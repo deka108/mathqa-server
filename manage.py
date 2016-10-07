@@ -1,4 +1,11 @@
-#!/usr/bin/env python
+"""
+# Name:           manage.py
+# Description:
+# Created by:     Auto
+# Date Created:   Oct 07 2016
+# Last Modified:  Oct 07 2016
+# Modified by:    Phuc Le-Sanh
+"""
 import os
 import sys
 
