@@ -1,9 +1,9 @@
 """
 # Name:           meas/settings.py
 # Description:
-# Created by:     Auto
-# Date Created:   Oct 07 2016
-# Last Modified:  Oct 07 2016
+# Created by:     Phuc Le-Sanh
+# Date Created:   Oct 10 2016
+# Last Modified:  Oct 10 2016
 # Modified by:    Phuc Le-Sanh
 """
 
@@ -11,9 +11,9 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ["MEAS_SECRET_KEY"]
+SECRET_KEY = 'g(yej*3clhw8mh1lge2jd*f7h0uam9exedd$ya50n-^n1#p2(9'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -63,9 +63,9 @@ WSGI_APPLICATION = 'meas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ["MEAS_DATABASE_NAME"],
-        'USER': os.environ["MEAS_DATABASE_USER"],
-        'PASSWORD': os.environ["MEAS_DATABASE_PASSWORD"]
+        'NAME': 'meas_development',
+        'USER': 'root',
+        'PASSWORD': 'Levantam9434'
     }
 }
 
