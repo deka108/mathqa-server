@@ -25,7 +25,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Web application
     'webapp.apps.WebAppConfig',
+
+    # Models
+    'meas_models.apps.MeasModelsConfig'
 )
 
 MIDDLEWARE_CLASSES = (
