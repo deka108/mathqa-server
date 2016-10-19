@@ -1,0 +1,191 @@
+[
+  {
+    "model": "meas_models.EducationLevel",
+    "fields": {
+      "name": "A'level",
+      "description": "Covers subjects in Junior College"
+    }
+  },
+  {
+    "model": "meas_models.EducationLevel",
+    "fields": {
+      "name": "O'level",
+      "description": "Covers subjects in Secondary School"
+    }
+  },
+  {
+    "model": "meas_models.EducationLevel",
+    "fields": {
+      "name": "Elementary",
+      "description": "Covers subjects in Primary School"
+    }
+  },
+  {
+    "model": "meas_models.Subject",
+    "fields": {
+      "name": "Additional Mathematics",
+      "description": "O Level Advanced Math",
+      "education_level_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.Subject",
+    "fields": {
+      "name": "Elementary Mathematics",
+      "description": "O Level Advanced Math",
+      "education_level_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.Subject",
+    "fields": {
+      "name": "H2 Mathematics",
+      "description": "High School Math",
+      "education_level_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Quadratic Equations & inequalities",
+      "description": "Test",
+      "subject_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Indices, Surds, Exponential, Logarithms",
+      "description": "Test",
+      "subject_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Polynomials and Partial Fractions",
+      "description": "Test",
+      "subject_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Simultaneous Equations",
+      "description": "Test",
+      "subject_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Binomial Function",
+      "description": "Test",
+      "subject_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Modulus Function",
+      "description": "Test",
+      "subject_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Coordinate Geometry",
+      "description": "Test",
+      "subject_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Plane Geometry",
+      "description": "Test",
+      "subject_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Trigonometry",
+      "description": "Test",
+      "subject_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Differentiation",
+      "description": "Test",
+      "subject_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Integration & Definite Integrals",
+      "description": "Test",
+      "subject_id": "3"
+    }
+  },
+  {
+    "model": "meas_models.Topic",
+    "fields": {
+      "name": "Kinematics",
+      "description": "Test",
+      "subject_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.Concept",
+    "fields": {
+      "name": "Symmetric properties of the roots of a quadratic equation",
+      "description": "Symmetric properties of the roots of a quadratic equation",
+      "topic_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.Concept",
+    "fields": {
+      "name": "Linear Law",
+      "description": "Linear Law",
+      "topic_id": "6"
+    }
+  },
+  {
+    "model": "meas_models.Concept",
+    "fields": {
+      "name": "Simple Coordinate Geometry",
+      "description": "Simple Coordinate Geometry",
+      "topic_id": "6"
+    }
+  },
+  {
+    "model": "meas_models.Concept",
+    "fields": {
+      "name": "Double angle formula",
+      "description": "Double angle formula",
+      "topic_id": "8"
+    }
+  },
+  {
+    "model": "meas_models.Concept",
+    "fields": {
+      "name": "Differentiation Techniques",
+      "description": "Differentiation Techniques",
+      "topic_id": "9"
+    }
+  },
+  {
+    "model": "meas_models.Concept",
+    "fields": {
+      "name": "Rates of change",
+      "description": "Rates of change",
+      "topic_id": "9"
+    }
+  }
+]
