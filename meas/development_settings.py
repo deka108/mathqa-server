@@ -29,7 +29,9 @@ INSTALLED_APPS = (
     'webapp.apps.WebAppConfig',
 
     # Models
-    'meas_models.apps.MeasModelsConfig'
+    'meas_models.apps.MeasModelsConfig',
+
+    'fontawesome'
 )
 
 MIDDLEWARE_CLASSES = (

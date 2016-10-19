@@ -1,7 +1,25 @@
 {% extends 'webapp/layout/base.html' %}
 
-{% block content %}
-  <div>
-    <p>test</p>
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'webapp/js/index.js' %}">
+  </script>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div id="w3m">
+    <ol class="breadcrumb custom-navbar">
+      <li>
+        <a href="#">
+          {% fontawesome_icon 'home' color='blue' %} Home
+        </a>
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'dashboard' color='blue' %} Dashboard
+      </li>
+    </ol>
   </div>
-{% endblock content %}
+{% endblock breadcrumb %}
