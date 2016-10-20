@@ -14,3 +14,10 @@ def adaptive_index(request):
     template = loader.get_template('webapp/adaptive_test/index.html')
     return HttpResponse(template.render(request))
 # ------------------------------------------------------------------------------
+
+
+# Contest
+def contest_index(request):
+    template = loader.get_template('webapp/contest/index.html')
+    return HttpResponse(template.render(request))
+# ------------------------------------------------------------------------------
