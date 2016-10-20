@@ -1,0 +1,108 @@
+{% extends 'webapp/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'webapp/js/dashboard/index.js' %}">
+  </script>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div id="w3m">
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a href="#">
+          {% fontawesome_icon 'home' color='blue' %} Home
+        </a>
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'dashboard' color='blue' %} Dashboard
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="row mathematics">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-2">
+      <div class="thumbnail custom-thumbnail">
+        <img src="{% static 'webapp/img/zero_level_additional_math.jpg' %}" />
+        <div class="caption text-center" >
+          <h4>O-level Additional Mathematics</h4>
+        </div>
+      </div>
+    </div>
+
+     <div class="col-md-2">
+      <div class="thumbnail custom-thumbnail">
+        <img src="{% static 'webapp/img/a_level_math.jpg' %}" />
+        <div class="caption text-center">
+          <h4>A-level Mathematics</h4>
+        </div>
+      </div>
+    </div>
+
+     <div class="col-md-2">
+      <div class="thumbnail custom-thumbnail">
+        <img src="{% static 'webapp/img/elementary_math.jpg' %}" />
+        <div class="caption text-center">
+          <h4>Elementary Mathematics</h4>
+        </div>
+      </div>
+    </div>
+
+     <div class="col-md-2">
+      <div class="thumbnail custom-thumbnail">
+        <img src="{% static 'webapp/img/psle_math.jpg' %}" />
+        <div class="caption text-center">
+          <h4>PSLE Mathematics</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+
+  </div>
+
+  <div class="row search">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-2">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Text search...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Search</button>
+          </span>
+      </div>
+    </div>
+
+    <div class="col-md-1"></div>
+
+    <div class="col-md-2">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Formula search...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Search</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-1"></div>
+
+    <div class="col-md-2">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Tag search...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Search</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+
+  </div>
+{% endblock content %}

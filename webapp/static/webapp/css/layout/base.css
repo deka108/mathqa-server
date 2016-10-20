@@ -1,0 +1,27 @@
+.custom-navbar-item{
+    color: white !important;
+    background: transparent !important;
+}
+
+.custom-thumbnail {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+.mathematics {
+  padding-top: 81px;
+  background-color: #00cc99 !important;
+}
+
+.search {
+  padding-top: 34px;
+}
+
+.custom-footer {
+  background-color: #337AB7 !important;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

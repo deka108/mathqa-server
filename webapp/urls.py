@@ -7,10 +7,14 @@
 # Modified by:    Phuc Le-Sanh
 """
 
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url('^', include('django.contrib.auth.urls')),
+
+    url(r'^$', views.dashboard_index, name='dashboard_index'),
+    url(r'^adaptive_test/$', views.adaptive_index, name='adaptive_index'),
+    url(r'^contest/$', views.contest_index, name='contest_index'),
 ]

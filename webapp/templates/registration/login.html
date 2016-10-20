@@ -1,0 +1,85 @@
+{% load staticfiles %}
+{% load fontawesome %}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+
+    <title class="title"></title>
+
+    <!-- JQuery -->
+    <script type = "text/javascript"
+        src = "{% static 'webapp/js/jquery-3.1.1.min.js' %}">
+    </script>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'webapp/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}"
+          rel="stylesheet">
+    <link href="{% static 'webapp/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}"
+          rel="stylesheet" >
+    <script type = "text/javascript"
+            src="{% static 'webapp/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}">
+    </script>
+
+    <!-- i18n -->
+    <script type = "text/javascript"
+            src="{% static 'webapp/js/i18n/en.js' %}">
+    </script>
+
+    {% fontawesome_stylesheet %}
+
+    <link href="{% static 'registration/login.css' %}"
+          rel="stylesheet"/>
+
+    <script type = "text/javascript"
+            src="{% static 'registration/login.js' %}">
+    </script>
+  </head>
+
+  <body style="background-color:#2B2B33">
+    <div class="container login-area">
+      <div class="row login-header">
+        <p class="text-center">
+          <img src="{% static 'webapp/img/meas_logo.png' %}" />
+          Mathematics System
+        </p>
+      </div>
+      <div class="row login-form">
+        {% if form.errors %}
+          <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+
+        {% if next %}
+          {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+          {% else %}
+            <p>Please login to see this page.</p>
+          {% endif %}
+        {% endif %}
+
+        <p class="login-access">Login Access</p>
+
+        <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table class="login-table">
+        <tr class="login-table-tr text-center">
+          <td class="login-table-td">{% fontawesome_icon 'user' %}</td>
+          <td class="login-table-input">{{ form.username }}</td>
+        </tr>
+        <tr class="login-table-tr text-center">
+          <td>{% fontawesome_icon 'lock' %}</td>
+          <td>{{ form.password }}</td>
+        </tr>
+        </table>
+
+        <input class="login-button text-center" type="submit" value="Log me in" />
+        <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

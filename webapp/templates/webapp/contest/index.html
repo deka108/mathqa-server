@@ -1,0 +1,50 @@
+{% extends 'webapp/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'webapp/js/contest/index.js' %}">
+  </script>
+
+  <link href="{% static 'webapp/css/contest/index.css' %}"
+        rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div id="w3m">
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a href="#">
+          {% fontawesome_icon 'home' color='blue' %} Home
+        </a>
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'dashboard' color='blue' %} Contest
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+      <blockquote class="custom-blockquote">
+        <p class="blockquote-title">
+          Pick some options and begin a paper test to test your skills!
+        </p>
+        <br/>
+        <p class="blockquote-text">
+        Paper Tests are generated using test paper generation techniques according to a user's specification.
+        </p>
+      </blockquote>
+
+    </div>
+
+    <div class="col-md-2"></div>
+
+  </div>
+{% endblock content %}

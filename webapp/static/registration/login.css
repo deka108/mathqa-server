@@ -1,0 +1,55 @@
+.login-area {
+  width: 400px;
+  height: 500px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -70px 0 0 -170px;
+}
+
+.login-header {
+  background: #337AB7;
+  padding: 10px;
+  color: white;
+  font-size: 25px;
+  font-family: 'Hoefler Text', 'Baskerville old face', Garamond, 'Times New Roman', serif;
+}
+
+.login-form {
+  background: white;
+  padding: 10px;
+}
+
+.login-access {
+  font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma,  sans-serif;
+  font-size: 18px;
+  margin-left: 30px;
+}
+
+.login-table {
+  margin-left: 30px;
+}
+
+.login-table-tr {
+  height: 36px;
+}
+
+.login-table-td {
+  width: 36px;
+}
+
+.login-table-input{
+  width: 280px;
+}
+
+.login-button{
+  background-color: #337AB7;
+  margin-top: 30px;
+  margin-left: 30px;
+  width: 300px;
+  height: 50px;
+  color: white;
+  font-family: Optima, Segoe,  'Segoe UI', Candara, Calibri, Arial, sans-serif;
+  font-size: 18px;
+}
