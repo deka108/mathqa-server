@@ -1,2 +1,2 @@
 // Create title
-$( ".title" ).append(en.title.index)
+$( ".title" ).append(en.title.dashboard)

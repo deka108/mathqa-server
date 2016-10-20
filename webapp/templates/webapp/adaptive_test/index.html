@@ -1,0 +1,71 @@
+{% extends 'webapp/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'webapp/js/adaptive_test/index.js' %}">
+  </script>
+
+  <link href="{% static 'webapp/css/adaptive_test/index.css' %}"
+        rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div id="w3m">
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a href="#">
+          {% fontawesome_icon 'home' color='blue' %} Home
+        </a>
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'dashboard' color='blue' %} Adaptive Test
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+      <blockquote class="custom-blockquote">
+        <p class="blockquote-title">
+          Pick a topic and begin a CAT test to know your ability score!
+        </p>
+        <br/>
+        <p class="blockquote-text">
+        CAT Tests are generated dynamically based on responses that a user gives on previous questions.
+        </p>
+      </blockquote>
+
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Select Topic
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="#">Quadratic Equations & inequalities</a></li>
+          <li><a href="#">Indices, Surds, Exponential, Logarithms</a></li>
+          <li><a href="#">Polynomials and Partial Fractions</a></li>
+          <li><a href="#">Simultaneous Equations</a></li>
+          <li><a href="#">Binomial Function</a></li>
+          <li><a href="#">Modulus Function</a></li>
+          <li><a href="#">Coordinate Geometry</a></li>
+          <li><a href="#">Plane Geometry</a></li>
+          <li><a href="#">Trigonometry</a></li>
+          <li><a href="#">Differentiation</a></li>
+          <li><a href="#">Integration & Definite Integrals</a></li>
+          <li><a href="#">Kinematics</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="col-md-2"></div>
+
+  </div>
+{% endblock content %}
