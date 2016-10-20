@@ -44,37 +44,37 @@
         <div class="container-fluid">
           <ul class="nav navbar-nav">
             <li>
-              <a href="#" class = "custom-navbar">
+              <a href="#" class = "custom-navbar-item">
                 <img src="{% static 'webapp/img/meas_logo.png' %}" />
               </a>
             </li>
 
             <li class="active">
-              <a href="#" class = "custom-navbar">
+              <a href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'dashboard' color='white' %} Dashboard
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar">
+              <a href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'book' color='white' %} Adaptive Test
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar">
+              <a href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'newspaper-o' color='white' %} Contest
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar">
+              <a href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'mortar-board' color='white' %} LeaderBoard
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar">
+              <a href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'history' color='white' %} Proficiency
               </a>
             </li>
@@ -82,12 +82,12 @@
 
           <ul class="nav navbar-nav navbar-right col-sm-2">
             <li>
-              <a href="#" class = "custom-navbar">
+              <a href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'registered' color='white' %} Register
               </a>
             </li>
             <li>
-              <a href="#" class = "custom-navbar">
+              <a href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'user' color='white' %} Login
               </a>
             </li>
@@ -107,5 +107,127 @@
         </li>
       </ul>
     </div>
+
+    <section id="mathematics">
+      <div class="row mathematics">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-2">
+          <div class="thumbnail custom-thumbnail">
+            <img src="{% static 'webapp/img/zero_level_additional_math.jpg' %}" />
+            <div class="caption text-center" >
+              <h4>O-level Additional Mathematics</h4>
+            </div>
+          </div>
+        </div>
+
+         <div class="col-md-2">
+          <div class="thumbnail custom-thumbnail">
+            <img src="{% static 'webapp/img/a_level_math.jpg' %}" />
+            <div class="caption text-center">
+              <h4>A-level Mathematics</h4>
+            </div>
+          </div>
+        </div>
+
+         <div class="col-md-2">
+          <div class="thumbnail custom-thumbnail">
+            <img src="{% static 'webapp/img/elementary_math.jpg' %}" />
+            <div class="caption text-center">
+              <h4>Elementary Mathematics</h4>
+            </div>
+          </div>
+        </div>
+
+         <div class="col-md-2">
+          <div class="thumbnail custom-thumbnail">
+            <img src="{% static 'webapp/img/psle_math.jpg' %}" />
+            <div class="caption text-center">
+              <h4>PSLE Mathematics</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2"></div>
+
+      </div>
+    </section>
+
+    <section id="search">
+      <div class="row search">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Text search...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Search</button>
+              </span>
+          </div>
+        </div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Formula search...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Search</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Tag search...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Search</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-2"></div>
+
+      </div>
+    </section>
+
+    <div class="custom-footer text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <h3>Location</h3>
+              <p>Nanyan Technological University
+              </p>
+          </div>
+          <div class="col-md-4">
+              <h3>Social</h3>
+              <ul class="list-inline">
+                  <li>
+                      <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook fa-inverse"></i></a>
+                  </li>
+                  <li>
+                      <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus fa-inverse"></i></a>
+                  </li>
+                  <li>
+                      <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter fa-inverse"></i></a>
+                  </li>
+                  <li>
+                      <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin fa-inverse"></i></a>
+                  </li>
+                  <li>
+                      <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble fa-inverse"></i></a>
+                  </li>
+              </ul>
+          </div>
+          <div class="col-md-4">
+              <h3>About us</h3>
+              <p>Students</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
