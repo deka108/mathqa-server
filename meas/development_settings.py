@@ -25,13 +25,18 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+    'rest_framework.authtoken',
+    'fontawesome',
+
     # Web application
     'webapp.apps.WebAppConfig',
 
     # Models
     'meas_models.apps.MeasModelsConfig',
 
-    'fontawesome'
+    # API
+    'api.apps.ApiConfig'
 )
 
 MIDDLEWARE_CLASSES = (
