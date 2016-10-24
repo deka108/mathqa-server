@@ -3,6 +3,14 @@ from django.contrib import admin
 from meas_models.models import *
 
 
+class EducationLevelAdmin(admin.ModelAdmin):
+    pass
+
+
+class SubjectAdmin(admin.ModelAdmin):
+    pass
+
+
 class TopicAdmin(admin.ModelAdmin):
     pass
 
@@ -35,6 +43,8 @@ class ProficiencyAdmin(admin.ModelAdmin):
     pass
 
 
+admin.site.register(EducationLevel, EducationLevelAdmin)
+admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Concept, ConceptAdmin)
 admin.site.register(Question, QuestionAdmin)
