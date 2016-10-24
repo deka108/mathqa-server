@@ -22,9 +22,6 @@ class EducationLevelList(generics.ListCreateAPIView):
     queryset = EducationLevel.objects.all()
     serializer_class = EducationLevelSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
 
 class EducationLevelDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (
