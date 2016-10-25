@@ -79,6 +79,7 @@ class Topic(models.Model):
 
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1000)
+    order = models.PositiveIntegerField(null=True, blank=True)
 
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
@@ -100,59 +101,11 @@ class Concept(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
 
 
-class Question(models.Model):
-    """
-    List of questions
-    """
-
-    EXAM_PAPERS = "EP"
-    ONLINE = "OL"
-
-    QUESTION_SOURCES = [
-        (EXAM_PAPERS, 'Exam papers'),
-        (ONLINE, 'Online')
-    ]
-
-    content = models.TextField(max_length=1000)
-
-    source = models.CharField(
-        max_length=2,
-        choices=QUESTION_SOURCES,
-        default=EXAM_PAPERS)
-
-    difficulty_level = models.IntegerField(
-        validators=[validate_difficulty_range],
-        default=0)
-
-
-class Part(models.Model):
-    """
-    List of parts in specific question
-    """
-
-    content = models.TextField(max_length=1000)
-    answer = models.TextField(max_length=200)
-    solution = models.TextField(max_length=1000)
-
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-
-class SubPart(models.Model):
-    """
-    List of subparts in specific part
-    """
-
-    content = models.TextField(max_length=1000)
-    answer = models.TextField(max_length=200)
-    solution = models.TextField(max_length=1000)
-
-    part = models.ForeignKey(Part, on_delete=models.CASCADE)
-
-
 class Test(models.Model):
     """
     List of test
     """
+
     ADAPTIVE_TEST = "AP"
     CONTEST = "CT"
 
@@ -167,13 +120,30 @@ class Test(models.Model):
         default=ADAPTIVE_TEST)
 
 
-class TestQuestion(models.Model):
+class Question(models.Model):
     """
-    List of questions in specific test
+    List of questions
     """
 
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    EXAM_PAPERS = "EP"
+    ONLINE = "OL"
+
+    QUESTION_SOURCES = [
+        (EXAM_PAPERS, 'Exam papers'),
+        (ONLINE, 'Online')
+    ]
+
+    content = models.TextField(max_length=1000)
+    source = models.CharField(
+        max_length=2,
+        choices=QUESTION_SOURCES,
+        default=EXAM_PAPERS)
+    difficulty_level = models.IntegerField(
+        validators=[validate_difficulty_range],
+        default=0)
+
+    parent = models.ForeignKey("self")
+    tests = models.ManyToManyField(Test)
 
 
 class Proficiency(models.Model):
@@ -181,12 +151,7 @@ class Proficiency(models.Model):
     Track history of students
     """
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
     detail = models.IntegerField
-
-    unique_together = ("user", "restaurant", "detail")
-
     response = models.TextField(max_length=1000)
     respone_type = models.CharField(
         max_length=10,
@@ -194,3 +159,8 @@ class Proficiency(models.Model):
         default=TEXT)
     is_subpart = models.BooleanField(default=0)
     is_complete = models.BooleanField(default=0)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+
+    unique_together = ("user", "restaurant", "detail")

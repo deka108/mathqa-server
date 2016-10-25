@@ -30,6 +30,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'fontawesome',
+    'suit_ckeditor',
 
     # Web application
     'webapp.apps.WebAppConfig',
@@ -135,5 +136,5 @@ SUIT_CONFIG = {
     # ),
 
     # misc
-    # 'LIST_PER_PAGE': 15
+    'LIST_PER_PAGE': 10
 }
