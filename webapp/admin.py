@@ -1,55 +1,28 @@
 from django.contrib import admin
+from django.contrib.admin import ModelAdmin
 
 from meas_models.models import *
 
 
-class EducationLevelAdmin(admin.ModelAdmin):
-    pass
+class TopicAdmin(ModelAdmin):
+    list_display = ('id', 'name', 'description', 'order')
+    list_editable = ('name', 'description', 'order')
 
 
-class SubjectAdmin(admin.ModelAdmin):
-    pass
-
-
-class TopicAdmin(admin.ModelAdmin):
-    pass
-
-
-class ConceptAdmin(admin.ModelAdmin):
-    pass
-
-
-class QuestionAdmin(admin.ModelAdmin):
-    pass
-
-
-class PartAdmin(admin.ModelAdmin):
-    pass
-
-
-class SubPartAdmin(admin.ModelAdmin):
-    pass
-
-
-class TestAdmin(admin.ModelAdmin):
-    pass
-
-
-class TestQuestionAdmin(admin.ModelAdmin):
-    pass
-
-
-class ProficiencyAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(EducationLevel, EducationLevelAdmin)
-admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Topic, TopicAdmin)
+
+
+class ConceptAdmin(ModelAdmin):
+    list_display = ('id', 'name', 'description')
+    list_editable = ('name', 'description')
+
+
 admin.site.register(Concept, ConceptAdmin)
+
+
+class QuestionAdmin(ModelAdmin):
+    list_display = ('id', 'content', 'source', 'difficulty_level')
+    list_editable = ('content', 'source', 'difficulty_level')
+
+
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Part, PartAdmin)
-admin.site.register(SubPart, SubPartAdmin)
-admin.site.register(Test, TestAdmin)
-admin.site.register(TestQuestion, TestQuestionAdmin)
-admin.site.register(Proficiency, ProficiencyAdmin)
