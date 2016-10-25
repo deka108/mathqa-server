@@ -158,7 +158,6 @@ class Proficiency(models.Model):
         max_length=10,
         choices=RESPONSE_TYPES,
         default=TEXT)
-    is_subpart = models.BooleanField(default=0)
     is_complete = models.BooleanField(default=0)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
