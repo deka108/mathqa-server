@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'fontawesome',
     'suit_ckeditor',
+    'autofixture',
 
     # Web application
     'webapp.apps.WebAppConfig',
@@ -138,3 +139,6 @@ SUIT_CONFIG = {
     # misc
     'LIST_PER_PAGE': 10
 }
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'

@@ -80,19 +80,33 @@
             </li>
           </ul>
 
-          <ul class="nav navbar-nav navbar-right col-sm-2">
-            <li>
-              <a href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'registered' color='white' %} Register
-              </a>
-            </li>
-            <li>
-              <a href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'user' color='white' %} Login
-              </a>
-            </li>
-
-          </ul>
+          {% if is_authenticated %}
+            <ul class="nav navbar-nav navbar-right col-sm-2">
+              <li>
+                <a href="#" class = "custom-navbar-item">
+                  {% fontawesome_icon 'user' color='white' %} {{ current_user }}
+                </a>
+              </li>
+              <li>
+                <a href="/logout/" class = "custom-navbar-item">
+                  {% fontawesome_icon 'sign-out' color='white' %} Sign out
+                </a>
+              </li>
+            </ul>
+          {% else %}
+            <ul class="nav navbar-nav navbar-right col-sm-2">
+              <li>
+                <a href="#" class = "custom-navbar-item">
+                  {% fontawesome_icon 'registered' color='white' %} Register
+                </a>
+              </li>
+              <li>
+                <a href="/login/" class = "custom-navbar-item">
+                  {% fontawesome_icon 'user' color='white' %} Login
+                </a>
+              </li>
+            </ul>
+          {% endif %}
 
         </div>
 

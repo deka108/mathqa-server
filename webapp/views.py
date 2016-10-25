@@ -1,23 +1,21 @@
-from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render
 
 
-# Dashboard
 def dashboard_index(request):
-    template = loader.get_template('webapp/dashboard/index.html')
-    return HttpResponse(template.render(request))
-# ------------------------------------------------------------------------------
+    return render(request, 'webapp/dashboard/index.html', __user_info(request))
 
 
-# Adaptive Test
 def adaptive_index(request):
-    template = loader.get_template('webapp/adaptive_test/index.html')
-    return HttpResponse(template.render(request))
-# ------------------------------------------------------------------------------
+    return render(request, 'webapp/adaptive_test/index.html',
+                  __user_info(request))
 
 
-# Contest
 def contest_index(request):
-    template = loader.get_template('webapp/contest/index.html')
-    return HttpResponse(template.render(request))
-# ------------------------------------------------------------------------------
+    return render(request, 'webapp/contest/index.html', __user_info(request))
+
+
+def __user_info(request):
+    return {
+        'is_authenticated': request.user.is_authenticated,
+        'current_user': request.user
+    }

@@ -199,5 +199,75 @@
       "description": "Rates of change",
       "topic_id": "9"
     }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 1",
+      "test_type": "AP"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 2",
+      "test_type": "AP"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 3",
+      "test_type": "AP"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 4",
+      "test_type": "AP"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 5",
+      "test_type": "AP"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 6",
+      "test_type": "CT"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 7",
+      "test_type": "CT"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 8",
+      "test_type": "CT"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 9",
+      "test_type": "CT"
+    }
+  },
+  {
+    "model": "meas_models.Test",
+    "fields": {
+      "name": "Test 10",
+      "test_type": "CT"
+    }
   }
 ]
