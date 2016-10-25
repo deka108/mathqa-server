@@ -114,7 +114,8 @@ class Test(models.Model):
         (CONTEST, 'Contest')
     ]
 
-    name = models.CharField(
+    name = models.CharField(max_length=200)
+    test_type = models.CharField(
         max_length=200,
         choices=TEST_TYPES,
         default=ADAPTIVE_TEST)
@@ -142,7 +143,7 @@ class Question(models.Model):
         validators=[validate_difficulty_range],
         default=0)
 
-    parent = models.ForeignKey("self")
+    parent = models.ForeignKey("self", null=True)
     tests = models.ManyToManyField(Test)
 
 
