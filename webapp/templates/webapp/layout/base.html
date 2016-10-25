@@ -9,6 +9,7 @@
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
 
     <title class="title"></title>
+    <link rel="icon" href="{% static 'webapp/img/meas_logo.png' %}" type="image/png">
 
     <!-- JQuery -->
     <script type = "text/javascript"
@@ -52,6 +53,12 @@
             <li class="active">
               <a href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'dashboard' color='white' %} Dashboard
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class = "custom-navbar-item">
+                {% fontawesome_icon 'bookmark' color='white' %} Topic
               </a>
             </li>
 
