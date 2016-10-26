@@ -17,3 +17,10 @@ class EducationLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationLevel
         fields = ('id', 'name', 'description')
+
+
+class TopicSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Topic
+        fields = ('id', 'name', 'description', 'order', 'subject')

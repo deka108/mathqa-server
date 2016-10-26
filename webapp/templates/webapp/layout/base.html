@@ -129,20 +129,118 @@
       </ul>
     </div>
 
-    <div class="row">
+    <div class="row main-area">
       {% block content %} {% endblock content %}
     </div>
 
-    <div class="custom-footer text-center">
+    <div class="row search">
+      <div class="col-md-1"></div>
+
+      <div class="col-md-4">
+        <hr class="custom-hr">
+      </div>
+
+      <div class="col-md-2">
+        <p class="text-center title-row">What do you need ?</p>
+      </div>
+      <div class="col-md-4">
+        <hr class="custom-hr">
+      </div>
+
+      <div class="col-md-1"></div>
+    </div>
+    <div class="row search">
+      <div class="col-md-2"></div>
+
+      <div class="col-md-2">
+        <ul class="nav nav-stacke text-center custom-nav-search">
+          <li>
+            <img src="{% static 'webapp/img/text.png' %}" />
+          </li>
+
+          <li>
+            Text search
+          </li>
+
+          <li>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">
+                    {% fontawesome_icon 'search' color='black' %} Search
+                  </button>
+                </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-1"></div>
+
+      <div class="col-md-2">
+        <ul class="nav nav-stacke text-center custom-nav-search">
+          <li class="text-center">
+            <img src="{% static 'webapp/img/formula.png' %}" />
+          </li>
+
+          <li>
+            Formula search
+          </li>
+
+          <li>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">
+                    {% fontawesome_icon 'search' color='black' %} Search
+                  </button>
+                </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-1"></div>
+
+       <div class="col-md-2">
+         <ul class="nav nav-stacke text-center custom-nav-search">
+          <li class="text-center">
+            <img src="{% static 'webapp/img/tag.png' %}" />
+          </li>
+
+          <li>
+            Tag search
+          </li>
+
+          <li>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">
+                    {% fontawesome_icon 'search' color='black' %} Search
+                  </button>
+                </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-2"></div>
+
+    </div>
+
+    <div class="custom-footer">
       <div class="container">
-        <div class="row">
+        <div class="row text-center">
           <div class="col-md-4">
               <h3>Location</h3>
-              <p>Nanyan Technological University
+              <hr class="custom-footer-hr">
+              <p>NANYAN TECHNOLOGICAL UNIVERSITY
               </p>
           </div>
           <div class="col-md-4">
-              <h3>Social</h3>
+              <h3>Social Network</h3>
+              <hr class="custom-footer-hr">
               <ul class="list-inline">
                   <li>
                       <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook fa-inverse"></i></a>
@@ -163,11 +261,16 @@
           </div>
           <div class="col-md-4">
               <h3>About us</h3>
+              <hr class="custom-footer-hr">
               <p>Students</p>
           </div>
         </div>
       </div>
     </div>
 
+    <div class="row custom-footer">
+      <hr class="custom-footer-hr">
+      <p class="text-center">Copyright © 2016 NTU - DMAL</p>
+    </div>
   </body>
 </html>
