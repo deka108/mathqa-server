@@ -16,6 +16,8 @@
 
 .search {
   padding-top: 34px;
+  padding-bottom: 34px;
+  background: #d9d9d9;
 }
 
 .custom-footer {
@@ -24,9 +26,26 @@
   position: relative;
   bottom: 0;
   width: 100%;
-  margin-top: 50px;
 }
 
 .main-area {
   background: #e6e6e6;
+}
+
+.custom-footer-hr {
+  border-color: #ffad33;
+}
+
+.custom-nav-search li {
+  margin-top: 20px;
+  font-size: 27px;
+  font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
+}
+
+.title-row {
+  font-size: 27px;
+  font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
+}
+.custom-hr {
+  border-color: #b3b3b3;
 }
