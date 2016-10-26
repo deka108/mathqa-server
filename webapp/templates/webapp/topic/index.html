@@ -1,0 +1,49 @@
+{% extends 'webapp/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'webapp/js/topic/index.js' %}">
+  </script>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div id="w3m">
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a href="#">
+          {% fontawesome_icon 'home' color='blue' %} Home
+        </a>
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'dashboard' color='blue' %} Contest
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-2">
+       <div class="list-group">
+        {% for topic in topics %}
+          <a href="/topic/{{ topic.id }}/concept/"
+            class="list-group-item"> {{ topic.name }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div id="concepts_div" class="list-group">
+
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+
+  </div>
+{% endblock content %}
