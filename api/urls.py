@@ -15,6 +15,10 @@ urlpatterns = [
     url(r'^education_levels/$', views.EducationLevelList.as_view()),
     url(r'^education_levels/(?P<pk>[0-9]+)/$',
         views.EducationLevelDetail.as_view()),
+
+    url(r'^topics/$', views.TopicList.as_view()),
+    url(r'^topics/(?P<pk>[0-9]+)/$',
+        views.TopicDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

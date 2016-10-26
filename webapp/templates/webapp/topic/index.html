@@ -7,6 +7,9 @@
   <script type = "text/javascript"
           src="{% static 'webapp/js/topic/index.js' %}">
   </script>
+
+  <link href="{% static 'webapp/css/topic/index.css' %}"
+        rel="stylesheet"/>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -18,7 +21,7 @@
         </a>
       </li>
       <li class="active">
-         {% fontawesome_icon 'dashboard' color='blue' %} Contest
+         {% fontawesome_icon 'bookmark' color='blue' %} Topic
       </li>
     </ol>
   </div>
@@ -26,24 +29,133 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-2">
-       <div class="list-group">
-        {% for topic in topics %}
-          <a href="/topic/{{ topic.id }}/concept/"
-            class="list-group-item"> {{ topic.name }}
-          </a>
-        {% endfor %}
-      </div>
-    </div>
-
-    <div class="col-md-2">
-      <div id="concepts_div" class="list-group">
-
-      </div>
-    </div>
-
     <div class="col-md-2"></div>
+    <div class="col-md-2">
+      <ul class="nav nav-stacked custom-nav-stacked">
+        <li class="main-section">Topics</li>
+        {% for topic in topics %}
+          <li role="presentation">
+            {% if topic.name == current_topic.name %}
+              <a class="custom-active" href="/topic/{{ topic.id }}/concept/1/">
+                {% fontawesome_icon 'folder-open' color='black' %} {{ topic.name }}
+              </a>
+            {% else%}
+              <a href="/topic/{{ topic.id }}/concept/1/">
+                {% fontawesome_icon 'folder-open' color='black' %} {{ topic.name }}
+              </a>
+            {% endif %}
+          </li>
+        {% endfor %}
+        <li class="main-section">Concepts</li>
+        {% block concept %} {% endblock concept %}
+      </ul>
+    </div>
+
+    <div class="col-md-6 custom-center-area">
+      <ul class="nav nav-pills pull-right" role="tablist">
+        <li role="presentation"><a href="#">Summary <span class="badge">2</span></a></li>
+        <li role="presentation"><a href="#">Questions <span class="badge">3</span></a></li>
+      </ul>
+
+      <div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="card">
+          <div class="card-header" role="tab" id="headingOne">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <p class="display-section">
+                  Summary
+                </p>
+              </a>
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel panel-danger">
+              <div class="panel-heading">Section 1</div>
+              <div class="panel-body">
+                <p>...</p>
+              </div>
+            </div>
+            <div class="panel panel-danger">
+              <div class="panel-heading">Section 2</div>
+              <div class="panel-body">
+                <p>...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="custom-hr">
+
+        <div class="card">
+          <div class="card-header" role="tab" id="headingTwo">
+            <h5 class="mb-0">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <p class="display-section">
+                  MathQuill Hints
+                </p>
+              </a>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <blockquote class="custom-blockquote">
+              <p class="blockquote-title">
+                Tip 1
+              </p>
+              <br/>
+              <p class="blockquote-text">
+              CAT Tests are generated dynamically based on responses that a user gives on previous questions.
+              </p>
+            </blockquote>
+
+            <blockquote class="custom-blockquote">
+              <p class="blockquote-title">
+                Tip 2
+              </p>
+              <br/>
+              <p class="blockquote-text">
+              CAT Tests are generated dynamically based on responses that a user gives on previous questions.
+              </p>
+            </blockquote>
+          </div>
+        </div>
+
+        <hr class="custom-hr">
+
+        <div class="card">
+          <div class="card-header" role="tab" id="headingThree">
+            <h5 class="mb-0">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <p class="display-section">
+                  Questions
+                </p>
+              </a>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div class="card-block">
+                <div class="panel panel-success">
+                <div class="panel-heading">Question 1</div>
+                <div class="panel-body">
+                  <p>...</p>
+                </div>
+              </div>
+              <div class="panel panel-success">
+                <div class="panel-heading">Question 2</div>
+                <div class="panel-body">
+                  <p>...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+
+  </div>
 
   </div>
 {% endblock content %}

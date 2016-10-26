@@ -1,0 +1,35 @@
+{% extends 'webapp/topic/index.html' %}
+
+{% load fontawesome %}
+
+{% block breadcrumb %}
+  <div id="w3m">
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a href="#">
+          {% fontawesome_icon 'home' color='blue' %} Home
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          {% fontawesome_icon 'bookmark' color='blue' %} Topic
+        </a>
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'file' color='blue' %} Concept
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block concept %}
+  {% for con in concepts %}
+    {% if con.name == current_concept.name %}
+      <li role="presentation">
+        <a class="custom-active" href="/topic/{{current_topic.id}}/concept/{{con.id}}/">{{ con.name }}</a>
+      </li>
+    {% else %}
+      <li role="presentation"><a href="/topic/{{current_topic.id}}/concept/{{con.id}}/">{{ con.name }}</a></li>
+    {% endif %}
+  {% endfor %}
+{% endblock concept %}

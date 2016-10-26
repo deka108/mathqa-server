@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from meas_models.models import Topic
+from meas_models.models import *
 
 
 def dashboard_index(request):
@@ -11,6 +11,17 @@ def dashboard_index(request):
 def topic_index(request):
     return render(request, 'webapp/topic/index.html', __user_info(request, {
         "topics": Topic.objects.all
+    }))
+
+
+def topic_concept(request, topic_id, concept_id):
+    topic = Topic.objects.get(pk=topic_id)
+    concept = Concept.objects.get(pk=concept_id)
+    return render(request, 'webapp/topic/concept.html', __user_info(request, {
+        "topics": Topic.objects.all,
+        "concepts": topic.concept_set.all,
+        "current_topic": topic,
+        "current_concept": concept
     }))
 
 
