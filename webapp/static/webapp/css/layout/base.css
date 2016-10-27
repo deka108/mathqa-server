@@ -11,13 +11,17 @@
 
 .mathematics {
   padding-top: 81px;
-  background-color: #00cc99 !important;
+  background-color: #e6e6e6 !important;
 }
 
 .search {
   padding-top: 34px;
   padding-bottom: 34px;
   background: #d9d9d9;
+}
+
+.custom-footer-border {
+  border-top: thick solid #ff751a;
 }
 
 .custom-footer {
