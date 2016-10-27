@@ -24,3 +24,27 @@
   font-size: 14px;
   margin-left: 45px;
 }
+
+.control-panel {
+  margin-top: 25px;
+}
+
+.main-content {
+  margin-top: 34px;
+  margin-bottom: 34px;
+}
+
+.mathquill-area {
+  border-left: thick solid #ff9900;
+  border-right: thick solid #ff9900;
+}
+
+.custom-hr {
+  border-color: #b3b3b3;
+}
+
+.display-section {
+  font-size: 27px;
+  font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
+}
+

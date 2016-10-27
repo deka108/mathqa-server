@@ -31,7 +31,7 @@
   <div class="row">
     <div class="col-md-2"></div>
 
-    <div class="col-md-8">
+    <div class="col-md-5">
       <blockquote class="custom-blockquote">
         <p class="blockquote-title">
           Pick a topic and begin a CAT test to know your ability score!
@@ -41,9 +41,11 @@
         CAT Tests are generated dynamically based on responses that a user gives on previous questions.
         </p>
       </blockquote>
+    </div>
 
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <div class="col-md-3">
+      <div class="dropdown control-panel">
+        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Select Topic
           <span class="caret"></span>
         </button>
@@ -62,10 +64,54 @@
           <li><a href="#">Kinematics</a></li>
         </ul>
       </div>
+      <ul class="nav nav-pills control-panel" role="tablist">
+        <li class="btn-default" role="presentation"><a href="#">Completed <span class="badge">5/10</span></a></li>
 
+        <li class="btn-default" role="presentation"><a href="#">Right <span class="badge">3</span></a></li>
+
+        <li class="btn-default" role="presentation"><a href="#">Wrong <span class="badge">2</span></a></li>
+      </ul>
     </div>
 
     <div class="col-md-2"></div>
 
+  </div>
+
+  <hr class="custom-hr">
+
+  <div class="row main-content">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-5">
+      <div class="panel panel-danger">
+        <div class="panel-heading">Question 1</div>
+        <div class="panel-body">
+          <p>...</p>
+        </div>
+        <div class="panel-footer">
+          <button type="button" class="btn btn-success">
+            Hint
+          </button>
+        </div>
+      </div>
+
+      <div class="panel panel-success">
+        <div class="panel-heading">Answer</div>
+        <div class="panel-body">
+          <p>...</p>
+        </div>
+        <div class="panel-footer">
+          <button type="button" class="btn btn-danger">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mathquill-area">
+      <p class="display-section">MathQuill Hints</p>
+    </div>
+
+    <div class="col-md-2"></div>
   </div>
 {% endblock content %}
