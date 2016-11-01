@@ -7,6 +7,14 @@ const en = {
         topic: "Mathematics Learning System - Topic"
     },
     menu: {
-        dashboard: "XXX",
-    }
+        home: "Home",
+        topic: "Topic",
+        quiz: "Quiz",
+        contest: "Contest",
+        leaderboard: "LeaderBoard",
+        proficiency: "Proficiency",
+        sign_out: "Sign out",
+        register: "Register",
+        login: "Login"
+    },
 };
