@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^', include('webapp.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('api.urls')),
+    url(r'^cms/', include('cms.urls')),
 ]
