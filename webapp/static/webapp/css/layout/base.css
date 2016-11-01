@@ -1,14 +1,3 @@
-.custom-navbar-item{
-    color: white !important;
-    background: transparent !important;
-}
-
-.custom-thumbnail {
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
-}
-
 .mathematics {
   padding-top: 81px;
   background-color: #e6e6e6 !important;
@@ -18,6 +7,54 @@
   padding-top: 34px;
   padding-bottom: 34px;
   background: #d9d9d9;
+}
+
+.main-area {
+  background: #e6e6e6;
+}
+
+.title-row {
+  font-size: 27px;
+  font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
+}
+
+.blockquote-title {
+  color: red;
+}
+
+.blockquote-text {
+  font-size: 14px;
+  margin-left: 45px;
+}
+
+.control-panel {
+  margin-top: 25px;
+}
+
+.main-content {
+  margin-top: 34px;
+  margin-bottom: 34px;
+}
+
+.mathquill-area {
+  border-left: thick solid #ff9900;
+  border-right: thick solid #ff9900;
+}
+
+.display-section {
+  font-size: 27px;
+  font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
+}
+
+.custom-navbar-item{
+    color: white !important;
+    background: transparent !important;
+}
+
+.custom-thumbnail {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
 }
 
 .custom-footer-border {
@@ -32,10 +69,6 @@
   width: 100%;
 }
 
-.main-area {
-  background: #e6e6e6;
-}
-
 .custom-footer-hr {
   border-color: #ffad33;
 }
@@ -46,14 +79,33 @@
   font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
 }
 
-.title-row {
-  font-size: 27px;
-  font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
-}
 .custom-hr {
   border-color: #b3b3b3;
 }
 
 .custom-breadcum {
   background: #d9d9d9;
+}
+
+.custom-blockquote {
+  background: #e0e0d1;
+  border-left: 18px solid #ff9900;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+.custom-blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+.custom-blockquote p {
+  display: inline;
+}
+
+.custom-hr {
+  border-color: #b3b3b3;
 }
