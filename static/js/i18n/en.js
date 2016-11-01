@@ -5,5 +5,8 @@ const en = {
         adaptive_test: "Mathematics Learning System - Adaptive Test",
         contest: "Mathematics Learning System - Contest",
         topic: "Mathematics Learning System - Topic"
+    },
+    menu: {
+        dashboard: "XXX",
     }
 };
