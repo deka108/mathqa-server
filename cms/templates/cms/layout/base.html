@@ -1,0 +1,135 @@
+{% load staticfiles %}
+{% load fontawesome %}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+
+    <title class="title"></title>
+    <link rel="icon" href="{% static 'cms/img/meas_logo.png' %}" type="image/png">
+
+    <!-- JQuery -->
+    <script type = "text/javascript"
+        src = "{% static 'js/jquery-3.1.1.min.js' %}">
+    </script>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}"
+          rel="stylesheet"/>
+    <link href="{% static 'css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}"
+          rel="stylesheet"/>
+    <script type = "text/javascript"
+            src="{% static 'css/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}">
+    </script>
+
+    <!-- i18n -->
+    <script type = "text/javascript"
+            src="{% static 'js/i18n/en.js' %}">
+    </script>
+
+    {% fontawesome_stylesheet %}
+
+    <link href="{% static 'cms/css/layout/base.css' %}"
+          rel="stylesheet"/>
+
+    <!-- Extend css and js -->
+    {% block extended_head %}{% endblock extended_head %}
+  </head>
+
+  <body>
+    <div class="row custom-header">
+      <div class="col-sm-3">
+        <nav class="navbar bg-default navbar-left">
+          <ul class="nav navbar-nav">
+            <li>
+              <a class="title-page"> Dr Hui CMS Admin</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-4"></div>
+
+      <div class="col-sm-4">
+        <nav class="navbar bg-default navbar-right">
+          <ul class="nav navbar-nav">
+            <li class="note">
+              <a href="#">
+                  Go to Application
+              </a>
+            </li>
+            <li class="note">
+              <a href="#">
+                  Admin Permissions
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                 <img class="img-responsive center-block"
+                      src="{% static 'cms/img/user.png' %}">
+                  Phuc Le-Sanh
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                 <img class="img-responsive center-block"
+                      src="{% static 'cms/img/sign_out.png' %}">
+                  Sign out
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-1"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 left-panel">
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation">
+            <a href="#">
+              Manage Topics
+            </a>
+            <a href="#">
+              Manage Concepts
+            </a>
+            <a href="#">
+              Manage Questions
+            </a>
+            <a href="#">
+              Manage Quiz
+            </a>
+            <a href="#">
+              Manage Test
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-sm-8">
+        <div class="row">
+          <p class="display-section">Topic</p>
+        </div>
+        <hr>
+        <div class="row">
+        {% block breadcrumb %}
+          {% endblock breadcrumb %}
+        </div>
+        <hr>
+        <div class="row">
+          {% block content %}
+          {% endblock content %}
+        </div>
+      </div>
+
+      <div class="col-sm-2"></div>
+
+    </div>
+
+  </body>
+</html>

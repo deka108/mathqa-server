@@ -5,5 +5,16 @@ const en = {
         adaptive_test: "Mathematics Learning System - Adaptive Test",
         contest: "Mathematics Learning System - Contest",
         topic: "Mathematics Learning System - Topic"
-    }
+    },
+    menu: {
+        home: "Home",
+        topic: "Topic",
+        quiz: "Quiz",
+        contest: "Contest",
+        leaderboard: "LeaderBoard",
+        proficiency: "Proficiency",
+        sign_out: "Sign out",
+        register: "Register",
+        login: "Login"
+    },
 };

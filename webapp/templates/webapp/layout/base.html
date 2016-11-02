@@ -13,27 +13,30 @@
 
     <!-- JQuery -->
     <script type = "text/javascript"
-        src = "{% static 'webapp/js/jquery-3.1.1.min.js' %}">
+        src = "{% static 'js/jquery-3.1.1.min.js' %}">
     </script>
 
     <!-- Bootstrap -->
-    <link href="{% static 'webapp/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}"
+    <link href="{% static 'css/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}"
           rel="stylesheet"/>
-    <link href="{% static 'webapp/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}"
+    <link href="{% static 'css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}"
           rel="stylesheet"/>
     <script type = "text/javascript"
-            src="{% static 'webapp/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}">
+            src="{% static 'css/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}">
     </script>
 
     <!-- i18n -->
     <script type = "text/javascript"
-            src="{% static 'webapp/js/i18n/en.js' %}">
+            src="{% static 'js/i18n/en.js' %}">
     </script>
 
     {% fontawesome_stylesheet %}
 
     <link href="{% static 'webapp/css/layout/base.css' %}"
           rel="stylesheet"/>
+    <script type = "text/javascript"
+            src="{% static 'webapp/js/layout/base.js' %}">
+    </script>
 
     <!-- Extend css and js -->
     {% block extended_head %}{% endblock extended_head %}
@@ -51,38 +54,38 @@
             </li>
 
             <li class="active">
-              <a href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'dashboard' color='white' %} Dashboard
+              <a id="menu-home" href="#" class = "custom-navbar-item">
+                {% fontawesome_icon 'dashboard' color='white' %}
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'bookmark' color='white' %} Topic
+              <a id="menu-topic" href="#" class = "custom-navbar-item">
+                {% fontawesome_icon 'bookmark' color='white' %}
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'book' color='white' %} Adaptive Test
+              <a id="menu-quiz" href="#" class = "custom-navbar-item">
+                {% fontawesome_icon 'book' color='white' %}
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'newspaper-o' color='white' %} Contest
+              <a id="menu-contest" href="#" class = "custom-navbar-item">
+                {% fontawesome_icon 'newspaper-o' color='white' %}
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'mortar-board' color='white' %} LeaderBoard
+              <a id="menu-leaderboard" href="#" class = "custom-navbar-item">
+                {% fontawesome_icon 'mortar-board' color='white' %}
               </a>
             </li>
 
             <li>
-              <a href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'history' color='white' %} Proficiency
+              <a id="menu-proficiency" href="#" class = "custom-navbar-item">
+                {% fontawesome_icon 'history' color='white' %}
               </a>
             </li>
           </ul>
@@ -95,21 +98,21 @@
                 </a>
               </li>
               <li>
-                <a href="/logout/" class = "custom-navbar-item">
-                  {% fontawesome_icon 'sign-out' color='white' %} Sign out
+                <a id="sign-out" href="/logout/" class = "custom-navbar-item">
+                  {% fontawesome_icon 'sign-out' color='white' %}
                 </a>
               </li>
             </ul>
           {% else %}
             <ul class="nav navbar-nav navbar-right col-sm-2">
               <li>
-                <a href="#" class = "custom-navbar-item">
-                  {% fontawesome_icon 'registered' color='white' %} Register
+                <a id="register" href="#" class = "custom-navbar-item">
+                  {% fontawesome_icon 'registered' color='white' %}
                 </a>
               </li>
               <li>
-                <a href="/login/" class = "custom-navbar-item">
-                  {% fontawesome_icon 'user' color='white' %} Login
+                <a id="login" href="/login/" class = "custom-navbar-item">
+                  {% fontawesome_icon 'user' color='white' %}
                 </a>
               </li>
             </ul>

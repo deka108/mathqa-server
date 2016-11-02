@@ -1,0 +1,27 @@
+.custom-header {
+  background: #f2f2f2;
+}
+
+.title-page {
+  margin-top: 20px;
+  font-size: 27px;
+}
+
+.note {
+  margin-top: 32px;
+}
+
+.left-panel {
+  background: #d9d9d9;
+  border-right: thick solid #ff751a;
+}
+
+.left-panel ul {
+  margin-left: 20px;
+}
+
+.display-section {
+  font-size: 27px;
+  font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
+  padding: 15px;
+}

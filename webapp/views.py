@@ -35,7 +35,7 @@ def contest_index(request):
                   __user_info(request, {}))
 
 
-def __user_info(request, updated_list):
+def __user_info(request, updated_list=""):
     result = {
         'is_authenticated': request.user.is_authenticated,
         'current_user': request.user

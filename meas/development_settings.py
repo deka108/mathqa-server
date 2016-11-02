@@ -37,7 +37,10 @@ INSTALLED_APPS = (
     'meas_models.apps.MeasModelsConfig',
 
     # API
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
+
+    # CMS
+    'cms.apps.CmsConfig'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -108,3 +111,7 @@ REST_FRAMEWORK = {
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
