@@ -9,6 +9,13 @@ def dashboard_index(request):
     }))
 
 
+def edit(request):
+    print(request.POST.__getitem__('your_name'))
+    return render(request, 'cms/shared/_edit.html', __user_info(request, {
+        "topics": Topic.objects.all
+    }))
+
+
 def __user_info(request, updated_list=""):
     result = {
         'is_authenticated': request.user.is_authenticated,

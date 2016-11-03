@@ -5,7 +5,6 @@ $( document ).ready(function() {
 
     // Menu
     $("#nav_applicaiton").append(en.cms.menu.application);
-    $("#permission").append(en.cms.menu.permission);
     $("#sign-out").append(en.cms.menu.sign_out);
 
     // Management

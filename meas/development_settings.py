@@ -110,6 +110,9 @@ REST_FRAMEWORK = {
 }
 
 LOGIN_REDIRECT_URL = '/'
+# TODO - Phuc Le-Sanh
+# If admin (CMS), redirect to CMS login page
+# else redirect to app
 LOGOUT_REDIRECT_URL = '/login/'
 
 STATICFILES_DIRS = [

@@ -44,7 +44,7 @@
 
   <body>
     <div class="row custom-header">
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <nav class="navbar bg-default navbar-left">
           <ul class="nav navbar-nav">
             <li>
@@ -54,31 +54,26 @@
         </nav>
       </div>
 
-      <div class="col-sm-4"></div>
-
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <nav class="navbar bg-default navbar-right">
           <ul class="nav navbar-nav">
             <li class="note">
               <a id="nav_applicaiton" href="#"> </a>
             </li>
-            <li class="note">
-              <a id="permission" href="#"> </a>
-            </li>
-            <li>
-              <a href="#">
-                 <img class="img-responsive center-block"
-                      src="{% static 'cms/img/user.png' %}">
-                  Phuc Le-Sanh
-              </a>
-            </li>
-
-            <li>
-              <a id="sign-out" href="#">
-                 <img class="img-responsive center-block"
+            {% if is_authenticated %}
+              <li>
+                <a href="#">
+                  <img class="img-responsive center-block"
+                      src="{% static 'cms/img/user.png' %}"> {{ current_user }}
+                </a>
+              </li>
+              <li>
+                <a id="sign-out" href="/logout/">
+                  <img class="img-responsive center-block"
                       src="{% static 'cms/img/sign_out.png' %}">
-              </a>
-            </li>
+                </a>
+              </li>
+            {% endif %}
           </ul>
         </nav>
       </div>
@@ -103,12 +98,16 @@
         <div class="row">
           <p id="main-title" class="display-section"> </p>
         </div>
+
         <hr>
+
         <div class="row">
-        {% block breadcrumb %}
+          {% block breadcrumb %}
           {% endblock breadcrumb %}
         </div>
+
         <hr>
+
         <div class="row">
           {% block content %}
           {% endblock content %}

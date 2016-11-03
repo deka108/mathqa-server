@@ -28,7 +28,8 @@ const en = {
             description: "Description",
             order: "Order",
             subject: "Subject"
-        }
+        },
+        edit: "Edit"
     },
     title: {
         login: "Mathematics Learning System - Sign In",
