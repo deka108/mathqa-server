@@ -1,0 +1,48 @@
+{% extends 'cms/topic/index.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'cms/js/concept/create.js' %}">
+  </script>
+  <link href="{% static 'cms/css/concept/create.css' %}"
+        rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div>
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a id="breadcrumb-home" href="#">
+          {% fontawesome_icon 'home' color='blue' %}
+        </a>
+      </li>
+      <li>
+        <a id="breadcrumb-topic">
+          {% fontawesome_icon 'bookmark' color='blue' %}
+        </a>
+      </li>
+      <li>
+        <a id="breadcrumb-create" class="active">
+         {% fontawesome_icon 'edit' color='blue' %}
+        </a>
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="form-style-6">
+
+    <h1>Concept Info</h1>
+    <form action="/cms/api_create_concept/" method="post">
+      {% csrf_token %}
+      {{ form.name }}
+      {{ form.description }}
+      {{ form.topic }}
+      <input type="submit" value="Create" />
+    </form>
+  </div>
+{% endblock content %}

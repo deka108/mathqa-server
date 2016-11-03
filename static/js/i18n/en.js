@@ -27,11 +27,14 @@ const en = {
             name: "Name",
             description: "Description",
             order: "Order",
-            subject: "Subject"
+            subject: "Subject",
+            topic: "Topic"
         },
         action: {
             edit: "Edit",
-            create: "Create"
+            create: "Create",
+            add_topic: "Add new Topic",
+            add_concept: "Add new Concept"
         }
     },
     title: {

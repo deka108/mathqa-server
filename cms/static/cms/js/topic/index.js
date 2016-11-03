@@ -12,4 +12,6 @@ $(document).ready(function() {
     $('#header-subject').append(en.cms.header.subject);
 
     $('#main-title').append(en.cms.breadcrumb.topic);
+
+    $('#add').append(en.cms.action.add_topic);
 } );

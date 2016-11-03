@@ -1,0 +1,23 @@
+.custom-nav-stacked {
+  background: #d9d9d9;
+  width: 100%;
+  border-right: thick solid #ff751a;
+  border-bottom: thick solid #ff751a;
+}
+
+.main-section {
+  background-color: #337AB7;
+  font-size: 18px;
+  font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
+  color: white;
+  padding: 10px;
+}
+
+.topic_panel {
+  height: 500px;
+  overflow: auto;
+}
+
+.new-button {
+  margin-bottom: 20px;
+}

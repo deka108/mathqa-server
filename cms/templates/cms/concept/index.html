@@ -1,0 +1,94 @@
+{% extends 'cms/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+
+  <script type = "text/javascript"
+          src="{% static 'cms/js/concept/index.js' %}">
+  </script>
+
+  <link href="{% static 'cms/css/concept/index.css' %}"
+        rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+  <div class="col-sm-3">
+    <ul class="nav nav-stacked custom-nav-stacked topic_panel">
+      <li class="main-section">Topics</li>
+      <li role="presentation">
+        {% for topic in topics %}
+          <a href="/cms/concept/{{ topic.id }}">
+            {% fontawesome_icon 'folder-open' color='black' %} {{topic.name}}
+          </a>
+        {% endfor %}
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-sm-8 main-area">
+    <div class="row">
+      <p id="main-title" class="display-section"> </p>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <ol class="breadcrumb custom-navbar-item">
+        <li>
+          <a id="breadcrumb-home" href="#">
+            {% fontawesome_icon 'home' color='blue' %}
+          </a>
+        </li>
+        <li id="breadcrumb-concept" class="active">
+           {% fontawesome_icon 'bookmark' color='blue' %}
+        </li>
+      </ol>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <a href="/cms/create_concept/">
+        <button id="add" type="button" class="btn btn-success new-button"></button>
+      </a>
+
+      <table id="items" class="display" width="100%" cellspacing="0">
+        <thead class="custom-header">
+          <tr>
+            <th id="header-name"> </th>
+            <th id="header-description"> </th>
+            <th id="header-topic"> </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for concept in concepts %}
+            <tr>
+              <td>{{concept.name}}</td>
+              <td>{{concept.description}}</td>
+              <td>{{concept.topic}}</td>
+              <td>
+                <ul class="nav nav-pills">
+                  <li role="presentation">
+                    <a href="/cms/edit_concept/{{ concept.id }}">
+                      {% fontawesome_icon 'edit' color='blue' %}
+                    </a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="col-sm-1"></div>
+
+{% endblock content %}
