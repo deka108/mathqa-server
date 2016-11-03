@@ -82,16 +82,44 @@
     </div>
 
     <div class="row">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-topic" type="button" class="btn btn-danger">
+            </button>
+          </a>
+        </div>
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-concept" type="button" class="btn btn-success">
+            </button>
+          </a>
+        </div>
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-question" type="button" class="btn btn-warning">
+            </button>
+          </a>
+        </div>
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-quiz" type="button" class="btn btn-primary">
+            </button>
+          </a>
+        </div>
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-contest" type="button" class="btn btn-default">
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-sm-2 left-panel">
-        <ul class="nav nav-pills nav-stacked">
-          <li role="presentation">
-            <a id="manage-topic" href="#"> </a>
-            <a id="manage-concept" href="#"> </a>
-            <a id="manage-question" href="#"> </a>
-            <a id="manage-quiz" href="#"> </a>
-            <a id="manage-contest" href="#"> </a>
-          </li>
-        </ul>
+        {% block left_panel %}
+        {% endblock left_panel %}
       </div>
 
       <div class="col-sm-8">
