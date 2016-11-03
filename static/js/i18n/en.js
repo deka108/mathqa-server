@@ -30,7 +30,8 @@ const en = {
             subject: "Subject"
         },
         action: {
-            edit: "Edit"
+            edit: "Edit",
+            create: "Create"
         }
     },
     title: {

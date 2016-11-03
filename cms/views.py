@@ -11,6 +11,10 @@ def topic_index(request):
     }))
 
 
+def create_topic(request):
+    return render(request, 'cms/topic/create.html', {'form': EditTopicForm()})
+
+
 def edit_topic(request, topic_id):
     topic = Topic.objects.get(pk=topic_id)
 
@@ -20,6 +24,19 @@ def edit_topic(request, topic_id):
                  'subject': topic.subject
                  }
     )})
+
+
+def api_create_topic(request):
+    topic = Topic(name=request.POST.__getitem__('name'),
+                  description=request.POST.__getitem__('description'),
+                  subject=Subject.objects.get(
+                      pk=request.POST.__getitem__('subject'))
+                  )
+    topic.save()
+
+    return HttpResponseRedirect('../topic/', __user_info(request, {
+        "topics": Topic.objects.all
+    }))
 
 
 def api_update_topic(request):
