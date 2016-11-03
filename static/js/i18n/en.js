@@ -29,7 +29,9 @@ const en = {
             order: "Order",
             subject: "Subject"
         },
-        edit: "Edit"
+        action: {
+            edit: "Edit"
+        }
     },
     title: {
         login: "Mathematics Learning System - Sign In",

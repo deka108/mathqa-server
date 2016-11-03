@@ -5,6 +5,9 @@ from . import views
 urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
 
-    url(r'^$', views.dashboard_index, name='dashboard_index'),
-    url(r'^edit/$', views.edit, name='edit'),
+    url(r'^topic/$', views.topic_index, name='topic_index'),
+    url(r'^edit_topic/(?P<topic_id>[0-9]+)/$',
+        views.edit_topic, name='edit_topic'),
+    url(r'^api_update_topic/$', views.api_update_topic,
+        name='api_update_topic'),
 ]
