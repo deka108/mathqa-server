@@ -35,100 +35,115 @@
     <link href="{% static 'cms/css/layout/base.css' %}"
           rel="stylesheet"/>
 
+    <script type = "text/javascript"
+            src="{% static 'cms/js/layout/base.js' %}">
+    </script>
     <!-- Extend css and js -->
     {% block extended_head %}{% endblock extended_head %}
   </head>
 
   <body>
     <div class="row custom-header">
-      <div class="col-sm-3">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-5">
         <nav class="navbar bg-default navbar-left">
           <ul class="nav navbar-nav">
             <li>
-              <a class="title-page"> Dr Hui CMS Admin</a>
+              <a class="title-page"> </a>
             </li>
           </ul>
         </nav>
       </div>
 
-      <div class="col-sm-4"></div>
-
-      <div class="col-sm-4">
+      <div class="col-sm-5">
         <nav class="navbar bg-default navbar-right">
           <ul class="nav navbar-nav">
             <li class="note">
-              <a href="#">
-                  Go to Application
-              </a>
+              <a id="nav_applicaiton" href="#"> </a>
             </li>
-            <li class="note">
-              <a href="#">
-                  Admin Permissions
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                 <img class="img-responsive center-block"
-                      src="{% static 'cms/img/user.png' %}">
-                  Phuc Le-Sanh
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                 <img class="img-responsive center-block"
+            {% if is_authenticated %}
+              <li>
+                <a href="#">
+                  <img class="img-responsive center-block"
+                      src="{% static 'cms/img/user.png' %}"> {{ current_user }}
+                </a>
+              </li>
+              <li>
+                <a id="sign-out" href="/logout/">
+                  <img class="img-responsive center-block"
                       src="{% static 'cms/img/sign_out.png' %}">
-                  Sign out
-              </a>
-            </li>
+                </a>
+              </li>
+            {% endif %}
           </ul>
         </nav>
       </div>
-
       <div class="col-sm-1"></div>
     </div>
 
     <div class="row">
-      <div class="col-sm-2 left-panel">
-        <ul class="nav nav-pills nav-stacked">
-          <li role="presentation">
-            <a href="#">
-              Manage Topics
-            </a>
-            <a href="#">
-              Manage Concepts
-            </a>
-            <a href="#">
-              Manage Questions
-            </a>
-            <a href="#">
-              Manage Quiz
-            </a>
-            <a href="#">
-              Manage Test
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="col-sm-8">
-        <div class="row">
-          <p class="display-section">Topic</p>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-topic" type="button" class="btn btn-danger">
+            </button>
+          </a>
         </div>
-        <hr>
-        <div class="row">
-        {% block breadcrumb %}
-          {% endblock breadcrumb %}
+        <div class="btn-group" role="group">
+          <a  href="/cms/concept/">
+            <button id="manage-concept" type="button" class="btn btn-success">
+            </button>
+          </a>
         </div>
-        <hr>
-        <div class="row">
-          {% block content %}
-          {% endblock content %}
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-question" type="button" class="btn btn-warning">
+            </button>
+          </a>
+        </div>
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-quiz" type="button" class="btn btn-primary">
+            </button>
+          </a>
+        </div>
+        <div class="btn-group" role="group">
+          <a  href="/cms/topic/">
+            <button id="manage-contest" type="button" class="btn btn-default">
+            </button>
+          </a>
         </div>
       </div>
+    </div>
 
-      <div class="col-sm-2"></div>
+    <div class="row">
+      {% block content %}
+        <div class="col-sm-2">
+          {% block left_panel %}
+          {% endblock left_panel %}
+        </div>
 
+        <div class="col-sm-8 main-area">
+          <div class="row">
+            <p id="main-title" class="display-section"> </p>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            {% block breadcrumb %}
+            {% endblock breadcrumb %}
+          </div>
+
+          <hr>
+
+          <div class="row">
+            {% block main_content %}{% endblock main_content %}
+          </div>
+        </div>
+
+        <div class="col-sm-1"></div>
+      {% endblock content %}
     </div>
 
   </body>
