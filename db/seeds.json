@@ -204,35 +204,35 @@
     "model": "meas_models.Test",
     "fields": {
       "name": "Test 1",
-      "test_type": "AP"
+      "test_type": "PT"
     }
   },
   {
     "model": "meas_models.Test",
     "fields": {
       "name": "Test 2",
-      "test_type": "AP"
+      "test_type": "PT"
     }
   },
   {
     "model": "meas_models.Test",
     "fields": {
       "name": "Test 3",
-      "test_type": "AP"
+      "test_type": "PT"
     }
   },
   {
     "model": "meas_models.Test",
     "fields": {
       "name": "Test 4",
-      "test_type": "AP"
+      "test_type": "PT"
     }
   },
   {
     "model": "meas_models.Test",
     "fields": {
       "name": "Test 5",
-      "test_type": "AP"
+      "test_type": "PT"
     }
   },
   {
@@ -268,6 +268,318 @@
     "fields": {
       "name": "Test 10",
       "test_type": "CT"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1995 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1995 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1995 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1995 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1996 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1996 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1996 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1996 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1997 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1997 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1997 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1997 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1998 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1998 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1998 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1998 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1999 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1999 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1999 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "1999 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2000 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2000 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2000 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2000 November 2"
+    }
+  },
+   {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2001 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2001 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2001 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2001 November 2"
+    }
+  },
+     {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2002 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2002 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2002 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2002 November 2"
+    }
+  },
+     {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2003 June 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2003 June 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2003 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2003 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2004 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2004 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2005 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2005 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2006 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2006 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2007 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2007 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2008 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2008 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2009 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2009 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2010 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2010 November 2"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2015 November 1"
+    }
+  },
+  {
+    "model": "meas_models.paper",
+    "fields": {
+      "name": "2015 November 2"
     }
   }
 ]

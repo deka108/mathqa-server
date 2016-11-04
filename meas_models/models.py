@@ -43,7 +43,7 @@ class EducationLevel(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
 
 
@@ -59,7 +59,7 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
 
     education_level = models.ForeignKey(
@@ -77,7 +77,7 @@ class Topic(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
     order = models.PositiveIntegerField(null=True, blank=True)
 
@@ -95,7 +95,7 @@ class Concept(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
 
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
@@ -106,11 +106,11 @@ class Test(models.Model):
     List of test
     """
 
-    ADAPTIVE_TEST = "AP"
+    PRACTICE_TEST = "PT"
     CONTEST = "CT"
 
     TEST_TYPES = [
-        (ADAPTIVE_TEST, 'Adaptive Test'),
+        (PRACTICE_TEST, 'Practice Test'),
         (CONTEST, 'Contest')
     ]
 
@@ -118,30 +118,70 @@ class Test(models.Model):
     test_type = models.CharField(
         max_length=200,
         choices=TEST_TYPES,
-        default=ADAPTIVE_TEST)
+        default=PRACTICE_TEST)
+
+
+class Paper(models.Model):
+
+    def __str__(self):
+        return self.name
+
+    name = models.CharField(max_length=200, unique=True)
 
 
 class Question(models.Model):
     """
     List of questions
     """
-
-    EXAM_PAPERS = "EP"
-    ONLINE = "OL"
-
-    QUESTION_SOURCES = [
-        (EXAM_PAPERS, 'Exam papers'),
-        (ONLINE, 'Online')
+    QUESTION_TYPES = [
+        ("EX", 'Exam'),
+        ("PR", 'Practice')
     ]
 
-    content = models.TextField(max_length=1000)
+    QUESTION_SOURCES = [
+        ("EP", 'Exam papers'),
+        ("OL", 'Online')
+    ]
+
+    USED_FOR = [
+        ("NO", 'No'),
+        ("ON", 'Online'),
+        ("PA", 'Papers'),
+        ("BO", 'Both online and papers')
+    ]
+
+    NUMBER_OF_PARTS = [(i, i) for i in range(4)]
+
+    question_type = models.CharField(
+        max_length=2,
+        choices=QUESTION_TYPES,
+        default="EX")
+
     source = models.CharField(
         max_length=2,
         choices=QUESTION_SOURCES,
-        default=EXAM_PAPERS)
+        default="EP")
+
+    used_for = models.CharField(
+        max_length=2,
+        choices=USED_FOR,
+        default="ON")
+
+    number_of_part = models.IntegerField(
+        choices=NUMBER_OF_PARTS,
+        default=1)
+
+    mark = models.IntegerField(default=1)
+
     difficulty_level = models.IntegerField(
         validators=[validate_difficulty_range],
         default=0)
+
+    content = models.TextField(max_length=5000)
+    solution = models.TextField(max_length=5000)
+
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
+    paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
 
     parent = models.ForeignKey("self", null=True)
     tests = models.ManyToManyField(Test)
