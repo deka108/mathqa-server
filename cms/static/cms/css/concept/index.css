@@ -14,10 +14,7 @@
 }
 
 .topic_panel {
-  height: 500px;
+  margin-top: 200px;
+  height: 550px;
   overflow: auto;
-}
-
-.new-button {
-  margin-bottom: 20px;
 }

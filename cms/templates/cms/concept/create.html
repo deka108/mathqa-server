@@ -1,15 +1,7 @@
-{% extends 'cms/topic/index.html' %}
+{% extends 'cms/layout/ce.html' %}
 
 {% load static %}
 {% load fontawesome %}
-
-{% block extended_head %}
-  <script type = "text/javascript"
-          src="{% static 'cms/js/concept/create.js' %}">
-  </script>
-  <link href="{% static 'cms/css/concept/create.css' %}"
-        rel="stylesheet"/>
-{% endblock %}
 
 {% block breadcrumb %}
   <div>
@@ -42,7 +34,7 @@
       {{ form.name }}
       {{ form.description }}
       {{ form.topic }}
-      <input type="submit" value="Create" />
+      <input type="submit" value="Save" />
     </form>
   </div>
 {% endblock content %}
