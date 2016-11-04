@@ -114,6 +114,10 @@ def api_update_concept(request):
                                 }))
 
 
+def question_index(request):
+    return render(request, 'cms/question/index.html')
+
+
 def __user_info(request, updated_list=""):
     result = {
         'is_authenticated': request.user.is_authenticated,
