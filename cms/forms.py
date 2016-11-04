@@ -54,18 +54,34 @@ class EditQuestionForm(forms.Form):
     paper = forms.ModelChoiceField(empty_label="Please choose Paper",
                                    queryset=Paper.objects.all())
 
-    class Meta:
-        model = Question
-
-
-class EditPartForm(forms.Form):
-    id = forms.CharField(widget=forms.HiddenInput())
-    mark = forms.IntegerField()
-    difficulty_level = forms.IntegerField()
-    respone_type = forms.CharField(
+    # Part 1
+    mark_1 = forms.IntegerField()
+    difficulty_level_1 = forms.IntegerField()
+    respone_type_1 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
-    content = forms.CharField(widget=CKEditorWidget())
-    solution = forms.CharField(widget=CKEditorWidget())
+    content_1 = forms.CharField(widget=CKEditorWidget())
+    solution_1 = forms.CharField(widget=CKEditorWidget())
 
-    class Meta:
-        model = Part
+    # Part 2
+    mark_2 = forms.IntegerField()
+    difficulty_level_2 = forms.IntegerField()
+    respone_type_2 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
+    content_2 = forms.CharField(widget=CKEditorWidget())
+    solution_2 = forms.CharField(widget=CKEditorWidget())
+
+    # Part 3
+    mark_3 = forms.IntegerField()
+    difficulty_level_3 = forms.IntegerField()
+    respone_type_3 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
+    content_3 = forms.CharField(widget=CKEditorWidget())
+    solution_3 = forms.CharField(widget=CKEditorWidget())
+
+    # Part 4
+    mark_4 = forms.IntegerField()
+    difficulty_level_4 = forms.IntegerField()
+    respone_type_4 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
+    content_4 = forms.CharField(widget=CKEditorWidget())
+    solution_4 = forms.CharField(widget=CKEditorWidget())

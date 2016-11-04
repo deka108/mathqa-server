@@ -5,5 +5,11 @@
 }
 
 .custom-component {
-  padding-top: 50px;
+  padding-top: 18px;
+}
+
+.part-form {
+  background: #ffffcc;
+  border: thick solid #cc9966;
+  padding: 18px;
 }

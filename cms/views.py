@@ -123,11 +123,6 @@ def create_question(request):
                   {'form': EditQuestionForm()})
 
 
-def create_part(request):
-    return render(request, 'cms/question/create_part.html',
-                  {'form': EditPartForm()})
-
-
 def __user_info(request, updated_list=""):
     result = {
         'is_authenticated': request.user.is_authenticated,
