@@ -1,6 +1,7 @@
 from django import forms
 
 from meas_models.models import *
+from meas_models.common import *
 
 
 class EditTopicForm(forms.Form):
@@ -27,3 +28,30 @@ class EditConceptForm(forms.Form):
                                              'Concept description'}))
     topic = forms.ModelChoiceField(empty_label="Please choose Topic",
                                    queryset=Topic.objects.all())
+
+
+class EditQuestionForm(forms.Form):
+    id = forms.CharField(widget=forms.HiddenInput())
+    question_type = forms.CharField(
+        max_length=2,
+        widget=forms.Select(choices=QUESTION_TYPES)
+    )
+    source = forms.CharField(
+        max_length=2., widget=forms.Select(choices=QUESTION_SOURCES))
+    used_for = forms.CharField(
+        max_length=2, widget=forms.Select(choices=USED_FOR))
+    number_of_part = forms.IntegerField(
+        widget=forms.Select(choices=NUMBER_OF_PARTS))
+    mark = forms.IntegerField()
+    difficulty_level = forms.IntegerField()
+
+    content = forms.CharField(label='Name', max_length=5000,
+                              widget=forms.TextInput(
+                                  attrs={'placeholder': 'Content'}))
+    solution = forms.CharField(label='Solution', max_length=5000,
+                               widget=forms.TextInput(
+                                   attrs={'placeholder': 'Solution'}))
+    concept = forms.ModelChoiceField(empty_label="Please choose Concept",
+                                     queryset=Concept.objects.all())
+    paper = forms.ModelChoiceField(empty_label="Please choose Paper",
+                                   queryset=Paper.objects.all())

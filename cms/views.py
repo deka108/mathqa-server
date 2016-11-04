@@ -115,7 +115,8 @@ def api_update_concept(request):
 
 
 def question_index(request):
-    return render(request, 'cms/question/index.html')
+    return render(request, 'cms/question/index.html',
+                  {'form': EditQuestionForm()})
 
 
 def __user_info(request, updated_list=""):

@@ -1,26 +1,45 @@
-{% load staticfiles %}
+{% extends 'cms/layout/ce.html' %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>A Simple Page with CKEditor</title>
-        <script type = "text/javascript"
-                src = "{% static 'ckeditor/ckeditor.js' %}">
-        </script>
-    </head>
-    <body>
-      <textarea cols="10" id="editor1" name="editor1" rows="10" >&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;
-      </textarea>
+{% load static %}
+{% load fontawesome %}
 
-      <script>
-        CKEDITOR.replace( 'editor1', {
-          mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.6-latest/MathJax.js?config=TeX-AMS_HTML',
-        } );
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'cms/js/question/index.js' %}">
+  </script>
+{% endblock %}
 
-        if ( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) {
-          document.getElementById( 'ie8-warning' ).className = 'tip alert';
-        }
-      </script>
-    </body>
-</html>
+{% block breadcrumb %}
+  <div>
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a id="breadcrumb-home" href="#">
+          {% fontawesome_icon 'home' color='blue' %}
+        </a>
+      </li>
+      <li id="breadcrumb-question" class="active">
+         {% fontawesome_icon 'question' color='blue' %}
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+  <div class="form-style-6">
+    <h1>Topic Info</h1>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.question_type }}
+      {{ form.source }}
+      {{ form.used_for }}
+      {{ form.number_of_part }}
+      {{ form.mark }}
+      {{ form.difficulty_level }}
+      {{ form.content }}
+      {{ form.solution }}
+      {{ form.concept }}
+      {{ form.paper }}
+      <input type="submit" value="Save" />
+    </form>
+  </div>
+{% endblock main_content %}

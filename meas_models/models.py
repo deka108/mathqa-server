@@ -6,19 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import User
 
-NUMERIC = 'Numberic'
-SKETCH = 'Sketch'
-EXPRESSION = 'EXPRESSION'
-TEXT = 'Text'
-PROVE = 'Prove'
+from common import *
 
-RESPONSE_TYPES = [
-    (NUMERIC, 'Exam Numberic'),
-    (SKETCH, 'Sketch'),
-    (EXPRESSION, 'Expression'),
-    (TEXT, 'Text'),
-    (PROVE, 'Prove')
-]
 """
 Validations
 """
@@ -106,19 +95,13 @@ class Test(models.Model):
     List of test
     """
 
-    PRACTICE_TEST = "PT"
-    CONTEST = "CT"
-
-    TEST_TYPES = [
-        (PRACTICE_TEST, 'Practice Test'),
-        (CONTEST, 'Contest')
-    ]
-
     name = models.CharField(max_length=200)
     test_type = models.CharField(
         max_length=200,
         choices=TEST_TYPES,
         default=PRACTICE_TEST)
+    questions_list = models.TextField()
+    number_of_questions = models.IntegerField()
 
 
 class Paper(models.Model):
@@ -133,74 +116,46 @@ class Question(models.Model):
     """
     List of questions
     """
-    QUESTION_TYPES = [
-        ("EX", 'Exam'),
-        ("PR", 'Practice')
-    ]
-
-    QUESTION_SOURCES = [
-        ("EP", 'Exam papers'),
-        ("OL", 'Online')
-    ]
-
-    USED_FOR = [
-        ("NO", 'No'),
-        ("ON", 'Online'),
-        ("PA", 'Papers'),
-        ("BO", 'Both online and papers')
-    ]
-
-    NUMBER_OF_PARTS = [(i, i) for i in range(4)]
 
     question_type = models.CharField(
         max_length=2,
         choices=QUESTION_TYPES,
         default="EX")
-
     source = models.CharField(
         max_length=2,
         choices=QUESTION_SOURCES,
         default="EP")
-
     used_for = models.CharField(
         max_length=2,
         choices=USED_FOR,
         default="ON")
-
     number_of_part = models.IntegerField(
         choices=NUMBER_OF_PARTS,
         default=1)
-
     mark = models.IntegerField(default=1)
-
     difficulty_level = models.IntegerField(
         validators=[validate_difficulty_range],
         default=0)
-
     content = models.TextField(max_length=5000)
     solution = models.TextField(max_length=5000)
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
 
-    parent = models.ForeignKey("self", null=True)
-    tests = models.ManyToManyField(Test)
+# class Proficiency(models.Model):
+#     """
+#     Track history of students
+#     """
 
+#     detail = models.IntegerField
+#     response = models.TextField(max_length=1000)
+#     respone_type = models.CharField(
+#         max_length=10,
+#         choices=RESPONSE_TYPES,
+#         default=TEXT)
+#     is_complete = models.BooleanField(default=0)
 
-class Proficiency(models.Model):
-    """
-    Track history of students
-    """
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     test = models.ForeignKey(Test, on_delete=models.CASCADE)
 
-    detail = models.IntegerField
-    response = models.TextField(max_length=1000)
-    respone_type = models.CharField(
-        max_length=10,
-        choices=RESPONSE_TYPES,
-        default=TEXT)
-    is_complete = models.BooleanField(default=0)
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
-
-    unique_together = ("user", "restaurant", "detail")
+#     unique_together = ("user", "restaurant", "detail")
