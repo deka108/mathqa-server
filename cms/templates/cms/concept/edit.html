@@ -1,15 +1,7 @@
-{% extends 'cms/topic/index.html' %}
+{% extends 'cms/layout/ce.html' %}
 
 {% load static %}
 {% load fontawesome %}
-
-{% block extended_head %}
-  <script type = "text/javascript"
-          src="{% static 'cms/js/concept/edit.js' %}">
-  </script>
-  <link href="{% static 'cms/css/concept/edit.css' %}"
-        rel="stylesheet"/>
-{% endblock %}
 
 {% block breadcrumb %}
   <div>

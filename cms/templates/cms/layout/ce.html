@@ -1,0 +1,12 @@
+{% extends 'cms/topic/index.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'cms/js/topic/create.js' %}">
+  </script>
+  <link href="{% static 'cms/css/layout/ce.css' %}"
+        rel="stylesheet"/>
+{% endblock %}
