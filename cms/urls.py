@@ -29,4 +29,5 @@ urlpatterns = [
 
     url(r'^question/$', views.question_index, name='question_index'),
     url(r'^create_question/$', views.create_question, name='create_question'),
+    url(r'^create_part/$', views.create_part, name='create_part'),
 ]

@@ -143,6 +143,25 @@ class Question(models.Model):
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
 
+
+class Part(models.Model):
+    """
+    List of questions
+    """
+
+    mark = models.IntegerField(default=1)
+    difficulty_level = models.IntegerField(
+        validators=[validate_difficulty_range],
+        default=0)
+    respone_type = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT)
+    content = RichTextField()
+    solution = RichTextField()
+
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
 # class Proficiency(models.Model):
 #     """
 #     Track history of students

@@ -45,7 +45,8 @@ class EditQuestionForm(forms.Form):
         widget=forms.Select(choices=NUMBER_OF_PARTS))
     mark = forms.IntegerField()
     difficulty_level = forms.IntegerField()
-
+    respone_type = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
     content = forms.CharField(widget=CKEditorWidget())
     solution = forms.CharField(widget=CKEditorWidget())
     concept = forms.ModelChoiceField(empty_label="Please choose Concept",
@@ -55,3 +56,16 @@ class EditQuestionForm(forms.Form):
 
     class Meta:
         model = Question
+
+
+class EditPartForm(forms.Form):
+    id = forms.CharField(widget=forms.HiddenInput())
+    mark = forms.IntegerField()
+    difficulty_level = forms.IntegerField()
+    respone_type = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
+    content = forms.CharField(widget=CKEditorWidget())
+    solution = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = Part
