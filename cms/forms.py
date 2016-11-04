@@ -1,4 +1,5 @@
 from django import forms
+from ckeditor.widgets import CKEditorWidget
 
 from meas_models.models import *
 from meas_models.common import *
@@ -45,13 +46,12 @@ class EditQuestionForm(forms.Form):
     mark = forms.IntegerField()
     difficulty_level = forms.IntegerField()
 
-    content = forms.CharField(label='Name', max_length=5000,
-                              widget=forms.TextInput(
-                                  attrs={'placeholder': 'Content'}))
-    solution = forms.CharField(label='Solution', max_length=5000,
-                               widget=forms.TextInput(
-                                   attrs={'placeholder': 'Solution'}))
+    content = forms.CharField(widget=CKEditorWidget())
+    solution = forms.CharField(widget=CKEditorWidget())
     concept = forms.ModelChoiceField(empty_label="Please choose Concept",
                                      queryset=Concept.objects.all())
     paper = forms.ModelChoiceField(empty_label="Please choose Paper",
                                    queryset=Paper.objects.all())
+
+    class Meta:
+        model = Question

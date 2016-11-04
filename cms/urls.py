@@ -28,4 +28,5 @@ urlpatterns = [
         name='api_create_concept'),
 
     url(r'^question/$', views.question_index, name='question_index'),
+    url(r'^create_question/$', views.create_question, name='create_question'),
 ]

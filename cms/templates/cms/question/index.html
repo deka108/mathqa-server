@@ -1,4 +1,4 @@
-{% extends 'cms/layout/ce.html' %}
+{% extends 'cms/layout/base.html' %}
 
 {% load static %}
 {% load fontawesome %}
@@ -25,21 +25,5 @@
 {% endblock breadcrumb %}
 
 {% block main_content %}
-  <div class="form-style-6">
-    <h1>Topic Info</h1>
-    <form action="" method="post">
-      {% csrf_token %}
-      {{ form.question_type }}
-      {{ form.source }}
-      {{ form.used_for }}
-      {{ form.number_of_part }}
-      {{ form.mark }}
-      {{ form.difficulty_level }}
-      {{ form.content }}
-      {{ form.solution }}
-      {{ form.concept }}
-      {{ form.paper }}
-      <input type="submit" value="Save" />
-    </form>
-  </div>
+
 {% endblock main_content %}

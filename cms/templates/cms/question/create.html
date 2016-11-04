@@ -1,0 +1,76 @@
+{% extends 'cms/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'cms/js/question/index.js' %}">
+  </script>
+  <link href="{% static 'cms/css/question/ce.css' %}"
+        rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div>
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a id="breadcrumb-home" href="#">
+          {% fontawesome_icon 'home' color='blue' %}
+        </a>
+      </li>
+      <li id="breadcrumb-question" class="active">
+         {% fontawesome_icon 'question' color='blue' %}
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    <div class="row main-form">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <ul class="nav nav-stacked">
+          <li class="custom-component" role="presentation">
+            Concept (*) {{ form.concept }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Paper (*) {{ form.paper }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Question type (*) {{ form.question_type }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Question source (*) {{ form.source }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Used for (*) {{ form.used_for }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Number of parts (*) {{ form.number_of_part }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Difficulty level (*) {{ form.difficulty_level }}
+          </li>
+          <li class="custom-component" role="presentation">Content (*)</li>
+          <li class="custom-component" role="presentation">
+            {{ form.content }}
+          </li>
+          <li class="custom-component" role="presentation">Solution (*)</li>
+          <li class="custom-component" role="presentation">
+            {{ form.solution }}
+          </li>
+          <li class="custom-component" role="presentation">
+            <button type="submit" class="btn btn-danger">Save</button>
+            <button type="submit" class="btn btn-success">Reset</button>
+            <button type="submit" class="btn btn-warning">Cancel</button>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+  </form>
+{% endblock main_content %}

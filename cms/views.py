@@ -115,7 +115,11 @@ def api_update_concept(request):
 
 
 def question_index(request):
-    return render(request, 'cms/question/index.html',
+    return render(request, 'cms/question/index.html')
+
+
+def create_question(request):
+    return render(request, 'cms/question/create.html',
                   {'form': EditQuestionForm()})
 
 

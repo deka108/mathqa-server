@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from django.db import models
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 
 from common import *
@@ -136,8 +137,8 @@ class Question(models.Model):
     difficulty_level = models.IntegerField(
         validators=[validate_difficulty_range],
         default=0)
-    content = models.TextField(max_length=5000)
-    solution = models.TextField(max_length=5000)
+    content = RichTextField()
+    solution = RichTextField()
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     paper = models.ForeignKey(Paper, on_delete=models.CASCADE)

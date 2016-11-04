@@ -1,0 +1,9 @@
+.main-form {
+  background: #ffffe6;
+  border: thick solid #e0ccff;
+  padding: 18px;
+}
+
+.custom-component {
+  padding-top: 50px;
+}
