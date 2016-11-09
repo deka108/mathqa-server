@@ -7,7 +7,8 @@ $.extend( true, $.fn.dataTable.defaults, {
         { width: '45%', targets: 2 },
         { width: '15%', targets: 3 },
         { width: '15%', targets: 4 },
-    ]
+    ],
+    "order": [[ 0, "asc" ]]
 } );
 
 $(document).ready(function() {

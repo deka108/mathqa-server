@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 from meas_models.models import *
@@ -144,7 +144,27 @@ def move_up(request, topic_id):
         topic.save()
         topic_swap.save()
 
-    return render(request, 'cms/topic/index.html', __user_info(request, {
+    return HttpResponseRedirect('/cms/topic', __user_info(request, {
+        "topics": subject.topic_set.all(),
+        'form': SelectSubjectForm(initial={'subject': subject}),
+    }))
+
+
+# TODO: clean code later
+# PhucLS
+def move_down(request, topic_id):
+    topic = Topic.objects.get(pk=topic_id)
+    subject = topic.subject
+    print subject
+
+    if topic.order < Topic.objects.all().count() - 1:
+        topic_swap = Topic.objects.get(order=int(topic.order) + 1)
+        topic.order, topic_swap.order = swap_tmp(topic.order, topic_swap.order)
+
+        topic.save()
+        topic_swap.save()
+
+    return HttpResponseRedirect('/cms/topic', __user_info(request, {
         "topics": subject.topic_set.all(),
         'form': SelectSubjectForm(initial={'subject': subject}),
     }))
