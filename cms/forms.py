@@ -14,6 +14,8 @@ class EditTopicForm(forms.Form):
                                   widget=forms.Textarea(
                                       attrs={'placeholder':
                                              'Topic description'}))
+    order = forms.IntegerField(widget=forms.TextInput(
+        {"placeholder": "Please enter order."}))
     subject = forms.ModelChoiceField(empty_label="Please choose Subject",
                                      queryset=Subject.objects.all())
 
