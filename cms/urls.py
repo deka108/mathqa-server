@@ -20,6 +20,9 @@ urlpatterns = [
         views.move_down, name='move_down'),
 
     url(r'^concept/$', views.concept_index, name='concept_index'),
+    url(r'^concept_subject/$',
+        views.concept_subject, name='concept_subject'),
+
     url(r'^concept/(?P<topic_id>[0-9]+)/$',
         views.concept_index, name='concept_index'),
     url(r'^edit_concept/(?P<concept_id>[0-9]+)/$',

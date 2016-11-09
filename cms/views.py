@@ -65,14 +65,36 @@ def api_update_topic(request):
 
 # Concept
 def concept_index(request, topic_id=0):
+    topics = ''
+    subject = ''
     if topic_id != 0:
         concepts = Concept.objects.filter(topic=topic_id)
+        subject = Topic.objects.get(pk=topic_id).subject
+        topics = subject.topic_set.all()
     else:
         concepts = Concept.objects.all
+        topics = Topic.objects.all
 
     return render(request, 'cms/concept/index.html', __user_info(request, {
-        "topics": Topic.objects.all,
+        "topics": topics,
         "concepts": concepts,
+        'form': SelectSubjectForm(initial={'subject': subject}),
+    }))
+
+
+def concept_subject(request):
+    subject = ''
+
+    if any(request.POST.getlist('subject')):
+        subject_id = request.POST.__getitem__('subject')
+        subject = Subject.objects.get(pk=subject_id)
+
+    topics = Topic.objects.filter(
+        subject=subject_id) if subject_id != 0 else Topic.objects.all
+
+    return render(request, 'cms/concept/index.html', __user_info(request, {
+        "topics": topics,
+        'form': SelectSubjectForm(initial={'subject': subject}),
     }))
 
 
