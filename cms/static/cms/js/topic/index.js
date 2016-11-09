@@ -1,3 +1,15 @@
+$.extend( true, $.fn.dataTable.defaults, {
+    "searching": false,
+    "autoWidth": false,
+    "columnDefs": [
+        { width: '5%', targets: 0 },
+        { width: '20%', targets: 1 },
+        { width: '45%', targets: 2 },
+        { width: '15%', targets: 3 },
+        { width: '15%', targets: 4 },
+    ]
+} );
+
 $(document).ready(function() {
     $('#items').DataTable();
 

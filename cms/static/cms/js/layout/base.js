@@ -11,6 +11,7 @@ $( document ).ready(function() {
     $('#manage-topic').append(en.cms.management.topic);
     $('#manage-concept').append(en.cms.management.concept);
     $('#manage-question').append(en.cms.management.question);
+    $('#manage-tag').append(en.cms.management.tag);
     $('#manage-quiz').append(en.cms.management.quiz);
     $('#manage-contest').append(en.cms.management.contest);
 });

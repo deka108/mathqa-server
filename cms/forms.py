@@ -85,3 +85,8 @@ class EditQuestionForm(forms.Form):
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
     content_4 = forms.CharField(widget=CKEditorWidget())
     solution_4 = forms.CharField(widget=CKEditorWidget())
+
+
+class SelectSubjectForm(forms.Form):
+    subject = forms.ModelChoiceField(empty_label="Please choose Subject",
+                                     queryset=Subject.objects.all())

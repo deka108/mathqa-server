@@ -41,7 +41,10 @@ INSTALLED_APPS = (
     'api.apps.ApiConfig',
 
     # CMS
-    'cms.apps.CmsConfig'
+    'cms.apps.CmsConfig',
+
+    # Common
+    'meas_common.apps.MeasCommonConfig'
 )
 
 MIDDLEWARE_CLASSES = (

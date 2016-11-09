@@ -12,6 +12,7 @@ const en = {
             topic: "Manage Topics",
             concept: "Manage Concepts",
             question: "Manage Questions",
+            tag: "Manage Tags",
             quiz: "Manage Quiz",
             contest: "Manage Contests",
         },

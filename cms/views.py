@@ -1,14 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 
 from meas_models.models import *
 from .forms import *
+from meas_common.basic import *
 
 
 # Topic
-def topic_index(request):
+def topic_index(request, subject_id=-1):
+    subject = ''
+    if any(request.POST.getlist('subject')):
+        subject_id = request.POST.__getitem__('subject')
+        subject = Subject.objects.get(pk=subject_id)
+
+    topics = Topic.objects.all if subject_id == - \
+        1 else Subject.objects.get(pk=subject_id).topic_set.all()
+
     return render(request, 'cms/topic/index.html', __user_info(request, {
-        "topics": Topic.objects.all
+        "topics": topics,
+        'form': SelectSubjectForm(initial={'subject': subject}),
     }))
 
 
@@ -51,8 +61,6 @@ def api_update_topic(request):
     return HttpResponseRedirect('../topic/', __user_info(request, {
         "topics": Topic.objects.all
     }))
-
-# ---
 
 
 # Concept
@@ -121,6 +129,25 @@ def question_index(request):
 def create_question(request):
     return render(request, 'cms/question/create.html',
                   {'form': EditQuestionForm()})
+
+
+# Move up, down order
+def move_up(request, topic_id):
+    topic = Topic.objects.get(pk=topic_id)
+    subject = topic.subject
+    print subject
+
+    if topic.order > 0:
+        topic_swap = Topic.objects.get(order=int(topic.order) - 1)
+        topic.order, topic_swap.order = swap_tmp(topic.order, topic_swap.order)
+
+        topic.save()
+        topic_swap.save()
+
+    return render(request, 'cms/topic/index.html', __user_info(request, {
+        "topics": subject.topic_set.all(),
+        'form': SelectSubjectForm(initial={'subject': subject}),
+    }))
 
 
 def __user_info(request, updated_list=""):

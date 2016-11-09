@@ -14,6 +14,8 @@ urlpatterns = [
         name='api_update_topic'),
     url(r'^api_create_topic/$', views.api_create_topic,
         name='api_create_topic'),
+    url(r'^topic/move_up/(?P<topic_id>[0-9]+)/$',
+        views.move_up, name='move_up'),
 
     url(r'^concept/$', views.concept_index, name='concept_index'),
     url(r'^concept/(?P<topic_id>[0-9]+)/$',
