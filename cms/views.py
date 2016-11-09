@@ -63,6 +63,16 @@ def api_update_topic(request):
     }))
 
 
+def delete_topic(request, topic_id):
+    topic = Topic.objects.get(pk=topic_id)
+    topic.delete()
+
+    return HttpResponseRedirect('/cms/topic', __user_info(request, {
+        "topics": Topic.objects.all(),
+        'form': SelectSubjectForm(),
+    }))
+
+
 # Concept
 def concept_index(request, topic_id=0):
     topics = ''
@@ -142,6 +152,17 @@ def api_update_concept(request):
                                 __user_info(request, {
                                     "topics": Topic.objects.all
                                 }))
+
+
+def delete_concept(request, concept_id):
+    concept = Concept.objects.get(pk=concept_id)
+    concept.delete()
+
+    return HttpResponseRedirect('/cms/concept', __user_info(request, {
+        "topics": Topic.objects.all(),
+        "concepts": Concept.objects.all(),
+        'form': SelectSubjectForm(),
+    }))
 
 
 def question_index(request):

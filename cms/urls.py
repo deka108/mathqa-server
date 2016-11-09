@@ -18,6 +18,8 @@ urlpatterns = [
         views.move_up, name='move_up'),
     url(r'^topic/move_down/(?P<topic_id>[0-9]+)/$',
         views.move_down, name='move_down'),
+    url(r'^delete_topic/(?P<topic_id>[0-9]+)/$',
+        views.delete_topic, name='delete_topic'),
 
     url(r'^concept/$', views.concept_index, name='concept_index'),
     url(r'^concept_subject/$',
@@ -33,6 +35,8 @@ urlpatterns = [
         name='api_update_concept'),
     url(r'^api_create_concept/$', views.api_create_concept,
         name='api_create_concept'),
+    url(r'^delete_concept/(?P<concept_id>[0-9]+)/$',
+        views.delete_concept, name='delete_concept'),
 
     url(r'^question/$', views.question_index, name='question_index'),
     url(r'^create_question/$', views.create_question, name='create_question'),
