@@ -25,5 +25,28 @@
 {% endblock breadcrumb %}
 
 {% block main_content %}
+  <a href="/cms/create_question">
+    <button type="button" class="btn btn-success new-button">
+      Add new Question
+    </button>
+  </a>
 
+  <div class="row">
+    <div class="col-sm-3">
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#practice">Topic (Practice)</a></li>
+        <li><a data-toggle="tab" href="#exam">Exam</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="practice" class="tab-pane fade in active">
+
+        </div>
+        <div id="exam" class="tab-pane fade">
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9"></div>
+  </div>
 {% endblock main_content %}
