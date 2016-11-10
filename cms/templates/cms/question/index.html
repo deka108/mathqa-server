@@ -4,9 +4,8 @@
 {% load fontawesome %}
 
 {% block extended_head %}
-  <script type = "text/javascript"
-          src="{% static 'cms/js/question/index.js' %}">
-  </script>
+  <link href="{% static 'cms/css/question/index.css' %}"
+        rel="stylesheet"/>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -40,10 +39,26 @@
 
       <div class="tab-content">
         <div id="practice" class="tab-pane fade in active">
-
+          <ul class="nav nav-stacked left-panel">
+            <li role="presentation">
+            {% for topic in topics %}
+              <a href="#">
+                {{topic.name}}
+              </a>
+            {% endfor %}
+            </li>
+          </ul>
         </div>
         <div id="exam" class="tab-pane fade">
-
+          <ul class="nav nav-stacked left-panel">
+            <li role="presentation">
+            {% for paper in papers %}
+              <a href="#">
+                Paper {{paper.year}} {{paper.get_month_display}} {{paper.number}}
+              </a>
+            {% endfor %}
+            </li>
+          </ul>
         </div>
       </div>
     </div>

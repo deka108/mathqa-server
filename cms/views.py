@@ -166,7 +166,10 @@ def delete_concept(request, concept_id):
 
 
 def question_index(request):
-    return render(request, 'cms/question/index.html')
+    return render(request, 'cms/question/index.html', __user_info(request, {
+        "topics": Topic.objects.all(),
+        "papers": Paper.objects.all(),
+    }))
 
 
 def create_question(request):
