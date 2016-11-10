@@ -40,4 +40,15 @@ urlpatterns = [
 
     url(r'^question/$', views.question_index, name='question_index'),
     url(r'^create_question/$', views.create_question, name='create_question'),
+
+    url(r'^paper/$', views.paper_index, name='paper_index'),
+    url(r'^create_paper/$', views.create_paper, name='create_paper'),
+    url(r'^api_create_paper/$', views.api_create_paper,
+        name='api_create_paper'),
+    url(r'^edit_paper/(?P<paper_id>[0-9]+)/$',
+        views.edit_paper, name='edit_paper'),
+    url(r'^api_update_paper/$', views.api_update_paper,
+        name='api_update_paper'),
+    url(r'^delete_paper/(?P<paper_id>[0-9]+)/$',
+        views.delete_paper, name='delete_paper'),
 ]

@@ -174,7 +174,64 @@ def create_question(request):
                   {'form': EditQuestionForm()})
 
 
+def paper_index(request):
+    return render(request, 'cms/paper/index.html', __user_info(request, {
+        "papers": Paper.objects.all(),
+    }))
+
+
+def create_paper(request):
+    return render(request, 'cms/paper/create.html',
+                  {'form': EditPaperForm()})
+
+
+def api_create_paper(request):
+    paper = Paper(year=request.POST.__getitem__('year'),
+                  month=request.POST.__getitem__('month'),
+                  number=request.POST.__getitem__('number'))
+
+    paper.save()
+
+    return HttpResponseRedirect('../paper/', __user_info(request, {
+        "papers": Paper.objects.all()
+    }))
+
+
+def edit_paper(request, paper_id):
+    paper = Paper.objects.get(pk=paper_id)
+
+    return render(request, 'cms/paper/edit.html', {'form': EditPaperForm(
+        initial={'id': paper_id, 'year': paper.year,
+                 'month': paper.get_month_display,
+                 'number': paper.number
+                 }
+    )})
+
+
+def api_update_paper(request):
+    paper = Paper.objects.get(pk=request.POST.__getitem__('id'))
+    paper.year = request.POST.__getitem__('year')
+    paper.month = request.POST.__getitem__('month')
+    paper.number = request.POST.__getitem__('number')
+
+    paper.save()
+
+    return HttpResponseRedirect('../paper/', __user_info(request, {
+        "papers": Paper.objects.all()
+    }))
+
+
+def delete_paper(request, paper_id):
+    paper = Paper.objects.get(pk=paper_id)
+    paper.delete()
+
+    return HttpResponseRedirect('/cms/paper', __user_info(request, {
+        "papers": Paper.objects.all()
+    }))
+
 # Move up, down order
+
+
 def move_up(request, topic_id):
     topic = Topic.objects.get(pk=topic_id)
     subject = topic.subject

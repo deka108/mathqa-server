@@ -10,6 +10,7 @@ $( document ).ready(function() {
     // Management
     $('#manage-topic').append(en.cms.management.topic);
     $('#manage-concept').append(en.cms.management.concept);
+    $('#manage-paper').append(en.cms.management.paper);
     $('#manage-question').append(en.cms.management.question);
     $('#manage-tag').append(en.cms.management.tag);
     $('#manage-quiz').append(en.cms.management.quiz);

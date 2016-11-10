@@ -108,9 +108,12 @@ class Test(models.Model):
 class Paper(models.Model):
 
     def __str__(self):
-        return self.name
+        return self.year + self.month
 
-    name = models.CharField(max_length=200, unique=True)
+    year = models.IntegerField()
+    month = models.CharField(max_length=20, choices=MONTHS, default="1")
+    number = models.IntegerField()
+    no_of_question = models.IntegerField(null=True, blank=True)
 
 
 class Question(models.Model):

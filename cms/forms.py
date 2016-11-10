@@ -92,3 +92,13 @@ class EditQuestionForm(forms.Form):
 class SelectSubjectForm(forms.Form):
     subject = forms.ModelChoiceField(empty_label="Please choose Subject",
                                      queryset=Subject.objects.all())
+
+
+class EditPaperForm(forms.Form):
+    id = forms.CharField(widget=forms.HiddenInput())
+    year = forms.IntegerField(widget=forms.TextInput(
+        {"placeholder": "Please enter year."}))
+    month = forms.CharField(
+        max_length=20., widget=forms.Select(choices=MONTHS))
+    number = forms.IntegerField(widget=forms.TextInput(
+        {"placeholder": "Please enter number."}))
