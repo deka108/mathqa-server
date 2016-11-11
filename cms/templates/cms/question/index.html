@@ -4,8 +4,19 @@
 {% load fontawesome %}
 
 {% block extended_head %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
   <link href="{% static 'cms/css/question/index.css' %}"
         rel="stylesheet"/>
+  <link href="{% static 'mathquill-0.10.1/mathquill.css' %}"
+        rel="stylesheet"/>
+  <script type = "text/javascript"
+          src="{% static 'mathquill-0.10.1/mathquill.js' %}">
+  </script>
+  <script type = "text/javascript"
+          src="{% static 'cms/js/question/index.js' %}">
+  </script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -37,12 +48,12 @@
         <li><a data-toggle="tab" href="#exam">Exam</a></li>
       </ul>
 
-      <div class="tab-content">
+      <div class="tab-content"  >
         <div id="practice" class="tab-pane fade in active">
           <ul class="nav nav-stacked left-panel">
             <li role="presentation">
             {% for topic in topics %}
-              <a href="#">
+              <a href="/cms/question_topic_detail/{{topic.id}}">
                 {{topic.name}}
               </a>
             {% endfor %}
@@ -53,7 +64,7 @@
           <ul class="nav nav-stacked left-panel">
             <li role="presentation">
             {% for paper in papers %}
-              <a href="#">
+              <a href="/cms/question_paper_detail/{{paper.id}}">
                 Paper {{paper.year}} {{paper.get_month_display}} {{paper.number}}
               </a>
             {% endfor %}
@@ -62,6 +73,45 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-9"></div>
+    <div class="col-sm-9">
+      <table id="items" class="display" width="100%" cellspacing="0">
+        <thead class="custom-header">
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for question in questions %}
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col-sm-8 pull-left">
+                    <ul class="nav nav-pills nav-stacked">
+                      <li role="presentation" class = "question-title">
+                        Question {{ question.id }}
+                      </li>
+                      <li role="presentation" class = "difficulty-level-display text-center">
+                        <span>{{ question.get_difficulty_level_display }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-sm-4 pull-right">
+                    <div class="btn-group" role="group" aria-label="...">
+                      <button type="button" class="btn btn-success">Test</button>
+                      <button type="button" class="btn btn-warning">Edit</button>
+                      <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row question-content">
+                  <hr>
+                  {{ question.content }}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 {% endblock main_content %}

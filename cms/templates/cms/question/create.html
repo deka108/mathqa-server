@@ -30,7 +30,7 @@
 {% endblock breadcrumb %}
 
 {% block main_content %}
-  <form action="" method="post">
+  <form action="/cms/api_create_question/" method="post">
     {% csrf_token %}
     {{ form.media }}
     <div class="row main-form">

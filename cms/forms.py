@@ -46,7 +46,8 @@ class EditQuestionForm(forms.Form):
     number_of_part = forms.IntegerField(
         widget=forms.Select(choices=NUMBER_OF_PARTS))
     mark = forms.IntegerField()
-    difficulty_level = forms.IntegerField()
+    difficulty_level = forms.CharField(
+        max_length=1, widget=forms.Select(choices=DIFFICULTIES))
     respone_type = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
     content = forms.CharField(widget=CKEditorWidget())
@@ -56,37 +57,37 @@ class EditQuestionForm(forms.Form):
     paper = forms.ModelChoiceField(empty_label="Please choose Paper",
                                    queryset=Paper.objects.all())
 
-    # Part 1
-    mark_1 = forms.IntegerField()
-    difficulty_level_1 = forms.IntegerField()
-    respone_type_1 = forms.CharField(
-        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
-    content_1 = forms.CharField(widget=CKEditorWidget())
-    solution_1 = forms.CharField(widget=CKEditorWidget())
+    # # Part 1
+    # mark_1 = forms.IntegerField()
+    # difficulty_level_1 = forms.IntegerField()
+    # respone_type_1 = forms.CharField(
+    #     max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
+    # content_1 = forms.CharField(widget=CKEditorWidget())
+    # solution_1 = forms.CharField(widget=CKEditorWidget())
 
-    # Part 2
-    mark_2 = forms.IntegerField()
-    difficulty_level_2 = forms.IntegerField()
-    respone_type_2 = forms.CharField(
-        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
-    content_2 = forms.CharField(widget=CKEditorWidget())
-    solution_2 = forms.CharField(widget=CKEditorWidget())
+    # # Part 2
+    # mark_2 = forms.IntegerField()
+    # difficulty_level_2 = forms.IntegerField()
+    # respone_type_2 = forms.CharField(
+    #     max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
+    # content_2 = forms.CharField(widget=CKEditorWidget())
+    # solution_2 = forms.CharField(widget=CKEditorWidget())
 
-    # Part 3
-    mark_3 = forms.IntegerField()
-    difficulty_level_3 = forms.IntegerField()
-    respone_type_3 = forms.CharField(
-        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
-    content_3 = forms.CharField(widget=CKEditorWidget())
-    solution_3 = forms.CharField(widget=CKEditorWidget())
+    # # Part 3
+    # mark_3 = forms.IntegerField()
+    # difficulty_level_3 = forms.IntegerField()
+    # respone_type_3 = forms.CharField(
+    #     max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
+    # content_3 = forms.CharField(widget=CKEditorWidget())
+    # solution_3 = forms.CharField(widget=CKEditorWidget())
 
-    # Part 4
-    mark_4 = forms.IntegerField()
-    difficulty_level_4 = forms.IntegerField()
-    respone_type_4 = forms.CharField(
-        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
-    content_4 = forms.CharField(widget=CKEditorWidget())
-    solution_4 = forms.CharField(widget=CKEditorWidget())
+    # # Part 4
+    # mark_4 = forms.IntegerField()
+    # difficulty_level_4 = forms.IntegerField()
+    # respone_type_4 = forms.CharField(
+    #     max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
+    # content_4 = forms.CharField(widget=CKEditorWidget())
+    # solution_4 = forms.CharField(widget=CKEditorWidget())
 
 
 class SelectSubjectForm(forms.Form):

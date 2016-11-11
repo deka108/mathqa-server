@@ -4,3 +4,22 @@
   overflow: scroll;
   height: 500px;
 }
+
+.question-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.difficulty-level-display {
+  padding-top: 5px;
+  background-color: green;
+  width: 120;
+  height: 25px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.question-content {
+  padding-left: 15px;
+}

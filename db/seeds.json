@@ -659,5 +659,51 @@
       "number": "2",
       "no_of_question": "0"
     }
+  },
+  {
+    "model": "meas_models.Question",
+    "fields": {
+      "question_type": "EX",
+      "source": "EP ",
+      "used_for": "ON",
+      "number_of_part": "0",
+      "mark": "2",
+      "difficulty_level": "2",
+      "content": "ax^2 + bx + c = 0",
+      "solution": "cba",
+      "concept_id": "1",
+      "paper_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.Question",
+    "fields": {
+      "question_type": "PR",
+      "source": "EP ",
+      "used_for": "ON",
+      "number_of_part": "0",
+      "mark": "2",
+      "difficulty_level": "2",
+      "content": "ax^2 + bx + c = 0",
+      "solution": "cba",
+      "concept_id": "1",
+      "paper_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.Question",
+    "fields": {
+      "question_type": "EX",
+      "source": "EP ",
+      "used_for": "ON",
+      "number_of_part": "0",
+      "mark": "2",
+      "difficulty_level": "2",
+      "respone_type": "Numberic",
+      "content": "ax^2 + bx + c = 0",
+      "solution": "cba",
+      "concept_id": "1",
+      "paper_id": "2"
+    }
   }
 ]

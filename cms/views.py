@@ -172,9 +172,53 @@ def question_index(request):
     }))
 
 
+def api_create_question(request):
+    question = Question(
+        question_type=request.POST.__getitem__('question_type'),
+        source=request.POST.__getitem__('source'),
+        used_for=request.POST.__getitem__('used_for'),
+        number_of_part=request.POST.__getitem__(
+            'number_of_part'),
+        mark=request.POST.__getitem__('mark'),
+        difficulty_level=request.POST.__getitem__(
+            'difficulty_level'),
+        content=request.POST.__getitem__('content'),
+        solution=request.POST.__getitem__('solution'),
+        concept=Concept.objects.get(pk=request.POST.__getitem__('concept'))
+    )
+
+    question.save()
+
+    return HttpResponseRedirect('../question/', __user_info(request, {
+    }))
+
+
 def create_question(request):
     return render(request, 'cms/question/create.html',
                   {'form': EditQuestionForm()})
+
+
+def question_topic_detail(request, topic_id):
+    topic = Topic.objects.get(pk=topic_id)
+    concept = topic.concept_set.all()
+
+    return render(request, 'cms/question/index.html', __user_info(request, {
+        "topics": Topic.objects.all(),
+        "papers": Paper.objects.all(),
+        "questions": Question.objects.filter(concept__in=concept,
+                                             question_type="PR"),
+    }))
+
+
+def question_paper_detail(request, paper_id):
+    paper = Paper.objects.get(pk=paper_id)
+
+    return render(request, 'cms/question/index.html', __user_info(request, {
+        "topics": Topic.objects.all(),
+        "papers": Paper.objects.all(),
+        "questions": Question.objects.filter(paper=paper,
+                                             question_type="EX"),
+    }))
 
 
 def paper_index(request):

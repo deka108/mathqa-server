@@ -108,7 +108,8 @@ class Test(models.Model):
 class Paper(models.Model):
 
     def __str__(self):
-        return self.year + self.month
+        return str(self.year) + " " + str(self.get_month_display()) + " " +\
+            str(self.number)
 
     year = models.IntegerField()
     month = models.CharField(max_length=20, choices=MONTHS, default="1")
@@ -137,14 +138,20 @@ class Question(models.Model):
         choices=NUMBER_OF_PARTS,
         default=1)
     mark = models.IntegerField(default=1)
-    difficulty_level = models.IntegerField(
-        validators=[validate_difficulty_range],
-        default=0)
+    difficulty_level = models.CharField(
+        max_length=1,
+        choices=DIFFICULTIES,
+        default="1")
+    respone_type = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT)
     content = RichTextField()
     solution = RichTextField()
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
-    paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
+    paper = models.ForeignKey(
+        Paper, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Part(models.Model):

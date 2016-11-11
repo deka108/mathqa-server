@@ -40,6 +40,12 @@ urlpatterns = [
 
     url(r'^question/$', views.question_index, name='question_index'),
     url(r'^create_question/$', views.create_question, name='create_question'),
+    url(r'^question_topic_detail/(?P<topic_id>[0-9]+)/$',
+        views.question_topic_detail, name='question_topic_detail'),
+    url(r'^question_paper_detail/(?P<paper_id>[0-9]+)/$',
+        views.question_paper_detail, name='question_paper_detail'),
+    url(r'^api_create_question/$',
+        views.api_create_question, name='api_create_question'),
 
     url(r'^paper/$', views.paper_index, name='paper_index'),
     url(r'^create_paper/$', views.create_paper, name='create_paper'),

@@ -53,3 +53,11 @@ MONTHS = [
     ("11", 'November'),
     ("12", 'December')
 ]
+
+DIFFICULTIES = [
+    ("1", 'Very Easy'),
+    ("2", 'Easy'),
+    ("3", 'Average'),
+    ("4", 'Difficult'),
+    ("5", 'Very Difficult'),
+]
