@@ -97,9 +97,17 @@
                   </div>
                   <div class="col-sm-4 pull-right">
                     <div class="btn-group" role="group" aria-label="...">
-                      <button type="button" class="btn btn-success">Test</button>
-                      <button type="button" class="btn btn-warning">Edit</button>
-                      <button type="button" class="btn btn-danger">Delete</button>
+                      <a href="">
+                        <button type="button" class="btn btn-success">
+                          Test
+                        </button>
+                      </a>
+                      <a href="/cms/edit_question/{{ question.id }}">
+                        <button type="button" class="btn btn-warning">Edit</button>
+                      </a>
+                      <a href="/cms/delete_question/{{ question.id }}">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                      </a>
                     </div>
                   </div>
                 </div>

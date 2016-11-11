@@ -46,6 +46,12 @@ urlpatterns = [
         views.question_paper_detail, name='question_paper_detail'),
     url(r'^api_create_question/$',
         views.api_create_question, name='api_create_question'),
+    url(r'^edit_question/(?P<question_id>[0-9]+)/$',
+        views.edit_question, name='edit_question'),
+    url(r'^delete_question/(?P<question_id>[0-9]+)/$',
+        views.delete_question, name='delete_question'),
+    url(r'^api_update_question/$', views.api_update_question,
+        name='api_update_question'),
 
     url(r'^paper/$', views.paper_index, name='paper_index'),
     url(r'^create_paper/$', views.create_paper, name='create_paper'),

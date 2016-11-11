@@ -198,6 +198,58 @@ def create_question(request):
                   {'form': EditQuestionForm()})
 
 
+def edit_question(request, question_id):
+    question = Question.objects.get(pk=question_id)
+
+    return render(request, 'cms/question/edit.html', {'form': EditQuestionForm(
+        initial={'id': question_id,
+                 'question_type': question.question_type,
+                 'source': question.source,
+                 'used_for': question.used_for,
+                 'number_of_part': question.number_of_part,
+                 'mark': question.mark,
+                 'difficulty_level': question.difficulty_level,
+                 'respone_type': question.respone_type,
+                 'content': question.content,
+                 'solution': question.solution,
+                 'concept': question.concept,
+                 'paper': question.paper,
+                 }
+    )})
+
+
+def api_update_question(request):
+
+    question = Question.objects.get(pk=request.POST.__getitem__('id'))
+    question.question_type = request.POST.__getitem__('question_type')
+    question.source = request.POST.__getitem__('source')
+    question.used_for = request.POST.__getitem__('used_for')
+    question.number_of_part = request.POST.__getitem__('number_of_part')
+    question.mark = request.POST.__getitem__('mark')
+    question.difficulty_level = request.POST.__getitem__('difficulty_level')
+    question.respone_type = request.POST.__getitem__('respone_type')
+    question.content = request.POST.__getitem__('content')
+    question.solution = request.POST.__getitem__('solution')
+    question.concept = Concept.objects.get(
+        pk=request.POST.__getitem__('concept'))
+    question.paper = Paper.objects.get(pk=request.POST.__getitem__('paper'))
+
+    question.save()
+
+    return HttpResponseRedirect('../question/', __user_info(request, {
+    }))
+
+
+def delete_question(request, question_id):
+    question = Question.objects.get(pk=question_id)
+    question.delete()
+
+    return HttpResponseRedirect('/cms/question', __user_info(request, {
+        "topics": Topic.objects.all(),
+        "papers": Paper.objects.all(),
+    }))
+
+
 def question_topic_detail(request, topic_id):
     topic = Topic.objects.get(pk=topic_id)
     concept = topic.concept_set.all()
