@@ -4,14 +4,6 @@ from django.contrib.admin import ModelAdmin
 from meas_models.models import *
 
 
-admin.site.unregister(EducationLevel)
-admin.site.unregister(Subject)
-admin.site.unregister(Topic)
-admin.site.unregister(Concept)
-admin.site.unregister(Test)
-admin.site.unregister(Question)
-
-
 class EducationLevelAdmin(ModelAdmin):
     list_display = ('id', 'name', 'description',)
     list_editable = ('name', 'description',)
