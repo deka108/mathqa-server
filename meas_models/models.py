@@ -1,8 +1,15 @@
+"""
+# Name:           meas_models/models.py
+# Description:
+# Created by:     Phuc Le-Sanh
+# Date Created:   Nov 16 2016
+# Last Modified:  Nov 16 2016
+# Modified by:    Phuc Le-Sanh
+"""
 from __future__ import unicode_literals
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
@@ -106,6 +113,9 @@ class Test(models.Model):
 
 
 class Paper(models.Model):
+    """
+    List of paper
+    """
 
     def __str__(self):
         return str(self.year) + " " + str(self.get_month_display()) + " " +\
@@ -171,6 +181,17 @@ class Part(models.Model):
     solution = RichTextField()
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+
+class KeyPoint(models.Model):
+    """
+    List of key points associate with specific concept
+    """
+    name = models.CharField(max_length=200)
+    content = models.TextField()
+
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
+
 
 # class Proficiency(models.Model):
 #     """

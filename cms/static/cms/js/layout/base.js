@@ -15,4 +15,9 @@ $( document ).ready(function() {
     $('#manage-tag').append(en.cms.management.tag);
     $('#manage-quiz').append(en.cms.management.quiz);
     $('#manage-contest').append(en.cms.management.contest);
+
+    $('.link-formset').formset({
+        addText: 'Add key point',
+        deleteText: 'Remove'
+    });
 });

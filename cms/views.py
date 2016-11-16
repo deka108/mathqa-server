@@ -1,5 +1,14 @@
+"""
+# Name:           cms/views.py
+# Description:
+# Created by:     Phuc Le-Sanh
+# Date Created:   Nov 16 2016
+# Last Modified:  Nov 16 2016
+# Modified by:    Phuc Le-Sanh
+"""
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.forms import formset_factory
 
 from meas_models.models import *
 from .forms import *
@@ -109,28 +118,49 @@ def concept_subject(request):
 
 
 def create_concept(request):
+    KeyPointFormSet = formset_factory(KeyPointForm, extra=1)
+    formset = KeyPointFormSet()
+
     return render(request, 'cms/concept/create.html',
-                  {'form': EditConceptForm()})
+                  {'form': EditConceptForm(), 'formset': formset})
 
 
 def edit_concept(request, concept_id):
     concept = Concept.objects.get(pk=concept_id)
 
-    return render(request, 'cms/concept/edit.html', {'form': EditConceptForm(
-        initial={'id': concept_id, 'name': concept.name,
-                 'description': concept.description,
-                 'topic': concept.topic
-                 }
-    )})
+    KeyPointFormSet = formset_factory(KeyPointForm)
+    res = []
+    for k in concept.keypoint_set.all():
+        res.append(k.__dict__)
+
+    return render(request, 'cms/concept/edit.html', {
+        'form': EditConceptForm(
+            initial={'id': concept_id, 'name': concept.name,
+                     'description': concept.description,
+                     'topic': concept.topic,
+                     }),
+        'formset': KeyPointFormSet(initial=res)
+    })
 
 
 def api_create_concept(request):
     concept = Concept(name=request.POST.__getitem__('name'),
                       description=request.POST.__getitem__('description'),
                       topic=Topic.objects.get(
-                      pk=request.POST.__getitem__('topic'))
-                      )
+        pk=request.POST.__getitem__('topic'))
+    )
     concept.save()
+
+    # Complement formset
+    KeyPointFormSet = formset_factory(KeyPointForm)
+    formset = KeyPointFormSet(request.POST)
+    if formset.is_valid():
+        for f in formset:
+            cd = f.cleaned_data
+            keypoint = KeyPoint(name=cd.get('name'),
+                                content=cd.get('content'),
+                                concept=concept)
+            keypoint.save()
 
     return HttpResponseRedirect('../concept/', __user_info(request, {
         "topics": Topic.objects.all,
@@ -147,6 +177,26 @@ def api_update_concept(request):
     concept.topic = Topic.objects.get(pk=topic_id)
 
     concept.save()
+
+    # Complement formset
+    KeyPointFormSet = formset_factory(KeyPointForm)
+    formset = KeyPointFormSet(request.POST)
+    if formset.is_valid():
+        for f in formset:
+            cd = f.cleaned_data
+
+            update_name = cd.get('name')
+            update_content = cd.get('content')
+
+            keypoint = KeyPoint.objects.filter(name=update_name).first()
+            if keypoint:
+                keypoint.content = update_content
+                keypoint.save()
+            elif (update_name is not None and update_content is not None):
+                keypoint = KeyPoint(name=update_name,
+                                    content=update_content,
+                                    concept=concept)
+                keypoint.save()
 
     return HttpResponseRedirect('../concept/' + topic_id + '/',
                                 __user_info(request, {

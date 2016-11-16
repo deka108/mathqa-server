@@ -103,3 +103,13 @@ class EditPaperForm(forms.Form):
         max_length=20., widget=forms.Select(choices=MONTHS))
     number = forms.IntegerField(widget=forms.TextInput(
         {"placeholder": "Please enter number."}))
+
+
+class KeyPointForm(forms.Form):
+    name = forms.CharField(label='Name', max_length=200,
+                           widget=forms.TextInput(
+                               attrs={'placeholder': 'Key Point'}))
+    content = forms.CharField(label='Content',
+                              widget=forms.TextInput(
+                                  attrs={'placeholder':
+                                         'Content of Key Point'}))

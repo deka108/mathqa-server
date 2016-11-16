@@ -35,6 +35,31 @@
       {{ form.name }}
       {{ form.description }}
       {{ form.topic }}
+      <h4 data-toggle="collapse" href=".link-formset" aria-expanded="false" aria-controls="link-formset">
+        <a>
+          {% fontawesome_icon 'key' color='blue' %}
+          Key points
+        </a>
+      </h4>
+      {{ formset.management_form }}
+      {% for sform in formset %}
+        <div class="link-formset">
+          {{ sform.name }}
+            {% if sform.name.errors %}
+                {% for error in sform.name.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endif %}
+          {{ sform.content }}
+            {% if sform.content.errors %}
+                {% for error in sform.content.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <hr>
+      {% endfor %}
+
       <input type="submit" value="Update" />
     </form>
   </div>
