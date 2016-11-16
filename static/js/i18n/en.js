@@ -12,8 +12,10 @@ const en = {
             topic: "Manage Topics",
             concept: "Manage Concepts",
             question: "Manage Questions",
+            tag: "Manage Tags",
             quiz: "Manage Quiz",
             contest: "Manage Contests",
+            paper: "Manage Papers",
         },
         breadcrumb: {
             home: "Home",
@@ -21,20 +23,26 @@ const en = {
             concept: "Concept",
             question: "Question",
             quiz: "Quiz",
-            contest: "Contest"
+            contest: "Contest",
+            paper: "Paper"
         },
         header: {
             name: "Name",
             description: "Description",
             order: "Order",
             subject: "Subject",
-            topic: "Topic"
+            topic: "Topic",
+            year: "Year",
+            month: "Month",
+            number: "Number",
+            no: "No. of Question"
         },
         action: {
             edit: "Edit",
             create: "Create",
             add_topic: "Add new Topic",
-            add_concept: "Add new Concept"
+            add_concept: "Add new Concept",
+            add_paper: "Add new Paper"
         }
     },
     title: {

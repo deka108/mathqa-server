@@ -1,24 +1,21 @@
+"""
+# Name:           meas_models/models.py
+# Description:
+# Created by:     Phuc Le-Sanh
+# Date Created:   Nov 16 2016
+# Last Modified:  Nov 16 2016
+# Modified by:    Phuc Le-Sanh
+"""
 from __future__ import unicode_literals
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-
 from django.db import models
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 
-NUMERIC = 'Numberic'
-SKETCH = 'Sketch'
-EXPRESSION = 'EXPRESSION'
-TEXT = 'Text'
-PROVE = 'Prove'
+from common import *
 
-RESPONSE_TYPES = [
-    (NUMERIC, 'Exam Numberic'),
-    (SKETCH, 'Sketch'),
-    (EXPRESSION, 'Expression'),
-    (TEXT, 'Text'),
-    (PROVE, 'Prove')
-]
 """
 Validations
 """
@@ -43,7 +40,7 @@ class EducationLevel(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
 
 
@@ -59,7 +56,7 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
 
     education_level = models.ForeignKey(
@@ -77,7 +74,7 @@ class Topic(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
     order = models.PositiveIntegerField(null=True, blank=True)
 
@@ -95,7 +92,7 @@ class Concept(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
 
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
@@ -106,19 +103,28 @@ class Test(models.Model):
     List of test
     """
 
-    ADAPTIVE_TEST = "AP"
-    CONTEST = "CT"
-
-    TEST_TYPES = [
-        (ADAPTIVE_TEST, 'Adaptive Test'),
-        (CONTEST, 'Contest')
-    ]
-
     name = models.CharField(max_length=200)
     test_type = models.CharField(
         max_length=200,
         choices=TEST_TYPES,
-        default=ADAPTIVE_TEST)
+        default=PRACTICE_TEST)
+    questions_list = models.TextField()
+    number_of_questions = models.IntegerField()
+
+
+class Paper(models.Model):
+    """
+    List of paper
+    """
+
+    def __str__(self):
+        return str(self.year) + " " + str(self.get_month_display()) + " " +\
+            str(self.number)
+
+    year = models.IntegerField()
+    month = models.CharField(max_length=20, choices=MONTHS, default="1")
+    number = models.IntegerField()
+    no_of_question = models.IntegerField(null=True, blank=True)
 
 
 class Question(models.Model):
@@ -126,41 +132,81 @@ class Question(models.Model):
     List of questions
     """
 
-    EXAM_PAPERS = "EP"
-    ONLINE = "OL"
-
-    QUESTION_SOURCES = [
-        (EXAM_PAPERS, 'Exam papers'),
-        (ONLINE, 'Online')
-    ]
-
-    content = models.TextField(max_length=1000)
+    question_type = models.CharField(
+        max_length=2,
+        choices=QUESTION_TYPES,
+        default="EX")
     source = models.CharField(
         max_length=2,
         choices=QUESTION_SOURCES,
-        default=EXAM_PAPERS)
-    difficulty_level = models.IntegerField(
-        validators=[validate_difficulty_range],
-        default=0)
-
-    parent = models.ForeignKey("self", null=True)
-    tests = models.ManyToManyField(Test)
-
-
-class Proficiency(models.Model):
-    """
-    Track history of students
-    """
-
-    detail = models.IntegerField
-    response = models.TextField(max_length=1000)
+        default="EP")
+    used_for = models.CharField(
+        max_length=2,
+        choices=USED_FOR,
+        default="ON")
+    number_of_part = models.IntegerField(
+        choices=NUMBER_OF_PARTS,
+        default=1)
+    mark = models.IntegerField(default=1)
+    difficulty_level = models.CharField(
+        max_length=1,
+        choices=DIFFICULTIES,
+        default="1")
     respone_type = models.CharField(
         max_length=10,
         choices=RESPONSE_TYPES,
         default=TEXT)
-    is_complete = models.BooleanField(default=0)
+    content = RichTextField()
+    solution = RichTextField()
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
+    paper = models.ForeignKey(
+        Paper, on_delete=models.CASCADE, null=True, blank=True)
 
-    unique_together = ("user", "restaurant", "detail")
+
+class Part(models.Model):
+    """
+    List of questions
+    """
+
+    mark = models.IntegerField(default=1)
+    difficulty_level = models.IntegerField(
+        validators=[validate_difficulty_range],
+        default=0)
+    respone_type = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT)
+    content = RichTextField()
+    solution = RichTextField()
+
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+
+class KeyPoint(models.Model):
+    """
+    List of key points associate with specific concept
+    """
+    name = models.CharField(max_length=200)
+    content = models.TextField()
+
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
+
+
+# class Proficiency(models.Model):
+#     """
+#     Track history of students
+#     """
+
+#     detail = models.IntegerField
+#     response = models.TextField(max_length=1000)
+#     respone_type = models.CharField(
+#         max_length=10,
+#         choices=RESPONSE_TYPES,
+#         default=TEXT)
+#     is_complete = models.BooleanField(default=0)
+
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     test = models.ForeignKey(Test, on_delete=models.CASCADE)
+
+#     unique_together = ("user", "restaurant", "detail")

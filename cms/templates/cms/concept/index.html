@@ -55,6 +55,12 @@
     <hr>
 
     <div class="row">
+      <form action="/cms/concept_subject/" method="post">
+        {% csrf_token %}
+        {{ form.subject }}
+        <input type="submit" value="Select" />
+      </form>
+
       <a href="/cms/create_concept/">
         <button id="add" type="button" class="btn btn-success new-button"></button>
       </a>
@@ -79,6 +85,11 @@
                   <li role="presentation">
                     <a href="/cms/edit_concept/{{ concept.id }}">
                       {% fontawesome_icon 'edit' color='blue' %}
+                    </a>
+                  </li>
+                  <li role="presentation">
+                    <a href="/cms/delete_concept/{{ concept.id }}">
+                      {% fontawesome_icon 'trash' color='blue' %}
                     </a>
                   </li>
                 </ul>

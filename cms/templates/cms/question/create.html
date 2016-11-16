@@ -1,0 +1,175 @@
+{% extends 'cms/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <script type = "text/javascript"
+          src="{% static 'cms/js/question/index.js' %}">
+  </script>
+  <script type = "text/javascript"
+          src="{% static 'cms/js/question/ce.js' %}">
+  </script>
+  <link href="{% static 'cms/css/question/ce.css' %}"
+        rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div>
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a id="breadcrumb-home" href="#">
+          {% fontawesome_icon 'home' color='blue' %}
+        </a>
+      </li>
+      <li id="breadcrumb-question" class="active">
+         {% fontawesome_icon 'question' color='blue' %}
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+  <form action="/cms/api_create_question/" method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    <div class="row main-form">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <ul class="nav nav-stacked">
+          <li class="custom-component" role="presentation">
+            Concept (*) {{ form.concept }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Paper (*) {{ form.paper }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Question type (*) {{ form.question_type }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Question source (*) {{ form.source }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Used for (*) {{ form.used_for }}
+          </li>
+          <li id="number_parts" class="custom-component" role="presentation">
+            Number of parts (*) {{ form.number_of_part }}
+          </li>
+          <li role="presentation">
+            <div class="btn-group" role="group" aria-label="...">
+              <button id="cpart1" data-toggle="collapse" data-target="#part1" type="button" class="btn btn-warning">Part 1</button>
+              <button id="cpart2" data-toggle="collapse" data-target="#part2" type="button" class="btn btn-success">Part 2</button>
+              <button id="cpart3" data-toggle="collapse" data-target="#part3" type="button" class="btn btn-primary">Part 3</button>
+              <button id="cpart4" data-toggle="collapse" data-target="#part4" type="button" class="btn btn-danger">Part 4</button>
+            </div>
+          </li>
+          <li class="custom-component" role="presentation">
+            <div id="part1" class="collapse part-form">
+              <ul class="nav nav-stacked">
+                <li class="custom-component" role="presentation">
+                  Mark 1 (*) {{ form.mark_1 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Difficulty level 1 (*) {{ form.mark_1 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Response type 1 (*) {{ form.respone_type_1 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Content 1 (*) {{ form.content_1 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Solution 1 (*) {{ form.solution_1 }}
+                </li>
+              </ul>
+            </div>
+
+            <div id="part2" class="collapse part-form">
+              <ul class="nav nav-stacked">
+                <li class="custom-component" role="presentation">
+                  Mark 2 (*) {{ form.mark_2 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Difficulty level 2 (*) {{ form.mark_2 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Response type 2 (*) {{ form.respone_type_2 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Content 2 (*) {{ form.content_2 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Solution 2 (*) {{ form.solution_2 }}
+                </li>
+              </ul>
+            </div>
+
+            <div id="part3" class="collapse part-form">
+              <ul class="nav nav-stacked">
+                <li class="custom-component" role="presentation">
+                  Mark 3(*) {{ form.mark_3 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Difficulty level 3(*) {{ form.mark_3 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Response type 3 (*) {{ form.respone_type_3 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Content 3 (*) {{ form.content_3 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Solution 3 (*) {{ form.solution_3 }}
+                </li>
+              </ul>
+            </div>
+
+            <div id="part4" class="collapse part-form">
+              <ul class="nav nav-stacked">
+                <li class="custom-component" role="presentation">
+                  Mark 4 (*) {{ form.mark_4 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Difficulty level 4 (*) {{ form.mark_4 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Response type 4 (*) {{ form.respone_type_4 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Content 4 (*) {{ form.content_4 }}
+                </li>
+                <li class="custom-component" role="presentation">
+                  Solution 4 (*) {{ form.solution_4 }}
+                </li>
+              </ul>
+            </div>
+
+          </li>
+          <li class="custom-component" role="presentation">
+            Mark (*) {{ form.mark }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Difficulty level (*) {{ form.difficulty_level }}
+          </li>
+          <li class="custom-component" role="presentation">
+            Response type (*) {{ form.respone_type }}
+          </li>
+          <li class="custom-component" role="presentation">Content (*)</li>
+          <li class="custom-component" role="presentation">
+            {{ form.content }}
+          </li>
+          <li class="custom-component" role="presentation">Solution (*)</li>
+          <li class="custom-component" role="presentation">
+            {{ form.solution }}
+          </li>
+          <li class="custom-component" role="presentation">
+            <button type="submit" class="btn btn-danger">Save</button>
+            <button type="submit" class="btn btn-success">Reset</button>
+            <button type="submit" class="btn btn-warning">Cancel</button>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+  </form>
+{% endblock main_content %}

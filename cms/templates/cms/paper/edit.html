@@ -1,0 +1,19 @@
+{% extends 'cms/layout/ce.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block content %}
+  <div class="form-style-6">
+
+    <h1>Paper</h1>
+    <form action="/cms/api_update_paper/" method="post">
+      {% csrf_token %}
+      {{ form.id }}
+      {{ form.year }}
+      {{ form.month }}
+      {{ form.number }}
+      <input type="submit" value="Update" />
+    </form>
+  </div>
+{% endblock content %}
