@@ -48,12 +48,14 @@
             </ul>
           </li>
 
-          <li class="custom-component" role="presentation">
+           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
-              <li role="presentation" class="pull-left">
-                Paper <span class="custom-asterisk">(*)</span>
+              <li id="question_type" role="presentation" class="pull-left">
+                Question type <span class="custom-asterisk">(*)</span>
+                {{ form.question_type }}
               </li>
-              <li role="presentation" class="pull-right">
+              <li id="paper" role="presentation" class="pull-right">
+                Paper <span class="custom-asterisk">(*)</span>
                 {{ form.paper }}
               </li>
             </ul>

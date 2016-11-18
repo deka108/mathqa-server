@@ -7,6 +7,5 @@ $(document).ready(function() {
     $('#breadcrumb-question').append(en.cms.breadcrumb.question);
 
     $('#main-title').append(en.cms.breadcrumb.question);
-
     MQ.StaticMath($('#question-content'));
 } );

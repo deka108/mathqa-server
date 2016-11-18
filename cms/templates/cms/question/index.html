@@ -9,6 +9,14 @@
   <script type = "text/javascript"
           src="{% static 'cms/js/question/index.js' %}">
   </script>
+
+  <script type = "text/javascript"
+          src="{% static 'ckeditor/ckeditor.js' %}">
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -42,18 +50,26 @@
 
       <div class="tab-content"  >
         <div id="practice" class="tab-pane fade in active">
-          <ul class="nav nav-stacked left-panel">
-            <li role="presentation">
+          <ul class="nav nav-stacked">
             {% for topic in topics %}
-              <a href="/cms/question_topic_detail/{{topic.id}}">
-                {{topic.name}}
-              </a>
+              {% if topic.name == topic_name %}
+                <li class="active selected-highlight" role="presentation">
+                  <a href="/cms/question_topic_detail/{{topic.id}}">
+                    {{topic.name}}
+                  </a>
+                </li>
+              {% else %}
+                <li class="active" role="presentation">
+                  <a href="/cms/question_topic_detail/{{topic.id}}">
+                    {{topic.name}}
+                  </a>
+                </li>
+              {% endif %}
             {% endfor %}
-            </li>
           </ul>
         </div>
         <div id="exam" class="tab-pane fade">
-          <ul class="nav nav-stacked left-panel">
+          <ul class="nav nav-stacked">
             <li role="presentation">
             {% for paper in papers %}
               <a href="/cms/question_paper_detail/{{paper.id}}">
@@ -105,7 +121,7 @@
                 </div>
                 <div class="row question-content">
                   <hr>
-                  {{ question.content }}
+                  <div>{{ question.content | safe }}</div>
                 </div>
               </td>
             </tr>

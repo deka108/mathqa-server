@@ -234,8 +234,12 @@ def api_create_question(request):
             'difficulty_level'),
         content=request.POST.__getitem__('content'),
         solution=request.POST.__getitem__('solution'),
-        concept=Concept.objects.get(pk=request.POST.__getitem__('concept'))
+        concept=Concept.objects.get(pk=request.POST.__getitem__('concept')),
     )
+
+    if any(request.POST.getlist('paper')):
+        question.paper = Paper.objects.get(
+            pk=request.POST.__getitem__('paper'))
 
     question.save()
 
@@ -305,6 +309,7 @@ def question_topic_detail(request, topic_id):
     concept = topic.concept_set.all()
 
     return render(request, 'cms/question/index.html', __user_info(request, {
+        "topic_name": topic.name,
         "topics": Topic.objects.all(),
         "papers": Paper.objects.all(),
         "questions": Question.objects.filter(concept__in=concept,

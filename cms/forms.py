@@ -56,7 +56,8 @@ class EditQuestionForm(forms.Form):
     concept = forms.ModelChoiceField(empty_label="Please choose Concept",
                                      queryset=Concept.objects.all())
     paper = forms.ModelChoiceField(empty_label="Please choose Paper",
-                                   queryset=Paper.objects.all())
+                                   queryset=Paper.objects.all(),
+                                   required=False)
 
     # # Part 1
     # mark_1 = forms.IntegerField()
