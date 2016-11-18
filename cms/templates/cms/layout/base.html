@@ -38,9 +38,20 @@
     <link href="{% static 'cms/css/layout/base.css' %}"
           rel="stylesheet"/>
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+
     <script type = "text/javascript"
             src="{% static 'cms/js/layout/base.js' %}">
     </script>
+
+    <link href="{% static 'mathquill-0.10.1/mathquill.css' %}"
+          rel="stylesheet"/>
+    <script type = "text/javascript"
+            src="{% static 'mathquill-0.10.1/mathquill.js' %}">
+    </script>
+
     <!-- Extend css and js -->
     {% block extended_head %}{% endblock extended_head %}
   </head>

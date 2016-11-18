@@ -61,3 +61,5 @@ DIFFICULTIES = [
     ("4", 'Difficult'),
     ("5", 'Very Difficult'),
 ]
+
+MARKS = [(i, i) for i in range(10)]

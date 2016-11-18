@@ -45,7 +45,8 @@ class EditQuestionForm(forms.Form):
         max_length=2, widget=forms.Select(choices=USED_FOR))
     number_of_part = forms.IntegerField(
         widget=forms.Select(choices=NUMBER_OF_PARTS))
-    mark = forms.IntegerField()
+    mark = forms.IntegerField(
+        widget=forms.Select(choices=MARKS))
     difficulty_level = forms.CharField(
         max_length=1, widget=forms.Select(choices=DIFFICULTIES))
     respone_type = forms.CharField(
