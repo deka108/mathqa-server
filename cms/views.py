@@ -243,6 +243,40 @@ def api_create_question(request):
 
     question.save()
 
+    # Add Parts
+    if any(request.POST.getlist('mark_1')):
+        part1 = Part(
+            mark=request.POST.__getitem__('mark_1'),
+            difficulty_level=request.POST.__getitem__('difficulty_level_1'),
+            respone_type=request.POST.__getitem__('respone_type_1'),
+            content=request.POST.__getitem__('content_1'),
+            solution=request.POST.__getitem__('solution_1'),
+            question=question,
+        )
+        part1.save()
+
+    if any(request.POST.getlist('mark_2')):
+        part2 = Part(
+            mark=request.POST.__getitem__('mark_2'),
+            difficulty_level=request.POST.__getitem__('difficulty_level_2'),
+            respone_type=request.POST.__getitem__('respone_type_2'),
+            content=request.POST.__getitem__('content_2'),
+            solution=request.POST.__getitem__('solution_2'),
+            question=question,
+        )
+        part2.save()
+
+    if any(request.POST.getlist('mark_3')):
+        part3 = Part(
+            mark=request.POST.__getitem__('mark_3'),
+            difficulty_level=request.POST.__getitem__('difficulty_level_3'),
+            respone_type=request.POST.__getitem__('respone_type_3'),
+            content=request.POST.__getitem__('content_3'),
+            solution=request.POST.__getitem__('solution_3'),
+            question=question,
+        )
+        part3.save()
+
     return HttpResponseRedirect('../question/', __user_info(request, {
     }))
 
@@ -254,6 +288,7 @@ def create_question(request):
 
 def edit_question(request, question_id):
     question = Question.objects.get(pk=question_id)
+    parts = question.part_set.all()
 
     return render(request, 'cms/question/edit.html', {'form': EditQuestionForm(
         initial={'id': question_id,
@@ -268,6 +303,11 @@ def edit_question(request, question_id):
                  'solution': question.solution,
                  'concept': question.concept,
                  'paper': question.paper,
+                 # 'mark_1': parts[0].mark,
+                 # 'difficulty_level_1': parts[0].difficulty_level,
+                 # 'respone_type_1': parts[0].respone_type,
+                 # 'content_1': parts[0].content,
+                 # 'solution_1': parts[0].solution,
                  }
     )})
 
@@ -289,6 +329,46 @@ def api_update_question(request):
     question.paper = Paper.objects.get(pk=request.POST.__getitem__('paper'))
 
     question.save()
+
+    # Update Parts
+    if any(request.POST.getlist('mark_1')):
+        part_1 = Part.objects.get(pk=request.POST.__getitem__('id_1'))
+
+        part_1.mark = request.POST.__getitem__('mark_1'),
+        part_1.difficulty_level = request.POST.__getitem__(
+            'difficulty_level_1')
+        part_1.respone_type = request.POST.__getitem__('respone_type_1')
+        part_1.content = request.POST.__getitem__('content_1')
+        part_1.solution = request.POST.__getitem__('solution_1')
+        part_1.question = question
+
+        part_1.save()
+
+    if any(request.POST.getlist('mark_2')):
+        part_2 = Part.objects.get(pk=request.POST.__getitem__('id_2'))
+
+        part_2.mark = request.POST.__getitem__('mark_2'),
+        part_2.difficulty_level = request.POST.__getitem__(
+            'difficulty_level_2')
+        part_2.respone_type = request.POST.__getitem__('respone_type_2')
+        part_2.content = request.POST.__getitem__('content_2')
+        part_2.solution = request.POST.__getitem__('solution_2')
+        part_2.question = question
+
+        part_2.save()
+
+    if any(request.POST.getlist('mark_3')):
+        part_3 = Part.objects.get(pk=request.POST.__getitem__('id_3'))
+
+        part_3.mark = request.POST.__getitem__('mark_3'),
+        part_3.difficulty_level = request.POST.__getitem__(
+            'difficulty_level_3')
+        part_3.respone_type = request.POST.__getitem__('respone_type_3')
+        part_3.content = request.POST.__getitem__('content_3')
+        part_3.solution = request.POST.__getitem__('solution_3')
+        part_3.question = question
+
+        part_3.save()
 
     return HttpResponseRedirect('../question/', __user_info(request, {
     }))

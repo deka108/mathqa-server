@@ -4,6 +4,24 @@ $(document).ready(function() {
     $('#cpart3').hide();
     $('#cpart4').hide();
 
+    var num_parts = parseInt($("#number_parts option:selected").val());
+    switch (num_parts) {
+        case 0:
+            break;
+        case 1:
+            $('#cpart1').show();
+            break;
+        case 2:
+            $('#cpart1').show();
+            $('#cpart2').show();
+            break;
+        case 3:
+            $('#cpart1').show();
+            $('#cpart2').show();
+            $('#cpart3').show();
+            break;
+    }
+
     $("#number_parts").change(function() {
         var count_parts = parseInt($("#number_parts option:selected").val());
         if (count_parts == 0) {

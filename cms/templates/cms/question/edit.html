@@ -38,7 +38,7 @@
       <div class="col-sm-10">
         <ul class="nav nav-stacked">
           <li class="custom-component" role="presentation">
-            {{ form.id }}
+            {{form.id}}
           </li>
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
@@ -51,15 +51,15 @@
             </ul>
           </li>
 
-          <li class="custom-component" role="presentation">
+           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
-              <li role="presentation" class="pull-left">
-                Paper <span class="custom-asterisk">(*)</span>
-                {{ form.paper }}
-              </li>
-              <li role="presentation" class="pull-right">
+              <li id="question_type" role="presentation" class="pull-left">
                 Question type <span class="custom-asterisk">(*)</span>
                 {{ form.question_type }}
+              </li>
+              <li id="paper" role="presentation" class="pull-right">
+                Paper <span class="custom-asterisk">(*)</span>
+                {{ form.paper }}
               </li>
             </ul>
           </li>
@@ -106,7 +106,7 @@
                   Mark 1 (*) {{ form.mark_1 }}
                 </li>
                 <li class="custom-component" role="presentation">
-                  Difficulty level 1 (*) {{ form.mark_1 }}
+                  Difficulty level 1 (*) {{ form.difficulty_level_1 }}
                 </li>
                 <li class="custom-component" role="presentation">
                   Response type 1 (*) {{ form.respone_type_1 }}
@@ -126,7 +126,7 @@
                   Mark 2 (*) {{ form.mark_2 }}
                 </li>
                 <li class="custom-component" role="presentation">
-                  Difficulty level 2 (*) {{ form.mark_2 }}
+                  Difficulty level 2 (*) {{ form.difficulty_level_2 }}
                 </li>
                 <li class="custom-component" role="presentation">
                   Response type 2 (*) {{ form.respone_type_2 }}
@@ -146,7 +146,7 @@
                   Mark 3(*) {{ form.mark_3 }}
                 </li>
                 <li class="custom-component" role="presentation">
-                  Difficulty level 3(*) {{ form.mark_3 }}
+                  Difficulty level 3(*) {{ form.difficulty_level_3 }}
                 </li>
                 <li class="custom-component" role="presentation">
                   Response type 3 (*) {{ form.respone_type_3 }}
@@ -166,7 +166,7 @@
                   Mark 4 (*) {{ form.mark_4 }}
                 </li>
                 <li class="custom-component" role="presentation">
-                  Difficulty level 4 (*) {{ form.mark_4 }}
+                  Difficulty level 4 (*) {{ form.difficulty_level_4 }}
                 </li>
                 <li class="custom-component" role="presentation">
                   Response type 4 (*) {{ form.respone_type_4 }}
