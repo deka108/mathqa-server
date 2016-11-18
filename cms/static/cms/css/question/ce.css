@@ -4,6 +4,10 @@
   padding: 18px;
 }
 
+.custom-inside {
+  font-size: 16px;
+}
+
 .custom-component {
   padding-top: 18px;
 }
@@ -12,4 +16,8 @@
   background: #ffffcc;
   border: thick solid #cc9966;
   padding: 18px;
+}
+
+.custom-asterisk {
+  color: red;
 }

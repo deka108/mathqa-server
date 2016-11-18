@@ -23,3 +23,7 @@
 .question-content {
   padding-left: 15px;
 }
+
+.selected-highlight {
+  background-color: #e0e0d1 !important;
+}
