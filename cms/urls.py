@@ -63,4 +63,15 @@ urlpatterns = [
         name='api_update_paper'),
     url(r'^delete_paper/(?P<paper_id>[0-9]+)/$',
         views.delete_paper, name='delete_paper'),
+
+    url(r'^user/$', views.user_index, name='user_index'),
+    url(r'^create_user/$', views.create_user, name='create_user'),
+    url(r'^api_create_user/$', views.api_create_user,
+        name='api_create_user'),
+    url(r'^edit_user/(?P<user_id>[0-9]+)/$',
+        views.edit_user, name='edit_user'),
+    url(r'^api_update_user/$', views.api_update_user,
+        name='api_update_user'),
+    url(r'^delete_user/(?P<user_id>[0-9]+)/$',
+        views.delete_user, name='delete_user'),
 ]

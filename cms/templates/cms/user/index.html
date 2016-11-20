@@ -1,0 +1,79 @@
+{% extends 'cms/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+
+  <script type = "text/javascript"
+          src="{% static 'cms/js/user/index.js' %}">
+  </script>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'cms/css/user/index.css' %}"/>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div>
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a id="breadcrumb-home" href="#">
+          {% fontawesome_icon 'home' color='blue' %}
+        </a>
+      </li>
+      <li id="breadcrumb-user" class="active">
+         {% fontawesome_icon 'user' color='blue' %}
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+  <a href="/cms/create_user/">
+    <button id="add" type="button" class="btn btn-success new-button"></button>
+  </a>
+
+  <table id="items" class="display" width="100%" cellspacing="0">
+    <thead class="custom-header">
+      <tr class="text-danger">
+        <th id="header-username"> </th>
+        <th id="header-email"> </th>
+        <th id="header-firstname"> </th>
+        <th id="header-lastname"> </th>
+        <th id="header-lastlogin"> </th>
+        <th id="header-isstaff"> </th>
+        <th id="header-isactive"> </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr class="text-center">
+          <td>{{user.username}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.first_name}}</td>
+          <td>{{user.last_name}}</td>
+          <td>{{user.last_login}}</td>
+          <td>{{user.is_staff}}</td>
+          <td>{{user.is_active}}</td>
+          <td>
+            <ul class="nav nav-pills">
+              <li role="presentation">
+                <a href="/cms/edit_user/{{ user.id }}">
+                  {% fontawesome_icon 'edit' color='blue' %}
+                </a>
+              </li>
+              <li role="presentation">
+                <a href="/cms/delete_user/{{ user.id }}">
+                  {% fontawesome_icon 'trash' color='blue' %}
+                </a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock main_content %}

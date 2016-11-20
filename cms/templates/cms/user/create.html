@@ -1,0 +1,31 @@
+{% extends 'cms/layout/ce.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block content %}
+  <div class="form-style-6">
+    <h1>User</h1>
+    <form action="/cms/api_create_user/" method="post">
+      {% csrf_token %}
+      {{ form.username }}
+      {{ form.password }}
+      {{ form.email }}
+      {{ form.first_name }}
+      {{ form.last_name }}
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2 bool-box">Is Staff?</div>
+        <div class="col-sm-3 bool-box">
+          {{ form.is_staff }}
+        </div>
+        <div class="col-sm-2 bool-box">Is Active?</div>
+        <div class="col-sm-3 bool-box">
+          {{ form.is_active }}
+        </div>
+        <div class="col-sm-1"></div>
+      </div>
+      <input type="submit" value="Save" />
+    </form>
+  </div>
+{% endblock content %}

@@ -13,6 +13,7 @@ const en = {
             concept: "Manage Concepts",
             question: "Manage Questions",
             tag: "Manage Tags",
+            user: "Manage Users",
             quiz: "Manage Quiz",
             contest: "Manage Contests",
             paper: "Manage Papers",
@@ -24,7 +25,8 @@ const en = {
             question: "Question",
             quiz: "Quiz",
             contest: "Contest",
-            paper: "Paper"
+            paper: "Paper",
+            user: "User"
         },
         header: {
             name: "Name",
@@ -35,14 +37,22 @@ const en = {
             year: "Year",
             month: "Month",
             number: "Number",
-            no: "No. of Question"
+            no: "No. of Question",
+            username: "User Name",
+            email: "Email",
+            firstname: "First Name",
+            lastname: "Last Name",
+            lastlogin: "Last Login",
+            isstaff: "Is Admin?",
+            isactive: "Is Active?"
         },
         action: {
             edit: "Edit",
             create: "Create",
             add_topic: "Add new Topic",
             add_concept: "Add new Concept",
-            add_paper: "Add new Paper"
+            add_paper: "Add new Paper",
+            add_user: "Add new User",
         }
     },
     title: {

@@ -142,3 +142,25 @@ class KeyPointForm(forms.Form):
                               widget=forms.TextInput(
                                   attrs={'placeholder':
                                          'Content of Key Point'}))
+
+
+class EditUserForm(forms.Form):
+    id = forms.CharField(widget=forms.HiddenInput())
+    username = forms.CharField(label='User Name', max_length=200,
+                               widget=forms.TextInput(
+                                   attrs={'placeholder': 'User Name'}))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'placeholder': 'Password'}))
+    email = forms.CharField(label='Email', max_length=200,
+                            widget=forms.TextInput(
+                                attrs={'placeholder': 'Email'}))
+    first_name = forms.CharField(label='First Name', max_length=200,
+                                 widget=forms.TextInput(
+                                     attrs={'placeholder': 'First Name'}))
+    last_name = forms.CharField(label='Email', max_length=200,
+                                widget=forms.TextInput(
+                                    attrs={'placeholder': 'Last Name'}))
+    is_staff = forms.BooleanField(
+        widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))
+    is_active = forms.BooleanField(
+        widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))

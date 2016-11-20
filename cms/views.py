@@ -619,6 +619,91 @@ def delete_paper(request, paper_id):
         "papers": Paper.objects.all()
     }))
 
+
+def user_index(request):
+    if not request.user.is_superuser:
+        return redirect('/cms/login/')
+
+    return render(request, 'cms/user/index.html', __user_info(request, {
+        "users": User.objects.all(),
+    }))
+
+
+def create_user(request):
+    if not request.user.is_superuser:
+        return redirect('/cms/login/')
+
+    return render(request, 'cms/user/create.html',
+                  {'form': EditUserForm()})
+
+
+def api_create_user(request):
+    if not request.user.is_superuser:
+        return redirect('/cms/login/')
+
+    User.objects.create_user(username=request.POST.__getitem__('username'),
+                             password=request.POST.__getitem__('password'),
+                             email=request.POST.__getitem__('email'),
+                             first_name=request.POST.__getitem__('first_name'),
+                             last_name=request.POST.__getitem__('last_name'),
+                             is_staff=request.POST.__getitem__('is_staff'),
+                             is_active=request.POST.__getitem__('is_active')
+                             )
+
+    return HttpResponseRedirect('../user/', __user_info(request, {
+        "users": User.objects.all()
+    }))
+
+
+def edit_user(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('/cms/login/')
+
+    user = User.objects.get(pk=user_id)
+
+    return render(request, 'cms/user/edit.html', {'form': EditUserForm(
+        initial={'id': user_id,
+                 'username': user.username,
+                 'password': user.password,
+                 'email': user.email,
+                 'first_name': user.first_name,
+                 'last_name': user.last_name,
+                 'is_staff': user.is_staff,
+                 'is_active': user.is_active
+                 }
+    )})
+
+
+def api_update_user(request):
+    if not request.user.is_superuser:
+        return redirect('/cms/login/')
+
+    user = User.objects.get(pk=request.POST.__getitem__('id'))
+    user.username = request.POST.__getitem__('username')
+    user.password = request.POST.__getitem__('password')
+    user.email = request.POST.__getitem__('email')
+    user.first_name = request.POST.__getitem__('first_name')
+    user.last_name = request.POST.__getitem__('last_name')
+    user.is_staff = request.POST.__getitem__('is_staff')
+    user.is_active = request.POST.__getitem__('is_active')
+
+    user.save()
+
+    return HttpResponseRedirect('../user/', __user_info(request, {
+        "users": User.objects.all()
+    }))
+
+
+def delete_user(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('/cms/login/')
+
+    user = User.objects.get(pk=user_id)
+    user.delete()
+
+    return HttpResponseRedirect('/cms/user', __user_info(request, {
+        "users": User.objects.all()
+    }))
 # Move up, down order
 
 

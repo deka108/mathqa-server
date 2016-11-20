@@ -28,6 +28,7 @@
 .form-style-6 input[type="datetime"],
 .form-style-6 input[type="email"],
 .form-style-6 input[type="number"],
+.form-style-6 input[type="password"],
 .form-style-6 input[type="search"],
 .form-style-6 input[type="time"],
 .form-style-6 input[type="url"],
@@ -83,4 +84,10 @@
 .form-style-6 input[type="submit"]:hover,
 .form-style-6 input[type="button"]:hover{
     background: #337AB7;
+}
+
+.bool-box {
+    font-size: 18px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
 }
