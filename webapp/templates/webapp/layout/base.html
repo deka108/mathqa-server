@@ -48,43 +48,37 @@
         <div class="container-fluid">
           <ul class="nav navbar-nav">
             <li>
-              <a href="#" class = "custom-navbar-item">
-                <img src="{% static 'webapp/img/meas_logo.png' %}" />
-              </a>
-            </li>
-
-            <li class="active">
-              <a id="menu-home" href="#" class = "custom-navbar-item">
-                {% fontawesome_icon 'dashboard' color='white' %}
+              <a href="/" class = "custom-navbar-item dr-hui">
+                Dr. Hui Mathematics
               </a>
             </li>
 
             <li>
-              <a id="menu-topic" href="#" class = "custom-navbar-item">
+              <a id="menu-topic" href="/topic/" class = "custom-navbar-item">
                 {% fontawesome_icon 'bookmark' color='white' %}
               </a>
             </li>
 
             <li>
-              <a id="menu-quiz" href="#" class = "custom-navbar-item">
+              <a id="menu-quiz" href="/adaptive_test/" class = "custom-navbar-item">
                 {% fontawesome_icon 'book' color='white' %}
               </a>
             </li>
 
             <li>
-              <a id="menu-contest" href="#" class = "custom-navbar-item">
+              <a id="menu-contest" href="/contest/" class = "custom-navbar-item">
                 {% fontawesome_icon 'newspaper-o' color='white' %}
               </a>
             </li>
 
             <li>
-              <a id="menu-leaderboard" href="#" class = "custom-navbar-item">
+              <a id="menu-leaderboard" href="/topic/" class = "custom-navbar-item">
                 {% fontawesome_icon 'mortar-board' color='white' %}
               </a>
             </li>
 
             <li>
-              <a id="menu-proficiency" href="#" class = "custom-navbar-item">
+              <a id="menu-proficiency" href="/topic/" class = "custom-navbar-item">
                 {% fontawesome_icon 'history' color='white' %}
               </a>
             </li>
@@ -144,30 +138,42 @@
       </div>
 
       <div class="col-md-2">
-        <p class="text-center title-row">What do you need ?</p>
+        <p class="text-center title-row">Search Questions</p>
       </div>
       <div class="col-md-4">
         <hr class="custom-hr">
       </div>
 
       <div class="col-md-1"></div>
+      </div>
+
+    <div class="row search text-center">
+      <div class="col-md-3"></div>
+
+      <div class="col-md-2">
+        <img src="{% static 'webapp/img/text.png' %}" />
+      </div>
+
+      <div class="col-md-2">
+        <img src="{% static 'webapp/img/tag.png' %}" />
+      </div>
+
+      <div class="col-md-2">
+        <img src="{% static 'webapp/img/formula.png' %}" />
+      </div>
+
+      <div class="col-md-3"></div>
     </div>
+
     <div class="row search">
-      <div class="col-md-2"></div>
+      <div class="col-md-3"></div>
 
-      <div class="col-md-2">
+      <div class="col-md-6">
         <ul class="nav nav-stacke text-center custom-nav-search">
           <li>
-            <img src="{% static 'webapp/img/text.png' %}" />
-          </li>
-
-          <li>
-            Text search
-          </li>
-
-          <li>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="...">
+              <input type="text" class="form-control" placeholder=
+              "Please enter something to search !">
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button">
                     {% fontawesome_icon 'search' color='black' %} Search
@@ -178,57 +184,7 @@
         </ul>
       </div>
 
-      <div class="col-md-1"></div>
-
-      <div class="col-md-2">
-        <ul class="nav nav-stacke text-center custom-nav-search">
-          <li class="text-center">
-            <img src="{% static 'webapp/img/formula.png' %}" />
-          </li>
-
-          <li>
-            Formula search
-          </li>
-
-          <li>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="...">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">
-                    {% fontawesome_icon 'search' color='black' %} Search
-                  </button>
-                </span>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="col-md-1"></div>
-
-       <div class="col-md-2">
-         <ul class="nav nav-stacke text-center custom-nav-search">
-          <li class="text-center">
-            <img src="{% static 'webapp/img/tag.png' %}" />
-          </li>
-
-          <li>
-            Tag search
-          </li>
-
-          <li>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="...">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">
-                    {% fontawesome_icon 'search' color='black' %} Search
-                  </button>
-                </span>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="col-md-2"></div>
+      <div class="col-md-3"></div>
 
     </div>
 
