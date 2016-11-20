@@ -15,6 +15,7 @@ urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
 
     url(r'^$', views.dashboard_index, name='dashboard_index'),
+    url(r'^custom_login/$', views.custom_login, name='custom_login'),
 
     url(r'^topic/$', views.topic_index, name='topic_index'),
     url(r'^topic/(?P<topic_id>[0-9]+)/$',

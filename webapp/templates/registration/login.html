@@ -66,7 +66,7 @@
 
         <p class="login-access">Login Access</p>
 
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="/custom_login/">
         {% csrf_token %}
         <table class="login-table">
         <tr class="login-table-tr text-center">

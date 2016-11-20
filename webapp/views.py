@@ -1,6 +1,21 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 
 from meas_models.models import *
+
+
+def custom_login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        login(request, user)
+        if user.is_superuser:
+            return redirect('/cms/topic')
+        else:
+            return redirect('/')
+    else:
+        return redirect('/login/')
 
 
 def dashboard_index(request):
