@@ -4,6 +4,10 @@
 {% load fontawesome %}
 
 {% block extended_head %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+
   <link href="{% static 'webapp/css/topic/index.css' %}"
         rel="stylesheet"/>
 
@@ -13,6 +17,13 @@
   <script type="text/javascript" async
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
   </script>
+
+  <link href="{% static 'webapp/css/topic/index.css' %}"
+        rel="stylesheet"/>
+   <script type = "text/javascript"
+          src="{% static 'webapp/js/topic/index.js' %}">
+  </script>
+
 {% endblock %}
 
 {% block breadcrumb %}
@@ -126,31 +137,52 @@
             <h5 class="mb-0">
               <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 <p class="display-section">
-                  Hints
+                  Practice Questions
                 </p>
               </a>
             </h5>
           </div>
           <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <blockquote class="custom-blockquote">
-              <p class="blockquote-title">
-                Tip 1
-              </p>
-              <br/>
-              <p class="blockquote-text">
-              CAT Tests are generated dynamically based on responses that a user gives on previous questions.
-              </p>
-            </blockquote>
-
-            <blockquote class="custom-blockquote">
-              <p class="blockquote-title">
-                Tip 2
-              </p>
-              <br/>
-              <p class="blockquote-text">
-              CAT Tests are generated dynamically based on responses that a user gives on previous questions.
-              </p>
-            </blockquote>
+            <table id="items" class="display" width="100%" cellspacing="0">
+              <thead class="custom-header">
+                <tr>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for question in questions %}
+                  <tr>
+                    <td>
+                      <div class="row">
+                        <div class="col-sm-8 pull-left">
+                          <ul class="nav nav-pills nav-stacked">
+                            <li role="presentation" class = "question-title">
+                              Question {{ question.id }}
+                            </li>
+                            <li role="presentation" class = "difficulty-level-display text-center">
+                              <span>{{ question.get_difficulty_level_display }}</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-sm-4 pull-right">
+                          <div class="btn-group" role="group" aria-label="...">
+                            <a href="">
+                              <button type="button" class="btn btn-success">
+                                Test
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row question-content">
+                        <hr>
+                        {{ question.content | safe }}
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
 

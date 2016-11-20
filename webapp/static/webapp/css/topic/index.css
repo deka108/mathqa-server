@@ -24,3 +24,33 @@
 .custom-center-area {
     border-right: thick solid #ff751a;
 }
+
+.left-panel{
+  background: #d9d9d9;
+  border-right: thick solid #ff751a;
+  overflow: scroll;
+  height: 500px;
+}
+
+.question-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.difficulty-level-display {
+  padding-top: 5px;
+  background-color: green;
+  width: 120;
+  height: 25px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.question-content {
+  padding-left: 15px;
+}
+
+.selected-highlight {
+  background-color: #e0e0d1 !important;
+}
