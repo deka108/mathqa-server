@@ -1,0 +1,123 @@
+{% extends 'webapp/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <link href="{% static 'webapp/css/user/index.css' %}"
+        rel="stylesheet"/>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+  </script>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div id="w3m">
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a href="#">
+          {% fontawesome_icon 'home' color='blue' %} Home
+        </a>
+      </li>
+      <li>
+        <a>
+         {% fontawesome_icon 'user' color='blue' %} User
+        </a>
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'edit' color='blue' %} Edit
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+    <blockquote>
+      <form action="/api_update_user/" method="post">
+        {% csrf_token %}
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation">
+            <ul class="nav nav-tabs">
+              <li class="form-item" role="presentation">
+                {% fontawesome_icon 'user' color='black' large=True %}
+              </li>
+              <li class="form-item" role="presentation">
+                User Name
+              </li>
+              <li class="form-item pull-right" role="presentation">
+                {{ form.username }}
+              </li>
+            </ul>
+          </li>
+          <li role="presentation">
+            <ul class="nav nav-tabs">
+              <li class="form-item" role="presentation">
+                {% fontawesome_icon 'lock' color='black' large=True %}
+              </li>
+              <li class="form-item" role="presentation">
+                Password
+              </li>
+              <li class="form-item pull-right" role="presentation">
+                {{ form.password }}
+              </li>
+            </ul>
+          </li>
+          <li role="presentation">
+            <ul class="nav nav-tabs">
+              <li class="form-item" role="presentation">
+                {% fontawesome_icon 'inbox' color='black' large=True %}
+              </li>
+              <li class="form-item" role="presentation">
+                Email
+              </li>
+              <li class="form-item pull-right" role="presentation">
+                {{ form.email }}
+              </li>
+            </ul>
+          </li>
+          <li role="presentation">
+            <ul class="nav nav-tabs">
+              <li class="form-item" role="presentation">
+                {% fontawesome_icon 'book' color='black' large=True %}
+              </li>
+              <li class="form-item" role="presentation">
+                First Name
+              </li>
+              <li class="form-item pull-right" role="presentation">
+                {{ form.first_name }}
+              </li>
+            </ul>
+          </li>
+          <li role="presentation">
+            <ul class="nav nav-tabs">
+              <li class="form-item" role="presentation">
+                {% fontawesome_icon 'book' color='black' large=True %}
+              </li>
+              <li class="form-item" role="presentation">
+                Last Name
+              </li>
+              <li class="form-item pull-right" role="presentation">
+                {{ form.last_name }}
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <button class="btn btn-danger form-button" type="submit">Save</button>
+        <a href="/">
+          <input class="btn btn-warning form-button" type="button"
+          value="Cancel"/>
+        </a>
+
+      </form>
+    </blockquote>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+{% endblock content %}

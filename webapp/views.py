@@ -109,6 +109,46 @@ def api_create_user(request):
                   __user_info(request, {}))
 
 
+def edit_user(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
+
+    return render(request, 'webapp/user/edit.html', {
+                  'form': EditUserProfileForm(initial={'username':
+                                                       request.user.username,
+                                                       'password':
+                                                       request.user.password,
+                                                       'email':
+                                                       request.user.email,
+                                                       'first_name':
+                                                       request.user.first_name,
+                                                       'last_name':
+                                                       request.user.last_name})
+                  })
+
+
+def api_update_user(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
+
+    update_user = request.user
+
+    if any(request.POST.getlist('username')):
+        update_user.username = request.POST.__getitem__('username')
+    if any(request.POST.getlist('password')):
+        update_user.password = request.POST.__getitem__('password')
+    if any(request.POST.getlist('email')):
+        update_user.email = request.POST.__getitem__('email')
+    if any(request.POST.getlist('first_name')):
+        update_user.first_name = request.POST.__getitem__('first_name')
+    if any(request.POST.getlist('last_name')):
+        update_user.last_name = request.POST.__getitem__('last_name')
+
+    update_user.save()
+
+    return redirect('/')
+
+
 def __user_info(request, updated_list=""):
     result = {
         'is_authenticated': request.user.is_authenticated,

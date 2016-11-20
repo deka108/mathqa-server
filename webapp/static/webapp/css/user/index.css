@@ -4,3 +4,13 @@
   overflow: scroll;
   height: 500px;
 }
+
+.form-item {
+  padding-top: 15px;
+  padding-left: 20px;
+}
+
+.form-button {
+  margin-top: 30px;
+  margin-left: 15px;
+}
