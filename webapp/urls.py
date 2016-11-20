@@ -17,6 +17,8 @@ urlpatterns = [
     url(r'^$', views.dashboard_index, name='dashboard_index'),
 
     url(r'^topic/$', views.topic_index, name='topic_index'),
+    url(r'^topic/(?P<topic_id>[0-9]+)/$',
+        views.topic_detail, name='topic_detail'),
     url(r'^topic/(?P<topic_id>[0-9]+)/concept/(?P<concept_id>[0-9]+)/$',
         views.topic_concept, name='topic_concept'),
 

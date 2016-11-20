@@ -705,5 +705,61 @@
       "concept_id": "1",
       "paper_id": "2"
     }
+  },
+  {
+    "model": "meas_models.KeyPoint",
+    "fields": {
+      "name": "Key point 1  for test",
+      "content": "Content 1",
+      "concept_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.KeyPoint",
+    "fields": {
+      "name": "Key point 1  for test",
+      "content": "Content 1",
+      "concept_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.KeyPoint",
+    "fields": {
+      "name": "Key point 1  for test",
+      "content": "Content 1",
+      "concept_id": "3"
+    }
+  },
+  {
+    "model": "meas_models.KeyPoint",
+    "fields": {
+      "name": "Key point 1  for test",
+      "content": "Content 1",
+      "concept_id": "1"
+    }
+  },
+  {
+    "model": "meas_models.KeyPoint",
+    "fields": {
+      "name": "Key point 1  for test",
+      "content": "Content 1",
+      "concept_id": "2"
+    }
+  },
+  {
+    "model": "meas_models.KeyPoint",
+    "fields": {
+      "name": "Key point 1  for test",
+      "content": "Content 1",
+      "concept_id": "3"
+    }
+  },
+  {
+    "model": "meas_models.KeyPoint",
+    "fields": {
+      "name": "Key point 1  for test",
+      "content": "Content 1",
+      "concept_id": "1"
+    }
   }
 ]

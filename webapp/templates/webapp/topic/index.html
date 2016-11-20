@@ -32,24 +32,43 @@
         {% for topic in topics %}
           <li role="presentation">
             {% if topic.name == current_topic.name %}
-              <a class="custom-active" href="/topic/{{ topic.id }}/concept/1/">
+              <a href="/topic/{{ topic.id }}/"
+                class="custom-active dropdown-toggle"
+                data-toggle="dropdown" role="button" aria-haspopup="true"
+                aria-expanded="false">
                 {% fontawesome_icon 'folder-open' color='black' %} {{ topic.name }}
-              </a>
+                <span class="caret"></span>
+               </a>
+
+              <ul class="dropdown-menu">
+                {% for concept in concepts %}
+                  <li>
+                    <a href="/topic/{{ topic.id }}/concept/{{ concept.id }}/">
+                      {{concept.name}}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+
             {% else%}
-              <a href="/topic/{{ topic.id }}/concept/1/">
+              <a href="/topic/{{ topic.id }}/">
                 {% fontawesome_icon 'folder-open' color='black' %} {{ topic.name }}
               </a>
             {% endif %}
           </li>
         {% endfor %}
-        <li class="main-section">Concepts</li>
-        {% block concept %} {% endblock concept %}
       </ul>
     </div>
 
     <div class="col-md-6 custom-center-area">
       <ul class="nav nav-pills pull-right" role="tablist">
-        <li role="presentation"><a href="#">Summary <span class="badge">2</span></a></li>
+        <li role="presentation">
+          <a href="#">Key points
+            <span class="badge">
+              {{ keypoints.count }}
+            </span>
+          </a>
+        </li>
         <li role="presentation"><a href="#">Questions <span class="badge">3</span></a></li>
       </ul>
 
@@ -59,36 +78,47 @@
             <h5 class="mb-0">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                 <p class="display-section">
-                  Summary
+                  {{ current_concept.name }}
                 </p>
               </a>
             </h5>
           </div>
 
           <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel panel-primary">
-              <div class="panel-heading">Section 1</div>
-              <div class="panel-body">
-                <p>...</p>
+            {% for keypoint in keypoints %}
+              <div class="panel panel-primary">
+                <div class="panel-heading">{{ keypoint.name }}</div>
+                <div class="panel-body">
+                  <p>{{ keypoint.content }}</p>
+                </div>
               </div>
-            </div>
-            <div class="panel panel-primary">
-              <div class="panel-heading">Section 2</div>
-              <div class="panel-body">
-                <p>...</p>
+
+              <div class="panel panel-danger">
+                <div class="panel-heading">Question 1</div>
+                <div class="panel-body">
+                  <p>...</p>
+                </div>
+                <div class="panel-footer">
+                  <button type="button" class="btn btn-success">
+                    Hint
+                  </button>
+                  <button type="button" class="btn btn-danger">
+                    Submit
+                  </button>
+                </div>
               </div>
-            </div>
+
+              <hr class="custom-hr">
+            {% endfor %}
           </div>
         </div>
-
-        <hr class="custom-hr">
 
         <div class="card">
           <div class="card-header" role="tab" id="headingTwo">
             <h5 class="mb-0">
               <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 <p class="display-section">
-                  MathQuill Hints
+                  Hints
                 </p>
               </a>
             </h5>
@@ -118,49 +148,6 @@
 
         <hr class="custom-hr">
 
-        <div class="card">
-          <div class="card-header" role="tab" id="headingThree">
-            <h5 class="mb-0">
-              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                <p class="display-section">
-                  Questions
-                </p>
-              </a>
-            </h5>
-          </div>
-          <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-            <div class="card-block">
-              <div class="panel panel-danger">
-                <div class="panel-heading">Question 1</div>
-                <div class="panel-body">
-                  <p>...</p>
-                </div>
-                <div class="panel-footer">
-                  <button type="button" class="btn btn-success">
-                    Hint
-                  </button>
-                  <button type="button" class="btn btn-danger">
-                    Submit
-                  </button>
-                </div>
-              </div>
-              <div class="panel panel-danger">
-                <div class="panel-heading">Question 2</div>
-                <div class="panel-body">
-                  <p>...</p>
-                </div>
-                <div class="panel-footer">
-                  <button type="button" class="btn btn-success">
-                    Hint
-                  </button>
-                  <button type="button" class="btn btn-danger">
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>

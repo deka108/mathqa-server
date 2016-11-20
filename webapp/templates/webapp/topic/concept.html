@@ -21,15 +21,3 @@
     </ol>
   </div>
 {% endblock breadcrumb %}
-
-{% block concept %}
-  {% for con in concepts %}
-    {% if con.name == current_concept.name %}
-      <li role="presentation">
-        <a class="custom-active" href="/topic/{{current_topic.id}}/concept/{{con.id}}/">{{ con.name }}</a>
-      </li>
-    {% else %}
-      <li role="presentation"><a href="/topic/{{current_topic.id}}/concept/{{con.id}}/">{{ con.name }}</a></li>
-    {% endif %}
-  {% endfor %}
-{% endblock concept %}
