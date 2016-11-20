@@ -6,6 +6,13 @@
 {% block extended_head %}
   <link href="{% static 'webapp/css/topic/index.css' %}"
         rel="stylesheet"/>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+  </script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -69,7 +76,6 @@
             </span>
           </a>
         </li>
-        <li role="presentation"><a href="#">Questions <span class="badge">3</span></a></li>
       </ul>
 
       <div id="accordion" role="tablist" aria-multiselectable="true">
@@ -93,20 +99,22 @@
                 </div>
               </div>
 
-              <div class="panel panel-danger">
-                <div class="panel-heading">Question 1</div>
-                <div class="panel-body">
-                  <p>...</p>
+              {% for question in keypoint.question_set.all %}
+                <div class="panel panel-danger">
+                  <div class="panel-heading">Question {{ question.id }}</div>
+                  <div class="panel-body">
+                    {{ question.content | safe }}
+                  </div>
+                  <div class="panel-footer">
+                    <button type="button" class="btn btn-success">
+                      Hint
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                      Submit
+                    </button>
+                  </div>
                 </div>
-                <div class="panel-footer">
-                  <button type="button" class="btn btn-success">
-                    Hint
-                  </button>
-                  <button type="button" class="btn btn-danger">
-                    Submit
-                  </button>
-                </div>
-              </div>
+              {% endfor %}
 
               <hr class="custom-hr">
             {% endfor %}

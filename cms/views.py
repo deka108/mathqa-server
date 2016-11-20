@@ -340,8 +340,9 @@ def api_update_question(request):
     question.content = request.POST.__getitem__('content')
     question.solution = request.POST.__getitem__('solution')
 
-    question.keypoint = KeyPoint.objects.get(
-        pk=request.POST.__getitem__('keypoint'))
+    if any(request.POST.getlist('keypoint')):
+        question.keypoint = KeyPoint.objects.get(
+            pk=request.POST.__getitem__('keypoint'))
 
     question.concept = Concept.objects.get(
         pk=request.POST.__getitem__('concept'))
