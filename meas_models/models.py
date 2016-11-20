@@ -127,6 +127,20 @@ class Paper(models.Model):
     no_of_question = models.IntegerField(null=True, blank=True)
 
 
+class KeyPoint(models.Model):
+    """
+    List of key points associate with specific concept
+    """
+
+    def __str__(self):
+        return self.name
+
+    name = models.CharField(max_length=200)
+    content = models.TextField()
+
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
+
+
 class Question(models.Model):
     """
     List of questions
@@ -160,6 +174,8 @@ class Question(models.Model):
     solution = RichTextField()
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
+    keypoint = models.ForeignKey(KeyPoint, on_delete=models.CASCADE,
+                                 null=True, blank=True)
     paper = models.ForeignKey(
         Paper, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -168,6 +184,9 @@ class Part(models.Model):
     """
     List of questions
     """
+
+    def __str__(self):
+        return self.id
 
     mark = models.IntegerField(default=1)
     difficulty_level = models.IntegerField(
@@ -181,16 +200,6 @@ class Part(models.Model):
     solution = RichTextField()
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-
-class KeyPoint(models.Model):
-    """
-    List of key points associate with specific concept
-    """
-    name = models.CharField(max_length=200)
-    content = models.TextField()
-
-    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
 
 
 # class Proficiency(models.Model):

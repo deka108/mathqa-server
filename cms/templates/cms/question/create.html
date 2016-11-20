@@ -22,6 +22,14 @@
           {% fontawesome_icon 'home' color='blue' %}
         </a>
       </li>
+      <li class="active">
+         {% fontawesome_icon 'bookmark' color='blue' %}
+         Topic
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'file' color='blue' %}
+         Concept
+      </li>
       <li id="breadcrumb-question" class="active">
          {% fontawesome_icon 'question' color='blue' %}
       </li>
@@ -41,9 +49,11 @@
             <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
                 Concept <span class="custom-asterisk">(*)</span>
+                {{ form.concept }}
               </li>
               <li role="presentation" class="pull-right">
-                {{ form.concept }}
+                Key Point
+                {{ form.keypoint }}
               </li>
             </ul>
           </li>

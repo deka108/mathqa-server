@@ -53,6 +53,9 @@ class EditQuestionForm(forms.Form):
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
     content = forms.CharField(widget=CKEditorWidget())
     solution = forms.CharField(widget=CKEditorWidget())
+    keypoint = forms.ModelChoiceField(empty_label="Please choose KeyPoint",
+                                      queryset=KeyPoint.objects.all(),
+                                      required=False)
     concept = forms.ModelChoiceField(empty_label="Please choose Concept",
                                      queryset=Concept.objects.all())
     paper = forms.ModelChoiceField(empty_label="Please choose Paper",

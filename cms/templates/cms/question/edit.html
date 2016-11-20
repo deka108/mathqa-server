@@ -22,6 +22,14 @@
           {% fontawesome_icon 'home' color='blue' %}
         </a>
       </li>
+      <li class="active">
+         {% fontawesome_icon 'bookmark' color='blue' %}
+         Topic
+      </li>
+      <li class="active">
+         {% fontawesome_icon 'file' color='blue' %}
+         Concept
+      </li>
       <li id="breadcrumb-question" class="active">
          {% fontawesome_icon 'question' color='blue' %}
       </li>
@@ -44,12 +52,15 @@
             <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
                 Concept <span class="custom-asterisk">(*)</span>
+                {{ form.concept }}
               </li>
               <li role="presentation" class="pull-right">
-                {{ form.concept }}
+                Key Point
+                {{ form.keypoint }}
               </li>
             </ul>
           </li>
+
 
            <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
@@ -103,6 +114,9 @@
             <div id="part1" class="collapse part-form">
               <ul class="nav nav-stacked">
                 <li class="custom-component" role="presentation">
+                  {{form.id_1}}
+                </li>
+                <li class="custom-component" role="presentation">
                   Mark 1 (*) {{ form.mark_1 }}
                 </li>
                 <li class="custom-component" role="presentation">
@@ -122,6 +136,9 @@
 
             <div id="part2" class="collapse part-form">
               <ul class="nav nav-stacked">
+                 <li class="custom-component" role="presentation">
+                  {{form.id_2}}
+                </li>
                 <li class="custom-component" role="presentation">
                   Mark 2 (*) {{ form.mark_2 }}
                 </li>
@@ -143,6 +160,9 @@
             <div id="part3" class="collapse part-form">
               <ul class="nav nav-stacked">
                 <li class="custom-component" role="presentation">
+                  {{form.id_3}}
+                </li>
+                <li class="custom-component" role="presentation">
                   Mark 3(*) {{ form.mark_3 }}
                 </li>
                 <li class="custom-component" role="presentation">
@@ -162,6 +182,9 @@
 
             <div id="part4" class="collapse part-form">
               <ul class="nav nav-stacked">
+                <li class="custom-component" role="presentation">
+                  {{form.id_4}}
+                </li>
                 <li class="custom-component" role="presentation">
                   Mark 4 (*) {{ form.mark_4 }}
                 </li>

@@ -37,7 +37,7 @@ USED_FOR = [
     ("BO", 'Both online and papers')
 ]
 
-NUMBER_OF_PARTS = [(i, i) for i in range(4)]
+NUMBER_OF_PARTS = [(i, i) for i in range(5)]
 
 MONTHS = [
     ("1", 'January'),
