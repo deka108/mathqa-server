@@ -42,6 +42,8 @@
 }
 
 .display-section {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
   font-size: 27px;
   font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
 }

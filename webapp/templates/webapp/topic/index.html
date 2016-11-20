@@ -98,27 +98,25 @@
                 <div class="panel-heading">{{ keypoint.name }}</div>
                 <div class="panel-body">
                   <p>{{ keypoint.content }}</p>
+                  {% for question in keypoint.question_set.all %}
+                    <div class="panel panel-danger">
+                      <div class="panel-heading">Example</div>
+                      <div class="panel-body">
+                        {{ question.content | safe }}
+                      </div>
+                      <div class="panel-footer">
+                        <button type="button" class="btn btn-success">
+                          Hint
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  {% endfor %}
+                  <hr class="custom-hr">
                 </div>
               </div>
-
-              {% for question in keypoint.question_set.all %}
-                <div class="panel panel-danger">
-                  <div class="panel-heading">Question {{ question.id }}</div>
-                  <div class="panel-body">
-                    {{ question.content | safe }}
-                  </div>
-                  <div class="panel-footer">
-                    <button type="button" class="btn btn-success">
-                      Hint
-                    </button>
-                    <button type="button" class="btn btn-danger">
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              {% endfor %}
-
-              <hr class="custom-hr">
             {% endfor %}
           </div>
         </div>
