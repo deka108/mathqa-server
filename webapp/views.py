@@ -19,9 +19,6 @@ def custom_login(request):
 
 
 def dashboard_index(request):
-    if not request.user.is_authenticated:
-        return redirect('/login/')
-
     return render(request, 'webapp/dashboard/index.html',
                   __user_info(request, {}))
 
@@ -31,7 +28,7 @@ def topic_index(request):
         return redirect('/login/')
 
     return render(request, 'webapp/topic/index.html', __user_info(request, {
-        "topics": Topic.objects.all
+        "topics": Topic.objects.all().order_by('-order').reverse()
     }))
 
 
@@ -42,7 +39,7 @@ def topic_detail(request, topic_id):
     topic = Topic.objects.get(pk=topic_id)
 
     return render(request, 'webapp/topic/index.html', __user_info(request, {
-        "topics": Topic.objects.all,
+        "topics": Topic.objects.all().order_by('-order').reverse(),
         "concepts": topic.concept_set.all,
         "current_topic": topic
     }))
@@ -57,7 +54,7 @@ def topic_concept(request, topic_id, concept_id):
     keypoints = concept.keypoint_set.all()
 
     return render(request, 'webapp/topic/concept.html', __user_info(request, {
-        "topics": Topic.objects.all,
+        "topics": Topic.objects.all().order_by('-order').reverse(),
         "concepts": topic.concept_set.all,
         "current_topic": topic,
         "current_concept": concept,
