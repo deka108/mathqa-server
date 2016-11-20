@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
+from .forms import *
 from meas_models.models import *
 
 
@@ -75,6 +76,36 @@ def contest_index(request):
         return redirect('/login/')
 
     return render(request, 'webapp/contest/index.html',
+                  __user_info(request, {}))
+
+
+def create_user(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+
+    return render(request, 'webapp/user/create.html',
+                  {'form': EditUserForm()})
+
+
+def api_create_user(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+
+    p_username = request.POST.__getitem__('username')
+    p_password = request.POST.__getitem__('password')
+
+    User.objects.create_user(username=p_username,
+                             password=p_password,
+                             email=request.POST.__getitem__('email'),
+                             first_name=request.POST.__getitem__('first_name'),
+                             last_name=request.POST.__getitem__('last_name'),
+                             is_staff=False,
+                             is_active=True
+                             )
+    user = authenticate(username=p_username, password=p_password)
+    login(request, user)
+
+    return render(request, 'webapp/dashboard/index.html',
                   __user_info(request, {}))
 
 

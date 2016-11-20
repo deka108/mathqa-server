@@ -117,7 +117,7 @@ REST_FRAMEWORK = {
 # TODO - Phuc Le-Sanh
 # If admin (CMS), redirect to CMS login page
 # else redirect to app
-LOGOUT_REDIRECT_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

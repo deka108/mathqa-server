@@ -17,6 +17,9 @@ urlpatterns = [
     url(r'^$', views.dashboard_index, name='dashboard_index'),
     url(r'^custom_login/$', views.custom_login, name='custom_login'),
 
+    url(r'^create_user/$', views.create_user, name='create_user'),
+    url(r'^api_create_user/$', views.api_create_user,
+        name='api_create_user'),
     url(r'^topic/$', views.topic_index, name='topic_index'),
     url(r'^topic/(?P<topic_id>[0-9]+)/$',
         views.topic_detail, name='topic_detail'),
