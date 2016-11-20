@@ -4,7 +4,7 @@ $( document ).ready(function() {
     $(".title-page").append(en.cms.title.dashboard);
 
     // Menu
-    $("#nav_applicaiton").append(en.cms.menu.application);
+    $("#nav_application").append(en.cms.menu.application);
     $("#sign-out").append(en.cms.menu.sign_out);
 
     // Management

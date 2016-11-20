@@ -146,7 +146,7 @@ CKEDITOR_CONFIGS = {
             '/',
             {'name': 'basicstyles',
              'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
-                       'Superscript', '-', 'RemoveFormat']},
+                       'Superscript', '-', 'ReplacemoveFormat']},
             {'name': 'paragraph',
              'items': ['NumberedList', 'BulletedList', '-', 'Outdent',
                        'Indent', '-', 'Blockquote', 'CreateDiv', '-',
