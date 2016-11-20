@@ -3,7 +3,17 @@
   height: 500px;
   padding: 20px;
   position: absolute;
-  top: 50%;
+  top: 40%;
+  left: 50%;
+  margin: -70px 0 0 -170px;
+}
+
+.register-area {
+  width: 450px;
+  height: 500px;
+  padding: 20px;
+  position: absolute;
+  top: 20%;
   left: 50%;
   margin: -70px 0 0 -170px;
 }
