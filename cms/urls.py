@@ -6,13 +6,11 @@
 # Last Modified:  Nov 21 2016
 # Modified by:    Phuc Le-Sanh
 """
-from django.conf.urls import url, include
+from django.conf.urls import url
 from . import views
 
 
 urlpatterns = [
-    url('^', include('django.contrib.auth.urls')),
-
     url(r'^topic/$', views.topic_index, name='topic_index'),
     url(r'^edit_topic/(?P<topic_id>[0-9]+)/$',
         views.edit_topic, name='edit_topic'),
