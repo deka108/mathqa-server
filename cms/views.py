@@ -190,10 +190,11 @@ def api_create_concept(request):
     if formset.is_valid():
         for f in formset:
             cd = f.cleaned_data
-            keypoint = KeyPoint(name=cd.get('name'),
-                                content=cd.get('content'),
-                                concept=concept)
-            keypoint.save()
+            if any(cd):
+                keypoint = KeyPoint(name=cd.get('name'),
+                                    content=cd.get('content'),
+                                    concept=concept)
+                keypoint.save()
 
     return HttpResponseRedirect('../concept/', __user_info(request, {
         "topics": Topic.objects.all,
