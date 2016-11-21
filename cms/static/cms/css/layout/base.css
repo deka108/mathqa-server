@@ -11,10 +11,13 @@
   margin-top: 32px;
 }
 
-.left-panel {
+.left-panel{
   background: #d9d9d9;
   border-right: thick solid #ff751a;
+  overflow: scroll;
+  height: 500px;
 }
+
 
 .display-section {
   font-size: 27px;
