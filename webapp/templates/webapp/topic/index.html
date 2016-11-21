@@ -177,6 +177,7 @@
                       <div class="row question-content">
                         <hr>
                         {{ question.content | safe }}
+                         </br>
                         {% for part in question.part_set.all %}
                           {{ part.content | safe}}
                         {% endfor %}
