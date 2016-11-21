@@ -77,7 +77,7 @@ class EditQuestionForm(forms.Form):
     solution_1 = forms.CharField(widget=CKEditorWidget(), required=False)
 
     # Part 2
-    id_1 = forms.CharField(widget=forms.HiddenInput())
+    id_2 = forms.CharField(widget=forms.HiddenInput())
     mark_2 = forms.IntegerField(
         widget=forms.Select(choices=MARKS), required=False)
     difficulty_level_2 = forms.CharField(max_length=1,
@@ -91,7 +91,7 @@ class EditQuestionForm(forms.Form):
     solution_2 = forms.CharField(widget=CKEditorWidget(), required=False)
 
     # Part 3
-    id_1 = forms.CharField(widget=forms.HiddenInput())
+    id_3 = forms.CharField(widget=forms.HiddenInput())
     mark_3 = forms.IntegerField(
         widget=forms.Select(choices=MARKS), required=False)
     difficulty_level_3 = forms.CharField(max_length=1,
@@ -105,7 +105,7 @@ class EditQuestionForm(forms.Form):
     solution_3 = forms.CharField(widget=CKEditorWidget(), required=False)
 
     # Part 4
-    id_1 = forms.CharField(widget=forms.HiddenInput())
+    id_4 = forms.CharField(widget=forms.HiddenInput())
     mark_4 = forms.IntegerField(
         widget=forms.Select(choices=MARKS), required=False)
     difficulty_level_4 = forms.CharField(max_length=1,

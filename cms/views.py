@@ -424,18 +424,10 @@ def api_update_question(request):
 
     # Update Parts
     if (any(request.POST.getlist('mark_1')) and
-            (int(question.number_of_part) == 1)):
-        if any(request.POST.getlist('mark_1')):
-            part_1 = Part(
-                mark=request.POST.__getitem__('mark_1'),
-                difficulty_level=request.POST.__getitem__(
-                    'difficulty_level_1'),
-                respone_type=request.POST.__getitem__('respone_type_1'),
-                content=request.POST.__getitem__('content_1'),
-                solution=request.POST.__getitem__('solution_1'),
-                question=question)
-            part_1.save()
-        else:
+            (int(question.number_of_part) >= 1)):
+        checking = Part.objects.get(pk=request.POST.__getitem__('id_1'))
+
+        if checking:
             part_1 = Part.objects.get(pk=request.POST.__getitem__('id_1'))
             part_1.mark = request.POST.__getitem__('mark_1')
             part_1.difficulty_level = request.POST.__getitem__(
@@ -445,20 +437,22 @@ def api_update_question(request):
             part_1.solution = request.POST.__getitem__('solution_1')
             part_1.question = question
             part_1.save()
+        else:
+            part_1 = Part(
+                mark=request.POST.__getitem__('mark_1'),
+                difficulty_level=request.POST.__getitem__(
+                    'difficulty_level_1'),
+                respone_type=request.POST.__getitem__('respone_type_1'),
+                content=request.POST.__getitem__('content_1'),
+                solution=request.POST.__getitem__('solution_1'),
+                question=question)
+            part_1.save()
 
     if (any(request.POST.getlist('mark_2')) and
-            (int(question.number_of_part) == 2)):
-        if any(request.POST.getlist('mark_2')):
-            part_2 = Part(
-                mark=request.POST.__getitem__('mark_2'),
-                difficulty_level=request.POST.__getitem__(
-                    'difficulty_level_2'),
-                respone_type=request.POST.__getitem__('respone_type_2'),
-                content=request.POST.__getitem__('content_2'),
-                solution=request.POST.__getitem__('solution_2'),
-                question=question)
-            part_2.save()
-        else:
+            (int(question.number_of_part) >= 2)):
+        checking = Part.objects.get(pk=request.POST.__getitem__('id_2'))
+
+        if checking:
             part_2 = Part.objects.get(pk=request.POST.__getitem__('id_2'))
             part_2.mark = request.POST.__getitem__('mark_2')
             part_2.difficulty_level = request.POST.__getitem__(
@@ -468,20 +462,22 @@ def api_update_question(request):
             part_2.solution = request.POST.__getitem__('solution_2')
             part_2.question = question
             part_2.save()
+        else:
+            part_2 = Part(
+                mark=request.POST.__getitem__('mark_2'),
+                difficulty_level=request.POST.__getitem__(
+                    'difficulty_level_2'),
+                respone_type=request.POST.__getitem__('respone_type_2'),
+                content=request.POST.__getitem__('content_2'),
+                solution=request.POST.__getitem__('solution_2'),
+                question=question)
+            part_2.save()
 
     if (any(request.POST.getlist('mark_3')) and
-            (int(question.number_of_part) == 3)):
-        if any(request.POST.getlist('mark_3')):
-            part_3 = Part(
-                mark=request.POST.__getitem__('mark_3'),
-                difficulty_level=request.POST.__getitem__(
-                    'difficulty_level_3'),
-                respone_type=request.POST.__getitem__('respone_type_3'),
-                content=request.POST.__getitem__('content_3'),
-                solution=request.POST.__getitem__('solution_3'),
-                question=question)
-            part_3.save()
-        else:
+            (int(question.number_of_part) >= 3)):
+        checking = Part.objects.get(pk=request.POST.__getitem__('id_3'))
+
+        if checking:
             part_3 = Part.objects.get(pk=request.POST.__getitem__('id_3'))
             part_3.mark = request.POST.__getitem__('mark_3')
             part_3.difficulty_level = request.POST.__getitem__(
@@ -491,20 +487,22 @@ def api_update_question(request):
             part_3.solution = request.POST.__getitem__('solution_3')
             part_3.question = question
             part_3.save()
+        else:
+            part_3 = Part(
+                mark=request.POST.__getitem__('mark_3'),
+                difficulty_level=request.POST.__getitem__(
+                    'difficulty_level_3'),
+                respone_type=request.POST.__getitem__('respone_type_3'),
+                content=request.POST.__getitem__('content_3'),
+                solution=request.POST.__getitem__('solution_3'),
+                question=question)
+            part_3.save()
 
     if (any(request.POST.getlist('mark_4')) and
             (int(question.number_of_part) == 4)):
-        if any(request.POST.getlist('mark_4')):
-            part_4 = Part(
-                mark=request.POST.__getitem__('mark_4'),
-                difficulty_level=request.POST.__getitem__(
-                    'difficulty_level_4'),
-                respone_type=request.POST.__getitem__('respone_type_4'),
-                content=request.POST.__getitem__('content_4'),
-                solution=request.POST.__getitem__('solution_4'),
-                question=question)
-            part_4.save()
-        else:
+        checking = Part.objects.get(pk=request.POST.__getitem__('id_4'))
+
+        if checking:
             part_4 = Part.objects.get(pk=request.POST.__getitem__('id_4'))
             part_4.mark = request.POST.__getitem__('mark_4')
             part_4.difficulty_level = request.POST.__getitem__(
@@ -513,6 +511,16 @@ def api_update_question(request):
             part_4.content = request.POST.__getitem__('content_4')
             part_4.solution = request.POST.__getitem__('solution_4')
             part_4.question = question
+            part_4.save()
+        else:
+            part_4 = Part(
+                mark=request.POST.__getitem__('mark_4'),
+                difficulty_level=request.POST.__getitem__(
+                    'difficulty_level_4'),
+                respone_type=request.POST.__getitem__('respone_type_4'),
+                content=request.POST.__getitem__('content_4'),
+                solution=request.POST.__getitem__('solution_4'),
+                question=question)
             part_4.save()
 
     return HttpResponseRedirect('../question/', __user_info(request, {
@@ -790,5 +798,4 @@ def __parts(clist, parts):
         }
         clist.update(hash_part)
         i = i + 1
-
     return clist

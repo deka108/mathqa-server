@@ -178,7 +178,7 @@
                         <hr>
                         {{ question.content | safe }}
                         {% for part in question.part_set.all %}
-                          {{ part.content | safe }}
+                          Part {{ forloop.counter }}: {{ part.content | safe}}
                         {% endfor %}
                       </div>
                     </td>
