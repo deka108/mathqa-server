@@ -177,6 +177,9 @@
                       <div class="row question-content">
                         <hr>
                         {{ question.content | safe }}
+                        {% for part in question.part_set.all %}
+                          {{ part.content | safe }}
+                        {% endfor %}
                       </div>
                     </td>
                   </tr>
