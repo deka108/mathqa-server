@@ -157,7 +157,7 @@
                         <div class="col-sm-8 pull-left">
                           <ul class="nav nav-pills nav-stacked">
                             <li role="presentation" class = "question-title">
-                              Question {{ question.id }}
+                              Question {{ forloop.counter }}
                             </li>
                             <li role="presentation" class = "difficulty-level-display text-center">
                               <span>{{ question.get_difficulty_level_display }}</span>
