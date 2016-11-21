@@ -773,6 +773,7 @@ def __parts(clist, parts):
             'content_' + str(i): part.content,
             'solution_' + str(i): part.solution,
         }
-        + +i
         clist.update(hash_part)
+        i = i + 1
+
     return clist

@@ -185,8 +185,11 @@ class Part(models.Model):
     List of questions
     """
 
+    def __unicode__(self):
+        return unicode(self.id)
+
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     mark = models.IntegerField(default=1)
     difficulty_level = models.IntegerField(
