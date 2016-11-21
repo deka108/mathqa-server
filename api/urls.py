@@ -6,7 +6,6 @@
 # Last Modified:  Nov 21 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 from api import views
 
 from django.conf.urls import url, include

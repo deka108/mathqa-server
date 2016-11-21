@@ -6,7 +6,6 @@
 # Last Modified:  Nov 21 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 

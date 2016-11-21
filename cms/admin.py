@@ -6,7 +6,6 @@
 # Last Modified:  Nov 21 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 

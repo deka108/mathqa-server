@@ -6,7 +6,6 @@
 # Last Modified:  Nov 16 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.forms import formset_factory

@@ -6,7 +6,6 @@
 # Last Modified:  Nov 21 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 NUMERIC = 'Numberic'
 SKETCH = 'Sketch'
 EXPRESSION = 'EXPRESSION'

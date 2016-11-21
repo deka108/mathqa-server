@@ -6,7 +6,6 @@
 # Last Modified:  Nov 21 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 from meas_models.models import *
 
 from rest_framework import serializers
