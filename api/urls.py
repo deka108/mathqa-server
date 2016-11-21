@@ -1,3 +1,12 @@
+"""
+# Name:           api/urls.py
+# Description:
+# Created by:     Phuc Le-Sanh
+# Date Created:   N.A
+# Last Modified:  Nov 21 2016
+# Modified by:    Phuc Le-Sanh
+"""
+
 from api import views
 
 from django.conf.urls import url, include
