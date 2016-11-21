@@ -295,7 +295,7 @@ def api_create_question(request):
 
     # Add Parts
     if (any(request.POST.getlist('mark_1')) and
-            (int(question.number_of_part) == 1)):
+            (int(question.number_of_part) >= 1)):
         part1 = Part(
             mark=request.POST.__getitem__('mark_1'),
             difficulty_level=request.POST.__getitem__(
@@ -308,7 +308,7 @@ def api_create_question(request):
         part1.save()
 
     if (any(request.POST.getlist('mark_2')) and
-            (int(question.number_of_part) == 2)):
+            (int(question.number_of_part) >= 2)):
         part2 = Part(
             mark=request.POST.__getitem__('mark_2'),
             difficulty_level=request.POST.__getitem__('difficulty_level_2'),
@@ -320,7 +320,7 @@ def api_create_question(request):
         part2.save()
 
     if (any(request.POST.getlist('mark_3')) and
-            (int(question.number_of_part) == 3)):
+            (int(question.number_of_part) >= 3)):
         part3 = Part(
             mark=request.POST.__getitem__('mark_3'),
             difficulty_level=request.POST.__getitem__('difficulty_level_3'),
