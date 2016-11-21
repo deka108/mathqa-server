@@ -218,7 +218,22 @@ def api_update_concept(request):
     # Complement formset
     KeyPointFormSet = formset_factory(KeyPointForm)
     formset = KeyPointFormSet(request.POST)
+
     if formset.is_valid():
+        # Temporarily fix for removing key points - PhucLS
+        existing_keypoints = concept.keypoint_set.all()
+        for keypoint in existing_keypoints:
+            counter = 0
+
+            for f in formset:
+                cd = f.cleaned_data
+
+                if keypoint.name == cd.get('name'):
+                    counter = counter + 1
+
+            if counter == 0:
+                keypoint.delete()
+
         for f in formset:
             cd = f.cleaned_data
 
