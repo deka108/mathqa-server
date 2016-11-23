@@ -6,7 +6,6 @@
 # Last Modified:  Oct 10 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

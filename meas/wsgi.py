@@ -6,7 +6,6 @@
 # Last Modified:  Oct 10 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 import os
 from django.core.wsgi import get_wsgi_application
 

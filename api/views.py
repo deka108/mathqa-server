@@ -1,3 +1,11 @@
+"""
+# Name:           api/views.py
+# Description:
+# Created by:     Phuc Le-Sanh
+# Date Created:   N.A
+# Last Modified:  Nov 21 2016
+# Modified by:    Phuc Le-Sanh
+"""
 from meas_models.models import *
 
 from api.serializers import *

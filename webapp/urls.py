@@ -1,12 +1,11 @@
 """
-# Name:           app/urls.py
+# Name:           webapp/urls.py
 # Description:
 # Created by:     Phuc Le-Sanh
 # Date Created:   Oct 10 2016
-# Last Modified:  Oct 10 2016
+# Last Modified:  Nov 21 2016
 # Modified by:    Phuc Le-Sanh
 """
-
 from django.conf.urls import url, include
 
 from . import views

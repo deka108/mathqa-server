@@ -1,3 +1,11 @@
+"""
+# Name:           webapp/views.py
+# Description:
+# Created by:     Phuc Le-Sanh
+# Date Created:   N.A
+# Last Modified:  Nov 21 2016
+# Modified by:    Phuc Le-Sanh
+"""
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
