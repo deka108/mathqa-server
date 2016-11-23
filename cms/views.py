@@ -38,7 +38,9 @@ def create_topic(request):
     if not request.user.is_superuser:
         return redirect('/cms/login/')
 
-    return render(request, 'cms/topic/create.html', {'form': EditTopicForm()})
+    return render(request, 'cms/topic/create.html', __user_info(request, {
+        'form': EditTopicForm()
+    }))
 
 
 def edit_topic(request, topic_id):
@@ -47,12 +49,13 @@ def edit_topic(request, topic_id):
 
     topic = Topic.objects.get(pk=topic_id)
 
-    return render(request, 'cms/topic/edit.html', {'form': EditTopicForm(
-        initial={'id': topic_id, 'name': topic.name,
-                 'description': topic.description,
-                 'subject': topic.subject
-                 }
-    )})
+    return render(request, 'cms/topic/edit.html', __user_info(request, {
+        'form': EditTopicForm(
+            initial={'id': topic_id, 'name': topic.name,
+                     'description': topic.description,
+                     'subject': topic.subject
+                     })}
+    ))
 
 
 def api_create_topic(request):
@@ -62,8 +65,8 @@ def api_create_topic(request):
     topic = Topic(name=request.POST.__getitem__('name'),
                   description=request.POST.__getitem__('description'),
                   subject=Subject.objects.get(
-                      pk=request.POST.__getitem__('subject'))
-                  )
+        pk=request.POST.__getitem__('subject'))
+    )
     topic.save()
 
     return HttpResponseRedirect('../topic/', __user_info(request, {
@@ -148,8 +151,9 @@ def create_concept(request):
     KeyPointFormSet = formset_factory(KeyPointForm, extra=1)
     formset = KeyPointFormSet()
 
-    return render(request, 'cms/concept/create.html',
-                  {'form': EditConceptForm(), 'formset': formset})
+    return render(request, 'cms/concept/create.html', __user_info(request, {
+                  'form': EditConceptForm(), 'formset': formset
+                  }))
 
 
 def edit_concept(request, concept_id):
@@ -163,14 +167,14 @@ def edit_concept(request, concept_id):
     for k in concept.keypoint_set.all():
         res.append(k.__dict__)
 
-    return render(request, 'cms/concept/edit.html', {
+    return render(request, 'cms/concept/edit.html', __user_info(request, {
         'form': EditConceptForm(
             initial={'id': concept_id, 'name': concept.name,
                      'description': concept.description,
                      'topic': concept.topic,
                      }),
         'formset': KeyPointFormSet(initial=res)
-    })
+    }))
 
 
 def api_create_concept(request):

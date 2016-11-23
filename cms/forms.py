@@ -59,8 +59,20 @@ class EditQuestionForm(forms.Form):
         max_length=1, widget=forms.Select(choices=DIFFICULTIES))
     respone_type = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
-    content = forms.CharField(widget=CKEditorWidget())
-    solution = forms.CharField(widget=CKEditorWidget())
+    content = forms.CharField(label='Content', max_length=1000,
+                              widget=forms.Textarea(
+                                  attrs={'placeholder': 'Content',
+                                         'width': "100%",
+                                         'cols': "60",
+                                         'rows': "10"}))
+    solution = forms.CharField(label='Content', max_length=1000,
+                               widget=forms.Textarea(
+                                   attrs={'placeholder': 'Solution',
+                                          'width': "100%",
+                                          'cols': "60",
+                                          'rows': "10"}))
+    # content = forms.CharField(widget=CKEditorWidget())
+    # solution = forms.CharField(widget=CKEditorWidget())
     keypoint = forms.ModelChoiceField(empty_label="Please choose KeyPoint",
                                       queryset=KeyPoint.objects.all(),
                                       required=False)
