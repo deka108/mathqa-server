@@ -587,8 +587,8 @@ def create_paper(request):
     if not request.user.is_superuser:
         return redirect('/cms/login/')
 
-    return render(request, 'cms/paper/create.html',
-                  {'form': EditPaperForm()})
+    return render(request, 'cms/paper/create.html', __user_info(request, {
+                  'form': EditPaperForm()}))
 
 
 def api_create_paper(request):
@@ -661,8 +661,8 @@ def create_user(request):
     if not request.user.is_superuser:
         return redirect('/cms/login/')
 
-    return render(request, 'cms/user/create.html',
-                  {'form': EditUserForm()})
+    return render(request, 'cms/user/create.html', __user_info(request, {
+                  'form': EditUserForm()}))
 
 
 def api_create_user(request):

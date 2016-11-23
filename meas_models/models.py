@@ -3,7 +3,7 @@
 # Description:
 # Created by:     Phuc Le-Sanh
 # Date Created:   Nov 16 2016
-# Last Modified:  Nov 16 2016
+# Last Modified:  Nov 23 2016
 # Modified by:    Phuc Le-Sanh
 """
 from __future__ import unicode_literals
@@ -158,9 +158,6 @@ class Question(models.Model):
         max_length=2,
         choices=USED_FOR,
         default="ON")
-    number_of_part = models.IntegerField(
-        choices=NUMBER_OF_PARTS,
-        default=1)
     mark = models.IntegerField(default=1)
     difficulty_level = models.CharField(
         max_length=1,
@@ -172,53 +169,10 @@ class Question(models.Model):
         default=TEXT)
     content = RichTextField()
     solution = RichTextField()
+    answer = RichTextField()
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     keypoint = models.ForeignKey(KeyPoint, on_delete=models.CASCADE,
                                  null=True, blank=True)
     paper = models.ForeignKey(
         Paper, on_delete=models.CASCADE, null=True, blank=True)
-
-
-class Part(models.Model):
-    """
-    List of questions
-    """
-
-    def __unicode__(self):
-        return unicode(self.id)
-
-    def __str__(self):
-        return str(self.id)
-
-    mark = models.IntegerField(default=1)
-    difficulty_level = models.IntegerField(
-        validators=[validate_difficulty_range],
-        default=0)
-    respone_type = models.CharField(
-        max_length=10,
-        choices=RESPONSE_TYPES,
-        default=TEXT)
-    content = RichTextField()
-    solution = RichTextField()
-
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-
-# class Proficiency(models.Model):
-#     """
-#     Track history of students
-#     """
-
-#     detail = models.IntegerField
-#     response = models.TextField(max_length=1000)
-#     respone_type = models.CharField(
-#         max_length=10,
-#         choices=RESPONSE_TYPES,
-#         default=TEXT)
-#     is_complete = models.BooleanField(default=0)
-
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     test = models.ForeignKey(Test, on_delete=models.CASCADE)
-
-#     unique_together = ("user", "restaurant", "detail")
