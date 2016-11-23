@@ -80,6 +80,14 @@ class Topic(models.Model):
 
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
+    def as_json(self):
+        return dict(
+            topic_id=self.id,
+            name=self.name,
+            description=self.description,
+            order=self.order,
+            subject=self.subject.name)
+
 
 class Concept(models.Model):
     """

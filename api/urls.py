@@ -1,32 +1,16 @@
 """
-# Name:           api/urls.py
+# Name:           cms/urls.py
 # Description:
 # Created by:     Phuc Le-Sanh
-# Date Created:   N.A
-# Last Modified:  Nov 21 2016
+# Date Created:   Nov 23, 2016
+# Last Modified:  Nov 23, 2016
 # Modified by:    Phuc Le-Sanh
 """
-from api import views
+from django.conf.urls import url
+from . import views
 
-from django.conf.urls import url, include
-from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework.authtoken import views as rest_views
 
 urlpatterns = [
-    url(r'^api-auth/', include('rest_framework.urls',
-                               namespace='rest_framework')),
-    url(r'^api-token-auth/', rest_views.obtain_auth_token),
-
-    url(r'^users/$', views.UserList.as_view()),
-    url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
-
-    url(r'^education_levels/$', views.EducationLevelList.as_view()),
-    url(r'^education_levels/(?P<pk>[0-9]+)/$',
-        views.EducationLevelDetail.as_view()),
-
-    url(r'^topics/$', views.TopicList.as_view()),
-    url(r'^topics/(?P<pk>[0-9]+)/$',
-        views.TopicDetail.as_view()),
+    url(r'^topic_index/$', views.topic_index, name='topic_index'),
+    url(r'^topic_post/$', views.topic_post, name='topic_post'),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
