@@ -98,8 +98,12 @@
                       <li role="presentation" class = "question-title">
                         Question {{ forloop.counter }}
                       </li>
-                      <li role="presentation" class = "difficulty-level-display text-center">
-                        <span>{{ question.get_difficulty_level_display }}</span>
+                      <li role="presentation" class = "difficulty-level-display">
+                        <span>
+                          {% for c in question.get_difficulty_level %}
+                            {% fontawesome_icon 'star' color='#b38600' %}
+                          {% endfor %}
+                        </span>
                       </li>
                     </ul>
                   </div>

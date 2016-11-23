@@ -169,10 +169,13 @@ class Question(models.Model):
         default=TEXT)
     content = RichTextField()
     solution = RichTextField()
-    answer = RichTextField()
+    answer = RichTextField(default="Test")
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     keypoint = models.ForeignKey(KeyPoint, on_delete=models.CASCADE,
                                  null=True, blank=True)
     paper = models.ForeignKey(
         Paper, on_delete=models.CASCADE, null=True, blank=True)
+
+    def get_difficulty_level(self):
+        return range(0, int(self.difficulty_level))

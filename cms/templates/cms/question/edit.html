@@ -12,6 +12,84 @@
   </script>
   <link href="{% static 'cms/css/question/ce.css' %}"
         rel="stylesheet"/>
+  <script>
+    var Preview = {
+      delay: 150,        // delay after keystroke before updating
+      preview: null,     // filled in by Init below
+      buffer: null,      // filled in by Init below
+      timeout: null,     // store setTimout id
+      mjRunning: false,  // true when MathJax is processing
+      mjPending: false,  // true when a typeset has been queued
+      oldText: null,     // used to check if an update is needed
+      //
+      //  Get the preview and buffer DIV's
+      //
+      Init: function () {
+        this.preview = document.getElementById("MathPreview");
+        this.buffer = document.getElementById("MathBuffer");
+      },
+      //
+      //  Switch the buffer and preview, and display the right one.
+      //  (We use visibility:hidden rather than display:none since
+      //  the results of running MathJax are more accurate that way.)
+      //
+      SwapBuffers: function () {
+        var buffer = this.preview, preview = this.buffer;
+        this.buffer = buffer; this.preview = preview;
+        buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+        preview.style.position = ""; preview.style.visibility = "";
+      },
+      //
+      //  This gets called when a key is pressed in the textarea.
+      //  We check if there is already a pending update and clear it if so.
+      //  Then set up an update to occur after a small delay (so if more keys
+      //    are pressed, the update won't occur until after there has been
+      //    a pause in the typing).
+      //  The callback function is set up below, after the Preview object is set up.
+      //
+      Update: function () {
+        if (this.timeout) {clearTimeout(this.timeout)}
+        this.timeout = setTimeout(this.callback,this.delay);
+      },
+      //
+      //  Creates the preview and runs MathJax on it.
+      //  If MathJax is already trying to render the code, return
+      //  If the text hasn't changed, return
+      //  Otherwise, indicate that MathJax is running, and start the
+      //    typesetting.  After it is done, call PreviewDone.
+      //
+      CreatePreview: function () {
+        Preview.timeout = null;
+        if (this.mjPending) return;
+        var text = document.getElementById("id_content").value;
+        if (text === this.oldtext) return;
+        if (this.mjRunning) {
+          this.mjPending = true;
+          MathJax.Hub.Queue(["CreatePreview",this]);
+        } else {
+          this.buffer.innerHTML = this.oldtext = text;
+          this.mjRunning = true;
+          MathJax.Hub.Queue(
+      ["Typeset",MathJax.Hub,this.buffer],
+      ["PreviewDone",this]
+          );
+        }
+      },
+      //
+      //  Indicate that MathJax is no longer running,
+      //  and swap the buffers to show the results.
+      //
+      PreviewDone: function () {
+        this.mjRunning = this.mjPending = false;
+        this.SwapBuffers();
+      }
+    };
+    //
+    //  Cache a callback to the CreatePreview action
+    //
+    Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
+    Preview.callback.autoReset = true;  // make sure it can run more than once
+  </script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -46,31 +124,38 @@
       <div class="col-sm-10">
         <ul class="nav nav-stacked">
           <li class="custom-component" role="presentation">
-            {{form.id}}
-          </li>
-          <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
+              <li class="custom-component" role="presentation">
+                {{form.id}}
+              </li>
               <li role="presentation" class="pull-left">
-                Concept <span class="custom-asterisk">(*)</span>
-                {{ form.concept }}
+                <b>Concept</b> <span class="custom-asterisk">(*)</span>
+                <div class="styled-select slate">
+                  {{ form.concept }}
+                </div>
               </li>
               <li role="presentation" class="pull-right">
-                Key Point
-                {{ form.keypoint }}
+                <b>Key Point</b>
+                <div class="styled-select slate">
+                  {{ form.keypoint }}
+                </div>
               </li>
             </ul>
           </li>
 
-
            <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
               <li id="question_type" role="presentation" class="pull-left">
-                Question type <span class="custom-asterisk">(*)</span>
-                {{ form.question_type }}
+                <b>Question type</b> <span class="custom-asterisk">(*)</span>
+                <div class="styled-select slate">
+                  {{ form.question_type }}
+                </div>
               </li>
-              <li id="paper" role="presentation" class="pull-right">
-                Paper <span class="custom-asterisk">(*)</span>
-                {{ form.paper }}
+              <li id="paper" role="presentation">
+                <b>Paper</b> <span class="custom-asterisk">(*)</span>
+                <div class="styled-select slate">
+                  {{ form.paper }}
+                </div>
               </li>
             </ul>
           </li>
@@ -79,141 +164,38 @@
             <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
                 Question source <span class="custom-asterisk">(*)</span>
-                {{ form.source }}
+                <div class="styled-select slate">
+                  {{ form.source }}
+                </div>
               </li>
-              <li role="presentation" class="pull-right">
-                Used for <span class="custom-asterisk">(*)</span>
-                {{ form.used_for }}
-              </li>
-            </ul>
-          </li>
-
-          <li class="custom-component" role="presentation">
-            <ul class="nav nav-pills custom-inside">
-              <li id="number_parts" role="presentation" class="pull-left">
-                Number of parts <span class="custom-asterisk">(*)</span>
-                {{ form.number_of_part }}
-              </li>
-              <li role="presentation" class="pull-right">
-                Response type <span class="custom-asterisk">(*)</span>
-                {{ form.respone_type }}
+              <li role="presentation">
+                 Used for <span class="custom-asterisk">(*)</span>
+                <div class="styled-select slate">
+                  {{ form.used_for }}
+                </div>
               </li>
             </ul>
-          </li>
-
-          <li role="presentation">
-            <div class="btn-group" role="group" aria-label="...">
-              <button id="cpart1" data-toggle="collapse" data-target="#part1" type="button" class="btn btn-warning">Part 1</button>
-              <button id="cpart2" data-toggle="collapse" data-target="#part2" type="button" class="btn btn-success">Part 2</button>
-              <button id="cpart3" data-toggle="collapse" data-target="#part3" type="button" class="btn btn-primary">Part 3</button>
-              <button id="cpart4" data-toggle="collapse" data-target="#part4" type="button" class="btn btn-danger">Part 4</button>
-            </div>
-          </li>
-
-          <li class="custom-component" role="presentation">
-            <div id="part1" class="collapse part-form">
-              <ul class="nav nav-stacked">
-                <li class="custom-component" role="presentation">
-                  {{form.id_1}}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Mark 1 (*) {{ form.mark_1 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Difficulty level 1 (*) {{ form.difficulty_level_1 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Response type 1 (*) {{ form.respone_type_1 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Content 1 (*) {{ form.content_1 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Solution 1 (*) {{ form.solution_1 }}
-                </li>
-              </ul>
-            </div>
-
-            <div id="part2" class="collapse part-form">
-              <ul class="nav nav-stacked">
-                <li class="custom-component" role="presentation">
-                  {{form.id_2}}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Mark 2 (*) {{ form.mark_2 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Difficulty level 2 (*) {{ form.difficulty_level_2 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Response type 2 (*) {{ form.respone_type_2 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Content 2 (*) {{ form.content_2 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Solution 2 (*) {{ form.solution_2 }}
-                </li>
-              </ul>
-            </div>
-
-            <div id="part3" class="collapse part-form">
-              <ul class="nav nav-stacked">
-                <li class="custom-component" role="presentation">
-                  {{form.id_3}}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Mark 3(*) {{ form.mark_3 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Difficulty level 3(*) {{ form.difficulty_level_3 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Response type 3 (*) {{ form.respone_type_3 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Content 3 (*) {{ form.content_3 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Solution 3 (*) {{ form.solution_3 }}
-                </li>
-              </ul>
-            </div>
-
-            <div id="part4" class="collapse part-form">
-              <ul class="nav nav-stacked">
-                <li class="custom-component" role="presentation">
-                  {{form.id_4}}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Mark 4 (*) {{ form.mark_4 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Difficulty level 4 (*) {{ form.difficulty_level_4 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Response type 4 (*) {{ form.respone_type_4 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Content 4 (*) {{ form.content_4 }}
-                </li>
-                <li class="custom-component" role="presentation">
-                  Solution 4 (*) {{ form.solution_4 }}
-                </li>
-              </ul>
-            </div>
-
           </li>
 
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
                 Mark <span class="custom-asterisk">(*)</span>
-                {{ form.mark }}
+                <div class="styled-select slate">
+                  {{ form.mark }}
+                </div>
               </li>
               <li role="presentation" class="pull-right">
+                Response type <span class="custom-asterisk">(*)</span>
+                <div class="styled-select slate">
+                  {{ form.respone_type }}
+                </div>
+              </li>
+              <li role="presentation">
                 Difficulty level <span class="custom-asterisk">(*)</span>
-                {{ form.difficulty_level }}
+                <div class="styled-select slate">
+                  {{ form.difficulty_level }}
+                </div>
               </li>
             </ul>
           </li>
@@ -221,9 +203,9 @@
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
-                Content <span class="custom-asterisk">(*)</span>
+                <b>Content</b> <span class="custom-asterisk">(*)</span>
               </li>
-              <li role="presentation" class="pull-right">
+              <li role="presentation">
                 {{ form.content }}
               </li>
             </ul>
@@ -232,17 +214,39 @@
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
-                Solution <span class="custom-asterisk">(*)</span>
+                <b>Preview</b> <span class="custom-asterisk">(*)</span>
               </li>
-              <li role="presentation" class="pull-right">
-                {{ form.solution }}
+              <li role="presentation" class="pull-left">
+                <div id="MathPreview"></div>
+                <div id="MathBuffer"></div>
+                <script>
+                  Preview.Init();
+                </script>
               </li>
             </ul>
           </li>
+
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
+              <li role="presentation" class="pull-left">
+                <b>Solution</b> <span class="custom-asterisk">(*)</span>
+              </li>
+               <li role="presentation">
+                {{ form.solution }}
+              </li>
+              <li role="presentation" class="pull-left">
+                &nbsp &nbsp &nbsp &nbsp &nbsp
+                <b>Answer</b> <span class="custom-asterisk">(*)</span>
+              </li>
+              <li role="presentation" class="pull-right">
+                {{ form.answer }}
+              </li>
+            </ul>
+          </li>
+
           <li class="custom-component pull-right" role="presentation">
-            <button type="submit" class="btn btn-danger">Save</button>
-            <button type="submit" class="btn btn-success">Reset</button>
-            <button type="submit" class="btn btn-warning">Cancel</button>
+            <button type="submit" class="btn btn-info">Save</button>
+            <button type="submit" class="btn btn-default">Cancel</button>
           </li>
         </ul>
       </div>
