@@ -52,12 +52,15 @@
             src="{% static 'mathquill-0.10.1/mathquill.js' %}">
     </script>
 
-    <script type="text/javascript" async
-      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML">
     </script>
 
     <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      MathJax.Hub.Config({
+        showProcessingMessages: false,
+        tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+      });
     </script>
     <!-- Extend css and js -->
     {% block extended_head %}{% endblock extended_head %}
@@ -106,43 +109,43 @@
       <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
           <a  href="/cms/topic/">
-            <button id="manage-topic" type="button" class="btn btn-danger">
+            <button id="manage-topic" type="button" class="btn btn-default">
             </button>
           </a>
         </div>
         <div class="btn-group" role="group">
           <a  href="/cms/concept/">
-            <button id="manage-concept" type="button" class="btn btn-primary">
+            <button id="manage-concept" type="button" class="btn btn-default">
             </button>
           </a>
         </div>
         <div class="btn-group" role="group">
           <a  href="/cms/paper/">
-            <button id="manage-paper" type="button" class="btn btn-primary">
+            <button id="manage-paper" type="button" class="btn btn-default">
             </button>
           </a>
         </div>
         <div class="btn-group" role="group">
           <a  href="/cms/question/">
-            <button id="manage-question" type="button" class="btn btn-primary">
+            <button id="manage-question" type="button" class="btn btn-default">
             </button>
           </a>
         </div>
         <div class="btn-group" role="group">
           <a  href="/cms/user/">
-            <button id="manage-user" type="button" class="btn btn-warning">
+            <button id="manage-user" type="button" class="btn btn-default">
             </button>
           </a>
         </div>
         <div class="btn-group" role="group">
           <a  href="#">
-            <button id="manage-quiz" type="button" class="btn btn-success">
+            <button id="manage-quiz" type="button" class="btn btn-default">
             </button>
           </a>
         </div>
         <div class="btn-group" role="group">
           <a  href="#">
-            <button id="manage-contest" type="button" class="btn btn-success">
+            <button id="manage-contest" type="button" class="btn btn-default">
             </button>
           </a>
         </div>

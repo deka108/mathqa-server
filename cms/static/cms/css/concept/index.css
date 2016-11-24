@@ -1,12 +1,12 @@
 .custom-nav-stacked {
-  background: #d9d9d9;
+  background: #f2f2f2;
   width: 100%;
   border-right: thick solid #ff751a;
   border-bottom: thick solid #ff751a;
 }
 
 .main-section {
-  background-color: #337AB7;
+  background-color: #4da6ff;
   font-size: 18px;
   font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
   color: white;

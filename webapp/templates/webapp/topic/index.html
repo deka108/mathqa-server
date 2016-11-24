@@ -11,11 +11,15 @@
   <link href="{% static 'webapp/css/topic/index.css' %}"
         rel="stylesheet"/>
 
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+   <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML">
   </script>
-  <script type="text/javascript" async
-    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      showProcessingMessages: false,
+      tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+    });
   </script>
 
   <link href="{% static 'webapp/css/topic/index.css' %}"
@@ -159,8 +163,12 @@
                             <li role="presentation" class = "question-title">
                               Question {{ forloop.counter }}
                             </li>
-                            <li role="presentation" class = "difficulty-level-display text-center">
-                              <span>{{ question.get_difficulty_level_display }}</span>
+                            <li role="presentation" class = "difficulty-level-display">
+                              <span>
+                                {% for c in question.get_difficulty_level %}
+                                  {% fontawesome_icon 'star' color='#b38600' %}
+                                {% endfor %}
+                              </span>
                             </li>
                           </ul>
                         </div>

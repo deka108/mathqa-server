@@ -1,6 +1,7 @@
 .main-form {
-  background: #ffffe6;
-  border: thick solid #e0ccff;
+  background: white;
+  border-left: solid #d9d9d9;
+  border-right: solid #d9d9d9;
   padding: 18px;
 }
 
@@ -13,8 +14,7 @@
 }
 
 .part-form {
-  background: #ffffcc;
-  border: thick solid #cc9966;
+  background: #f2f2f2;
   padding: 18px;
 }
 

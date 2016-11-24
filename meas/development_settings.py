@@ -3,7 +3,7 @@
 # Description:
 # Created by:     Phuc Le-Sanh
 # Date Created:   Oct 10 2016
-# Last Modified:  Oct 10 2016
+# Last Modified:  Nov 23 2016
 # Modified by:    Phuc Le-Sanh
 """
 import os
@@ -24,8 +24,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',
-    'rest_framework.authtoken',
     'fontawesome',
     'autofixture',
     'ckeditor',
@@ -36,14 +34,14 @@ INSTALLED_APPS = (
     # Models
     'meas_models.apps.MeasModelsConfig',
 
-    # API
-    'api.apps.ApiConfig',
-
     # CMS
     'cms.apps.CmsConfig',
 
     # Common
-    'meas_common.apps.MeasCommonConfig'
+    'meas_common.apps.MeasCommonConfig',
+
+    # API
+    'api.apps.ApiConfig'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -87,7 +85,6 @@ DATABASES = {
     }
 }
 
-
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 
@@ -99,23 +96,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    )
-}
-
-# LOGIN_REDIRECT_URL = '/'
-# TODO - Phuc Le-Sanh
-# If admin (CMS), redirect to CMS login page
-# else redirect to app
 LOGOUT_REDIRECT_URL = '/'
 
 STATICFILES_DIRS = [

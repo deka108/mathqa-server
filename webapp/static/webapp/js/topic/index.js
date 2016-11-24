@@ -1,3 +1,5 @@
+var MQ = MathQuill.getInterface(2);
+
 $(document).ready(function() {
     $("#items").DataTable();
     // Breadcum

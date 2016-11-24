@@ -3,11 +3,11 @@
 # Description:
 # Created by:     Phuc Le-Sanh
 # Date Created:   N.A
-# Last Modified:  Nov 21 2016
+# Last Modified:  Nov 23 2016
 # Modified by:    Phuc Le-Sanh
 """
 from django import forms
-from ckeditor.widgets import CKEditorWidget
+# from ckeditor.widgets import CKEditorWidget
 
 from meas_models.models import *
 from meas_models.common import *
@@ -59,8 +59,28 @@ class EditQuestionForm(forms.Form):
         max_length=1, widget=forms.Select(choices=DIFFICULTIES))
     respone_type = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES))
-    content = forms.CharField(widget=CKEditorWidget())
-    solution = forms.CharField(widget=CKEditorWidget())
+    content = forms.CharField(label='Content', max_length=1000,
+                              widget=forms.Textarea(
+                                  attrs={'placeholder': 'Please enter ' +
+                                         'Question here.',
+                                         'width': "100%",
+                                         'cols': "70",
+                                         'rows': "10",
+                                         "onkeyup": "Preview.Update()"}))
+    solution = forms.CharField(label='Solution', max_length=1000,
+                               widget=forms.Textarea(
+                                   attrs={'placeholder': 'Please enter ' +
+                                          'solution for this question here.',
+                                          'width': "100%",
+                                          'cols': "70",
+                                          'rows': "10"}))
+    answer = forms.CharField(label='Answer', max_length=1000,
+                             widget=forms.Textarea(
+                                   attrs={'placeholder': 'Please enter ' +
+                                          'answers for this question here.',
+                                          'width': "100%",
+                                          'cols': "40",
+                                          'rows': "10"}))
     keypoint = forms.ModelChoiceField(empty_label="Please choose KeyPoint",
                                       queryset=KeyPoint.objects.all(),
                                       required=False)
@@ -69,62 +89,6 @@ class EditQuestionForm(forms.Form):
     paper = forms.ModelChoiceField(empty_label="Please choose Paper",
                                    queryset=Paper.objects.all(),
                                    required=False)
-
-    # Part 1
-    id_1 = forms.CharField(widget=forms.HiddenInput())
-    mark_1 = forms.IntegerField(
-        widget=forms.Select(choices=MARKS), required=False)
-    difficulty_level_1 = forms.CharField(max_length=1,
-                                         widget=forms.Select(
-                                             choices=DIFFICULTIES),
-                                         required=False)
-    respone_type_1 = forms.CharField(
-        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
-        required=False)
-    content_1 = forms.CharField(widget=CKEditorWidget(), required=False)
-    solution_1 = forms.CharField(widget=CKEditorWidget(), required=False)
-
-    # Part 2
-    id_2 = forms.CharField(widget=forms.HiddenInput())
-    mark_2 = forms.IntegerField(
-        widget=forms.Select(choices=MARKS), required=False)
-    difficulty_level_2 = forms.CharField(max_length=1,
-                                         widget=forms.Select(
-                                             choices=DIFFICULTIES),
-                                         required=False)
-    respone_type_2 = forms.CharField(
-        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
-        required=False)
-    content_2 = forms.CharField(widget=CKEditorWidget(), required=False)
-    solution_2 = forms.CharField(widget=CKEditorWidget(), required=False)
-
-    # Part 3
-    id_3 = forms.CharField(widget=forms.HiddenInput())
-    mark_3 = forms.IntegerField(
-        widget=forms.Select(choices=MARKS), required=False)
-    difficulty_level_3 = forms.CharField(max_length=1,
-                                         widget=forms.Select(
-                                             choices=DIFFICULTIES),
-                                         required=False)
-    respone_type_3 = forms.CharField(
-        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
-        required=False)
-    content_3 = forms.CharField(widget=CKEditorWidget(), required=False)
-    solution_3 = forms.CharField(widget=CKEditorWidget(), required=False)
-
-    # Part 4
-    id_4 = forms.CharField(widget=forms.HiddenInput())
-    mark_4 = forms.IntegerField(
-        widget=forms.Select(choices=MARKS), required=False)
-    difficulty_level_4 = forms.CharField(max_length=1,
-                                         widget=forms.Select(
-                                             choices=DIFFICULTIES),
-                                         required=False)
-    respone_type_4 = forms.CharField(
-        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
-        required=False)
-    content_4 = forms.CharField(widget=CKEditorWidget(), required=False)
-    solution_4 = forms.CharField(widget=CKEditorWidget(), required=False)
 
 
 class SelectSubjectForm(forms.Form):
@@ -172,3 +136,69 @@ class EditUserForm(forms.Form):
         widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))
     is_active = forms.BooleanField(
         widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))
+
+
+class EditAnswerPartForm(forms.Form):
+    part_name = forms.CharField(label='Name of Part', max_length=1,
+                                widget=forms.TextInput(attrs={
+                                    'placeholder': 'Name of Part'}),
+                                required=False)
+    part_content = forms.CharField(label='Content', max_length=1000,
+                                   widget=forms.TextInput(
+                                       attrs={'placeholder': 'Please enter ' +
+                                              'answer here.', }),
+                                   required=False)
+    part_respone_type = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)
+    required = False
+
+    subpart_name_1 = forms.CharField(label='Name of SubPart', max_length=10,
+                                     widget=forms.TextInput(attrs={
+                                         'placeholder': 'Name of SubPart', }),
+                                     initial='i', required=False)
+    subpart_content_1 = forms.CharField(label='Content', max_length=1000,
+                                        widget=forms.TextInput(
+                                            attrs={'placeholder': 'Please ' +
+                                                   'enter answer.', }),
+                                        required=False)
+    respone_type_1 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
+        required=False)
+
+    subpart_name_2 = forms.CharField(label='Name of SubPart', max_length=10,
+                                     widget=forms.TextInput(attrs={
+                                         'placeholder': 'Name of SubPart'}),
+                                     initial='ii', required=False)
+    subpart_content_2 = forms.CharField(label='Content', max_length=1000,
+                                        widget=forms.TextInput(
+                                            attrs={'placeholder': 'Please ' +
+                                                   'enter answer.', }),
+                                        required=False)
+    respone_type_2 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
+        required=False)
+
+    subpart_name_3 = forms.CharField(label='Name of SubPart', max_length=10,
+                                     widget=forms.TextInput(attrs={
+                                         'placeholder': 'Name of SubPart'}),
+                                     initial='iii', required=False)
+    subpart_content_3 = forms.CharField(label='Content', max_length=1000,
+                                        widget=forms.TextInput(
+                                            attrs={'placeholder': 'Please ' +
+                                                   'enter answer.', }),
+                                        required=False)
+    respone_type_3 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
+        required=False)
+
+    subpart_name_4 = forms.CharField(label='Name of SubPart', max_length=10,
+                                     widget=forms.TextInput(attrs={
+                                         'placeholder': 'Name of SubPart'}),
+                                     initial='iv', required=False)
+    subpart_content_4 = forms.CharField(label='Content', max_length=1000,
+                                        widget=forms.TextInput(
+                                            attrs={'placeholder': 'Please ' +
+                                                   'enter answer.', }),
+                                        required=False)
+    respone_type_4 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)

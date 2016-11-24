@@ -3,7 +3,7 @@
 # Description:
 # Created by:     Phuc Le-Sanh
 # Date Created:   Nov 16 2016
-# Last Modified:  Nov 16 2016
+# Last Modified:  Nov 23 2016
 # Modified by:    Phuc Le-Sanh
 """
 from __future__ import unicode_literals
@@ -79,6 +79,14 @@ class Topic(models.Model):
     order = models.PositiveIntegerField(null=True, blank=True)
 
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+
+    def as_json(self):
+        return dict(
+            topic_id=self.id,
+            name=self.name,
+            description=self.description,
+            order=self.order,
+            subject=self.subject.name)
 
 
 class Concept(models.Model):
@@ -158,9 +166,6 @@ class Question(models.Model):
         max_length=2,
         choices=USED_FOR,
         default="ON")
-    number_of_part = models.IntegerField(
-        choices=NUMBER_OF_PARTS,
-        default=1)
     mark = models.IntegerField(default=1)
     difficulty_level = models.CharField(
         max_length=1,
@@ -179,46 +184,44 @@ class Question(models.Model):
     paper = models.ForeignKey(
         Paper, on_delete=models.CASCADE, null=True, blank=True)
 
+    def get_difficulty_level(self):
+        return range(0, int(self.difficulty_level))
 
-class Part(models.Model):
+
+class AnswerPart(models.Model):
     """
-    List of questions
+    List of AnswerPart
     """
 
-    def __unicode__(self):
-        return unicode(self.id)
-
-    def __str__(self):
-        return str(self.id)
-
-    mark = models.IntegerField(default=1)
-    difficulty_level = models.IntegerField(
-        validators=[validate_difficulty_range],
-        default=0)
-    respone_type = models.CharField(
+    part_name = models.CharField(max_length=1)
+    part_content = RichTextField()
+    part_respone_type = models.CharField(
         max_length=10,
         choices=RESPONSE_TYPES,
         default=TEXT)
-    content = RichTextField()
-    solution = RichTextField()
+    subpart_name_1 = models.CharField(max_length=10, null=True, blank=True)
+    subpart_content_1 = RichTextField(null=True, blank=True)
+    respone_type_1 = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT, null=True, blank=True)
+    subpart_name_2 = models.CharField(max_length=10, null=True, blank=True)
+    subpart_content_2 = RichTextField(null=True, blank=True)
+    respone_type_2 = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT, null=True, blank=True)
+    subpart_name_3 = models.CharField(max_length=10, null=True, blank=True)
+    subpart_content_3 = RichTextField(null=True, blank=True)
+    respone_type_3 = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT, null=True, blank=True)
+    subpart_name_4 = models.CharField(max_length=10, null=True, blank=True)
+    subpart_content_4 = RichTextField(null=True, blank=True)
+    respone_type_4 = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT, null=True, blank=True)
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-
-# class Proficiency(models.Model):
-#     """
-#     Track history of students
-#     """
-
-#     detail = models.IntegerField
-#     response = models.TextField(max_length=1000)
-#     respone_type = models.CharField(
-#         max_length=10,
-#         choices=RESPONSE_TYPES,
-#         default=TEXT)
-#     is_complete = models.BooleanField(default=0)
-
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     test = models.ForeignKey(Test, on_delete=models.CASCADE)
-
-#     unique_together = ("user", "restaurant", "detail")

@@ -38,7 +38,9 @@ def create_topic(request):
     if not request.user.is_superuser:
         return redirect('/cms/login/')
 
-    return render(request, 'cms/topic/create.html', {'form': EditTopicForm()})
+    return render(request, 'cms/topic/create.html', __user_info(request, {
+        'form': EditTopicForm()
+    }))
 
 
 def edit_topic(request, topic_id):
@@ -47,12 +49,13 @@ def edit_topic(request, topic_id):
 
     topic = Topic.objects.get(pk=topic_id)
 
-    return render(request, 'cms/topic/edit.html', {'form': EditTopicForm(
-        initial={'id': topic_id, 'name': topic.name,
-                 'description': topic.description,
-                 'subject': topic.subject
-                 }
-    )})
+    return render(request, 'cms/topic/edit.html', __user_info(request, {
+        'form': EditTopicForm(
+            initial={'id': topic_id, 'name': topic.name,
+                     'description': topic.description,
+                     'subject': topic.subject
+                     })}
+    ))
 
 
 def api_create_topic(request):
@@ -62,8 +65,8 @@ def api_create_topic(request):
     topic = Topic(name=request.POST.__getitem__('name'),
                   description=request.POST.__getitem__('description'),
                   subject=Subject.objects.get(
-                      pk=request.POST.__getitem__('subject'))
-                  )
+        pk=request.POST.__getitem__('subject'))
+    )
     topic.save()
 
     return HttpResponseRedirect('../topic/', __user_info(request, {
@@ -148,8 +151,9 @@ def create_concept(request):
     KeyPointFormSet = formset_factory(KeyPointForm, extra=1)
     formset = KeyPointFormSet()
 
-    return render(request, 'cms/concept/create.html',
-                  {'form': EditConceptForm(), 'formset': formset})
+    return render(request, 'cms/concept/create.html', __user_info(request, {
+                  'form': EditConceptForm(), 'formset': formset
+                  }))
 
 
 def edit_concept(request, concept_id):
@@ -163,14 +167,14 @@ def edit_concept(request, concept_id):
     for k in concept.keypoint_set.all():
         res.append(k.__dict__)
 
-    return render(request, 'cms/concept/edit.html', {
+    return render(request, 'cms/concept/edit.html', __user_info(request, {
         'form': EditConceptForm(
             initial={'id': concept_id, 'name': concept.name,
                      'description': concept.description,
                      'topic': concept.topic,
                      }),
         'formset': KeyPointFormSet(initial=res)
-    })
+    }))
 
 
 def api_create_concept(request):
@@ -288,8 +292,6 @@ def api_create_question(request):
         question_type=request.POST.__getitem__('question_type'),
         source=request.POST.__getitem__('source'),
         used_for=request.POST.__getitem__('used_for'),
-        number_of_part=request.POST.__getitem__(
-            'number_of_part'),
         mark=request.POST.__getitem__('mark'),
         difficulty_level=request.POST.__getitem__(
             'difficulty_level'),
@@ -308,55 +310,60 @@ def api_create_question(request):
 
     question.save()
 
-    # Add Parts
-    if (any(request.POST.getlist('mark_1')) and
-            (int(question.number_of_part) >= 1)):
-        part1 = Part(
-            mark=request.POST.__getitem__('mark_1'),
-            difficulty_level=request.POST.__getitem__(
-                'difficulty_level_1'),
-            respone_type=request.POST.__getitem__('respone_type_1'),
-            content=request.POST.__getitem__('content_1'),
-            solution=request.POST.__getitem__('solution_1'),
-            question=question,
-        )
-        part1.save()
+    # AnswerPart, Answer Sub Part
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
+    formset = EditAnswerPartFormSet(request.POST)
 
-    if (any(request.POST.getlist('mark_2')) and
-            (int(question.number_of_part) >= 2)):
-        part2 = Part(
-            mark=request.POST.__getitem__('mark_2'),
-            difficulty_level=request.POST.__getitem__('difficulty_level_2'),
-            respone_type=request.POST.__getitem__('respone_type_2'),
-            content=request.POST.__getitem__('content_2'),
-            solution=request.POST.__getitem__('solution_2'),
-            question=question,
-        )
-        part2.save()
+    if formset.is_valid():
+        for f in formset:
+            cd = f.cleaned_data
+            if any(cd):
+                if (any(cd.get('part_name')) and
+                        any(cd.get('part_content')) and
+                        any(cd.get('part_respone_type'))):
+                    answer_part = AnswerPart(part_name=cd.get('part_name'),
+                                             part_content=cd.get(
+                                                 'part_content'),
+                                             part_respone_type=cd.get(
+                                                 'part_respone_type'),
+                                             question=question)
+                    if (any(cd.get('subpart_name_1')) and
+                            any(cd.get('subpart_content_1')) and
+                            any(cd.get('respone_type_1'))):
+                        answer_part.subpart_name_1 = cd.get('subpart_name_1')
+                        answer_part.subpart_content_1 = cd.get(
+                            'subpart_content_1')
+                        answer_part.respone_type_1 = cd.get(
+                            'subpart_content_1')
 
-    if (any(request.POST.getlist('mark_3')) and
-            (int(question.number_of_part) >= 3)):
-        part3 = Part(
-            mark=request.POST.__getitem__('mark_3'),
-            difficulty_level=request.POST.__getitem__('difficulty_level_3'),
-            respone_type=request.POST.__getitem__('respone_type_3'),
-            content=request.POST.__getitem__('content_3'),
-            solution=request.POST.__getitem__('solution_3'),
-            question=question,
-        )
-        part3.save()
+                    if (any(cd.get('subpart_name_2')) and
+                            any(cd.get('subpart_content_2')) and
+                            any(cd.get('respone_type_2'))):
+                        answer_part.subpart_name_2 = cd.get('subpart_name_2')
+                        answer_part.subpart_content_2 = cd.get(
+                            'subpart_content_2')
+                        answer_part.respone_type_2 = cd.get(
+                            'respone_type_2')
 
-    if (any(request.POST.getlist('mark_4')) and
-            (int(question.number_of_part) == 4)):
-        part4 = Part(
-            mark=request.POST.__getitem__('mark_4'),
-            difficulty_level=request.POST.__getitem__('difficulty_level_4'),
-            respone_type=request.POST.__getitem__('respone_type_4'),
-            content=request.POST.__getitem__('content_4'),
-            solution=request.POST.__getitem__('solution_4'),
-            question=question,
-        )
-        part4.save()
+                    if (any(cd.get('subpart_name_3')) and
+                            any(cd.get('subpart_content_3')) and
+                            any(cd.get('respone_type_3'))):
+                        answer_part.subpart_name_3 = cd.get('subpart_name_3')
+                        answer_part.subpart_content_3 = cd.get(
+                            'subpart_content_3')
+                        answer_part.respone_type_3 = cd.get(
+                            'respone_type_3')
+
+                    if (any(cd.get('subpart_name_4')) and
+                            any(cd.get('subpart_content_4')) and
+                            any(cd.get('respone_type_4'))):
+                        answer_part.subpart_name_4 = cd.get('subpart_name_4')
+                        answer_part.subpart_content_4 = cd.get(
+                            'subpart_content_4')
+                        answer_part.respone_type_4 = cd.get(
+                            'respone_type_4')
+
+                    answer_part.save()
 
     return HttpResponseRedirect('../question/', __user_info(request, {
     }))
@@ -366,8 +373,11 @@ def create_question(request):
     if not request.user.is_superuser:
         return redirect('/cms/login/')
 
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
+    formset = EditAnswerPartFormSet()
+
     return render(request, 'cms/question/create.html',
-                  {'form': EditQuestionForm()})
+                  {'form': EditQuestionForm(), 'formset': formset})
 
 
 def edit_question(request, question_id):
@@ -375,23 +385,28 @@ def edit_question(request, question_id):
         return redirect('/cms/login/')
 
     question = Question.objects.get(pk=question_id)
-    parts = question.part_set.all()
+
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm)
+
+    res = []
+    for k in question.answerpart_set.all():
+        res.append(k.__dict__)
 
     return render(request, 'cms/question/edit.html', {'form': EditQuestionForm(
-        initial=__parts({'id': question_id,
-                         'question_type': question.question_type,
-                         'source': question.source,
-                         'used_for': question.used_for,
-                         'number_of_part': question.number_of_part,
-                         'mark': question.mark,
-                         'difficulty_level': question.difficulty_level,
-                         'respone_type': question.respone_type,
-                         'content': question.content,
-                         'solution': question.solution,
-                         'concept': question.concept,
-                         'paper': question.paper
-                         }, parts)
-    )})
+        initial={'id': question_id,
+                 'question_type': question.question_type,
+                 'source': question.source,
+                 'used_for': question.used_for,
+                 'mark': question.mark,
+                 'difficulty_level': question.difficulty_level,
+                 'respone_type': question.respone_type,
+                 'content': question.content,
+                 'solution': question.solution,
+                 'concept': question.concept,
+                 'paper': question.paper
+                 }),
+        'formset': EditAnswerPartFormSet(initial=res)
+    })
 
 
 def api_update_question(request):
@@ -402,7 +417,6 @@ def api_update_question(request):
     question.question_type = request.POST.__getitem__('question_type')
     question.source = request.POST.__getitem__('source')
     question.used_for = request.POST.__getitem__('used_for')
-    question.number_of_part = request.POST.__getitem__('number_of_part')
     question.mark = request.POST.__getitem__('mark')
     question.difficulty_level = request.POST.__getitem__('difficulty_level')
     question.respone_type = request.POST.__getitem__('respone_type')
@@ -422,106 +436,60 @@ def api_update_question(request):
 
     question.save()
 
-    # Update Parts
-    if (any(request.POST.getlist('mark_1')) and
-            (int(question.number_of_part) >= 1)):
-        checking = Part.objects.get(pk=request.POST.__getitem__('id_1'))
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
+    formset = EditAnswerPartFormSet(request.POST)
 
-        if checking:
-            part_1 = Part.objects.get(pk=request.POST.__getitem__('id_1'))
-            part_1.mark = request.POST.__getitem__('mark_1')
-            part_1.difficulty_level = request.POST.__getitem__(
-                'difficulty_level_1')
-            part_1.respone_type = request.POST.__getitem__('respone_type_1')
-            part_1.content = request.POST.__getitem__('content_1')
-            part_1.solution = request.POST.__getitem__('solution_1')
-            part_1.question = question
-            part_1.save()
-        else:
-            part_1 = Part(
-                mark=request.POST.__getitem__('mark_1'),
-                difficulty_level=request.POST.__getitem__(
-                    'difficulty_level_1'),
-                respone_type=request.POST.__getitem__('respone_type_1'),
-                content=request.POST.__getitem__('content_1'),
-                solution=request.POST.__getitem__('solution_1'),
-                question=question)
-            part_1.save()
+    if formset.is_valid():
+        for f in formset:
+            cd = f.cleaned_data
+            if any(cd):
+                if (any(cd.get('part_name')) and
+                        any(cd.get('part_content')) and
+                        any(cd.get('part_respone_type'))):
+                    answer_part = AnswerPart.objects.filter(
+                        part_name=cd.get('part_name')).first()
 
-    if (any(request.POST.getlist('mark_2')) and
-            (int(question.number_of_part) >= 2)):
-        checking = Part.objects.get(pk=request.POST.__getitem__('id_2'))
+                    answer_part.part_name = cd.get('part_name')
+                    answer_part.part_content = cd.get('part_content')
+                    answer_part.part_respone_type = cd.get('part_respone_type')
 
-        if checking:
-            part_2 = Part.objects.get(pk=request.POST.__getitem__('id_2'))
-            part_2.mark = request.POST.__getitem__('mark_2')
-            part_2.difficulty_level = request.POST.__getitem__(
-                'difficulty_level_2')
-            part_2.respone_type = request.POST.__getitem__('respone_type_2')
-            part_2.content = request.POST.__getitem__('content_2')
-            part_2.solution = request.POST.__getitem__('solution_2')
-            part_2.question = question
-            part_2.save()
-        else:
-            part_2 = Part(
-                mark=request.POST.__getitem__('mark_2'),
-                difficulty_level=request.POST.__getitem__(
-                    'difficulty_level_2'),
-                respone_type=request.POST.__getitem__('respone_type_2'),
-                content=request.POST.__getitem__('content_2'),
-                solution=request.POST.__getitem__('solution_2'),
-                question=question)
-            part_2.save()
+                    if (any(cd.get('subpart_name_1')) and
+                            any(cd.get('subpart_content_1')) and
+                            any(cd.get('respone_type_1'))):
+                        answer_part.subpart_name_1 = cd.get('subpart_name_1')
+                        answer_part.subpart_content_1 = cd.get(
+                            'subpart_content_1')
+                        answer_part.respone_type_1 = cd.get(
+                            'subpart_content_1')
 
-    if (any(request.POST.getlist('mark_3')) and
-            (int(question.number_of_part) >= 3)):
-        checking = Part.objects.get(pk=request.POST.__getitem__('id_3'))
+                    if (any(cd.get('subpart_name_2')) and
+                            any(cd.get('subpart_content_2')) and
+                            any(cd.get('respone_type_2'))):
+                        answer_part.subpart_name_2 = cd.get('subpart_name_2')
+                        answer_part.subpart_content_2 = cd.get(
+                            'subpart_content_2')
+                        answer_part.respone_type_2 = cd.get(
+                            'respone_type_2')
 
-        if checking:
-            part_3 = Part.objects.get(pk=request.POST.__getitem__('id_3'))
-            part_3.mark = request.POST.__getitem__('mark_3')
-            part_3.difficulty_level = request.POST.__getitem__(
-                'difficulty_level_3')
-            part_3.respone_type = request.POST.__getitem__('respone_type_3')
-            part_3.content = request.POST.__getitem__('content_3')
-            part_3.solution = request.POST.__getitem__('solution_3')
-            part_3.question = question
-            part_3.save()
-        else:
-            part_3 = Part(
-                mark=request.POST.__getitem__('mark_3'),
-                difficulty_level=request.POST.__getitem__(
-                    'difficulty_level_3'),
-                respone_type=request.POST.__getitem__('respone_type_3'),
-                content=request.POST.__getitem__('content_3'),
-                solution=request.POST.__getitem__('solution_3'),
-                question=question)
-            part_3.save()
+                    if (any(cd.get('subpart_name_3')) and
+                            any(cd.get('subpart_content_3')) and
+                            any(cd.get('respone_type_3'))):
+                        answer_part.subpart_name_3 = cd.get('subpart_name_3')
+                        answer_part.subpart_content_3 = cd.get(
+                            'subpart_content_3')
+                        answer_part.respone_type_3 = cd.get(
+                            'respone_type_3')
 
-    if (any(request.POST.getlist('mark_4')) and
-            (int(question.number_of_part) == 4)):
-        checking = Part.objects.get(pk=request.POST.__getitem__('id_4'))
+                    if (any(cd.get('subpart_name_4')) and
+                            any(cd.get('subpart_content_4')) and
+                            any(cd.get('respone_type_4'))):
+                        answer_part.subpart_name_4 = cd.get('subpart_name_4')
+                        answer_part.subpart_content_4 = cd.get(
+                            'subpart_content_4')
+                        answer_part.respone_type_4 = cd.get(
+                            'respone_type_4')
 
-        if checking:
-            part_4 = Part.objects.get(pk=request.POST.__getitem__('id_4'))
-            part_4.mark = request.POST.__getitem__('mark_4')
-            part_4.difficulty_level = request.POST.__getitem__(
-                'difficulty_level_4')
-            part_4.respone_type = request.POST.__getitem__('respone_type_4')
-            part_4.content = request.POST.__getitem__('content_4')
-            part_4.solution = request.POST.__getitem__('solution_4')
-            part_4.question = question
-            part_4.save()
-        else:
-            part_4 = Part(
-                mark=request.POST.__getitem__('mark_4'),
-                difficulty_level=request.POST.__getitem__(
-                    'difficulty_level_4'),
-                respone_type=request.POST.__getitem__('respone_type_4'),
-                content=request.POST.__getitem__('content_4'),
-                solution=request.POST.__getitem__('solution_4'),
-                question=question)
-            part_4.save()
+                    answer_part.save()
 
     return HttpResponseRedirect('../question/', __user_info(request, {
     }))
@@ -583,8 +551,8 @@ def create_paper(request):
     if not request.user.is_superuser:
         return redirect('/cms/login/')
 
-    return render(request, 'cms/paper/create.html',
-                  {'form': EditPaperForm()})
+    return render(request, 'cms/paper/create.html', __user_info(request, {
+                  'form': EditPaperForm()}))
 
 
 def api_create_paper(request):
@@ -657,8 +625,8 @@ def create_user(request):
     if not request.user.is_superuser:
         return redirect('/cms/login/')
 
-    return render(request, 'cms/user/create.html',
-                  {'form': EditUserForm()})
+    return render(request, 'cms/user/create.html', __user_info(request, {
+                  'form': EditUserForm()}))
 
 
 def api_create_user(request):
