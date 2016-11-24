@@ -108,31 +108,54 @@
           </div>
 
           <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
-            {% for keypoint in keypoints %}
-              <div class="panel panel-primary">
-                <div class="panel-heading">{{ keypoint.name }}</div>
-                <div class="panel-body">
-                  <p>{{ keypoint.content }}</p>
-                  {% for question in keypoint.question_set.all %}
-                    <div class="panel panel-danger">
-                      <div class="panel-heading">Example</div>
+            <div class="panel panel-primary">
+              <div class="panel-heading">Summary</div>
+              <div class="panel-body">
+                {% for keypoint in keypoints %}
+                  {{ keypoint.content }}
+                  <hr class="custom-hr">
+                {% endfor %}
+              </div>
+            </div>
+            <div class="panel panel-danger">
+              <div class="panel-heading">Questions</div>
+              <div class="panel-body">
+                {% for question in k_questions %}
+                  <div class="panel panel-default">
+                    <div class="panel-heading">Example {{ forloop.counter }}</div>
                       <div class="panel-body">
                         {{ question.content | safe }}
                       </div>
                       <div class="panel-footer">
-                        <button type="button" class="btn btn-success">
-                          Hint
-                        </button>
-                        <button type="button" class="btn btn-danger">
-                          Submit
-                        </button>
+                        <a class="btn btn-success" data-toggle="modal" data-target="#form-modal__{{question.id}}">Solution
+                        </a>
                       </div>
-                    </div>
-                  {% endfor %}
-                  <hr class="custom-hr">
-                </div>
+
+                      <div class="modal fade" id="form-modal__{{ question.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4 class="modal-title">Try Question {{ forloop.counter }}
+                              </h4>
+                            </div>
+                            <div id="form-modal-body" class="modal-body">
+                              {{ question.content | safe }}
+                              </br>
+                              <hr>
+                              Answer </br>
+                              {{ question.answer | safe }}
+                           </div>
+                           <div class="modal-footer">
+                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           </div>
+                         </div>
+                        </div>
+                      </div>
+                  </div>
+                {% endfor %}
               </div>
-            {% endfor %}
+            </div>
           </div>
         </div>
 
@@ -176,7 +199,7 @@
                           <div class="btn-group" role="group" aria-label="...">
                             <a href="">
                               <button type="button" class="btn btn-success">
-                                Test
+                                Try
                               </button>
                             </a>
                           </div>
