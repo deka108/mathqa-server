@@ -8,4 +8,4 @@ $(document).ready(function() {
 
     $('#main-title').append(en.cms.breadcrumb.question);
     MQ.StaticMath($('#question-content'));
-} );
+});
