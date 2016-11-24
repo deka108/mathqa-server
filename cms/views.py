@@ -293,7 +293,6 @@ def api_create_question(request):
         source=request.POST.__getitem__('source'),
         used_for=request.POST.__getitem__('used_for'),
         mark=request.POST.__getitem__('mark'),
-        answer=request.POST.__getitem__('answer'),
         difficulty_level=request.POST.__getitem__(
             'difficulty_level'),
         content=request.POST.__getitem__('content'),
@@ -311,6 +310,61 @@ def api_create_question(request):
 
     question.save()
 
+    # AnswerPart, Answer Sub Part
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
+    formset = EditAnswerPartFormSet(request.POST)
+
+    if formset.is_valid():
+        for f in formset:
+            cd = f.cleaned_data
+            if any(cd):
+                if (any(cd.get('part_name')) and
+                        any(cd.get('part_content')) and
+                        any(cd.get('part_respone_type'))):
+                    answer_part = AnswerPart(part_name=cd.get('part_name'),
+                                             part_content=cd.get(
+                                                 'part_content'),
+                                             part_respone_type=cd.get(
+                                                 'part_respone_type'),
+                                             question=question)
+                    if (any(cd.get('subpart_name_1')) and
+                            any(cd.get('subpart_content_1')) and
+                            any(cd.get('respone_type_1'))):
+                        answer_part.subpart_name_1 = cd.get('subpart_name_1')
+                        answer_part.subpart_content_1 = cd.get(
+                            'subpart_content_1')
+                        answer_part.respone_type_1 = cd.get(
+                            'subpart_content_1')
+
+                    if (any(cd.get('subpart_name_2')) and
+                            any(cd.get('subpart_content_2')) and
+                            any(cd.get('respone_type_2'))):
+                        answer_part.subpart_name_2 = cd.get('subpart_name_2')
+                        answer_part.subpart_content_2 = cd.get(
+                            'subpart_content_2')
+                        answer_part.respone_type_2 = cd.get(
+                            'respone_type_2')
+
+                    if (any(cd.get('subpart_name_3')) and
+                            any(cd.get('subpart_content_3')) and
+                            any(cd.get('respone_type_3'))):
+                        answer_part.subpart_name_3 = cd.get('subpart_name_3')
+                        answer_part.subpart_content_3 = cd.get(
+                            'subpart_content_3')
+                        answer_part.respone_type_3 = cd.get(
+                            'respone_type_3')
+
+                    if (any(cd.get('subpart_name_4')) and
+                            any(cd.get('subpart_content_4')) and
+                            any(cd.get('respone_type_4'))):
+                        answer_part.subpart_name_4 = cd.get('subpart_name_4')
+                        answer_part.subpart_content_4 = cd.get(
+                            'subpart_content_4')
+                        answer_part.respone_type_4 = cd.get(
+                            'respone_type_4')
+
+                    answer_part.save()
+
     return HttpResponseRedirect('../question/', __user_info(request, {
     }))
 
@@ -319,8 +373,11 @@ def create_question(request):
     if not request.user.is_superuser:
         return redirect('/cms/login/')
 
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
+    formset = EditAnswerPartFormSet()
+
     return render(request, 'cms/question/create.html',
-                  {'form': EditQuestionForm()})
+                  {'form': EditQuestionForm(), 'formset': formset})
 
 
 def edit_question(request, question_id):
@@ -328,6 +385,12 @@ def edit_question(request, question_id):
         return redirect('/cms/login/')
 
     question = Question.objects.get(pk=question_id)
+
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm)
+
+    res = []
+    for k in question.answerpart_set.all():
+        res.append(k.__dict__)
 
     return render(request, 'cms/question/edit.html', {'form': EditQuestionForm(
         initial={'id': question_id,
@@ -338,12 +401,12 @@ def edit_question(request, question_id):
                  'difficulty_level': question.difficulty_level,
                  'respone_type': question.respone_type,
                  'content': question.content,
-                 'answer': question.answer,
                  'solution': question.solution,
                  'concept': question.concept,
                  'paper': question.paper
-                 }
-    )})
+                 }),
+        'formset': EditAnswerPartFormSet(initial=res)
+    })
 
 
 def api_update_question(request):
@@ -355,7 +418,6 @@ def api_update_question(request):
     question.source = request.POST.__getitem__('source')
     question.used_for = request.POST.__getitem__('used_for')
     question.mark = request.POST.__getitem__('mark')
-    question.answer = request.POST.__getitem__('answer')
     question.difficulty_level = request.POST.__getitem__('difficulty_level')
     question.respone_type = request.POST.__getitem__('respone_type')
     question.content = request.POST.__getitem__('content')
@@ -373,6 +435,61 @@ def api_update_question(request):
             pk=request.POST.__getitem__('paper'))
 
     question.save()
+
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
+    formset = EditAnswerPartFormSet(request.POST)
+
+    if formset.is_valid():
+        for f in formset:
+            cd = f.cleaned_data
+            if any(cd):
+                if (any(cd.get('part_name')) and
+                        any(cd.get('part_content')) and
+                        any(cd.get('part_respone_type'))):
+                    answer_part = AnswerPart.objects.filter(
+                        part_name=cd.get('part_name')).first()
+
+                    answer_part.part_name = cd.get('part_name')
+                    answer_part.part_content = cd.get('part_content')
+                    answer_part.part_respone_type = cd.get('part_respone_type')
+
+                    if (any(cd.get('subpart_name_1')) and
+                            any(cd.get('subpart_content_1')) and
+                            any(cd.get('respone_type_1'))):
+                        answer_part.subpart_name_1 = cd.get('subpart_name_1')
+                        answer_part.subpart_content_1 = cd.get(
+                            'subpart_content_1')
+                        answer_part.respone_type_1 = cd.get(
+                            'subpart_content_1')
+
+                    if (any(cd.get('subpart_name_2')) and
+                            any(cd.get('subpart_content_2')) and
+                            any(cd.get('respone_type_2'))):
+                        answer_part.subpart_name_2 = cd.get('subpart_name_2')
+                        answer_part.subpart_content_2 = cd.get(
+                            'subpart_content_2')
+                        answer_part.respone_type_2 = cd.get(
+                            'respone_type_2')
+
+                    if (any(cd.get('subpart_name_3')) and
+                            any(cd.get('subpart_content_3')) and
+                            any(cd.get('respone_type_3'))):
+                        answer_part.subpart_name_3 = cd.get('subpart_name_3')
+                        answer_part.subpart_content_3 = cd.get(
+                            'subpart_content_3')
+                        answer_part.respone_type_3 = cd.get(
+                            'respone_type_3')
+
+                    if (any(cd.get('subpart_name_4')) and
+                            any(cd.get('subpart_content_4')) and
+                            any(cd.get('respone_type_4'))):
+                        answer_part.subpart_name_4 = cd.get('subpart_name_4')
+                        answer_part.subpart_content_4 = cd.get(
+                            'subpart_content_4')
+                        answer_part.respone_type_4 = cd.get(
+                            'respone_type_4')
+
+                    answer_part.save()
 
     return HttpResponseRedirect('../question/', __user_info(request, {
     }))
@@ -634,3 +751,19 @@ def __user_info(request, updated_list=""):
         result.update(updated_list)
 
     return result
+
+
+def __parts(clist, parts):
+    i = 1
+    for part in parts:
+        hash_part = {
+            'id_' + str(i): part.id,
+            'mark_' + str(i): part.mark,
+            'difficulty_level_' + str(i): part.difficulty_level,
+            'respone_type_' + str(i): part.respone_type,
+            'content_' + str(i): part.content,
+            'solution_' + str(i): part.solution,
+        }
+        clist.update(hash_part)
+        i = i + 1
+    return clist

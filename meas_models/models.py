@@ -177,7 +177,6 @@ class Question(models.Model):
         default=TEXT)
     content = RichTextField()
     solution = RichTextField()
-    answer = RichTextField(default="Test")
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     keypoint = models.ForeignKey(KeyPoint, on_delete=models.CASCADE,
@@ -187,3 +186,42 @@ class Question(models.Model):
 
     def get_difficulty_level(self):
         return range(0, int(self.difficulty_level))
+
+
+class AnswerPart(models.Model):
+    """
+    List of AnswerPart
+    """
+
+    part_name = models.CharField(max_length=1)
+    part_content = RichTextField()
+    part_respone_type = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT)
+    subpart_name_1 = models.CharField(max_length=10, null=True, blank=True)
+    subpart_content_1 = RichTextField(null=True, blank=True)
+    respone_type_1 = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT, null=True, blank=True)
+    subpart_name_2 = models.CharField(max_length=10, null=True, blank=True)
+    subpart_content_2 = RichTextField(null=True, blank=True)
+    respone_type_2 = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT, null=True, blank=True)
+    subpart_name_3 = models.CharField(max_length=10, null=True, blank=True)
+    subpart_content_3 = RichTextField(null=True, blank=True)
+    respone_type_3 = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT, null=True, blank=True)
+    subpart_name_4 = models.CharField(max_length=10, null=True, blank=True)
+    subpart_content_4 = RichTextField(null=True, blank=True)
+    respone_type_4 = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT, null=True, blank=True)
+
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)

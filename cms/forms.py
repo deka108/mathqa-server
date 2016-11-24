@@ -7,7 +7,7 @@
 # Modified by:    Phuc Le-Sanh
 """
 from django import forms
-from ckeditor.widgets import CKEditorWidget
+# from ckeditor.widgets import CKEditorWidget
 
 from meas_models.models import *
 from meas_models.common import *
@@ -136,3 +136,69 @@ class EditUserForm(forms.Form):
         widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))
     is_active = forms.BooleanField(
         widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))
+
+
+class EditAnswerPartForm(forms.Form):
+    part_name = forms.CharField(label='Name of Part', max_length=1,
+                                widget=forms.TextInput(attrs={
+                                    'placeholder': 'Name of Part'}),
+                                required=False)
+    part_content = forms.CharField(label='Content', max_length=1000,
+                                   widget=forms.TextInput(
+                                       attrs={'placeholder': 'Please enter ' +
+                                              'answer here.', }),
+                                   required=False)
+    part_respone_type = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)
+    required = False
+
+    subpart_name_1 = forms.CharField(label='Name of SubPart', max_length=10,
+                                     widget=forms.TextInput(attrs={
+                                         'placeholder': 'Name of SubPart', }),
+                                     initial='i', required=False)
+    subpart_content_1 = forms.CharField(label='Content', max_length=1000,
+                                        widget=forms.TextInput(
+                                            attrs={'placeholder': 'Please ' +
+                                                   'enter answer.', }),
+                                        required=False)
+    respone_type_1 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
+        required=False)
+
+    subpart_name_2 = forms.CharField(label='Name of SubPart', max_length=10,
+                                     widget=forms.TextInput(attrs={
+                                         'placeholder': 'Name of SubPart'}),
+                                     initial='ii', required=False)
+    subpart_content_2 = forms.CharField(label='Content', max_length=1000,
+                                        widget=forms.TextInput(
+                                            attrs={'placeholder': 'Please ' +
+                                                   'enter answer.', }),
+                                        required=False)
+    respone_type_2 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
+        required=False)
+
+    subpart_name_3 = forms.CharField(label='Name of SubPart', max_length=10,
+                                     widget=forms.TextInput(attrs={
+                                         'placeholder': 'Name of SubPart'}),
+                                     initial='iii', required=False)
+    subpart_content_3 = forms.CharField(label='Content', max_length=1000,
+                                        widget=forms.TextInput(
+                                            attrs={'placeholder': 'Please ' +
+                                                   'enter answer.', }),
+                                        required=False)
+    respone_type_3 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
+        required=False)
+
+    subpart_name_4 = forms.CharField(label='Name of SubPart', max_length=10,
+                                     widget=forms.TextInput(attrs={
+                                         'placeholder': 'Name of SubPart'}),
+                                     initial='iv', required=False)
+    subpart_content_4 = forms.CharField(label='Content', max_length=1000,
+                                        widget=forms.TextInput(
+                                            attrs={'placeholder': 'Please ' +
+                                                   'enter answer.', }),
+                                        required=False)
+    respone_type_4 = forms.CharField(
+        max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)

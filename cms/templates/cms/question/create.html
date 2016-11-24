@@ -228,15 +228,181 @@
               <li role="presentation" class="pull-left">
                 <b>Solution</b> <span class="custom-asterisk">(*)</span>
               </li>
-               <li role="presentation">
+              <li role="presentation" class="pull-left">
                 {{ form.solution }}
               </li>
-              <li role="presentation" class="pull-left">
-                &nbsp &nbsp &nbsp &nbsp &nbsp
+            </ul>
+          </li>
+
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
+              <li role="presentation">
+                {% fontawesome_icon 'key' color='blue' %}
                 <b>Answer</b> <span class="custom-asterisk">(*)</span>
               </li>
-              <li role="presentation" class="pull-right">
-                {{ form.answer }}
+
+              <li role="presentation">
+                {{ formset.management_form }}
+                {% for sform in formset %}
+                  <div class="link-answer-formset">
+                    <ul class="nav nav-pills">
+                      <li>
+                        {{ sform.part_name }}
+                        {% if sform.part_name.errors %}
+                            {% for error in sform.part_name.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        {{ sform.part_content }}
+                        {% if sform.part_content.errors %}
+                            {% for error in sform.part_content.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        <div class="styled-select slate">
+                          {{ sform.part_respone_type }}
+                        </div>
+                        {% if sform.part_respone_type.errors %}
+                            {% for error in sform.part_respone_type.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+                    </ul>
+
+                    <ul class="nav nav-pills">
+                      <li>
+                        {{ sform.subpart_name_1 }}
+                        {% if sform.subpart_name_1.errors %}
+                            {% for error in sform.subpart_name_1.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        {{ sform.subpart_content_1 }}
+                        {% if sform.subpart_content_1.errors %}
+                            {% for error in sform.subpart_content_1.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        <div class="styled-select slate">
+                          {{ sform.respone_type_1 }}
+                        </div>
+                        {% if sform.respone_type_1.errors %}
+                            {% for error in sform.respone_type_1.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+                    </ul>
+
+                    <ul class="nav nav-pills">
+                      <li>
+                        {{ sform.subpart_name_2 }}
+                        {% if sform.subpart_name_2.errors %}
+                            {% for error in sform.subpart_name_2.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        {{ sform.subpart_content_2 }}
+                        {% if sform.subpart_content_2.errors %}
+                            {% for error in sform.subpart_content_2.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        <div class="styled-select slate">
+                          {{ sform.respone_type_2 }}
+                        </div>
+                        {% if sform.respone_type_2.errors %}
+                            {% for error in sform.respone_type_2.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+                    </ul>
+
+                    <ul class="nav nav-pills">
+                      <li>
+                        {{ sform.subpart_name_3 }}
+                        {% if sform.subpart_name_3.errors %}
+                            {% for error in sform.subpart_name_3.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        {{ sform.subpart_content_3 }}
+                        {% if sform.subpart_content_3.errors %}
+                            {% for error in sform.subpart_content_3.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        <div class="styled-select slate">
+                          {{ sform.respone_type_3 }}
+                        </div>
+                        {% if sform.respone_type_3.errors %}
+                            {% for error in sform.respone_type_3.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+                    </ul>
+
+                    <ul class="nav nav-pills">
+                      <li>
+                        {{ sform.subpart_name_4 }}
+                        {% if sform.subpart_name_4.errors %}
+                            {% for error in sform.subpart_name_4.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        {{ sform.subpart_content_4 }}
+                        {% if sform.subpart_content_4.errors %}
+                            {% for error in sform.subpart_content_4.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
+                      <li>
+                        <div class="styled-select slate">
+                          {{ sform.respone_type_4 }}
+                        </div>
+                        {% if sform.respone_type_4.errors %}
+                            {% for error in sform.respone_type_4.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+                    </ul>
+
+                  </div>
+                {% endfor %}
+                <hr>
               </li>
             </ul>
           </li>
