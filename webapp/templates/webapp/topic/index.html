@@ -112,6 +112,7 @@
               <div class="panel-heading">Summary</div>
               <div class="panel-body">
                 {% for keypoint in keypoints %}
+                  {{ keypoint.name }} |
                   {{ keypoint.content }}
                   <hr class="custom-hr">
                 {% endfor %}
