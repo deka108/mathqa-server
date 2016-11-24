@@ -652,7 +652,7 @@ def api_create_user(request):
                              email=request.POST.__getitem__('email'),
                              first_name=request.POST.__getitem__('first_name'),
                              last_name=request.POST.__getitem__('last_name'),
-                             is_staff=request.POST.__getitem__('is_staff'),
+                             is_staff=False,
                              is_active=request.POST.__getitem__('is_active')
                              )
 
@@ -690,7 +690,6 @@ def api_update_user(request):
     user.email = request.POST.__getitem__('email')
     user.first_name = request.POST.__getitem__('first_name')
     user.last_name = request.POST.__getitem__('last_name')
-    user.is_staff = request.POST.__getitem__('is_staff')
     user.is_active = request.POST.__getitem__('is_active')
 
     user.save()
