@@ -132,8 +132,6 @@ class EditUserForm(forms.Form):
     last_name = forms.CharField(label='Email', max_length=200,
                                 widget=forms.TextInput(
                                     attrs={'placeholder': 'Last Name'}))
-    is_staff = forms.BooleanField(
-        widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))
     is_active = forms.BooleanField(
         widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))
 
