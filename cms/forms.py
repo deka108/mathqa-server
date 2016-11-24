@@ -139,6 +139,7 @@ class EditUserForm(forms.Form):
 
 
 class EditAnswerPartForm(forms.Form):
+    # id = forms.CharField(widget=forms.HiddenInput())
     part_name = forms.CharField(label='Name of Part', max_length=1,
                                 widget=forms.TextInput(attrs={
                                     'placeholder': 'Name of Part'}),

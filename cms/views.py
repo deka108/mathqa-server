@@ -318,9 +318,7 @@ def api_create_question(request):
         for f in formset:
             cd = f.cleaned_data
             if any(cd):
-                if (any(cd.get('part_name')) and
-                        any(cd.get('part_content')) and
-                        any(cd.get('part_respone_type'))):
+                if any(cd.get('part_name')):
                     answer_part = AnswerPart(part_name=cd.get('part_name'),
                                              part_content=cd.get(
                                                  'part_content'),
@@ -334,7 +332,7 @@ def api_create_question(request):
                         answer_part.subpart_content_1 = cd.get(
                             'subpart_content_1')
                         answer_part.respone_type_1 = cd.get(
-                            'subpart_content_1')
+                            'respone_type_1')
 
                     if (any(cd.get('subpart_name_2')) and
                             any(cd.get('subpart_content_2')) and
@@ -436,7 +434,7 @@ def api_update_question(request):
 
     question.save()
 
-    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
+    EditAnswerPartFormSet = formset_factory(EditAnswerPartForm)
     formset = EditAnswerPartFormSet(request.POST)
 
     if formset.is_valid():
@@ -447,8 +445,8 @@ def api_update_question(request):
                         any(cd.get('part_content')) and
                         any(cd.get('part_respone_type'))):
                     answer_part = AnswerPart.objects.filter(
-                        part_name=cd.get('part_name')).first()
-
+                        part_name=cd.get('part_name'),
+                        question=question).first()
                     answer_part.part_name = cd.get('part_name')
                     answer_part.part_content = cd.get('part_content')
                     answer_part.part_respone_type = cd.get('part_respone_type')
@@ -460,7 +458,7 @@ def api_update_question(request):
                         answer_part.subpart_content_1 = cd.get(
                             'subpart_content_1')
                         answer_part.respone_type_1 = cd.get(
-                            'subpart_content_1')
+                            'respone_type_1')
 
                     if (any(cd.get('subpart_name_2')) and
                             any(cd.get('subpart_content_2')) and
