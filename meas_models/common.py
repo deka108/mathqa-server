@@ -13,7 +13,7 @@ TEXT = 'Text'
 PROVE = 'Prove'
 
 RESPONSE_TYPES = [
-    (NUMERIC, 'Exam Numberic'),
+    (NUMERIC, 'Numbers'),
     (SKETCH, 'Sketch'),
     (EXPRESSION, 'Expression'),
     (TEXT, 'Text'),
