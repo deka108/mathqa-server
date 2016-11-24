@@ -62,6 +62,7 @@ def topic_concept(request, topic_id, concept_id):
     concept = Concept.objects.get(pk=concept_id)
     keypoints = concept.keypoint_set.all()
     questions = concept.question_set.filter(keypoint__isnull=True)
+    k_questions = Question.objects.filter(keypoint__in=keypoints)
 
     return render(request, 'webapp/topic/index.html', __user_info(request, {
         "topics": Topic.objects.all().order_by('-order').reverse(),
@@ -69,7 +70,8 @@ def topic_concept(request, topic_id, concept_id):
         "current_topic": topic,
         "current_concept": concept,
         "keypoints": keypoints,
-        "questions": questions
+        "questions": questions,
+        "k_questions": k_questions
     }))
 
 
