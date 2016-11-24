@@ -89,6 +89,33 @@ def paper_delete(request):
     return
 
 
+# AnswerPart
+def check_answer(request):
+    if request.method == 'GET':
+        answer_part = AnswerPart.objects.get(pk=request.GET.__getitem__('id'))
+        subpart_num = request.GET.__getitem__('subpart_num')
+
+        compare = ''
+        if subpart_num == 1:
+            compare = answer_part.subpart_content_1
+        elif subpart_num == 2:
+            compare = answer_part.subpart_content_2
+        elif subpart_num == 3:
+            compare = answer_part.subpart_content_3
+        else:
+            compare = answer_part.subpart_content_4
+        result = {
+            'result': request.GET.__getitem__('answer') == compare
+        }
+
+        return HttpResponse(
+            json.dumps(result),
+            content_type="application/json"
+        )
+
+    return __error_response
+
+
 def __error_response():
     return HttpResponse(
         json.dumps({"Error"}),

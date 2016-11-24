@@ -19,3 +19,7 @@
 .selected-highlight {
   background-color: #e0e0d1 !important;
 }
+
+.input-box {
+  padding-top: 10px;
+}
