@@ -105,7 +105,46 @@
                         </br>
                         <hr>
                         Answer </br>
-                        {{ question.answer | safe }}
+                        {% for answerpart in question.answerpart_set.all %}
+                          <div class="panel panel-default">
+                            <div class="panel-heading">
+                              ( {{ answerpart.part_name }} )
+                               {{ answerpart.part_content }}
+                            </div>
+                            <div class="panel-body">
+                              <div class="rows">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-1">
+                                  {{ answerpart.subpart_name_1 }}. &nbsp
+                                  {{ answerpart.subpart_name_2 }}. &nbsp
+                                  {{ answerpart.subpart_name_3 }}. &nbsp
+                                  {{ answerpart.subpart_name_4 }}. &nbsp
+                                </div>
+                                <div class="col-sm-4">
+                                  <input class="input-box"></input>
+                                  <input class="input-box"></input>
+                                  <input class="input-box"></input>
+                                  <input class="input-box"></input>
+                                </div>
+                                <div class="col-sm-2">
+                                  <a type="button" class="btn btn-default">
+                                    Check
+                                  </a>
+                                  <a type="button" class="btn btn-default">
+                                    Check
+                                  </a>
+                                  <a type="button" class="btn btn-default">
+                                    Check
+                                  </a>
+                                  <a type="button" class="btn btn-default">
+                                    Check
+                                  </a>
+                                </div>
+                                <div class="col-sm-4"></div>
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
                      </div>
                      <div class="modal-footer">
                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

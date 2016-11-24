@@ -13,4 +13,5 @@ from . import views
 urlpatterns = [
     url(r'^topic_index/$', views.topic_index, name='topic_index'),
     url(r'^topic_post/$', views.topic_post, name='topic_post'),
+    url(r'^check_answer/$', views.check_answer, name='check_answer'),
 ]
