@@ -438,6 +438,19 @@ def api_update_question(request):
     formset = EditAnswerPartFormSet(request.POST)
 
     if formset.is_valid():
+        existing_answer_parts = question.answerpart_set.all()
+        for answer_part in existing_answer_parts:
+            counter = 0
+
+            for f in formset:
+                cd = f.cleaned_data
+
+                if answer_part.part_name == cd.get('part_name'):
+                    counter = counter + 1
+
+            if counter == 0:
+                answer_part.delete()
+
         for f in formset:
             cd = f.cleaned_data
             if any(cd):
@@ -447,6 +460,9 @@ def api_update_question(request):
                     answer_part = AnswerPart.objects.filter(
                         part_name=cd.get('part_name'),
                         question=question).first()
+                    if answer_part is None:
+                        answer_part = AnswerPart(question=question)
+
                     answer_part.part_name = cd.get('part_name')
                     answer_part.part_content = cd.get('part_content')
                     answer_part.part_respone_type = cd.get('part_respone_type')
