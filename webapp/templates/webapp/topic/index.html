@@ -109,49 +109,52 @@
 
           <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel panel-primary">
-              <div class="panel-heading">Summary</div>
+              <div class="panel-heading"><b>Summary</b></div>
               <div class="panel-body">
                 {% for keypoint in keypoints %}
-                  {{ keypoint.name }} |
+                  <b> <i> {{ keypoint.name }} </i> </b>|
                   {{ keypoint.content }}
                   <hr class="custom-hr">
                 {% endfor %}
               </div>
             </div>
             <div class="panel panel-danger">
-              <div class="panel-heading">Questions</div>
+              <div class="panel-heading"><b>Questions</b></div>
               <div class="panel-body">
                 {% for question in k_questions %}
                   <div class="panel panel-default">
-                    <div class="panel-heading">Example {{ forloop.counter }}</div>
-                      <div class="panel-body">
-                        {{ question.content | safe }}
-                      </div>
-                      <div class="panel-footer">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#form-modal__{{question.id}}">Solution
-                        </a>
-                      </div>
+                    <div class="panel-heading">
+                      <b>Example {{ forloop.counter }}</b>
+                    </div>
 
-                      <div class="modal fade" id="form-modal__{{ question.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                              <h4 class="modal-title">Solution for Question {{ forloop.counter }}
-                              </h4>
-                            </div>
-                            <div id="form-modal-body" class="modal-body">
-                              {{ question.content | safe }}
-                              </br>
-                              <hr>
-                              {{ question.solution | safe }}
-                            </div>
-                           <div class="modal-footer">
-                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                           </div>
+                    <div class="panel-body">
+                      {{ question.content | safe }}
+                    </div>
+                    <div class="panel-footer">
+                      <a class="btn btn-success" data-toggle="modal" data-target="#form-modal__{{question.id}}">Solution
+                      </a>
+                    </div>
+
+                    <div class="modal fade" id="form-modal__{{ question.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Solution for Question {{ forloop.counter }}
+                            </h4>
+                          </div>
+                          <div id="form-modal-body" class="modal-body">
+                            {{ question.content | safe }}
+                            </br>
+                            <hr>
+                            {{ question.solution | safe }}
+                          </div>
+                         <div class="modal-footer">
+                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                          </div>
-                        </div>
+                       </div>
                       </div>
+                    </div>
                   </div>
                 {% endfor %}
               </div>
