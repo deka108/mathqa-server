@@ -200,13 +200,9 @@
                           </ul>
                         </div>
                         <div class="col-sm-4 pull-right">
-                          <div class="btn-group" role="group" aria-label="...">
-                            <a href="">
-                              <button type="button" class="btn btn-success">
-                                Try
-                              </button>
-                            </a>
-                          </div>
+                          <button type="button" class="btn btn-success collapsed" data-toggle="collapse" href="#collapse_{{ question.id }}" aria-expanded="false" aria-controls="collapseTwo">
+                            Solution
+                          </button>
                         </div>
                       </div>
                       <div class="row question-content">
@@ -216,6 +212,26 @@
                         {% for part in question.part_set.all %}
                           {{ part.content | safe}}
                         {% endfor %}
+                      </div>
+                      <div id="collapse_{{ question.id }}" class="collapse row" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4 class="modal-title">Solution for Question {{ forloop.counter }}
+                              </h4>
+                            </div>
+                            <div id="form-modal-body" class="modal-body">
+                              {{ question.content | safe }}
+                              </br>
+                              <hr>
+                              {{ question.solution | safe }}
+                            </div>
+                           <div class="modal-footer">
+
+                           </div>
+                         </div>
+                        </div>
                       </div>
                     </td>
                   </tr>
