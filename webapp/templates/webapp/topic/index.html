@@ -63,7 +63,7 @@
                </a>
 
               <ul class="dropdown-menu">
-                <li><a href="#">Concepts</a></li>
+                <li class="highlight-concept">Concepts</li>
                 <li role="separator" class="divider"></li>
                 {% for concept in concepts %}
                   <li>
@@ -109,7 +109,7 @@
 
           <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel panel-primary">
-              <div class="panel-heading"><b>Summary</b></div>
+              <div class="panel-heading"><b>Key Points</b></div>
               <div class="panel-body">
                 {% for keypoint in keypoints %}
                   <b> <i> {{ keypoint.name }} </i> </b>|
@@ -188,13 +188,14 @@
                           <ul class="nav nav-pills nav-stacked">
                             <li role="presentation" class = "question-title">
                               Question {{ forloop.counter }}
-                            </li>
-                            <li role="presentation" class = "difficulty-level-display">
-                              <span>
+                              <span class = "difficulty-level-display">
                                 {% for c in question.get_difficulty_level %}
                                   {% fontawesome_icon 'star' color='#b38600' %}
                                 {% endfor %}
                               </span>
+                            </li>
+                            <li role="presentation" class="question-concept">
+                              {{ question.concept.name }}
                             </li>
                           </ul>
                         </div>
