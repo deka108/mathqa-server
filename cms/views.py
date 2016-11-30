@@ -18,7 +18,7 @@ from meas_common.basic import *
 # Topic
 def topic_index(request, subject_id=-1):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     subject = ''
     if any(request.POST.getlist('subject')):
@@ -36,7 +36,7 @@ def topic_index(request, subject_id=-1):
 
 def create_topic(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     return render(request, 'cms/topic/create.html', __user_info(request, {
         'form': EditTopicForm()
@@ -45,7 +45,7 @@ def create_topic(request):
 
 def edit_topic(request, topic_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topic = Topic.objects.get(pk=topic_id)
 
@@ -60,7 +60,7 @@ def edit_topic(request, topic_id):
 
 def api_create_topic(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topic = Topic(name=request.POST.__getitem__('name'),
                   description=request.POST.__getitem__('description'),
@@ -76,7 +76,7 @@ def api_create_topic(request):
 
 def api_update_topic(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topic = Topic.objects.get(pk=request.POST.__getitem__('id'))
     topic.name = request.POST.__getitem__('name')
@@ -92,12 +92,12 @@ def api_update_topic(request):
 
 def delete_topic(request, topic_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topic = Topic.objects.get(pk=topic_id)
     topic.delete()
 
-    return HttpResponseRedirect('/cms/topic', __user_info(request, {
+    return HttpResponseRedirect('/topic', __user_info(request, {
         "topics": Topic.objects.all(),
         'form': SelectSubjectForm(),
     }))
@@ -106,7 +106,7 @@ def delete_topic(request, topic_id):
 # Concept
 def concept_index(request, topic_id=0):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topics = ''
     subject = ''
@@ -127,7 +127,7 @@ def concept_index(request, topic_id=0):
 
 def concept_subject(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     subject = ''
 
@@ -146,7 +146,7 @@ def concept_subject(request):
 
 def create_concept(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     KeyPointFormSet = formset_factory(KeyPointForm, extra=1)
     formset = KeyPointFormSet()
@@ -158,7 +158,7 @@ def create_concept(request):
 
 def edit_concept(request, concept_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     concept = Concept.objects.get(pk=concept_id)
 
@@ -179,7 +179,7 @@ def edit_concept(request, concept_id):
 
 def api_create_concept(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     concept = Concept(name=request.POST.__getitem__('name'),
                       description=request.POST.__getitem__('description'),
@@ -208,7 +208,7 @@ def api_create_concept(request):
 
 def api_update_concept(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topic_id = request.POST.__getitem__('topic')
 
@@ -262,7 +262,7 @@ def api_update_concept(request):
 
 def delete_concept(request, concept_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     concept = Concept.objects.get(pk=concept_id)
     concept.delete()
@@ -276,7 +276,7 @@ def delete_concept(request, concept_id):
 
 def question_index(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     return render(request, 'cms/question/index.html', __user_info(request, {
         "topics": Topic.objects.all(),
@@ -286,7 +286,7 @@ def question_index(request):
 
 def api_create_question(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     question = Question(
         question_type=request.POST.__getitem__('question_type'),
@@ -297,6 +297,7 @@ def api_create_question(request):
             'difficulty_level'),
         content=request.POST.__getitem__('content'),
         solution=request.POST.__getitem__('solution'),
+        answer=request.POST.__getitem__('answer'),
         concept=Concept.objects.get(pk=request.POST.__getitem__('concept')),
     )
 
@@ -369,7 +370,7 @@ def api_create_question(request):
 
 def create_question(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
     formset = EditAnswerPartFormSet()
@@ -380,7 +381,7 @@ def create_question(request):
 
 def edit_question(request, question_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     question = Question.objects.get(pk=question_id)
 
@@ -399,6 +400,7 @@ def edit_question(request, question_id):
                  'difficulty_level': question.difficulty_level,
                  'respone_type': question.respone_type,
                  'content': question.content,
+                 'answer': question.answer,
                  'solution': question.solution,
                  'concept': question.concept,
                  'paper': question.paper
@@ -409,7 +411,7 @@ def edit_question(request, question_id):
 
 def api_update_question(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     question = Question.objects.get(pk=request.POST.__getitem__('id'))
     question.question_type = request.POST.__getitem__('question_type')
@@ -418,6 +420,7 @@ def api_update_question(request):
     question.mark = request.POST.__getitem__('mark')
     question.difficulty_level = request.POST.__getitem__('difficulty_level')
     question.respone_type = request.POST.__getitem__('respone_type')
+    question.answer = request.POST.__getitem__('answer')
     question.content = request.POST.__getitem__('content')
     question.solution = request.POST.__getitem__('solution')
 
@@ -511,7 +514,7 @@ def api_update_question(request):
 
 def delete_question(request, question_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     question = Question.objects.get(pk=question_id)
     question.delete()
@@ -524,7 +527,7 @@ def delete_question(request, question_id):
 
 def question_topic_detail(request, topic_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topic = Topic.objects.get(pk=topic_id)
     concept = topic.concept_set.all()
@@ -552,12 +555,21 @@ def question_paper_detail(request, paper_id):
     }))
 
 
-def paper_index(request):
+def paper_index(request, subject_id=-1):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
+
+    subject = ''
+    if any(request.POST.getlist('subject')):
+        subject_id = request.POST.__getitem__('subject')
+        subject = Subject.objects.get(pk=subject_id)
+
+    papers = Paper.objects.all if subject_id == - \
+        1 else Subject.objects.get(pk=subject_id).paper_set.all()
 
     return render(request, 'cms/paper/index.html', __user_info(request, {
-        "papers": Paper.objects.all(),
+        "papers": papers,
+        'form': SelectSubjectForm(initial={'subject': subject})
     }))
 
 
@@ -571,11 +583,13 @@ def create_paper(request):
 
 def api_create_paper(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     paper = Paper(year=request.POST.__getitem__('year'),
                   month=request.POST.__getitem__('month'),
-                  number=request.POST.__getitem__('number'))
+                  number=request.POST.__getitem__('number'),
+                  subject=Subject.objects.get(
+                      pk=request.POST.__getitem__('subject')))
 
     paper.save()
 
@@ -593,20 +607,22 @@ def edit_paper(request, paper_id):
     return render(request, 'cms/paper/edit.html', {'form': EditPaperForm(
         initial={'id': paper_id, 'year': paper.year,
                  'month': paper.get_month_display,
-                 'number': paper.number
+                 'number': paper.number,
+                 'subject': paper.subject
                  }
     )})
 
 
 def api_update_paper(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     paper = Paper.objects.get(pk=request.POST.__getitem__('id'))
     paper.year = request.POST.__getitem__('year')
     paper.month = request.POST.__getitem__('month')
     paper.number = request.POST.__getitem__('number')
-
+    paper.subject = Subject.objects.get(
+        pk=request.POST.__getitem__('subject'))
     paper.save()
 
     return HttpResponseRedirect('../paper/', __user_info(request, {
@@ -616,7 +632,7 @@ def api_update_paper(request):
 
 def delete_paper(request, paper_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     paper = Paper.objects.get(pk=paper_id)
     paper.delete()
@@ -628,7 +644,7 @@ def delete_paper(request, paper_id):
 
 def user_index(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     return render(request, 'cms/user/index.html', __user_info(request, {
         "users": User.objects.all(),
@@ -637,7 +653,7 @@ def user_index(request):
 
 def create_user(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     return render(request, 'cms/user/create.html', __user_info(request, {
                   'form': EditUserForm()}))
@@ -645,7 +661,7 @@ def create_user(request):
 
 def api_create_user(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     User.objects.create_user(username=request.POST.__getitem__('username'),
                              password=request.POST.__getitem__('password'),
@@ -663,7 +679,7 @@ def api_create_user(request):
 
 def edit_user(request, user_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     user = User.objects.get(pk=user_id)
 
@@ -682,7 +698,7 @@ def edit_user(request, user_id):
 
 def api_update_user(request):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     user = User.objects.get(pk=request.POST.__getitem__('id'))
     user.username = request.POST.__getitem__('username')
@@ -701,7 +717,7 @@ def api_update_user(request):
 
 def delete_user(request, user_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     user = User.objects.get(pk=user_id)
     user.delete()
@@ -714,7 +730,7 @@ def delete_user(request, user_id):
 
 def move_up(request, topic_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topic = Topic.objects.get(pk=topic_id)
     subject = topic.subject
@@ -736,7 +752,7 @@ def move_up(request, topic_id):
 # PhucLS
 def move_down(request, topic_id):
     if not request.user.is_superuser:
-        return redirect('/cms/login/')
+        return redirect('/login/')
 
     topic = Topic.objects.get(pk=topic_id)
     subject = topic.subject

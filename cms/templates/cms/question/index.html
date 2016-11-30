@@ -158,13 +158,14 @@
                     <ul class="nav nav-pills nav-stacked">
                       <li role="presentation" class = "question-title">
                         Question {{ forloop.counter }}
-                      </li>
-                      <li role="presentation" class = "difficulty-level-display">
-                        <span>
+                        <span class = "difficulty-level-display">
                           {% for c in question.get_difficulty_level %}
                             {% fontawesome_icon 'star' color='#b38600' %}
                           {% endfor %}
                         </span>
+                      </li>
+                      <li role="presentation" class="question-concept">
+                        {{ question.concept.name }}
                       </li>
                     </ul>
                   </div>

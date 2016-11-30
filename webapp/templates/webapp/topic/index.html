@@ -63,7 +63,7 @@
                </a>
 
               <ul class="dropdown-menu">
-                <li><a href="#">Concepts</a></li>
+                <li class="highlight-concept">Concepts</li>
                 <li role="separator" class="divider"></li>
                 {% for concept in concepts %}
                   <li>
@@ -109,7 +109,7 @@
 
           <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel panel-primary">
-              <div class="panel-heading"><b>Summary</b></div>
+              <div class="panel-heading"><b>Key Points</b></div>
               <div class="panel-body">
                 {% for keypoint in keypoints %}
                   <b> <i> {{ keypoint.name }} </i> </b>|
@@ -188,24 +188,21 @@
                           <ul class="nav nav-pills nav-stacked">
                             <li role="presentation" class = "question-title">
                               Question {{ forloop.counter }}
-                            </li>
-                            <li role="presentation" class = "difficulty-level-display">
-                              <span>
+                              <span class = "difficulty-level-display">
                                 {% for c in question.get_difficulty_level %}
                                   {% fontawesome_icon 'star' color='#b38600' %}
                                 {% endfor %}
                               </span>
                             </li>
+                            <li role="presentation" class="question-concept">
+                              {{ question.concept.name }}
+                            </li>
                           </ul>
                         </div>
                         <div class="col-sm-4 pull-right">
-                          <div class="btn-group" role="group" aria-label="...">
-                            <a href="">
-                              <button type="button" class="btn btn-success">
-                                Try
-                              </button>
-                            </a>
-                          </div>
+                          <button type="button" class="btn btn-success collapsed" data-toggle="collapse" href="#collapse_{{ question.id }}" aria-expanded="false" aria-controls="collapseTwo">
+                            Solution
+                          </button>
                         </div>
                       </div>
                       <div class="row question-content">
@@ -215,6 +212,26 @@
                         {% for part in question.part_set.all %}
                           {{ part.content | safe}}
                         {% endfor %}
+                      </div>
+                      <div id="collapse_{{ question.id }}" class="collapse row" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4 class="modal-title">Solution for Question {{ forloop.counter }}
+                              </h4>
+                            </div>
+                            <div id="form-modal-body" class="modal-body">
+                              {{ question.content | safe }}
+                              </br>
+                              <hr>
+                              {{ question.solution | safe }}
+                            </div>
+                           <div class="modal-footer">
+
+                           </div>
+                         </div>
+                        </div>
                       </div>
                     </td>
                   </tr>
