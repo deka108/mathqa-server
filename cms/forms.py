@@ -66,7 +66,7 @@ class EditQuestionForm(forms.Form):
                                          'width': "100%",
                                          'cols': "70",
                                          'rows': "10",
-                                         "onkeyup": "Preview.Update()"}))
+                                         "onkeyup": "Pre`.Update()"}))
     solution = forms.CharField(label='Solution', max_length=1000,
                                widget=forms.Textarea(
                                    attrs={'placeholder': 'Please enter ' +
@@ -79,7 +79,7 @@ class EditQuestionForm(forms.Form):
                                    attrs={'placeholder': 'Please enter ' +
                                           'answers for this question here.',
                                           'width': "100%",
-                                          'cols': "40",
+                                          'cols': "80",
                                           'rows': "10"}))
     keypoint = forms.ModelChoiceField(empty_label="Please choose KeyPoint",
                                       queryset=KeyPoint.objects.all(),

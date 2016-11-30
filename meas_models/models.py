@@ -177,6 +177,7 @@ class Question(models.Model):
         default=TEXT)
     content = RichTextField()
     solution = RichTextField()
+    answer = RichTextField(default="Test")
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     keypoint = models.ForeignKey(KeyPoint, on_delete=models.CASCADE,

@@ -236,11 +236,23 @@
 
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
-              <li role="presentation">
+              <li role="presentation" class="pull-left">
                 {% fontawesome_icon 'key' color='blue' %}
                 <b>Answer</b> <span class="custom-asterisk">(*)</span>
               </li>
+            </ul>
+          </li>
 
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
+              <li role="presentation" class="pull-left">
+                {{ form.answer }}
+              </li>
+            </ul>
+          </li>
+
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
               <li role="presentation">
                 {{ formset.management_form }}
                 {% for sform in formset %}

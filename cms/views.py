@@ -297,6 +297,7 @@ def api_create_question(request):
             'difficulty_level'),
         content=request.POST.__getitem__('content'),
         solution=request.POST.__getitem__('solution'),
+        answer=request.POST.__getitem__('answer'),
         concept=Concept.objects.get(pk=request.POST.__getitem__('concept')),
     )
 
@@ -399,6 +400,7 @@ def edit_question(request, question_id):
                  'difficulty_level': question.difficulty_level,
                  'respone_type': question.respone_type,
                  'content': question.content,
+                 'answer': question.answer,
                  'solution': question.solution,
                  'concept': question.concept,
                  'paper': question.paper
@@ -418,6 +420,7 @@ def api_update_question(request):
     question.mark = request.POST.__getitem__('mark')
     question.difficulty_level = request.POST.__getitem__('difficulty_level')
     question.respone_type = request.POST.__getitem__('respone_type')
+    question.answer = request.POST.__getitem__('answer')
     question.content = request.POST.__getitem__('content')
     question.solution = request.POST.__getitem__('solution')
 
