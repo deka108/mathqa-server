@@ -15,6 +15,14 @@ from . import views
 urlpatterns = [
     url(r'^topics/$', views.TopicList.as_view()),
     url(r'^topics/(?P<pk>[0-9]+)/$', views.TopicDetail.as_view()),
+    url(r'^concepts/$', views.ConceptList.as_view()),
+    url(r'^concepts/(?P<pk>[0-9]+)/$', views.ConceptDetail.as_view()),
+    url(r'^papers/$', views.PaperList.as_view()),
+    url(r'^papers/(?P<pk>[0-9]+)/$', views.PaperDetail.as_view()),
+    url(r'^questions/$', views.QuestionList.as_view()),
+    url(r'^questions/(?P<pk>[0-9]+)/$', views.QuestionDetail.as_view()),
+    url(r'^answerparts/$', views.AnswerPartList.as_view()),
+    url(r'^answerparts/(?P<pk>[0-9]+)/$', views.AnswerPartDetail.as_view()),
 ]
 
 urlpatterns += [
