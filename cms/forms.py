@@ -104,6 +104,9 @@ class EditPaperForm(forms.Form):
         max_length=20., widget=forms.Select(choices=MONTHS))
     number = forms.IntegerField(widget=forms.TextInput(
         {"placeholder": "Please enter number."}))
+    subject = forms.ModelChoiceField(empty_label="Please choose Subject",
+                                     queryset=Subject.objects.all(),
+                                     required=True)
 
 
 class KeyPointForm(forms.Form):

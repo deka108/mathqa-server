@@ -555,12 +555,21 @@ def question_paper_detail(request, paper_id):
     }))
 
 
-def paper_index(request):
+def paper_index(request, subject_id=-1):
     if not request.user.is_superuser:
         return redirect('/login/')
 
+    subject = ''
+    if any(request.POST.getlist('subject')):
+        subject_id = request.POST.__getitem__('subject')
+        subject = Subject.objects.get(pk=subject_id)
+
+    papers = Paper.objects.all if subject_id == - \
+        1 else Subject.objects.get(pk=subject_id).paper_set.all()
+
     return render(request, 'cms/paper/index.html', __user_info(request, {
-        "papers": Paper.objects.all(),
+        "papers": papers,
+        'form': SelectSubjectForm(initial={'subject': subject})
     }))
 
 
@@ -578,7 +587,9 @@ def api_create_paper(request):
 
     paper = Paper(year=request.POST.__getitem__('year'),
                   month=request.POST.__getitem__('month'),
-                  number=request.POST.__getitem__('number'))
+                  number=request.POST.__getitem__('number'),
+                  subject=Subject.objects.get(
+                      pk=request.POST.__getitem__('subject')))
 
     paper.save()
 
@@ -596,7 +607,8 @@ def edit_paper(request, paper_id):
     return render(request, 'cms/paper/edit.html', {'form': EditPaperForm(
         initial={'id': paper_id, 'year': paper.year,
                  'month': paper.get_month_display,
-                 'number': paper.number
+                 'number': paper.number,
+                 'subject': paper.subject
                  }
     )})
 
@@ -609,7 +621,8 @@ def api_update_paper(request):
     paper.year = request.POST.__getitem__('year')
     paper.month = request.POST.__getitem__('month')
     paper.number = request.POST.__getitem__('number')
-
+    paper.subject = Subject.objects.get(
+        pk=request.POST.__getitem__('subject'))
     paper.save()
 
     return HttpResponseRedirect('../paper/', __user_info(request, {

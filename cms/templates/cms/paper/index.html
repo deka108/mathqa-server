@@ -25,6 +25,20 @@
 {% endblock breadcrumb %}
 
 {% block main_content %}
+   <form action="/cms/paper/" method="post">
+    {% csrf_token %}
+    <ul class="nav nav-pills">
+      <li role="presentation" class="pull-left">
+        <div class="styled-select slate">
+          {{ form.subject }}
+        </div>
+      </li>
+      <li role="presentation" class="pull-left">
+        <input type="submit" class="btn btn-default"value="Select" />
+      </li>
+    </ul>
+  </form>
+
   <a href="/cms/create_paper/">
     <button id="add" type="button" class="btn btn-success new-button"></button>
   </a>

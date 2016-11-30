@@ -23,3 +23,9 @@
 .input-box {
   padding-top: 10px;
 }
+
+.question-concept {
+  color: green;
+  font-style: italic;
+  font-size: 12px;
+}

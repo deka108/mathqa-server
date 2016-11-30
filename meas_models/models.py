@@ -134,6 +134,9 @@ class Paper(models.Model):
     number = models.IntegerField()
     no_of_question = models.IntegerField(null=True, blank=True)
 
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE,
+                                default=1)
+
 
 class KeyPoint(models.Model):
     """
