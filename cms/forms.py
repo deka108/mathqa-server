@@ -66,7 +66,7 @@ class EditQuestionForm(forms.Form):
                                          'width': "100%",
                                          'cols': "70",
                                          'rows': "10",
-                                         "onkeyup": "Pre`.Update()"}))
+                                         "onkeyup": "Preview.Update()"}))
     solution = forms.CharField(label='Solution', max_length=1000,
                                widget=forms.Textarea(
                                    attrs={'placeholder': 'Please enter ' +
