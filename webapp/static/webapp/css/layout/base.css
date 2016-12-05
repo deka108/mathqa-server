@@ -1,3 +1,13 @@
+.latex-btn {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.latex-btn-long {
+  width: 120px !important;
+  height: 50px !important;
+}
+
 .mathematics {
   padding-top: 81px;
   background-color: #e6e6e6 !important;
