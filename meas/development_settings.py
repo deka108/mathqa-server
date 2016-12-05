@@ -27,6 +27,8 @@ INSTALLED_APPS = (
     'fontawesome',
     'autofixture',
     'ckeditor',
+    'rest_framework',
+    'rest_framework.authtoken',
 
     # Web application
     'webapp.apps.WebAppConfig',
@@ -181,4 +183,15 @@ CKEDITOR_CONFIGS = {
                 'mathjax'
             ]),
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
