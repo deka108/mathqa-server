@@ -87,6 +87,11 @@
 
 .custom-breadcum {
   background: #d9d9d9;
+  height: 40px;
+}
+
+.breadcrumb-item {
+  padding-top: 8px;
 }
 
 .custom-blockquote {
@@ -113,5 +118,5 @@
 }
 
 .dr-hui {
-  font-size: 27px;
+  font-size: 18px;
 }

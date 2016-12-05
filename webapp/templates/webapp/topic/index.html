@@ -47,44 +47,35 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-md-2"></div>
     <div class="col-md-2">
       <ul class="nav nav-stacked custom-nav-stacked">
         <li class="main-section">Topics</li>
         {% for topic in topics %}
           <li role="presentation">
-            {% if topic.name == current_topic.name %}
-              <a href="/topic/{{ topic.id }}/"
-                class="custom-active dropdown-toggle"
-                data-toggle="dropdown" role="button" aria-haspopup="true"
-                aria-expanded="false">
-                {% fontawesome_icon 'folder-open' color='black' %} {{ topic.name }}
-                <span class="caret"></span>
-               </a>
+            <a href="/topic/{{ topic.id }}/" class="dropdown-toggle"
+              data-toggle="dropdown" role="button" aria-haspopup="true"
+              aria-expanded="false">
+              {% fontawesome_icon 'folder-open' color='black' %} {{ topic.name }}
+              <span class="caret"></span>
+            </a>
 
-              <ul class="dropdown-menu">
-                <li class="highlight-concept">Concepts</li>
-                <li role="separator" class="divider"></li>
-                {% for concept in concepts %}
-                  <li>
-                    <a href="/topic/{{ topic.id }}/concept/{{ concept.id }}/">
-                      {{concept.name}}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-
-            {% else%}
-              <a href="/topic/{{ topic.id }}/">
-                {% fontawesome_icon 'folder-open' color='black' %} {{ topic.name }}
-              </a>
-            {% endif %}
+            <ul class="dropdown-menu">
+              <li class="highlight-concept">Concepts</li>
+              <li role="separator" class="divider"></li>
+              {% for concept in topic.concept_set.all %}
+                <li>
+                  <a href="/topic/{{ topic.id }}/concept/{{ concept.id }}/">
+                    {{concept.name}}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
           </li>
         {% endfor %}
       </ul>
     </div>
 
-    <div class="col-md-6 custom-center-area">
+    <div class="col-md-8 custom-center-area">
       <ul class="nav nav-pills pull-right" role="tablist">
         <li role="presentation">
           <a href="#">Key points
@@ -118,6 +109,7 @@
                 {% endfor %}
               </div>
             </div>
+
             <div class="panel panel-danger">
               <div class="panel-heading"><b>Questions</b></div>
               <div class="panel-body">
@@ -158,6 +150,7 @@
                   </div>
                 {% endfor %}
               </div>
+
             </div>
           </div>
         </div>
@@ -245,11 +238,5 @@
 
       </div>
     </div>
-  </div>
-
-  <div class="col-md-2">
-
-  </div>
-
   </div>
 {% endblock content %}
