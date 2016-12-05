@@ -1,6 +1,9 @@
 .custom-nav-stacked {
   background: #d9d9d9;
   border-right: thick solid #ff751a;
+  height: 720px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .main-section {

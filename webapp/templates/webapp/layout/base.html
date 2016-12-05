@@ -58,13 +58,103 @@
       #EqnEditor { text-align:left; }
     </style>
 
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML">
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        showProcessingMessages: false,
+        tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
+      });
+    </script>
+
+    </script>
+
+    <script>
+      var Preview = {
+        delay: 150,        // delay after keystroke before updating
+        preview: null,     // filled in by Init below
+        buffer: null,      // filled in by Init below
+        timeout: null,     // store setTimout id
+        mjRunning: false,  // true when MathJax is processing
+        mjPending: false,  // true when a typeset has been queued
+        oldText: null,     // used to check if an update is needed
+        //
+        //  Get the preview and buffer DIV's
+        //
+        Init: function () {
+          this.preview = document.getElementById("MathPreview");
+          this.buffer = document.getElementById("MathBuffer");
+        },
+        //
+        //  Switch the buffer and preview, and display the right one.
+        //  (We use visibility:hidden rather than display:none since
+        //  the results of running MathJax are more accurate that way.)
+        //
+        SwapBuffers: function () {
+          var buffer = this.preview, preview = this.buffer;
+          this.buffer = buffer; this.preview = preview;
+          buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+          preview.style.position = ""; preview.style.visibility = "";
+        },
+        //
+        //  This gets called when a key is pressed in the textarea.
+        //  We check if there is already a pending update and clear it if so.
+        //  Then set up an update to occur after a small delay (so if more keys
+        //    are pressed, the update won't occur until after there has been
+        //    a pause in the typing).
+        //  The callback function is set up below, after the Preview object is set up.
+        //
+        Update: function () {
+          if (this.timeout) {clearTimeout(this.timeout)}
+          this.timeout = setTimeout(this.callback,this.delay);
+        },
+        //
+        //  Creates the preview and runs MathJax on it.
+        //  If MathJax is already trying to render the code, return
+        //  If the text hasn't changed, return
+        //  Otherwise, indicate that MathJax is running, and start the
+        //    typesetting.  After it is done, call PreviewDone.
+        //
+        CreatePreview: function () {
+          Preview.timeout = null;
+          if (this.mjPending) return;
+          var text = document.getElementById("search-box").value;
+          if (text === this.oldtext) return;
+          if (this.mjRunning) {
+            this.mjPending = true;
+            MathJax.Hub.Queue(["CreatePreview",this]);
+          } else {
+            this.buffer.innerHTML = this.oldtext = text;
+            this.mjRunning = true;
+            MathJax.Hub.Queue(
+        ["Typeset",MathJax.Hub,this.buffer],
+        ["PreviewDone",this]
+            );
+          }
+        },
+        //
+        //  Indicate that MathJax is no longer running,
+        //  and swap the buffers to show the results.
+        //
+        PreviewDone: function () {
+          this.mjRunning = this.mjPending = false;
+          this.SwapBuffers();
+        }
+      };
+      //
+      //  Cache a callback to the CreatePreview action
+      //
+      Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
+      Preview.callback.autoReset = true;  // make sure it can run more than once
     </script>
     <!-- Extend css and js -->
     {% block extended_head %}{% endblock extended_head %}
   </head>
 
   <body>
-    <div class="row custom-breadcum ">
+    <div class="row custom-breadcum">
       <nav class="navbar bg-primary">
         <div class="container-fluid">
           <ul class="nav navbar-nav">
@@ -81,13 +171,13 @@
             </li>
 
             <li>
-              <a id="menu-quiz" href="/adaptive_test/" class = "custom-navbar-item">
+              <a id="menu-quiz" href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'book' color='white' %}
               </a>
             </li>
 
             <li>
-              <a id="menu-contest" href="/contest/" class = "custom-navbar-item">
+              <a id="menu-contest" href="#" class = "custom-navbar-item">
                 {% fontawesome_icon 'newspaper-o' color='white' %}
               </a>
             </li>
@@ -140,7 +230,7 @@
     </div>
 
     <div class="row container-fluid custom-breadcum">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav breadcrumb-item">
         <li>
           {% block breadcrumb %}{% endblock breadcrumb %}
         </li>
@@ -192,16 +282,52 @@
       <div class="col-md-6">
         <ul class="nav nav-stacke text-center custom-nav-search">
           <li>
+            <div class="btn-group btn-group-justified">
+              <button id="btn-1" class="btn btn-default latex-btn">$\frac{x}{y}$</button>
+              <button id="btn-2" class="btn btn-default latex-btn">$e^x$</button>
+              <button id="btn-3" class="btn btn-default latex-btn">$x^2$</button>
+              <button id="btn-4" class="btn btn-default latex-btn">${x}_{2}$</button>
+              <button id="btn-5" class="btn btn-default latex-btn">$\sqrt{x}$</button>
+              <button id="btn-6" class="btn btn-default latex-btn">$\sqrt[3]{x}$</button>
+              <button id="btn-7" class="btn btn-default latex-btn-long">$\int_{-1}^{1} xdx$</button>
+              <button id="btn-8" class="btn btn-default latex-btn-long">$\sum_{i=0}^{n} {a}_{n}$</button>
+              <button id="btn-9" class="btn btn-default latex-btn">$\overrightarrow{AB}$</button>
+            </div>
+          </li>
+          <li>
+            <div class="btn-group btn-group-justified">
+              <button id="btn-10" class="btn btn-default latex-btn">$\sin x$</button>
+              <button id="btn-11" class="btn btn-default latex-btn">$\cos x$</button>
+              <button id="btn-12" class="btn btn-default latex-btn">$\tan x$</button>
+              <button id="btn-13" class="btn btn-default latex-btn">$\cot x$</button>
+              <button id="btn-14" class="btn btn-default latex-btn-long">$\lim_(n \to \infty)$</button>
+              <button id="btn-15" class="btn btn-default latex-btn">$\log x$</button>
+              <button id="btn-16" class="btn btn-default latex-btn">$\ln x$</button>
+            </div>
+          </li>
+          <li>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder=
+              <input id="search-box" type="text" class="form-control" placeholder=
               "Please enter something to search !">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">
+                  <a class="btn btn-default" type="button"
+                    href="">
                     {% fontawesome_icon 'search' color='black' %} Search
-                  </button>
+                  </a>
                 </span>
 
             </div>
+          </li>
+          <li>
+            <div id="MathPreview"></div>
+            <div id="MathBuffer"></div>
+            <script>
+              Preview.Init();
+            </script>
+          </li>
+
+          <li>
+
           </li>
         </ul>
 
