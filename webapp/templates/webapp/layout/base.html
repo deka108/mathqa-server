@@ -126,7 +126,7 @@
             this.mjPending = true;
             MathJax.Hub.Queue(["CreatePreview",this]);
           } else {
-            this.buffer.innerHTML = this.oldtext = text;
+            this.buffer.innerHTML = this.oldtext = "$" + text + "$";
             this.mjRunning = true;
             MathJax.Hub.Queue(
         ["Typeset",MathJax.Hub,this.buffer],
@@ -230,11 +230,7 @@
     </div>
 
     <div class="row container-fluid custom-breadcum">
-      <ul class="nav navbar-nav breadcrumb-item">
-        <li>
-          {% block breadcrumb %}{% endblock breadcrumb %}
-        </li>
-      </ul>
+      {% block breadcrumb %}{% endblock breadcrumb %}
     </div>
 
     <div class="row main-area">
@@ -256,7 +252,7 @@
       </div>
 
       <div class="col-md-1"></div>
-      </div>
+    </div>
 
     <div class="row search text-center">
       <div class="col-md-3"></div>
