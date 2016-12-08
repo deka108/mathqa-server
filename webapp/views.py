@@ -170,7 +170,7 @@ def search_question(request, keyword="test"):
 
     return render(request, 'webapp/dashboard/index.html',
                   __user_info(request, {
-                      "questions": questions
+                      "s_questions": questions
                   }))
 
 
