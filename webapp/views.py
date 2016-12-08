@@ -163,6 +163,15 @@ def api_update_user(request):
     return redirect('/')
 
 
+def search_question(request, keyword):
+    questions = Question.objects.filter(content=keyword)
+
+    return render(request, 'webapp/dashboard/index.html',
+                  __user_info(request, {
+                      "questions": questions
+                  }))
+
+
 def __user_info(request, updated_list=""):
     result = {
         'is_authenticated': request.user.is_authenticated,

@@ -30,4 +30,6 @@ urlpatterns = [
 
     url(r'^adaptive_test/$', views.adaptive_index, name='adaptive_index'),
     url(r'^contest/$', views.contest_index, name='contest_index'),
+    url(r'^search_question/(?P<keyword>[\w\-]+)/$',
+        views.search_question, name='search_question'),
 ]

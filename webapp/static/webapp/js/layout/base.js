@@ -15,6 +15,9 @@ $( document ).ready(function() {
     $("#login").append(en.menu.login);
 
     $("#search-box").attr("onkeyup", "Preview.Update()");
+    $("#btn-search").click(function() {
+        alert( "Handler for .click() called." );
+    });
 
     $("#btn-1").click(function(){
         $("#search-box").val($("#search-box").val() + "\\frac{x}{y}");
