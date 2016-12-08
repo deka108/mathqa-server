@@ -31,6 +31,15 @@
     </script>
 
     {% fontawesome_stylesheet %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+
+    <link href="{% static 'mathquill-0.10.1/mathquill.css' %}"
+          rel="stylesheet"/>
+    <script type = "text/javascript"
+            src="{% static 'mathquill-0.10.1/mathquill.js' %}">
+    </script>
 
     <link href="{% static 'webapp/css/layout/base.css' %}"
           rel="stylesheet"/>
@@ -126,7 +135,7 @@
             this.mjPending = true;
             MathJax.Hub.Queue(["CreatePreview",this]);
           } else {
-            this.buffer.innerHTML = this.oldtext = text;
+            this.buffer.innerHTML = this.oldtext = "$" + text + "$";
             this.mjRunning = true;
             MathJax.Hub.Queue(
         ["Typeset",MathJax.Hub,this.buffer],
@@ -230,11 +239,7 @@
     </div>
 
     <div class="row container-fluid custom-breadcum">
-      <ul class="nav navbar-nav breadcrumb-item">
-        <li>
-          {% block breadcrumb %}{% endblock breadcrumb %}
-        </li>
-      </ul>
+      {% block breadcrumb %}{% endblock breadcrumb %}
     </div>
 
     <div class="row main-area">
@@ -256,7 +261,7 @@
       </div>
 
       <div class="col-md-1"></div>
-      </div>
+    </div>
 
     <div class="row search text-center">
       <div class="col-md-3"></div>
@@ -310,8 +315,7 @@
               <input id="search-box" type="text" class="form-control" placeholder=
               "Please enter something to search !">
                 <span class="input-group-btn">
-                  <a class="btn btn-default" type="button"
-                    href="">
+                  <a id="btn-search" class="btn btn-default" type="button">
                     {% fontawesome_icon 'search' color='black' %} Search
                   </a>
                 </span>
@@ -335,6 +339,74 @@
 
       <div class="col-md-3"></div>
 
+    </div>
+
+    <div class="container main-area">
+      <table id="items" class="display" width="100%" cellspacing="0">
+        <thead class="custom-header">
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for question in questions %}
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col-sm-8 pull-left">
+                    <ul class="nav nav-pills nav-stacked">
+                      <li role="presentation" class = "question-title">
+                        Question {{ forloop.counter }}
+                        <span class = "difficulty-level-display">
+                          {% for c in question.get_difficulty_level %}
+                            {% fontawesome_icon 'star' color='#b38600' %}
+                          {% endfor %}
+                        </span>
+                      </li>
+                      <li role="presentation" class="question-concept">
+                        {{ question.concept.name }}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-sm-4 pull-right">
+                    <button type="button" class="btn btn-success collapsed" data-toggle="collapse" href="#collapse_{{ question.id }}" aria-expanded="false" aria-controls="collapseTwo">
+                      Solution
+                    </button>
+                  </div>
+                </div>
+                <div class="row question-content">
+                  <hr>
+                  {{ question.content | safe }}
+                   </br>
+                  {% for part in question.part_set.all %}
+                    {{ part.content | safe}}
+                  {% endfor %}
+                </div>
+                <div id="collapse_{{ question.id }}" class="collapse row" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Solution for Question {{ forloop.counter }}
+                        </h4>
+                      </div>
+                      <div id="form-modal-body" class="modal-body">
+                        {{ question.content | safe }}
+                        </br>
+                        <hr>
+                        {{ question.solution | safe }}
+                      </div>
+                     <div class="modal-footer">
+
+                     </div>
+                   </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 
     <div class="custom-footer custom-footer-border">

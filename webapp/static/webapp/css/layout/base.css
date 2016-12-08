@@ -1,3 +1,21 @@
+.question-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.difficulty-level-display {
+  padding-top: 5px;
+  width: 120;
+  height: 25px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.question-content {
+  padding-left: 15px;
+}
+
 .latex-btn {
   width: 50px !important;
   height: 50px !important;
@@ -59,6 +77,7 @@
 }
 
 .custom-navbar-item{
+    padding: 15px;
     color: white !important;
     background: transparent !important;
 }
