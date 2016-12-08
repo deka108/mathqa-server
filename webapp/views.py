@@ -163,8 +163,10 @@ def api_update_user(request):
     return redirect('/')
 
 
-def search_question(request, keyword):
-    questions = Question.objects.filter(content=keyword)
+def search_question(request, keyword="test"):
+    print request.GET["keyword"]
+    questions = Question.objects.filter(
+        content__icontains=request.GET["keyword"])
 
     return render(request, 'webapp/dashboard/index.html',
                   __user_info(request, {
