@@ -3,10 +3,10 @@ $.extend( true, $.fn.dataTable.defaults, {
     "autoWidth": false,
     "columnDefs": [
         { width: '5%', targets: 0 },
-        { width: '20%', targets: 1 },
-        { width: '40%', targets: 2 },
+        { width: '35%', targets: 1 },
+        { width: '15%', targets: 2 },
         { width: '15%', targets: 3 },
-        { width: '20%', targets: 4 },
+        { width: '30%', targets: 4 },
     ],
     "order": [[ 0, "asc" ]]
 } );

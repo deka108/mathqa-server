@@ -88,20 +88,15 @@
     background: transparent !important;
 }
 
-.custom-footer-border {
-  border-top: thick solid #ff751a;
+.footer-text {
+  padding-top: 10px;
+  font-weight: bold;
 }
-
 .custom-footer {
+  border-top: thick solid #ff751a;
   background-color: #337AB7 !important;
   color: white;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-}
-
-.custom-footer-hr {
-  border-color: #ffad33;
+  padding-bottom: 0px;
 }
 
 .custom-nav-search li {

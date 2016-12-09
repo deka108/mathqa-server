@@ -2,10 +2,11 @@ $.extend( true, $.fn.dataTable.defaults, {
     "searching": false,
     "autoWidth": false,
     "columnDefs": [
-        { width: '20%', targets: 0 },
-        { width: '50%', targets: 1 },
+        { width: '5%', targets: 0 },
+        { width: '40%', targets: 1 },
         { width: '20%', targets: 2 },
-        { width: '10%', targets: 3 },
+        { width: '20%', targets: 3 },
+        { width: '15%', targets: 4 }
     ],
     "order": [[ 0, "asc" ]]
 } );
@@ -13,6 +14,7 @@ $.extend( true, $.fn.dataTable.defaults, {
 $(document).ready(function() {
     $('#items').DataTable();
     // Table headers
+    $('#header-order').append(en.cms.header.order);
     $('#header-name').append(en.cms.header.name);
     $('#header-description').append(en.cms.header.description);
     $('#header-topic').append(en.cms.header.topic);

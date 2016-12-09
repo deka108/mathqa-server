@@ -14,3 +14,14 @@
   margin-top: 30px;
   margin-left: 15px;
 }
+
+.main-user-register {
+  height: 100%;
+}
+
+.user-form {
+  margin-top: 40%;
+  padding: 10px;
+  border: solid #c1c1d7;
+  background: #e0e0eb;
+}

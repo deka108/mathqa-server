@@ -6,13 +6,6 @@
 {% block extended_head %}
   <link href="{% static 'webapp/css/user/index.css' %}"
         rel="stylesheet"/>
-
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-  </script>
-  <script type="text/javascript" async
-    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
-  </script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -29,18 +22,17 @@
         </a>
       </li>
       <li class="active">
-         {% fontawesome_icon 'edit' color='blue' %} Edit
+         {% fontawesome_icon 'edit' color='blue' %} Edit User
       </li>
     </ol>
   </div>
 {% endblock breadcrumb %}
 
 {% block content %}
-  <div class="row">
+  <div class="row main-user-register">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-    <blockquote>
-      <form action="/api_update_user/" method="post">
+      <form action="/api_update_user/" method="post" class="user-form">
         {% csrf_token %}
         <ul class="nav nav-pills nav-stacked">
           <li role="presentation">
@@ -116,7 +108,6 @@
         </a>
 
       </form>
-    </blockquote>
     </div>
     <div class="col-md-4"></div>
   </div>
