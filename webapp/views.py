@@ -127,7 +127,7 @@ def edit_user(request):
     if not request.user.is_authenticated:
         return redirect('/')
 
-    return render(request, 'webapp/user/edit.html', {
+    return render(request, 'webapp/user/edit.html', __user_info(request, {
                   'form': EditUserProfileForm(initial={'username':
                                                        request.user.username,
                                                        'password':
@@ -137,8 +137,8 @@ def edit_user(request):
                                                        'first_name':
                                                        request.user.first_name,
                                                        'last_name':
-                                                       request.user.last_name})
-                  })
+                                                       request.user.last_name}
+                                              )}))
 
 
 def api_update_user(request):

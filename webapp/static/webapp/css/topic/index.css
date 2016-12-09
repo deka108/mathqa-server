@@ -1,3 +1,7 @@
+.main-area {
+  min-height: 100%;
+}
+
 .custom-nav-stacked {
   background: #d9d9d9;
   border-right: thick solid #ff751a;
