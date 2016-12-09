@@ -4,30 +4,11 @@
 {% load fontawesome %}
 
 {% block extended_head %}
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
-
-  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
-
   <link href="{% static 'webapp/css/topic/index.css' %}"
         rel="stylesheet"/>
-
-   <script type="text/javascript"
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML">
-  </script>
-
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      showProcessingMessages: false,
-      tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
-    });
-  </script>
-
-  <link href="{% static 'webapp/css/topic/index.css' %}"
-        rel="stylesheet"/>
-   <script type = "text/javascript"
+  <script type = "text/javascript"
           src="{% static 'webapp/js/topic/index.js' %}">
   </script>
-
 {% endblock %}
 
 {% block breadcrumb %}

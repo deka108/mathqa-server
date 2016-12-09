@@ -4,8 +4,10 @@
 {% load fontawesome %}
 
 {% block extended_head %}
-  <link href="{% static 'webapp/css/dashboard/index.css' %}"
-        rel="stylesheet"/>
+  <script type = "text/javascript"
+          src="{% static 'webapp/js/dashboard/index.js' %}">
+  </script>
+
 {% endblock %}
 
 {% block breadcrumb %}
@@ -65,6 +67,169 @@
 
     <div class="col-md-2"></div>
 
+  </div>
+
+  <div class="row search">
+    <div class="col-md-1"></div>
+
+    <div class="col-md-4">
+      <hr class="custom-hr">
+    </div>
+
+    <div class="col-md-2">
+      <p class="text-center title-row">Search Questions</p>
+    </div>
+    <div class="col-md-4">
+      <hr class="custom-hr">
+    </div>
+
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row search text-center">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-2">
+      <img src="{% static 'webapp/img/text.png' %}" />
+    </div>
+
+    <div class="col-md-2">
+      <img src="{% static 'webapp/img/tag.png' %}" />
+    </div>
+
+    <div class="col-md-2">
+      <img src="{% static 'webapp/img/formula.png' %}" />
+    </div>
+
+    <div class="col-md-3"></div>
+  </div>
+
+  <div class="row search">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+      <ul class="nav nav-stacke text-center custom-nav-search">
+        <li>
+          <div class="btn-group btn-group-justified">
+            <button id="btn-1" class="btn btn-default latex-btn">$\frac{x}{y}$</button>
+            <button id="btn-2" class="btn btn-default latex-btn">$e^x$</button>
+            <button id="btn-3" class="btn btn-default latex-btn">$x^2$</button>
+            <button id="btn-4" class="btn btn-default latex-btn">${x}_{2}$</button>
+            <button id="btn-5" class="btn btn-default latex-btn">$\sqrt{x}$</button>
+            <button id="btn-6" class="btn btn-default latex-btn">$\sqrt[3]{x}$</button>
+            <button id="btn-7" class="btn btn-default latex-btn-long">$\int_{-1}^{1} xdx$</button>
+            <button id="btn-8" class="btn btn-default latex-btn-long">$\sum_{i=0}^{n} {a}_{n}$</button>
+            <button id="btn-9" class="btn btn-default latex-btn">$\overrightarrow{AB}$</button>
+          </div>
+        </li>
+        <li>
+          <div class="btn-group btn-group-justified">
+            <button id="btn-10" class="btn btn-default latex-btn">$\sin x$</button>
+            <button id="btn-11" class="btn btn-default latex-btn">$\cos x$</button>
+            <button id="btn-12" class="btn btn-default latex-btn">$\tan x$</button>
+            <button id="btn-13" class="btn btn-default latex-btn">$\cot x$</button>
+            <button id="btn-14" class="btn btn-default latex-btn-long">$\lim_(n \to \infty)$</button>
+            <button id="btn-15" class="btn btn-default latex-btn">$\log x$</button>
+            <button id="btn-16" class="btn btn-default latex-btn">$\ln x$</button>
+          </div>
+        </li>
+        <li>
+          <div class="input-group">
+            <input id="search-box" type="text" class="form-control" placeholder=
+            "Please enter something to search !">
+              <span class="input-group-btn">
+                <a id="btn-search" class="btn btn-default" type="button">
+                  {% fontawesome_icon 'search' color='black' %} Search
+                </a>
+              </span>
+
+          </div>
+        </li>
+        <li>
+          <div id="MathPreview"></div>
+          <div id="MathBuffer"></div>
+          <script>
+            Preview.Init();
+          </script>
+        </li>
+
+        <li>
+
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="col-md-3"></div>
+
+  </div>
+
+  <div class="container main-area">
+    <table id="items" class="display" width="100%" cellspacing="0">
+      <thead class="custom-header">
+        <tr>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for question in s_questions %}
+          <tr>
+            <td>
+              <div class="row">
+                <div class="col-sm-8 pull-left">
+                  <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" class = "question-title">
+                      Question {{ forloop.counter }}
+                      <span class = "difficulty-level-display">
+                        {% for c in question.get_difficulty_level %}
+                          {% fontawesome_icon 'star' color='#b38600' %}
+                        {% endfor %}
+                      </span>
+                    </li>
+                    <li role="presentation" class="question-concept">
+                      {{ question.concept.name }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-4 pull-right">
+                  <button type="button" class="btn btn-success collapsed" data-toggle="collapse" href="#collapse_{{ question.id }}" aria-expanded="false" aria-controls="collapseTwo">
+                    Solution
+                  </button>
+                </div>
+              </div>
+              <div class="row question-content">
+                <hr>
+                {{ question.content | safe }}
+                 </br>
+                {% for part in question.part_set.all %}
+                  {{ part.content | safe}}
+                {% endfor %}
+              </div>
+              <div id="collapse_{{ question.id }}" class="collapse row" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">Solution for Question {{ forloop.counter }}
+                      </h4>
+                    </div>
+                    <div id="form-modal-body" class="modal-body">
+                      {{ question.content | safe }}
+                      </br>
+                      <hr>
+                      {{ question.solution | safe }}
+                    </div>
+                   <div class="modal-footer">
+
+                   </div>
+                 </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
 {% endblock content %}
