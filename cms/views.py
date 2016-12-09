@@ -113,7 +113,8 @@ def concept_index(request, topic_id=0):
     if topic_id != 0:
         concepts = Concept.objects.filter(topic=topic_id)
         subject = Topic.objects.get(pk=topic_id).subject
-        topics = subject.topic_set.all()
+        topics = Topic.objects.all
+        # topics = subject.topic_set.all()
     else:
         concepts = Concept.objects.all
         topics = Topic.objects.all
@@ -172,6 +173,7 @@ def edit_concept(request, concept_id):
             initial={'id': concept_id, 'name': concept.name,
                      'description': concept.description,
                      'topic': concept.topic,
+                     'order': concept.order,
                      }),
         'formset': KeyPointFormSet(initial=res)
     }))
@@ -183,6 +185,7 @@ def api_create_concept(request):
 
     concept = Concept(name=request.POST.__getitem__('name'),
                       description=request.POST.__getitem__('description'),
+                      order=request.POST.__getitem__('order'),
                       topic=Topic.objects.get(
         pk=request.POST.__getitem__('topic'))
     )
@@ -215,6 +218,7 @@ def api_update_concept(request):
     concept = Concept.objects.get(pk=request.POST.__getitem__('id'))
     concept.name = request.POST.__getitem__('name')
     concept.description = request.POST.__getitem__('description')
+    concept.order = request.POST.__getitem__('order')
     concept.topic = Topic.objects.get(pk=topic_id)
 
     concept.save()
@@ -604,13 +608,12 @@ def edit_paper(request, paper_id):
 
     paper = Paper.objects.get(pk=paper_id)
 
-    return render(request, 'cms/paper/edit.html', {'form': EditPaperForm(
-        initial={'id': paper_id, 'year': paper.year,
-                 'month': paper.get_month_display,
-                 'number': paper.number,
-                 'subject': paper.subject
-                 }
-    )})
+    return render(request, 'cms/paper/edit.html', __user_info(request, {
+        'form': EditPaperForm(initial={'id': paper_id, 'year': paper.year,
+                                       'month': paper.get_month_display,
+                                       'number': paper.number,
+                                       'subject': paper.subject
+                                       })}))
 
 
 def api_update_paper(request):
@@ -683,17 +686,17 @@ def edit_user(request, user_id):
 
     user = User.objects.get(pk=user_id)
 
-    return render(request, 'cms/user/edit.html', {'form': EditUserForm(
-        initial={'id': user_id,
-                 'username': user.username,
-                 'password': user.password,
-                 'email': user.email,
-                 'first_name': user.first_name,
-                 'last_name': user.last_name,
-                 'is_staff': user.is_staff,
-                 'is_active': user.is_active
-                 }
-    )})
+    return render(request, 'cms/user/edit.html', __user_info(request, {
+        'form': EditUserForm(
+            initial={'id': user_id,
+                     'username': user.username,
+                     'password': user.password,
+                     'email': user.email,
+                     'first_name': user.first_name,
+                     'last_name': user.last_name,
+                     'is_staff': user.is_staff,
+                     'is_active': user.is_active
+                     })}))
 
 
 def api_update_user(request):

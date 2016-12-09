@@ -102,6 +102,7 @@ class Concept(models.Model):
 
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
+    order = models.PositiveIntegerField(null=True, blank=True, default=1)
 
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
 

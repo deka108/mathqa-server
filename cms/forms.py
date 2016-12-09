@@ -37,6 +37,8 @@ class EditConceptForm(forms.Form):
                                   widget=forms.Textarea(
                                       attrs={'placeholder':
                                              'Concept description'}))
+    order = forms.IntegerField(widget=forms.TextInput(
+        {"placeholder": "Please enter order."}))
     topic = forms.ModelChoiceField(empty_label="Please choose Topic",
                                    queryset=Topic.objects.all())
 
