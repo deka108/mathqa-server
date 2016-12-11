@@ -17,6 +17,7 @@ const en = {
             quiz: "Manage Quiz",
             contest: "Manage Contests",
             paper: "Manage Papers",
+            formula: "Manage Formula",
         },
         breadcrumb: {
             home: "Home",

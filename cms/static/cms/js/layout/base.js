@@ -15,6 +15,7 @@ $( document ).ready(function() {
     $('#manage-user').append(en.cms.management.user);
     $('#manage-quiz').append(en.cms.management.quiz);
     $('#manage-contest').append(en.cms.management.contest);
+    $('#manage-formula').append(en.cms.management.formula);
 
     $('.link-formset').formset({
         addText: 'Add key point',

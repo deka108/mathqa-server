@@ -230,3 +230,15 @@ class AnswerPart(models.Model):
         default=TEXT, null=True, blank=True)
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+
+class Formula(models.Model):
+    """
+    List of formula
+    """
+
+    def __str__(self):
+        return self.name
+
+    name = models.CharField(max_length=200)
+    content = models.TextField()

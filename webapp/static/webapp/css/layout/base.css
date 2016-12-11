@@ -16,6 +16,23 @@
   padding-left: 15px;
 }
 
+.selected-highlight {
+  background-color: #e0e0d1 !important;
+}
+
+.highlight-concept {
+  padding-left: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+}
+
+.question-concept {
+  color: green;
+  font-style: italic;
+  font-size: 12px;
+}
+
 .latex-btn {
   width: 50px !important;
   height: 50px !important;
