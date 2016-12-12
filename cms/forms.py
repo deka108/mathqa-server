@@ -217,4 +217,5 @@ class EditFormulaForm(forms.Form):
     content = forms.CharField(label='Name', max_length=1000,
                               widget=forms.TextInput(
                                   attrs={'class': 'form-control',
-                                         'placeholder': 'Content of Formula'}))
+                                         'placeholder': 'Content of Formula',
+                                         "onkeyup": "Preview.Update()"}))

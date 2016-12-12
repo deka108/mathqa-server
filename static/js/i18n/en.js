@@ -57,6 +57,7 @@ const en = {
             add_paper: "Add new Paper",
             add_user: "Add new User",
             add_formula: "Add new Formula",
+            edit_formula: "Edit Formula",
         }
     },
     title: {
