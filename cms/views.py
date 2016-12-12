@@ -728,9 +728,80 @@ def delete_user(request, user_id):
     return HttpResponseRedirect('/cms/user', __user_info(request, {
         "users": User.objects.all()
     }))
+
+
+def formula_index(request):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    return render(request, 'cms/formula/index.html', __user_info(request, {
+        "formulas": Formula.objects.all(),
+    }))
+
+
+def create_formula(request):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    return render(request, 'cms/formula/create.html', __user_info(request, {
+        'form': EditFormulaForm()
+    }))
+
+
+def api_create_formula(request):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    formula = Formula(name=request.POST.__getitem__('name'),
+                      content=request.POST.__getitem__('content'),)
+    formula.save()
+
+    return HttpResponseRedirect('../formula/', __user_info(request, {
+        "formulas": Formula.objects.all()
+    }))
+
+
+def edit_formula(request, formula_id):
+    if not request.user.is_superuser:
+        return redirect('/cms/login/')
+
+    formula = Formula.objects.get(pk=formula_id)
+
+    return render(request, 'cms/formula/edit.html', __user_info(request, {
+        'form': EditFormulaForm(initial={'id': formula_id,
+                                         'name': formula.name,
+                                         'content': formula.content
+                                         })}))
+
+
+def api_update_formula(request):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    formula = Formula.objects.get(pk=request.POST.__getitem__('id'))
+    formula.name = request.POST.__getitem__('name')
+    formula.content = request.POST.__getitem__('content')
+
+    formula.save()
+
+    return HttpResponseRedirect('../formula/', __user_info(request, {
+        "formula": Formula.objects.all()
+    }))
+
+
+def delete_formula(request, formula_id):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    formula = Formula.objects.get(pk=formula_id)
+    formula.delete()
+
+    return HttpResponseRedirect('/cms/formula', __user_info(request, {
+        "formulas": Formula.objects.all()
+    }))
+
+
 # Move up, down order
-
-
 def move_up(request, topic_id):
     if not request.user.is_superuser:
         return redirect('/login/')

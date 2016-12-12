@@ -206,3 +206,23 @@ class EditAnswerPartForm(forms.Form):
                                         required=False)
     respone_type_4 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)
+
+
+class EditFormulaForm(forms.Form):
+    id = forms.CharField(widget=forms.HiddenInput())
+    name = forms.CharField(label='Name', max_length=200,
+                           widget=forms.TextInput(
+                               attrs={'class': 'form-control',
+                                      'placeholder': 'Name of Formula'}))
+    content = forms.CharField(label='Name', max_length=1000,
+                              widget=forms.TextInput(
+                                  attrs={'class': 'form-control',
+                                         'placeholder': 'Content of Formula',
+                                         "onkeyup": "Preview.Update()"}))
+
+
+class FormulaForm(forms.Form):
+    name = forms.CharField(label='Name', max_length=200,
+                           widget=forms.TextInput(
+                               attrs={'class': 'form-control',
+                                      'placeholder': 'Name of Formula'}))

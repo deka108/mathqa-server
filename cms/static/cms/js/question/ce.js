@@ -6,4 +6,8 @@ $(document).ready(function() {
             $('#paper').hide();
         }
     });
+    $('.formula-formset').formset({
+        addText: 'Add formula',
+        deleteText: 'Remove'
+    });
 } );

@@ -153,6 +153,18 @@ class KeyPoint(models.Model):
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
 
 
+class Formula(models.Model):
+    """
+    List of formula
+    """
+
+    def __str__(self):
+        return self.name
+
+    name = models.CharField(max_length=200)
+    content = models.TextField()
+
+
 class Question(models.Model):
     """
     List of questions
@@ -188,6 +200,8 @@ class Question(models.Model):
                                  null=True, blank=True)
     paper = models.ForeignKey(
         Paper, on_delete=models.CASCADE, null=True, blank=True)
+
+    formulas = models.ManyToManyField(Formula, null=True, blank=True)
 
     def get_difficulty_level(self):
         return range(0, int(self.difficulty_level))
