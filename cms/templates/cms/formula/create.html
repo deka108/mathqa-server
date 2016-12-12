@@ -1,0 +1,76 @@
+{% extends 'cms/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+  <link href="{% static 'cms/css/formula/create.css' %}"
+        rel="stylesheet"/>
+  <script type = "text/javascript"
+          src="{% static 'cms/js/formula/create.js' %}">
+  </script>
+{% endblock %}
+
+{% block breadcrumb %}
+  <div>
+    <ol class="breadcrumb custom-navbar-item">
+      <li>
+        <a id="breadcrumb-home" href="#">
+          {% fontawesome_icon 'home' color='blue' %}
+        </a>
+      </li>
+      <li id="breadcrumb-formula" class="active">
+         {% fontawesome_icon 'calculator' color='blue' %}
+      </li>
+    </ol>
+  </div>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+  <form action="#" method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-4">
+        <ul class="data-field-container" type="none">
+          <li class="data-field text-right">
+            Name
+          </li>
+          <li class="data-field text-right">
+            Content
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-6">
+        <ul class="data-input-container" type="none">
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'user' large=True %}
+                </button>
+              </div>
+              {{ form.name }}
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'book' large=True %}
+                </button>
+              </div>
+              {{ form.content }}
+            </div>
+          </li>
+          <li class="data-input pull-right">
+            <div class="btn-group" role="group" aria-label="...">
+              <input type="submit" value="Save" class="center-block btn btn-default"/>
+              <button type="button" class="btn btn-default">Cancel</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </form>
+{% endblock main_content %}

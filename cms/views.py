@@ -728,9 +728,27 @@ def delete_user(request, user_id):
     return HttpResponseRedirect('/cms/user', __user_info(request, {
         "users": User.objects.all()
     }))
+
+
+def formula_index(request):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    return render(request, 'cms/formula/index.html', __user_info(request, {
+        "formulas": Formula.objects.all(),
+    }))
+
+
+def create_formula(request):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    return render(request, 'cms/formula/create.html', __user_info(request, {
+        'form': EditFormulaForm()
+    }))
+
+
 # Move up, down order
-
-
 def move_up(request, topic_id):
     if not request.user.is_superuser:
         return redirect('/login/')

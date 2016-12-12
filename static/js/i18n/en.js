@@ -27,9 +27,11 @@ const en = {
             quiz: "Quiz",
             contest: "Contest",
             paper: "Paper",
-            user: "User"
+            user: "User",
+            formula: "Formula",
         },
         header: {
+            id: "Id",
             name: "Name",
             description: "Description",
             order: "Order",
@@ -54,6 +56,7 @@ const en = {
             add_concept: "Add new Concept",
             add_paper: "Add new Paper",
             add_user: "Add new User",
+            add_formula: "Add new Formula",
         }
     },
     title: {

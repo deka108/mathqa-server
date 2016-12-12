@@ -80,4 +80,8 @@ urlpatterns = [
         name='api_update_user'),
     url(r'^delete_user/(?P<user_id>[0-9]+)/$',
         views.delete_user, name='delete_user'),
+
+    url(r'^formula/$', views.formula_index, name='formula_index'),
+    url(r'^create_formula/$',
+        views.create_formula, name='create_formula'),
 ]
