@@ -1,0 +1,38 @@
+.navbar {
+  background: #808080;
+}
+
+.navbar-brand .dr{
+  font-size: 27px;
+  font-weight: bold;
+}
+.navbar-brand {
+  color: white !important;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.navbar-button {
+  color: white !important;
+  min-height: 50px !important;
+}
+
+.navbar-username-container {
+  background: #b3b3b3;
+  border-left: 1px solid white;
+}
+
+.navbar-username {
+  color: blue !important;
+  min-height: 50px !important;
+}
+
+.navbar-button-container {
+  background: #666666;
+  border-left: 1px solid white;
+}
+
+.navbar-button-container:hover {
+  background-color: #8c8c8c;
+}
+
