@@ -1,0 +1,22 @@
+.btn-default {
+  background: #b3b3b3 !important;
+}
+
+.nav-left {
+  margin-top: 50px;
+  border-right: 1px solid #d1d1e0;
+}
+
+.nav-component-li {
+  border-top: 1px solid #d1d1e0;
+  height: 36px;
+}
+
+.nav-component-content {
+  color: black;
+  padding: 5px;
+}
+
+.tab-content {
+  background: #f2f2f2;
+}

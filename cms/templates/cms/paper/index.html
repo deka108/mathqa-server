@@ -11,18 +11,20 @@
 
 {% block breadcrumb %}
   <div>
-    <ol class="breadcrumb custom-navbar-item">
+    <ol class="breadcrumb">
       <li>
-        <a id="breadcrumb-home" href="#">
-          {% fontawesome_icon 'home' color='blue' %}
-        </a>
+        {% fontawesome_icon 'home' color='grey' %}
       </li>
       <li id="breadcrumb-paper" class="active">
-         {% fontawesome_icon 'bookmark' color='blue' %}
+        {% fontawesome_icon 'book' color='grey' %}
       </li>
     </ol>
   </div>
 {% endblock breadcrumb %}
+
+{% block main_title %}
+  <p class="display-section">Paper</p>
+{% endblock main_title %}
 
 {% block main_content %}
    <form action="/cms/paper/" method="post">

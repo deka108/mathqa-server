@@ -11,6 +11,8 @@
     <title class="title"></title>
     <link rel="icon" href="{% static 'cms/img/meas_logo.png' %}" type="image/png">
 
+    {% fontawesome_stylesheet %}
+
     <!-- JQuery -->
     <script type = "text/javascript"
         src = "{% static 'js/jquery-3.1.1.min.js' %}">
@@ -33,25 +35,19 @@
             src="{% static 'js/i18n/en.js' %}">
     </script>
 
-    {% fontawesome_stylesheet %}
-
-    <link href="{% static 'cms/css/layout/base.css' %}"
-          rel="stylesheet"/>
-
+    <!-- Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
 
-    <script type = "text/javascript"
-            src="{% static 'cms/js/layout/base.js' %}">
-    </script>
-
+    <!--MathQuill -->
     <link href="{% static 'mathquill-0.10.1/mathquill.css' %}"
           rel="stylesheet"/>
     <script type = "text/javascript"
             src="{% static 'mathquill-0.10.1/mathquill.js' %}">
     </script>
 
+    <!--MathJax -->
     <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML">
     </script>
@@ -62,130 +58,46 @@
         tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
       });
     </script>
+
+    <link href="{% static 'cms/css/layout/base.css' %}"
+          rel="stylesheet"/>
+
+    <script type = "text/javascript"
+            src="{% static 'cms/js/layout/base.js' %}">
+    </script>
+
     <!-- Extend css and js -->
     {% block extended_head %}{% endblock extended_head %}
   </head>
 
   <body>
-    <div class="row custom-header">
-      <div class="col-sm-1"></div>
-      <div class="col-sm-5">
-        <nav class="navbar bg-default navbar-left">
-          <ul class="nav navbar-nav">
-            <li>
-              <a class="title-page"> </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-
-      <div class="col-sm-5">
-        <nav class="navbar bg-default navbar-right">
-          <ul class="nav navbar-nav">
-            <li class="note">
-              <a id="nav_application" href="/"> </a>
-            </li>
-            {% if is_authenticated %}
-              <li>
-                <a href="#">
-                  <img class="img-responsive center-block"
-                      src="{% static 'cms/img/user.png' %}"> {{ current_user }}
-                </a>
-              </li>
-              <li>
-                <a id="sign-out" href="/logout/">
-                  <img class="img-responsive center-block"
-                      src="{% static 'cms/img/sign_out.png' %}">
-                </a>
-              </li>
-            {% endif %}
-          </ul>
-        </nav>
-      </div>
-      <div class="col-sm-1"></div>
-    </div>
+    {% include "cms/layout/nav_header.html" %}
 
     <div class="row">
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <a  href="/cms/topic/">
-            <button id="manage-topic" type="button" class="btn btn-primary">
-            </button>
-          </a>
+      <div class="col-sm-3">
+        {% include "cms/layout/nav_left.html" %}
+      </div>
+
+      <div class="col-sm-8 main-area">
+        <div class="row">
+          </br></br></br>
+          {% block breadcrumb %}
+          {% endblock breadcrumb %}
         </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/concept/">
-            <button id="manage-concept" type="button" class="btn btn-primary">
-            </button>
-          </a>
+
+        <div class="row">
+          {% block main_title %}
+          {% endblock main_title %}
         </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/paper/">
-            <button id="manage-paper" type="button" class="btn btn-primary">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/question/">
-            <button id="manage-question" type="button" class="btn btn-primary">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/formula/">
-            <button id="manage-formula" type="button" class="btn btn-primary">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="#">
-            <button id="manage-quiz" type="button" class="btn btn-default">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="#">
-            <button id="manage-contest" type="button" class="btn btn-default">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/user/">
-            <button id="manage-user" type="button" class="btn btn-danger">
-            </button>
-          </a>
+
+        <hr>
+
+        <div class="row">
+          {% block main_content %}{% endblock main_content %}
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      {% block content %}
-        <div class="col-sm-2">
-          {% block left_panel %}
-          {% endblock left_panel %}
-        </div>
-
-        <div class="col-sm-8 main-area">
-          <div class="row">
-            <p id="main-title" class="display-section"> </p>
-          </div>
-
-          <hr>
-
-          <div class="row">
-            {% block breadcrumb %}
-            {% endblock breadcrumb %}
-          </div>
-
-          <hr>
-
-          <div class="row">
-            {% block main_content %}{% endblock main_content %}
-          </div>
-        </div>
-
-        <div class="col-sm-1"></div>
-      {% endblock content %}
+      <div class="col-sm-1"></div>
     </div>
 
   </body>

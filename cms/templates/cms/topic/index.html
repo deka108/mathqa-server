@@ -10,22 +10,22 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  <div>
-    <ol class="breadcrumb custom-navbar-item">
-      <li>
-        <a id="breadcrumb-home" href="#">
-          {% fontawesome_icon 'home' color='blue' %}
-        </a>
-      </li>
-      <li id="breadcrumb-topic" class="active">
-         {% fontawesome_icon 'bookmark' color='blue' %}
-      </li>
-    </ol>
-  </div>
+  <ul class="breadcrumb">
+    <li>
+      {% fontawesome_icon 'home' color='grey' %}
+    </li>
+    <li class="active">
+      {% fontawesome_icon 'folder' color='grey' %}
+      Topic
+    </li>
+  </ul>
 {% endblock breadcrumb %}
 
-{% block main_content %}
+{% block main_title %}
+  <p class="display-section">Topic</p>
+{% endblock main_title %}
 
+{% block main_content %}
   <form action="/cms/topic/" method="post">
     {% csrf_token %}
     <ul class="nav nav-pills">

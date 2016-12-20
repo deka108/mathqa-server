@@ -1,0 +1,48 @@
+{% load static %}
+{% load fontawesome %}
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">
+        Dr. Hui <span class="dr">CMS</span>
+      </a>
+    </div>
+
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-button-container">
+          <a class="navbar-button" href="/">
+            {% fontawesome_icon 'institution' color='white' large=True %}
+            Learning System
+          </a>
+        </li>
+        <li class="navbar-button-container">
+          <a class="navbar-button">
+            {% fontawesome_icon 'question' color='white' large=True %}
+            QA System
+          </a>
+        </li>
+        {% if is_authenticated %}
+          <li class="navbar-username-container">
+            <a class="navbar-username">
+              <b> {{ current_user }} </b>
+              {% if current_user.is_staff %}
+                | <i> Administrator </i>
+              {% endif %}
+            </a>
+          </li>
+          <li class="navbar-button-container">
+            <a class="navbar-button" href="/logout/">
+            {% fontawesome_icon 'sign-out' color='white' large=True %}
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+<link href="{% static 'cms/css/layout/nav_header.css' %}"
+      rel="stylesheet"/>

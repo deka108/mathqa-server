@@ -53,7 +53,8 @@ def edit_topic(request, topic_id):
         'form': EditTopicForm(
             initial={'id': topic_id, 'name': topic.name,
                      'description': topic.description,
-                     'subject': topic.subject
+                     'subject': topic.subject,
+                     'order': topic.order
                      })}
     ))
 

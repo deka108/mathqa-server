@@ -16,44 +16,23 @@
         rel="stylesheet"/>
 {% endblock %}
 
-{% block content %}
-  <div class="col-sm-1"></div>
+{% block breadcrumb %}
+  <ul class="breadcrumb">
+    <li>
+      {% fontawesome_icon 'home' color='grey' %}
+    </li>
+    <li class="active">
+      {% fontawesome_icon 'archive' color='grey' %}
+      Concept
+    </li>
+  </ul>
+{% endblock breadcrumb %}
 
-  <div class="col-sm-2">
-    <ul class="nav nav-stacked custom-nav-stacked topic_panel">
-      <li class="main-section">Topics</li>
-      <li role="presentation">
-        {% for topic in topics %}
-          <a href="/cms/concept/{{ topic.id }}">
-            {% fontawesome_icon 'folder-open' color='black' %} {{topic.name}}
-          </a>
-        {% endfor %}
-      </li>
-    </ul>
-  </div>
+{% block main_title %}
+  <p class="display-section">Concept</p>
+{% endblock main_title %}
 
-  <div class="col-sm-8 main-area">
-    <div class="row">
-      <p id="main-title" class="display-section"> </p>
-    </div>
-
-    <hr>
-
-    <div class="row">
-      <ol class="breadcrumb custom-navbar-item">
-        <li>
-          <a id="breadcrumb-home" href="#">
-            {% fontawesome_icon 'home' color='blue' %}
-          </a>
-        </li>
-        <li id="breadcrumb-concept" class="active">
-           {% fontawesome_icon 'bookmark' color='blue' %}
-        </li>
-      </ol>
-    </div>
-
-    <hr>
-
+{% block main_content %}
     <div class="row">
       <form action="/cms/concept_subject/" method="post">
         {% csrf_token %}
@@ -110,8 +89,5 @@
       </table>
 
     </div>
-  </div>
 
-  <div class="col-sm-1"></div>
-
-{% endblock content %}
+{% endblock main_content %}

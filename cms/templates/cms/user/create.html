@@ -3,25 +3,130 @@
 {% load static %}
 {% load fontawesome %}
 
-{% block content %}
-  <div class="form-style-6">
-    <h1>User</h1>
-    <form action="/cms/api_create_user/" method="post">
-      {% csrf_token %}
-      {{ form.username }}
-      {{ form.password }}
-      {{ form.email }}
-      {{ form.first_name }}
-      {{ form.last_name }}
-      <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-2 bool-box">Is Active?</div>
-        <div class="col-sm-3 bool-box">
-          {{ form.is_active }}
-        </div>
-        <div class="col-sm-1"></div>
+{% block extended_head %}
+  <link href="{% static 'cms/css/layout/ce.css' %}"
+        rel="stylesheet"/>
+{% endblock extended_head %}
+
+{% block main_title %}
+  <p class="display-section">Create new User</p>
+{% endblock main_title %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li>
+      <a>
+        {% fontawesome_icon 'home' color='grey' %}
+      </a>
+    </li>
+    <li>
+      {% fontawesome_icon 'user' color='grey' %}
+      User
+    </li>
+    <li class="active">
+      {% fontawesome_icon 'plus' color='grey' %}
+      Create
+    </li>
+  </ol>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+  <form action="/cms/api_create_user/" method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-4">
+        <ul class="data-field-container" type="none">
+          <li class="data-field text-right">
+            UserName
+          </li>
+          <li class="data-field text-right">
+            Email
+          </li>
+          <li class="data-field text-right">
+            Password
+          </li>
+          <li class="data-field text-right">
+            First Name
+          </li>
+          <li class="data-field text-right">
+            Last Name
+          </li>
+          <li class="data-field text-right">
+            Is Active?
+          </li>
+        </ul>
       </div>
-      <input type="submit" value="Save" />
-    </form>
-  </div>
-{% endblock content %}
+      <div class="col-sm-6">
+        <ul class="data-input-container" type="none">
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'user-plus' large=True %}
+                </button>
+              </div>
+              {{ form.username }}
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'envelope' large=True %}
+                </button>
+              </div>
+              {{ form.email }}
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'user-secret' large=True %}
+                </button>
+              </div>
+              {{ form.password }}
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'user-plus' large=True %}
+                </button>
+              </div>
+              {{ form.first_name }}
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'user-plus' large=True %}
+                </button>
+              </div>
+              {{ form.last_name }}
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'unlock-alt' large=True %}
+                </button>
+              </div>
+              {{ form.is_active }}
+            </div>
+          </li>
+          <li class="data-input pull-right">
+            <div class="btn-group" role="group" aria-label="...">
+              <input type="submit" value="Save" class="center-block btn btn-default"/>
+              <button type="button" class="btn btn-default">Cancel</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </form>
+{% endblock main_content %}
