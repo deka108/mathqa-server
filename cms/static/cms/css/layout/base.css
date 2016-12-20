@@ -26,7 +26,7 @@
 .display-section {
   font-size: 27px;
   font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
-  padding: 15px;
+
 }
 
 .main-area {
@@ -37,9 +37,8 @@
 .new-button {
   margin-bottom: 20px;
 }
-
 /* -------------------- Page Styles (not required) */
-/* -------------------- Select Box Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
+/* -------------------- Select Bcustom-navbar-itemox Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
 /* -------------------- Source: http://bavotasan.com/2011/style-select-box-using-only-css/ */
 .styled-select {
    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;

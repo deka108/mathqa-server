@@ -14,19 +14,20 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  <div>
-    <ol class="breadcrumb custom-navbar-item">
-      <li>
-        <a id="breadcrumb-home" href="#">
-          {% fontawesome_icon 'home' color='blue' %}
-        </a>
-      </li>
-      <li id="breadcrumb-user" class="active">
-         {% fontawesome_icon 'user' color='blue' %}
-      </li>
-    </ol>
-  </div>
+  <ul class="breadcrumb">
+    <li>
+      {% fontawesome_icon 'home' color='grey' %}
+    </li>
+    <li class="active">
+      {% fontawesome_icon 'user' color='grey' %}
+      User
+    </li>
+  </ul>
 {% endblock breadcrumb %}
+
+{% block main_title %}
+  <p class="display-section">User</p>
+{% endblock main_title %}
 
 {% block main_content %}
   <a href="/cms/create_user/">

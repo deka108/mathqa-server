@@ -3,16 +3,108 @@
 {% load static %}
 {% load fontawesome %}
 
-{% block content %}
-  <div class="form-style-6">
-    <h1>Paper</h1>
-    <form action="/cms/api_create_paper/" method="post">
-      {% csrf_token %}
-      {{ form.year }}
-      {{ form.month }}
-      {{ form.number }}
-      {{ form.subject }}
-      <input type="submit" value="Save" />
-    </form>
-  </div>
-{% endblock content %}
+{% block extended_head %}
+  <link href="{% static 'cms/css/layout/ce.css' %}"
+        rel="stylesheet"/>
+{% endblock extended_head %}
+
+{% block main_title %}
+  <p class="display-section">Create new Paper</p>
+{% endblock main_title %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb">
+    <li>
+      <a>
+        {% fontawesome_icon 'home' color='grey' %}
+      </a>
+    </li>
+    <li>
+      {% fontawesome_icon 'book' color='grey' %}
+      Paper
+    </li>
+    <li class="active">
+      {% fontawesome_icon 'plus' color='grey' %}
+      Create
+    </li>
+  </ol>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+  <form action="/cms/api_create_paper/" method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-4">
+        <ul class="data-field-container" type="none">
+          <li class="data-field text-right">
+            Year
+          </li>
+          <li class="data-field text-right">
+            Month
+          </li>
+          <li class="data-field text-right">
+            Number
+          </li>
+          <li class="data-field text-right">
+            Subject
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-6">
+        <ul class="data-input-container" type="none">
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'calendar' large=True %}
+                </button>
+              </div>
+              {{ form.year }}
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'calendar' large=True %}
+                </button>
+              </div>
+              <div class="styled-select slate">
+                {{ form.month }}
+              </div>
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'list-ol' large=True %}
+                </button>
+              </div>
+              {{ form.number }}
+            </div>
+          </li>
+          <li class="data-input">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default">
+                  {% fontawesome_icon 'file' large=True %}
+                </button>
+              </div>
+              <div class="styled-select slate">
+                {{ form.subject }}
+              </div>
+            </div>
+          </li>
+          <li class="data-input pull-right">
+            <div class="btn-group" role="group" aria-label="...">
+              <input type="submit" value="Save" class="center-block btn btn-default"/>
+              <button type="button" class="btn btn-default">Cancel</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </form>
+{% endblock main_content %}

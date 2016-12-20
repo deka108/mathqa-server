@@ -74,86 +74,30 @@
     {% include "cms/layout/nav_header.html" %}
 
     <div class="row">
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <a  href="/cms/topic/">
-            <button id="manage-topic" type="button" class="btn btn-primary">
-            </button>
-          </a>
+      <div class="col-sm-3">
+        {% include "cms/layout/nav_left.html" %}
+      </div>
+
+      <div class="col-sm-8 main-area">
+        <div class="row">
+          </br></br></br>
+          {% block breadcrumb %}
+          {% endblock breadcrumb %}
         </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/concept/">
-            <button id="manage-concept" type="button" class="btn btn-primary">
-            </button>
-          </a>
+
+        <div class="row">
+          {% block main_title %}
+          {% endblock main_title %}
         </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/paper/">
-            <button id="manage-paper" type="button" class="btn btn-primary">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/question/">
-            <button id="manage-question" type="button" class="btn btn-primary">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/formula/">
-            <button id="manage-formula" type="button" class="btn btn-primary">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="#">
-            <button id="manage-quiz" type="button" class="btn btn-default">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="#">
-            <button id="manage-contest" type="button" class="btn btn-default">
-            </button>
-          </a>
-        </div>
-        <div class="btn-group" role="group">
-          <a  href="/cms/user/">
-            <button id="manage-user" type="button" class="btn btn-danger">
-            </button>
-          </a>
+
+        <hr>
+
+        <div class="row">
+          {% block main_content %}{% endblock main_content %}
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      {% block content %}
-        <div class="col-sm-2">
-          {% block left_panel %}
-          {% endblock left_panel %}
-        </div>
-
-        <div class="col-sm-8 main-area">
-          <div class="row">
-            <p id="main-title" class="display-section"> </p>
-          </div>
-
-          <hr>
-
-          <div class="row">
-            {% block breadcrumb %}
-            {% endblock breadcrumb %}
-          </div>
-
-          <hr>
-
-          <div class="row">
-            {% block main_content %}{% endblock main_content %}
-          </div>
-        </div>
-
-        <div class="col-sm-1"></div>
-      {% endblock content %}
+      <div class="col-sm-1"></div>
     </div>
 
   </body>

@@ -17,13 +17,19 @@ class EditTopicForm(forms.Form):
     id = forms.CharField(widget=forms.HiddenInput())
     name = forms.CharField(label='Name', max_length=200,
                            widget=forms.TextInput(
-                               attrs={'placeholder': 'Topic name'}))
+                               attrs={'class': 'form-control',
+                                      'placeholder': 'Topic name'}))
     description = forms.CharField(label='Description', max_length=1000,
-                                  widget=forms.Textarea(
-                                      attrs={'placeholder':
-                                             'Topic description'}))
+                                  widget=forms.TextInput(
+                                      attrs={
+                                          'class': 'form-control',
+                                          'placeholder':
+                                          'Topic description'}))
     order = forms.IntegerField(widget=forms.TextInput(
-        {"placeholder": "Please enter order."}))
+        attrs={
+            'class': 'form-control',
+            'placeholder':
+            'Order of the Topic'}))
     subject = forms.ModelChoiceField(empty_label="Please choose Subject",
                                      queryset=Subject.objects.all())
 
@@ -101,11 +107,13 @@ class SelectSubjectForm(forms.Form):
 class EditPaperForm(forms.Form):
     id = forms.CharField(widget=forms.HiddenInput())
     year = forms.IntegerField(widget=forms.TextInput(
-        {"placeholder": "Please enter year."}))
+        attrs={'class': 'form-control',
+               "placeholder": "Please enter year."}))
     month = forms.CharField(
         max_length=20., widget=forms.Select(choices=MONTHS))
     number = forms.IntegerField(widget=forms.TextInput(
-        {"placeholder": "Please enter number."}))
+        attrs={'class': 'form-control',
+               "placeholder": "Please enter number."}))
     subject = forms.ModelChoiceField(empty_label="Please choose Subject",
                                      queryset=Subject.objects.all(),
                                      required=True)
@@ -125,18 +133,24 @@ class EditUserForm(forms.Form):
     id = forms.CharField(widget=forms.HiddenInput())
     username = forms.CharField(label='User Name', max_length=200,
                                widget=forms.TextInput(
-                                   attrs={'placeholder': 'User Name'}))
+                                   attrs={
+                                       'class': 'form-control',
+                                       'placeholder': 'User Name'}))
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': 'Password'}))
+        attrs={'class': 'form-control', 'placeholder': 'Password'}))
     email = forms.CharField(label='Email', max_length=200,
                             widget=forms.TextInput(
-                                attrs={'placeholder': 'Email'}))
+                                attrs={'class': 'form-control',
+                                       'placeholder': 'Email'}))
     first_name = forms.CharField(label='First Name', max_length=200,
                                  widget=forms.TextInput(
-                                     attrs={'placeholder': 'First Name'}))
+                                     attrs={
+                                         'class': 'form-control',
+                                         'placeholder': 'First Name'}))
     last_name = forms.CharField(label='Email', max_length=200,
                                 widget=forms.TextInput(
-                                    attrs={'placeholder': 'Last Name'}))
+                                    attrs={'class': 'form-control',
+                                           'placeholder': 'Last Name'}))
     is_active = forms.BooleanField(
         widget=forms.RadioSelect(choices=[(True, 'Yes'), (False, 'No')]))
 
