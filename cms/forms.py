@@ -38,13 +38,17 @@ class EditConceptForm(forms.Form):
     id = forms.CharField(widget=forms.HiddenInput())
     name = forms.CharField(label='Name', max_length=200,
                            widget=forms.TextInput(
-                               attrs={'placeholder': 'Concept name'}))
+                               attrs={
+                                   'class': 'form-control',
+                                   'placeholder': 'Concept name'}))
     description = forms.CharField(label='Description', max_length=1000,
-                                  widget=forms.Textarea(
-                                      attrs={'placeholder':
-                                             'Concept description'}))
+                                  widget=forms.TextInput(
+                                      attrs={
+                                          'class': 'form-control',
+                                          'placeholder': 'Concept description'}))
     order = forms.IntegerField(widget=forms.TextInput(
-        {"placeholder": "Please enter order."}))
+        attrs={'class': 'form-control',
+               "placeholder": "Please enter order."}))
     topic = forms.ModelChoiceField(empty_label="Please choose Topic",
                                    queryset=Topic.objects.all())
 
