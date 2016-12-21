@@ -20,6 +20,7 @@
 .navbar-username-container {
   background: #b3b3b3;
   border-left: 1px solid white;
+  min-width: 200px !important;
 }
 
 .navbar-username {
