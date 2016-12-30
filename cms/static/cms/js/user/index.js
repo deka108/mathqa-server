@@ -2,12 +2,13 @@ $.extend( true, $.fn.dataTable.defaults, {
     "autoWidth": false,
     "columnDefs": [
         { width: '10%', targets: 0 },
-        { width: '15%', targets: 1 },
+        { width: '10%', targets: 1 },
         { width: '10%', targets: 2 },
         { width: '10%', targets: 3 },
-        { width: '25%', targets: 4 },
+        { width: '20%', targets: 4 },
         { width: '10%', targets: 5 },
         { width: '10%', targets: 6 },
+        { width: '20%', targets: 7 },
     ],
     "order": [[ 0, "asc" ]]
 } );
