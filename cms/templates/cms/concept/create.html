@@ -31,7 +31,7 @@
 {% endblock breadcrumb %}
 
 {% block main_content %}
-  <form action="/cms/api_create_topic/" method="post">
+  <form action="/cms/api_create_concept/" method="post">
     {% csrf_token %}
     <div class="row">
       <div class="col-sm-4">
@@ -94,10 +94,38 @@
               </div>
             </div>
           </li>
+          <li class="data-input">
+            <h4 data-toggle="collapse" href=".link-formset" aria-expanded="false" aria-controls="link-formset">
+             <a>
+               {% fontawesome_icon 'key' color='blue' %}
+               Key points
+             </a>
+            </h4>
+            {{ formset.management_form }}
+            {% for sform in formset %}
+             <div class="link-formset">
+               {{ sform.name }}
+                 {% if sform.name.errors %}
+                     {% for error in sform.name.errors %}
+                         {{ error|escape }}
+                    {% endfor %}
+                 {% endif %}
+               {{ sform.content }}
+                 {% if sform.content.errors %}
+                     {% for error in sform.content.errors %}
+                         {{ error|escape }}
+                     {% endfor %}
+                 {% endif %}
+             </div>
+            {% endfor %}
+          </li>
           <li class="data-input pull-right">
             <div class="btn-group" role="group" aria-label="...">
               <input type="submit" value="Save" class="center-block btn btn-default"/>
-              <button type="button" class="btn btn-default">Cancel</button>
+              <a type="button" class="btn btn-default"
+                href="/cms/concept/">
+                Cancel
+              </a>
             </div>
           </li>
         </ul>

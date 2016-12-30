@@ -147,7 +147,7 @@ class KeyPoint(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     content = models.TextField()
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)

@@ -671,7 +671,7 @@
   {
     "model": "meas_models.KeyPoint",
     "fields": {
-      "name": "Key point 1  for test",
+      "name": "Key point 2 for test",
       "content": "Content 1",
       "concept_id": "2"
     }
@@ -679,7 +679,7 @@
   {
     "model": "meas_models.KeyPoint",
     "fields": {
-      "name": "Key point 1  for test",
+      "name": "Key point 3 for test",
       "content": "Content 1",
       "concept_id": "3"
     }
@@ -687,7 +687,7 @@
   {
     "model": "meas_models.KeyPoint",
     "fields": {
-      "name": "Key point 1  for test",
+      "name": "Key point 4 for test",
       "content": "Content 1",
       "concept_id": "1"
     }
@@ -695,7 +695,7 @@
   {
     "model": "meas_models.KeyPoint",
     "fields": {
-      "name": "Key point 1  for test",
+      "name": "Key point 5 for test",
       "content": "Content 1",
       "concept_id": "2"
     }
@@ -703,7 +703,7 @@
   {
     "model": "meas_models.KeyPoint",
     "fields": {
-      "name": "Key point 1  for test",
+      "name": "Key point 6 for test",
       "content": "Content 1",
       "concept_id": "3"
     }
@@ -711,7 +711,7 @@
   {
     "model": "meas_models.KeyPoint",
     "fields": {
-      "name": "Key point 1  for test",
+      "name": "Key point 7 for test",
       "content": "Content 1",
       "concept_id": "1"
     }
