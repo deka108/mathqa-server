@@ -65,6 +65,7 @@ def api_create_topic(request):
 
     topic = Topic(name=request.POST.__getitem__('name'),
                   description=request.POST.__getitem__('description'),
+                  order=request.POST.__getitem__('order'),
                   subject=Subject.objects.get(
         pk=request.POST.__getitem__('subject'))
     )
@@ -82,6 +83,7 @@ def api_update_topic(request):
     topic = Topic.objects.get(pk=request.POST.__getitem__('id'))
     topic.name = request.POST.__getitem__('name')
     topic.description = request.POST.__getitem__('description')
+    topic.order = request.POST.__getitem__('order')
     topic.subject = Subject.objects.get(pk=request.POST.__getitem__('subject'))
 
     topic.save()
