@@ -65,6 +65,7 @@ def api_create_topic(request):
 
     topic = Topic(name=request.POST.__getitem__('name'),
                   description=request.POST.__getitem__('description'),
+                  order=request.POST.__getitem__('order'),
                   subject=Subject.objects.get(
         pk=request.POST.__getitem__('subject'))
     )
@@ -82,6 +83,7 @@ def api_update_topic(request):
     topic = Topic.objects.get(pk=request.POST.__getitem__('id'))
     topic.name = request.POST.__getitem__('name')
     topic.description = request.POST.__getitem__('description')
+    topic.order = request.POST.__getitem__('order')
     topic.subject = Subject.objects.get(pk=request.POST.__getitem__('subject'))
 
     topic.save()
@@ -164,7 +166,12 @@ def edit_concept(request, concept_id):
 
     concept = Concept.objects.get(pk=concept_id)
 
-    KeyPointFormSet = formset_factory(KeyPointForm)
+    extra_keypoint = 0
+    if concept.keypoint_set.all().count() == 0:
+        extra_keypoint = 1
+
+    KeyPointFormSet = formset_factory(KeyPointForm, extra=extra_keypoint)
+
     res = []
     for k in concept.keypoint_set.all():
         res.append(k.__dict__)
@@ -224,45 +231,26 @@ def api_update_concept(request):
 
     concept.save()
 
-    # Complement formset
     KeyPointFormSet = formset_factory(KeyPointForm)
     formset = KeyPointFormSet(request.POST)
 
     if formset.is_valid():
-        # Temporarily fix for removing key points - PhucLS
         existing_keypoints = concept.keypoint_set.all()
         for keypoint in existing_keypoints:
-            counter = 0
-
-            for f in formset:
-                cd = f.cleaned_data
-
-                if keypoint.name == cd.get('name'):
-                    counter = counter + 1
-
-            if counter == 0:
-                keypoint.delete()
+            keypoint.delete()
+            print "delete"
 
         for f in formset:
             cd = f.cleaned_data
 
-            update_name = cd.get('name')
-            update_content = cd.get('content')
+            keypoint = KeyPoint(name=cd.get('name'),
+                                content=cd.get('content'),
+                                concept=concept)
+            keypoint.save()
 
-            keypoint = KeyPoint.objects.filter(name=update_name).first()
-            if keypoint:
-                keypoint.content = update_content
-                keypoint.save()
-            elif (update_name is not None and update_content is not None):
-                keypoint = KeyPoint(name=update_name,
-                                    content=update_content,
-                                    concept=concept)
-                keypoint.save()
-
-    return HttpResponseRedirect('../concept/' + topic_id + '/',
-                                __user_info(request, {
-                                    "topics": Topic.objects.all
-                                }))
+    return HttpResponseRedirect('../concept/', __user_info(request, {
+        "concepts": Concept.objects.all
+    }))
 
 
 def delete_concept(request, concept_id):
