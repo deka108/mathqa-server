@@ -18,7 +18,7 @@ $(document).ready(function() {
     // Table headers
     $('#header-id').append(en.cms.header.id);
     $('#header-name').append(en.cms.header.name);
-    $('#header-content').append(en.cms.header.number);
+    $('#header-content').append(en.cms.header.description);
 
     $('#main-title').append(en.cms.breadcrumb.formula);
 

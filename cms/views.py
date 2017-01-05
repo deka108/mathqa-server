@@ -838,7 +838,6 @@ def move_down(request, topic_id):
         'form': SelectSubjectForm(initial={'subject': subject}),
     }))
 
-
 def __user_info(request, updated_list=""):
     result = {
         'is_authenticated': request.user.is_authenticated,
