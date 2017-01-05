@@ -100,7 +100,7 @@ def delete_topic(request, topic_id):
     topic = Topic.objects.get(pk=topic_id)
     topic.delete()
 
-    return HttpResponseRedirect('/topic', __user_info(request, {
+    return HttpResponseRedirect('/cms/topic/', __user_info(request, {
         "topics": Topic.objects.all(),
         'form': SelectSubjectForm(),
     }))
@@ -274,6 +274,16 @@ def question_index(request):
     return render(request, 'cms/question/index.html', __user_info(request, {
         "topics": Topic.objects.all(),
         "papers": Paper.objects.all(),
+    }))
+
+
+def question_paper(request):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    return render(request, 'cms/question/paper.html', __user_info(request, {
+        "papers": Paper.objects.all(),
+        "questions": Question.objects.filter(question_type="PR")
     }))
 
 
@@ -525,13 +535,9 @@ def question_topic_detail(request, topic_id):
     topic = Topic.objects.get(pk=topic_id)
     concept = topic.concept_set.all()
 
-    return render(request, 'cms/question/index.html', __user_info(request, {
-        "topic_name": topic.name,
-        "topics": Topic.objects.all(),
-        "papers": Paper.objects.all(),
-        "questions": Question.objects.filter(concept__in=concept,
-                                             question_type="PR"),
-    }))
+    return render(request, 'cms/question/questions.html', __user_info(
+        request, {"questions": Question.objects.filter(concept__in=concept,
+                                                       question_type="PR")}))
 
 
 def question_paper_detail(request, paper_id):
@@ -540,7 +546,7 @@ def question_paper_detail(request, paper_id):
 
     paper = Paper.objects.get(pk=paper_id)
 
-    return render(request, 'cms/question/index.html', __user_info(request, {
+    return render(request, 'cms/question/paper.html', __user_info(request, {
         "topics": Topic.objects.all(),
         "papers": Paper.objects.all(),
         "questions": Question.objects.filter(paper=paper,

@@ -45,9 +45,12 @@ urlpatterns = [
         views.delete_concept, name='delete_concept'),
 
     url(r'^question/$', views.question_index, name='question_index'),
+    url(r'^question_paper/$', views.question_paper, name='question_paper'),
     url(r'^create_question/$', views.create_question, name='create_question'),
     url(r'^question_topic_detail/(?P<topic_id>[0-9]+)/$',
         views.question_topic_detail, name='question_topic_detail'),
+    url(r'^question_paper_detail/$',
+        views.question_paper_detail, name='question_paper_detail'),
     url(r'^question_paper_detail/(?P<paper_id>[0-9]+)/$',
         views.question_paper_detail, name='question_paper_detail'),
     url(r'^api_create_question/$',
