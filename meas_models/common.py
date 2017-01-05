@@ -33,11 +33,6 @@ QUESTION_TYPES = [
     ("PR", 'Practice')
 ]
 
-QUESTION_SOURCES = [
-    ("EP", 'Exam papers'),
-    ("OL", 'Online')
-]
-
 USED_FOR = [
     ("NO", 'No'),
     ("ON", 'Online'),

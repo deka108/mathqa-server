@@ -53,3 +53,19 @@
 .view-all {
   font-weight: normal !important;
 }
+
+.question-formula-content {
+  margin-top: 15px;
+  padding-left: 15px;
+}
+
+.formula {
+  margin: 2px;
+  background: #cceeff;
+}
+
+.formula-content {
+  padding-top: 5px;
+  font-size: 11px;
+  color: #006699;
+}

@@ -12,7 +12,6 @@ $(document).ready(function() {
     $('#items').DataTable();
 
     // Breadcum
-    $('#breadcrumb-home').append(en.cms.breadcrumb.home);
     $('#breadcrumb-formula').append(en.cms.breadcrumb.formula);
 
     // Table headers

@@ -53,8 +53,8 @@ admin.site.register(Test, TestAdmin)
 
 
 class QuestionAdmin(ModelAdmin):
-    list_display = ('id', 'content', 'source', 'difficulty_level')
-    list_editable = ('content', 'source', 'difficulty_level')
+    list_display = ('id', 'content', 'difficulty_level')
+    list_editable = ('content', 'difficulty_level')
 
 
 admin.site.register(Question, QuestionAdmin)

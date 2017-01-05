@@ -96,29 +96,33 @@
   <div>
     <ol class="breadcrumb custom-navbar-item">
       <li>
-        <a id="breadcrumb-home" href="#">
-          {% fontawesome_icon 'home' color='blue' %}
+        <a href="#">
+          {% fontawesome_icon 'home' color='grey' %}
         </a>
       </li>
       <li class="active">
-         {% fontawesome_icon 'bookmark' color='blue' %}
+         {% fontawesome_icon 'bookmark' color='grey' %}
          Topic
       </li>
       <li class="active">
-         {% fontawesome_icon 'file' color='blue' %}
+         {% fontawesome_icon 'file' color='grey' %}
          Concept
       </li>
       <li id="breadcrumb-question" class="active">
-         {% fontawesome_icon 'question' color='blue' %}
+         {% fontawesome_icon 'question' color='grey' %}
       </li>
     </ol>
   </div>
 {% endblock breadcrumb %}
 
+{% block main_title %}
+  <p class="display-section">Create new Question</p>
+{% endblock main_title %}
+
 {% block main_content %}
   <form action="/cms/api_create_question/" method="post">
     {% csrf_token %}
-    {{ form.media }}
+
     <div class="row main-form">
       <div class="col-sm-1"></div>
       <div class="col-sm-10">
@@ -127,20 +131,12 @@
             <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
                 <b>Concept</b> <span class="custom-asterisk">(*)</span>
-                <div class="styled-select slate">
-                  {{ form.concept }}
-                </div>
-              </li>
-              <li role="presentation" class="pull-right">
-                <b>Key Point</b>
-                <div class="styled-select slate">
-                  {{ form.keypoint }}
-                </div>
+                {{ form.concept }}
               </li>
             </ul>
           </li>
 
-           <li class="custom-component" role="presentation">
+          <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
               <li id="question_type" role="presentation" class="pull-left">
                 <b>Question type</b> <span class="custom-asterisk">(*)</span>
@@ -150,7 +146,7 @@
               </li>
               <li id="paper" role="presentation">
                 <b>Paper</b> <span class="custom-asterisk">(*)</span>
-                <div class="styled-select slate">
+                <div>
                   {{ form.paper }}
                 </div>
               </li>
@@ -159,16 +155,41 @@
 
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
-              <li role="presentation" class="pull-left">
-                Question source <span class="custom-asterisk">(*)</span>
-                <div class="styled-select slate">
-                  {{ form.source }}
+              <li id="question_type" role="presentation" class="pull-left">
+                <b>Formula</b>
+                <div>
+                  {{ form.formula }}
+                  <a href="/cms/create_formula/" class="btn btn-default">
+                    + Formula
+                  </a>
                 </div>
               </li>
+              <li id="question_type" role="presentation" class="pull-right">
+                <b>Key Points</b>
+                <div>
+                  {{ form.keypoint }}
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
               <li role="presentation">
                  Used for <span class="custom-asterisk">(*)</span>
                 <div class="styled-select slate">
                   {{ form.used_for }}
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
+              <li role="presentation" class="pull-left">
+                Response type <span class="custom-asterisk">(*)</span>
+                <div class="styled-select slate">
+                  {{ form.respone_type }}
                 </div>
               </li>
             </ul>
@@ -182,12 +203,7 @@
                   {{ form.mark }}
                 </div>
               </li>
-              <li role="presentation" class="pull-right">
-                Response type <span class="custom-asterisk">(*)</span>
-                <div class="styled-select slate">
-                  {{ form.respone_type }}
-                </div>
-              </li>
+
               <li role="presentation">
                 Difficulty level <span class="custom-asterisk">(*)</span>
                 <div class="styled-select slate">
@@ -420,7 +436,7 @@
           </li>
 
           <li class="custom-component pull-right" role="presentation">
-            <button type="submit" class="btn btn-info">Save</button>
+            <button type="submit" class="btn btn-default">Save</button>
             <button type="submit" class="btn btn-default">Cancel</button>
           </li>
         </ul>

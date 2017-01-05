@@ -293,7 +293,6 @@ def api_create_question(request):
 
     question = Question(
         question_type=request.POST.__getitem__('question_type'),
-        source=request.POST.__getitem__('source'),
         used_for=request.POST.__getitem__('used_for'),
         mark=request.POST.__getitem__('mark'),
         difficulty_level=request.POST.__getitem__(
@@ -367,6 +366,12 @@ def api_create_question(request):
 
                     answer_part.save()
 
+    # Description:  Add formulas
+    # Author:       PhucLS
+    # Date:         Jan 05, 2017
+    for f_id in request.POST.getlist('formula'):
+        question.formulas.add(Formula.objects.get(pk=f_id))
+
     return HttpResponseRedirect('../question/', __user_info(request, {
     }))
 
@@ -378,8 +383,8 @@ def create_question(request):
     EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
     formset = EditAnswerPartFormSet()
 
-    return render(request, 'cms/question/create.html',
-                  {'form': EditQuestionForm(), 'formset': formset})
+    return render(request, 'cms/question/create.html', __user_info(request,
+                  {'form': EditQuestionForm(), 'formset': formset}))
 
 
 def edit_question(request, question_id):
@@ -397,7 +402,6 @@ def edit_question(request, question_id):
     return render(request, 'cms/question/edit.html', {'form': EditQuestionForm(
         initial={'id': question_id,
                  'question_type': question.question_type,
-                 'source': question.source,
                  'used_for': question.used_for,
                  'mark': question.mark,
                  'difficulty_level': question.difficulty_level,
@@ -418,7 +422,6 @@ def api_update_question(request):
 
     question = Question.objects.get(pk=request.POST.__getitem__('id'))
     question.question_type = request.POST.__getitem__('question_type')
-    question.source = request.POST.__getitem__('source')
     question.used_for = request.POST.__getitem__('used_for')
     question.mark = request.POST.__getitem__('mark')
     question.difficulty_level = request.POST.__getitem__('difficulty_level')
@@ -511,6 +514,11 @@ def api_update_question(request):
 
                     answer_part.save()
 
+    # Description:  Add formulas
+    # Author:       PhucLS
+    # Date:         Jan 05, 2017
+    for f_id in request.POST.getlist('formula'):
+        question.formulas.add(Formula.objects.get(pk=f_id))
     return HttpResponseRedirect('../question/', __user_info(request, {
     }))
 

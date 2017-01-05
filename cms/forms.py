@@ -45,7 +45,7 @@ class EditConceptForm(forms.Form):
                                   widget=forms.TextInput(
                                       attrs={
                                           'class': 'form-control',
-                                          'placeholder': 'Concept description'}))
+                                        'placeholder': 'Concept description'}))
     order = forms.IntegerField(widget=forms.TextInput(
         attrs={'class': 'form-control',
                "placeholder": "Please enter order."}))
@@ -55,12 +55,26 @@ class EditConceptForm(forms.Form):
 
 class EditQuestionForm(forms.Form):
     id = forms.CharField(widget=forms.HiddenInput())
+    formula = forms.ModelMultipleChoiceField(queryset=Formula.objects.all(),
+                                             widget=forms.SelectMultiple(
+                                                 attrs={
+                                                     'class': 'selectpicker',
+                                                     'multiple': '',
+                                                     'data-live-search': 'true',
+                                                     'data-selected-text-format':
+                                                     "count > 1"}))
+
+
+    concept = forms.ModelChoiceField(empty_label="",
+                                     queryset=Concept.objects.all(),
+                                     widget=forms.Select(
+                                         attrs={
+                                             'class': 'selectpicker concept',
+                                             'data-live-search': 'true'}))
     question_type = forms.CharField(
         max_length=2,
         widget=forms.Select(choices=QUESTION_TYPES)
     )
-    source = forms.CharField(
-        max_length=2., widget=forms.Select(choices=QUESTION_SOURCES))
     used_for = forms.CharField(
         max_length=2, widget=forms.Select(choices=USED_FOR))
     number_of_part = forms.IntegerField(
@@ -93,13 +107,20 @@ class EditQuestionForm(forms.Form):
                                           'width': "100%",
                                           'cols': "80",
                                           'rows': "10"}))
-    keypoint = forms.ModelChoiceField(empty_label="Please choose KeyPoint",
+    keypoint = forms.ModelChoiceField(empty_label="",
                                       queryset=KeyPoint.objects.all(),
+                                      widget=forms.Select(
+                                          attrs={
+                                              'class': 'selectpicker',
+                                              'data-live-search': 'true'}),
                                       required=False)
-    concept = forms.ModelChoiceField(empty_label="Please choose Concept",
-                                     queryset=Concept.objects.all())
-    paper = forms.ModelChoiceField(empty_label="Please choose Paper",
+
+    paper = forms.ModelChoiceField(empty_label="",
                                    queryset=Paper.objects.all(),
+                                   widget=forms.Select(
+                                       attrs={
+                                           'class': 'selectpicker',
+                                           'data-live-search': 'true'}),
                                    required=False)
 
 
