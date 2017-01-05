@@ -29,3 +29,27 @@
   font-style: italic;
   font-size: 12px;
 }
+
+.topic-box {
+  border: 2px solid #d1d1e0;
+  border-radius: 18px;
+  margin: 18px;
+  width: 380px;
+  height: 180px;
+  display: inline-table;
+}
+
+.topic-title {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.concept-display {
+  color: #0099ff;
+  font-size: 15px;
+}
+
+.view-all {
+  font-weight: normal !important;
+}

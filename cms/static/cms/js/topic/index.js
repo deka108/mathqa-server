@@ -4,9 +4,9 @@ $.extend( true, $.fn.dataTable.defaults, {
     "columnDefs": [
         { width: '5%', targets: 0 },
         { width: '35%', targets: 1 },
-        { width: '15%', targets: 2 },
-        { width: '15%', targets: 3 },
-        { width: '30%', targets: 4 },
+        { width: '10%', targets: 2 },
+        { width: '10%', targets: 3 },
+        { width: '40%', targets: 4 },
     ],
     "order": [[ 0, "asc" ]]
 } );
