@@ -12,13 +12,12 @@ $(document).ready(function() {
     $('#items').DataTable();
 
     // Breadcum
-    $('#breadcrumb-home').append(en.cms.breadcrumb.home);
     $('#breadcrumb-formula').append(en.cms.breadcrumb.formula);
 
     // Table headers
     $('#header-id').append(en.cms.header.id);
     $('#header-name').append(en.cms.header.name);
-    $('#header-content').append(en.cms.header.number);
+    $('#header-content').append(en.cms.header.description);
 
     $('#main-title').append(en.cms.breadcrumb.formula);
 

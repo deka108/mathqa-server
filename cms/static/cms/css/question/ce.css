@@ -21,3 +21,11 @@
 .custom-asterisk {
   color: red;
 }
+
+.concept {
+  width: 375px !important;
+}
+
+.btn.dropdown-toggle.btn-default {
+    background: white !important;
+}

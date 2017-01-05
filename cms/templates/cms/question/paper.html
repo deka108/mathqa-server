@@ -124,7 +124,7 @@
               </div>
 
               <div class="row">
-                <div class="col-sm-8 pull-left">
+                <div class="col-md-10 pull-left">
                   <ul class="nav nav-pills nav-stacked">
                     <li role="presentation" class = "question-title">
                       Question {{ forloop.counter }}
@@ -139,18 +139,18 @@
                     </li>
                   </ul>
                 </div>
-                <div class="col-sm-4 pull-right">
+                <div class="col-md-2 pull-right">
                   <div class="btn-group" role="group" aria-label="...">
-                    <a href="">
-                      <a class="btn btn-success" data-toggle="modal" data-target="#form-modal_{{question.id}}">Try
-                      </a>
+                    <a class="btn btn-success" data-toggle="modal" data-target="#form-modal_{{question.id}}">
+                      {% fontawesome_icon 'hand-o-up' color='white' %}
                     </a>
-                    &nbsp
-                    <a href="/cms/edit_question/{{ question.id }}">
-                      <button type="button" class="btn btn-warning">Edit</button>
+                    <a href="/cms/edit_question/{{ question.id }}"
+                      class="btn btn-warning">
+                      {% fontawesome_icon 'edit' color='white' %}
                     </a>
-                    <a href="/cms/delete_question/{{ question.id }}">
-                      <button type="button" class="btn btn-danger">Delete</button>
+                    <a href="/cms/delete_question/{{ question.id }}"
+                      class="btn btn-danger">
+                      {% fontawesome_icon 'trash' color='white' %}
                     </a>
                   </div>
                 </div>
@@ -159,6 +159,15 @@
                 <hr>
                 {{ question.content | safe }}
                 </br>
+              </div>
+              <div class="row question-formula-content">
+                <ul class="list-inline">
+                  {% for formula in question.formulas.all %}
+                    <li class="formula">
+                      <p class="formula-content">{{ formula.name }}</p>
+                    </li>
+                  {% endfor %}
+                </ul>
               </div>
             </td>
           </tr>

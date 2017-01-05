@@ -147,7 +147,7 @@ class KeyPoint(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200)
     content = models.TextField()
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
@@ -174,10 +174,6 @@ class Question(models.Model):
         max_length=2,
         choices=QUESTION_TYPES,
         default="EX")
-    source = models.CharField(
-        max_length=2,
-        choices=QUESTION_SOURCES,
-        default="EP")
     used_for = models.CharField(
         max_length=2,
         choices=USED_FOR,
