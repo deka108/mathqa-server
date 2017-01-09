@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  <ol class="breadcrumb custom-navbar-item">
+  <ol class="breadcrumb">
     <li>
       <a href="#">
         {% fontawesome_icon 'home' color='blue' %} Home
@@ -102,7 +102,8 @@
                     {{ question.content | safe }}
                   </div>
                   <div class="panel-footer">
-                    <a class="btn btn-success" data-toggle="modal" data-target="#form-modal__{{question.id}}">Solution
+                    <a class="btn btn-success" data-toggle="modal" data-target="#form-modal__{{question.id}}">
+                      {% fontawesome_icon 'key' %}
                     </a>
                   </div>
 
@@ -118,6 +119,8 @@
                           {{ question.content | safe }}
                           </br>
                           <hr>
+                          <b> Answer </b>
+                          </br>
                           {{ question.solution | safe }}
                         </div>
                        <div class="modal-footer">
@@ -153,60 +156,109 @@
             </thead>
             <tbody>
               {% for question in questions %}
-                <tr>
-                  <td>
-                    <div class="row">
-                      <div class="col-sm-8 pull-left">
-                        <ul class="nav nav-pills nav-stacked">
-                          <li role="presentation" class = "question-title">
-                            Question {{ forloop.counter }}
-                            <span class = "difficulty-level-display">
-                              {% for c in question.get_difficulty_level %}
-                                {% fontawesome_icon 'star' color='#b38600' %}
-                              {% endfor %}
-                            </span>
-                          </li>
-                          <li role="presentation" class="question-concept">
-                            {{ question.concept.name }}
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-sm-4 pull-right">
-                        <button type="button" class="btn btn-success collapsed" data-toggle="collapse" href="#collapse_{{ question.id }}" aria-expanded="false" aria-controls="collapseTwo">
-                          Solution
-                        </button>
-                      </div>
-                    </div>
-                    <div class="row question-content">
-                      <hr>
-                      {{ question.content | safe }}
-                       </br>
-                      {% for part in question.part_set.all %}
-                        {{ part.content | safe}}
-                      {% endfor %}
-                    </div>
-                    <div id="collapse_{{ question.id }}" class="collapse row" role="tabpanel" aria-labelledby="headingTwo">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Solution for Question {{ forloop.counter }}
-                            </h4>
-                          </div>
-                          <div id="form-modal-body" class="modal-body">
-                            {{ question.content | safe }}
-                            </br>
-                            <hr>
-                            {{ question.solution | safe }}
-                          </div>
-                         <div class="modal-footer">
-
-                         </div>
+              <tr>
+                <td>
+                  <div class="modal fade" id="form-modal_{{ question.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Try Question {{ forloop.counter }}
+                          </h4>
+                        </div>
+                        <div id="form-modal-body" class="modal-body">
+                          {{ question.content | safe }}
+                          </br>
+                          <hr>
+                          Answer </br>
+                          {% for answerpart in question.answerpart_set.all %}
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                ( {{ answerpart.part_name }} )
+                                 {{ answerpart.part_content }}
+                              </div>
+                              <div class="panel-body">
+                                <div class="rows">
+                                  <div class="col-sm-1"></div>
+                                  <div class="col-sm-1">
+                                    {{ answerpart.subpart_name_1 }}. &nbsp
+                                    {{ answerpart.subpart_name_2 }}. &nbsp
+                                    {{ answerpart.subpart_name_3 }}. &nbsp
+                                    {{ answerpart.subpart_name_4 }}. &nbsp
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <input class="input-box"></input>
+                                    <input class="input-box"></input>
+                                    <input class="input-box"></input>
+                                    <input class="input-box"></input>
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <a type="button" class="btn btn-default">
+                                      Check
+                                    </a>
+                                    <a type="button" class="btn btn-default">
+                                      Check
+                                    </a>
+                                    <a type="button" class="btn btn-default">
+                                      Check
+                                    </a>
+                                    <a type="button" class="btn btn-default">
+                                      Check
+                                    </a>
+                                  </div>
+                                  <div class="col-sm-4"></div>
+                                </div>
+                              </div>
+                            </div>
+                          {% endfor %}
                        </div>
+                       <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                       </div>
+                     </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-10 pull-left">
+                      <ul class="nav nav-pills nav-stacked">
+                        <li role="presentation" class = "question-title">
+                          Question {{ forloop.counter }}
+                          <span class = "difficulty-level-display">
+                            {% for c in question.get_difficulty_level %}
+                              {% fontawesome_icon 'star' color='#b38600' %}
+                            {% endfor %}
+                          </span>
+                        </li>
+                        <li role="presentation" class="question-concept">
+                          {{ question.concept.name }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-2 pull-right">
+                      <div class="btn-group" role="group" aria-label="...">
+                        <a class="btn btn-success" data-toggle="modal" data-target="#form-modal_{{question.id}}">
+                          {% fontawesome_icon 'hand-o-up' color='white' %}
+                        </a>
                       </div>
                     </div>
-                  </td>
-                </tr>
+                  </div>
+                  <div class="row question-content">
+                    <hr>
+                    {{ question.content | safe }}
+                    </br>
+                  </div>
+                  <div class="row question-formula-content">
+                    <ul class="list-inline">
+                      {% for formula in question.formulas.all %}
+                        <li class="formula">
+                          <p class="formula-content">{{ formula.name }}</p>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>

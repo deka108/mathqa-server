@@ -3,40 +3,42 @@
 {% load static %}
 {% load fontawesome %}
 
+{% block extended_head %}
+
+{% endblock %}
+
 {% block breadcrumb %}
-  <div id="w3m">
-    <ol class="breadcrumb custom-navbar-item">
-      <li>
-        <a href="#">
-          {% fontawesome_icon 'home' color='blue' %} Home
-        </a>
-      </li>
-      <li class="active">
-         {% fontawesome_icon 'dashboard' color='blue' %} Adaptive Test
-      </li>
-    </ol>
-  </div>
+  <ol class="breadcrumb">
+    <li>
+      <a href="#">
+        {% fontawesome_icon 'home' color='blue' %} Home
+      </a>
+    </li>
+    <li class="active">
+       {% fontawesome_icon 'bookmark' color='blue' %} Topic
+    </li>
+  </ol>
 {% endblock breadcrumb %}
 
 {% block content %}
   <div class="row">
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
 
     <div class="col-md-5">
       <blockquote class="custom-blockquote">
         <p class="blockquote-title">
-          Pick a topic and begin a CAT test to know your ability score!
+          Pick a topic and begin a CAT test!
         </p>
         <br/>
         <p class="blockquote-text">
-        CAT Tests are generated dynamically based on responses that a user gives on previous questions.
+          CAT Tests are generated dynamically.
         </p>
       </blockquote>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-5">
       <div class="dropdown control-panel">
-        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Select Topic
           <span class="caret"></span>
         </button>
@@ -64,7 +66,7 @@
       </ul>
     </div>
 
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
 
   </div>
 
@@ -79,30 +81,23 @@
   </div>
 
   <div class="row main-content">
-    <div class="col-md-2"></div>
-
-    <div class="col-md-5">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="panel panel-danger">
         <div class="panel-heading">Question 1</div>
         <div class="panel-body">
           <p>...</p>
         </div>
         <div class="panel-footer">
-          <button type="button" class="btn btn-success">
+          <button type="button" class="btn btn-default">
             Hint
           </button>
-          <button type="button" class="btn btn-danger">
+          <button type="button" class="btn btn-default">
             Submit
           </button>
         </div>
       </div>
-
     </div>
-
-    <div class="col-md-3 mathquill-area">
-      <p class="display-section">MathQuill Hints</p>
-    </div>
-
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
   </div>
 {% endblock content %}

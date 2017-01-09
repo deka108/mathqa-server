@@ -12,8 +12,9 @@ from . import views
 
 urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
+    url(r'^$', views.default, name='default'),
 
-    url(r'^$', views.dashboard_index, name='dashboard_index'),
+    url(r'^dashboard/$', views.dashboard_index, name='dashboard_index'),
     url(r'^custom_login/$', views.custom_login, name='custom_login'),
 
     url(r'^create_user/$', views.create_user, name='create_user'),

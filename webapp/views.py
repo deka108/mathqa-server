@@ -156,7 +156,6 @@ def api_update_user(request):
 
 
 def search_question(request, keyword="test"):
-    print request.GET["keyword"]
     questions = Question.objects.filter(
         content__icontains=request.GET["keyword"])
 
@@ -164,6 +163,10 @@ def search_question(request, keyword="test"):
                   __user_info(request, {
                       "s_questions": questions
                   }))
+
+
+def default(request):
+    return render(request, 'webapp/index.html', __user_info(request, {}))
 
 
 def __user_info(request, updated_list=""):

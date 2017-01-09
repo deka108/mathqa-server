@@ -12,7 +12,7 @@
 
 {% block breadcrumb %}
   <div id="w3m">
-    <ol class="breadcrumb custom-navbar-item">
+    <ol class="breadcrumb">
       <li>
         <a href="#">
           {% fontawesome_icon 'dashboard' color='blue' %} Dr. Hui
@@ -27,45 +27,7 @@
 
 {% block content %}
   <div class="row mathematics">
-    <div class="col-md-2"></div>
 
-    <div class="col-md-2">
-      <div class="panel panel-primary">
-        <div class="panel-heading text-center">Additional Mathematics</div>
-        <div class="panel-body">
-          <content></content>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-2">
-      <div class="panel panel-primary">
-        <div class="panel-heading text-center">O-level Additional Mathematics</div>
-        <div class="panel-body">
-          <content></content>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-2">
-      <div class="panel panel-primary">
-        <div class="panel-heading text-center">Elementary Mathematics</div>
-        <div class="panel-body">
-          <content></content>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-2">
-      <div class="panel panel-primary">
-        <div class="panel-heading text-center">PSLE Mathematics</div>
-        <div class="panel-body">
-          <content></content>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-2"></div>
 
   </div>
 
@@ -84,24 +46,6 @@
     </div>
 
     <div class="col-md-1"></div>
-  </div>
-
-  <div class="row search text-center">
-    <div class="col-md-3"></div>
-
-    <div class="col-md-2">
-      <img src="{% static 'webapp/img/text.png' %}" />
-    </div>
-
-    <div class="col-md-2">
-      <img src="{% static 'webapp/img/tag.png' %}" />
-    </div>
-
-    <div class="col-md-2">
-      <img src="{% static 'webapp/img/formula.png' %}" />
-    </div>
-
-    <div class="col-md-3"></div>
   </div>
 
   <div class="row search">

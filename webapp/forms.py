@@ -7,6 +7,7 @@
 # Modified by:    Phuc Le-Sanh
 """
 from django import forms
+from meas_models.models import *
 
 
 class EditUserForm(forms.Form):
@@ -46,3 +47,7 @@ class EditUserProfileForm(forms.Form):
                                 widget=forms.TextInput(
                                     attrs={'placeholder': 'Last Name'}),
                                 required=False)
+
+
+class SelectSubjectForm(forms.Form):
+    subject = forms.ModelChoiceField(queryset=Subject.objects.all())

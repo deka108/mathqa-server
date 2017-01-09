@@ -1,0 +1,9 @@
+.main-area {
+  width: 1000px;
+  height: 500px;
+  padding: 20px;
+  position: absolute;
+  top: 40%;
+  left: 25%;
+  margin: -70px 0 0 -170px;
+}
