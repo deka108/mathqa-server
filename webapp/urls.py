@@ -12,8 +12,9 @@ from . import views
 
 urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
+    url(r'^$', views.default, name='default'),
 
-    url(r'^$', views.dashboard_index, name='dashboard_index'),
+    url(r'^dashboard/$', views.dashboard_index, name='dashboard_index'),
     url(r'^custom_login/$', views.custom_login, name='custom_login'),
 
     url(r'^create_user/$', views.create_user, name='create_user'),
@@ -29,7 +30,6 @@ urlpatterns = [
         views.topic_concept, name='topic_concept'),
 
     url(r'^adaptive_test/$', views.adaptive_index, name='adaptive_index'),
-    url(r'^contest/$', views.contest_index, name='contest_index'),
     url(r'^search_question?keyword=(?P<keyword>.+)/$',
         views.search_question, name='search_question'),
     url(r'^search_question/$',

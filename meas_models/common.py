@@ -66,3 +66,15 @@ DIFFICULTIES = [
 ]
 
 MARKS = [(i, i) for i in range(10)]
+
+CONTEST_TIME = [
+    ("1", '1 minute per question '),
+    ("2", '2 minutes per question'),
+]
+
+NUMER_OF_QUESTIONS = [
+    ("5", '5'),
+    ("10", '10'),
+    ("15", '15'),
+    ("20", '20'),
+]

@@ -59,7 +59,7 @@
 }
 
 .title-row {
-  font-size: 27px;
+  font-size: 24px;
   font-family: Palatino, 'Palatino Linotype',  'Palatino LT STD', 'Book Antiqua', Georgia, serif;
 }
 
@@ -107,10 +107,8 @@
 
 .footer-text {
   padding-top: 10px;
-  font-weight: bold;
 }
 .custom-footer {
-  border-top: thick solid #ff751a;
   background-color: #337AB7 !important;
   color: white;
   padding-bottom: 0px;
@@ -124,15 +122,6 @@
 
 .custom-hr {
   border-color: #b3b3b3;
-}
-
-.custom-breadcum {
-  background: #d9d9d9;
-  height: 40px;
-}
-
-.breadcrumb-item {
-  padding-top: 8px;
 }
 
 .custom-blockquote {

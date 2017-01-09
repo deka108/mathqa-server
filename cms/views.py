@@ -804,6 +804,16 @@ def delete_formula(request, formula_id):
     }))
 
 
+# Contest
+def contest_index(request):
+    if not request.user.is_superuser:
+        return redirect('/login/')
+
+    return render(request, 'cms/contest/index.html', __user_info(request, {
+        'form': ContestForm(),
+    }))
+
+
 # Move up, down order
 def move_up(request, topic_id):
     if not request.user.is_superuser:
@@ -845,6 +855,7 @@ def move_down(request, topic_id):
         "topics": subject.topic_set.all(),
         'form': SelectSubjectForm(initial={'subject': subject}),
     }))
+
 
 def __user_info(request, updated_list=""):
     result = {
