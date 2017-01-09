@@ -95,4 +95,6 @@ urlpatterns = [
         name='api_update_formula'),
     url(r'^delete_formula/(?P<formula_id>[0-9]+)/$',
         views.delete_formula, name='delete_formula'),
+
+    url(r'^contest/$', views.contest_index, name='contest_index'),
 ]

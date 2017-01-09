@@ -60,10 +60,10 @@ class EditQuestionForm(forms.Form):
                                                  attrs={
                                                      'class': 'selectpicker',
                                                      'multiple': '',
-                                                     'data-live-search': 'true',
+                                                     'data-live-search':
+                                                         'true',
                                                      'data-selected-text-format':
-                                                     "count > 1"}))
-
+                                                         "count > 1"}))
 
     concept = forms.ModelChoiceField(empty_label="",
                                      queryset=Concept.objects.all(),
@@ -265,3 +265,16 @@ class FormulaForm(forms.Form):
                            widget=forms.TextInput(
                                attrs={'class': 'form-control',
                                       'placeholder': 'Name of Formula'}))
+
+
+class ContestForm(forms.Form):
+    time = forms.CharField(
+        widget=forms.Select(choices=CONTEST_TIME)
+    )
+    numer_of_questions = forms.CharField(
+        widget=forms.Select(choices=NUMER_OF_QUESTIONS)
+    )
+    difficulty_level = forms.CharField(
+        widget=forms.Select(choices=DIFFICULTIES)
+    )
+    topic = forms.ModelChoiceField(queryset=Topic.objects.all())

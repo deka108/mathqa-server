@@ -85,14 +85,6 @@ def adaptive_index(request):
                   __user_info(request, {}))
 
 
-def contest_index(request):
-    if not request.user.is_authenticated:
-        return redirect('/login/')
-
-    return render(request, 'webapp/contest/index.html',
-                  __user_info(request, {}))
-
-
 def create_user(request):
     if request.user.is_authenticated:
         return redirect('/')

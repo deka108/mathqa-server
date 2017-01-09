@@ -29,7 +29,6 @@ urlpatterns = [
         views.topic_concept, name='topic_concept'),
 
     url(r'^adaptive_test/$', views.adaptive_index, name='adaptive_index'),
-    url(r'^contest/$', views.contest_index, name='contest_index'),
     url(r'^search_question?keyword=(?P<keyword>.+)/$',
         views.search_question, name='search_question'),
     url(r'^search_question/$',
