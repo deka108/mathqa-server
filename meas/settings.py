@@ -1,4 +1,3 @@
-
 """
 # Name:           meas/settings.py
 # Description:
@@ -44,7 +43,7 @@ INSTALLED_APPS = (
     'meas_common.apps.MeasCommonConfig',
 
     # API
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
 
     # Assessment
     'assessment.apps.AssessmentConfig'
