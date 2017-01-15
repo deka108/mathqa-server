@@ -89,3 +89,6 @@ TestingENV/
 
 # Rope project settings
 .ropeproject
+
+# Setting for local development
+meas/development_settings.py

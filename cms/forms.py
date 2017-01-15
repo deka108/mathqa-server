@@ -65,6 +65,13 @@ class EditQuestionForm(forms.Form):
                                                      'data-selected-text-format':
                                                          "count > 1"}))
 
+    topic = forms.ModelChoiceField(empty_label="",
+                                   queryset=Topic.objects.all(),
+                                   widget=forms.Select(
+                                       attrs={
+                                           'class': 'selectpicker concept',
+                                           'data-live-search': 'true'}))
+
     concept = forms.ModelChoiceField(empty_label="",
                                      queryset=Concept.objects.all(),
                                      widget=forms.Select(
@@ -90,7 +97,7 @@ class EditQuestionForm(forms.Form):
                                   attrs={'placeholder': 'Please enter ' +
                                          'Question here.',
                                          'width': "100%",
-                                         'cols': "70",
+                                         'cols': "109",
                                          'rows': "10",
                                          "onkeyup": "Preview.Update()"}))
     solution = forms.CharField(label='Solution', max_length=1000,
@@ -98,15 +105,17 @@ class EditQuestionForm(forms.Form):
                                    attrs={'placeholder': 'Please enter ' +
                                           'solution for this question here.',
                                           'width': "100%",
-                                          'cols': "70",
-                                          'rows': "10"}))
+                                          'cols': "109",
+                                          'rows': "10",
+                                          "onkeyup": "Preview2.Update()"}))
     answer = forms.CharField(label='Answer', max_length=1000,
                              widget=forms.Textarea(
-                                   attrs={'placeholder': 'Please enter ' +
-                                          'answers for this question here.',
-                                          'width': "100%",
-                                          'cols': "80",
-                                          'rows': "10"}))
+                                   attrs={
+                                       'placeholder': 'Please enter ' +
+                                       'answers for this question here.',
+                                       'width': "100%",
+                                       'cols': "109",
+                                       'rows': "5"}))
     keypoint = forms.ModelChoiceField(empty_label="",
                                       queryset=KeyPoint.objects.all(),
                                       widget=forms.Select(
@@ -187,61 +196,56 @@ class EditAnswerPartForm(forms.Form):
                                     'placeholder': 'Name of Part'}),
                                 required=False)
     part_content = forms.CharField(label='Content', max_length=1000,
-                                   widget=forms.TextInput(
-                                       attrs={'placeholder': 'Please enter ' +
-                                              'answer here.', }),
+                                   widget=forms.Textarea(
+                                       attrs={
+                                           'cols': "59",
+                                           'rows': "1",
+                                           'placeholder': 'Please enter ' +
+                                           'the answer of this part.', }),
                                    required=False)
     part_respone_type = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)
     required = False
 
-    subpart_name_1 = forms.CharField(label='Name of SubPart', max_length=10,
-                                     widget=forms.TextInput(attrs={
-                                         'placeholder': 'Name of SubPart', }),
-                                     initial='i', required=False)
     subpart_content_1 = forms.CharField(label='Content', max_length=1000,
-                                        widget=forms.TextInput(
+                                        widget=forms.Textarea(
                                             attrs={'placeholder': 'Please ' +
-                                                   'enter answer.', }),
+                                                   'enter the answer.',
+                                                   'cols': "59",
+                                                   'rows': "1", }),
                                         required=False)
     respone_type_1 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
         required=False)
 
-    subpart_name_2 = forms.CharField(label='Name of SubPart', max_length=10,
-                                     widget=forms.TextInput(attrs={
-                                         'placeholder': 'Name of SubPart'}),
-                                     initial='ii', required=False)
     subpart_content_2 = forms.CharField(label='Content', max_length=1000,
-                                        widget=forms.TextInput(
+                                        widget=forms.Textarea(
                                             attrs={'placeholder': 'Please ' +
-                                                   'enter answer.', }),
+                                                   'enter the answer.',
+                                                   'cols': "59",
+                                                   'rows': "1", }),
                                         required=False)
     respone_type_2 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
         required=False)
 
-    subpart_name_3 = forms.CharField(label='Name of SubPart', max_length=10,
-                                     widget=forms.TextInput(attrs={
-                                         'placeholder': 'Name of SubPart'}),
-                                     initial='iii', required=False)
     subpart_content_3 = forms.CharField(label='Content', max_length=1000,
-                                        widget=forms.TextInput(
+                                        widget=forms.Textarea(
                                             attrs={'placeholder': 'Please ' +
-                                                   'enter answer.', }),
+                                                   'enter the answer.',
+                                                   'cols': "59",
+                                                   'rows': "1", }),
                                         required=False)
     respone_type_3 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
         required=False)
 
-    subpart_name_4 = forms.CharField(label='Name of SubPart', max_length=10,
-                                     widget=forms.TextInput(attrs={
-                                         'placeholder': 'Name of SubPart'}),
-                                     initial='iv', required=False)
     subpart_content_4 = forms.CharField(label='Content', max_length=1000,
-                                        widget=forms.TextInput(
+                                        widget=forms.Textarea(
                                             attrs={'placeholder': 'Please ' +
-                                                   'enter answer.', }),
+                                                   'enter the answer.',
+                                                   'cols': "59",
+                                                   'rows': "1", }),
                                         required=False)
     respone_type_4 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)
