@@ -328,37 +328,33 @@ def api_create_question(request):
                                              part_respone_type=cd.get(
                                                  'part_respone_type'),
                                              question=question)
-                    if (any(cd.get('subpart_name_1')) and
-                            any(cd.get('subpart_content_1')) and
+                    if (any(cd.get('subpart_content_1')) and
                             any(cd.get('respone_type_1'))):
-                        answer_part.subpart_name_1 = cd.get('subpart_name_1')
+                        answer_part.subpart_name_1 = "a"
                         answer_part.subpart_content_1 = cd.get(
                             'subpart_content_1')
                         answer_part.respone_type_1 = cd.get(
                             'respone_type_1')
 
-                    if (any(cd.get('subpart_name_2')) and
-                            any(cd.get('subpart_content_2')) and
+                    if (any(cd.get('subpart_content_2')) and
                             any(cd.get('respone_type_2'))):
-                        answer_part.subpart_name_2 = cd.get('subpart_name_2')
+                        answer_part.subpart_name_2 = "b"
                         answer_part.subpart_content_2 = cd.get(
                             'subpart_content_2')
                         answer_part.respone_type_2 = cd.get(
                             'respone_type_2')
 
-                    if (any(cd.get('subpart_name_3')) and
-                            any(cd.get('subpart_content_3')) and
+                    if (any(cd.get('subpart_content_3')) and
                             any(cd.get('respone_type_3'))):
-                        answer_part.subpart_name_3 = cd.get('subpart_name_3')
+                        answer_part.subpart_name_3 = "c"
                         answer_part.subpart_content_3 = cd.get(
                             'subpart_content_3')
                         answer_part.respone_type_3 = cd.get(
                             'respone_type_3')
 
-                    if (any(cd.get('subpart_name_4')) and
-                            any(cd.get('subpart_content_4')) and
+                    if (any(cd.get('subpart_content_4')) and
                             any(cd.get('respone_type_4'))):
-                        answer_part.subpart_name_4 = cd.get('subpart_name_4')
+                        answer_part.subpart_name_4 = "d"
                         answer_part.subpart_content_4 = cd.get(
                             'subpart_content_4')
                         answer_part.respone_type_4 = cd.get(
@@ -383,8 +379,10 @@ def create_question(request):
     EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
     formset = EditAnswerPartFormSet()
 
-    return render(request, 'cms/question/create.html', __user_info(request,
-                  {'form': EditQuestionForm(), 'formset': formset}))
+    return render(request, 'cms/question/create.html',
+                  __user_info(request,
+                              {'form': EditQuestionForm(),
+                               'formset': formset}))
 
 
 def edit_question(request, question_id):
@@ -476,37 +474,33 @@ def api_update_question(request):
                     answer_part.part_content = cd.get('part_content')
                     answer_part.part_respone_type = cd.get('part_respone_type')
 
-                    if (any(cd.get('subpart_name_1')) and
-                            any(cd.get('subpart_content_1')) and
+                    if (any(cd.get('subpart_content_1')) and
                             any(cd.get('respone_type_1'))):
-                        answer_part.subpart_name_1 = cd.get('subpart_name_1')
+                        answer_part.subpart_name_1 = "a"
                         answer_part.subpart_content_1 = cd.get(
                             'subpart_content_1')
                         answer_part.respone_type_1 = cd.get(
                             'respone_type_1')
 
-                    if (any(cd.get('subpart_name_2')) and
-                            any(cd.get('subpart_content_2')) and
+                    if (any(cd.get('subpart_content_2')) and
                             any(cd.get('respone_type_2'))):
-                        answer_part.subpart_name_2 = cd.get('subpart_name_2')
+                        answer_part.subpart_name_2 = "b"
                         answer_part.subpart_content_2 = cd.get(
                             'subpart_content_2')
                         answer_part.respone_type_2 = cd.get(
                             'respone_type_2')
 
-                    if (any(cd.get('subpart_name_3')) and
-                            any(cd.get('subpart_content_3')) and
+                    if (any(cd.get('subpart_content_3')) and
                             any(cd.get('respone_type_3'))):
-                        answer_part.subpart_name_3 = cd.get('subpart_name_3')
+                        answer_part.subpart_name_3 = "c"
                         answer_part.subpart_content_3 = cd.get(
                             'subpart_content_3')
                         answer_part.respone_type_3 = cd.get(
                             'respone_type_3')
 
-                    if (any(cd.get('subpart_name_4')) and
-                            any(cd.get('subpart_content_4')) and
+                    if (any(cd.get('subpart_content_4')) and
                             any(cd.get('respone_type_4'))):
-                        answer_part.subpart_name_4 = cd.get('subpart_name_4')
+                        answer_part.subpart_name_4 = "d"
                         answer_part.subpart_content_4 = cd.get(
                             'subpart_content_4')
                         answer_part.respone_type_4 = cd.get(
