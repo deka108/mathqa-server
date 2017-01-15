@@ -73,36 +73,28 @@
                              {{ answerpart.part_content }}
                           </div>
                           <div class="panel-body">
-                            <div class="rows">
-                              <div class="col-sm-1"></div>
-                              <div class="col-sm-1">
-                                {{ answerpart.subpart_name_1 }}. &nbsp
-                                {{ answerpart.subpart_name_2 }}. &nbsp
-                                {{ answerpart.subpart_name_3 }}. &nbsp
-                                {{ answerpart.subpart_name_4 }}. &nbsp
-                              </div>
-                              <div class="col-sm-4">
-                                <input class="input-box"></input>
-                                <input class="input-box"></input>
-                                <input class="input-box"></input>
-                                <input class="input-box"></input>
-                              </div>
-                              <div class="col-sm-2">
-                                <a type="button" class="btn btn-default">
-                                  Check
-                                </a>
-                                <a type="button" class="btn btn-default">
-                                  Check
-                                </a>
-                                <a type="button" class="btn btn-default">
-                                  Check
-                                </a>
-                                <a type="button" class="btn btn-default">
-                                  Check
-                                </a>
-                              </div>
-                              <div class="col-sm-4"></div>
-                            </div>
+                            <ul class="nav nav-pills nav-stacked">
+                              <li>
+                                {% if answerpart.subpart_name_1 == "i" %}
+                                  {{ answerpart.subpart_name_1 }}
+                                {% endif %}
+                              </li>
+                              <li>
+                                {% if answerpart.subpart_name_2 == "ii" %}
+                                  {{ answerpart.subpart_name_2 }}
+                                {% endif %}
+                              </li>
+                              <li>
+                                {% if answerpart.subpart_name_3 == "iii" %}
+                                  {{ answerpart.subpart_name_3 }}
+                                {% endif %}
+                              </li>
+                              <li>
+                                {% if answerpart.subpart_name_4 == "iv" %}
+                                  {{ answerpart.subpart_name_4 }}
+                                {% endif %}
+                              </li>
+                            </ul>
                           </div>
                         </div>
                       {% endfor %}

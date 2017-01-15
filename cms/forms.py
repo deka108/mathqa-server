@@ -199,7 +199,7 @@ class EditAnswerPartForm(forms.Form):
                                    widget=forms.Textarea(
                                        attrs={
                                            'cols': "59",
-                                           'rows': "1",
+                                           'rows': "3",
                                            'placeholder': 'Please enter ' +
                                            'the answer of this part.', }),
                                    required=False)
@@ -212,7 +212,7 @@ class EditAnswerPartForm(forms.Form):
                                             attrs={'placeholder': 'Please ' +
                                                    'enter the answer.',
                                                    'cols': "59",
-                                                   'rows': "1", }),
+                                                   'rows': "3", }),
                                         required=False)
     respone_type_1 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
@@ -223,7 +223,7 @@ class EditAnswerPartForm(forms.Form):
                                             attrs={'placeholder': 'Please ' +
                                                    'enter the answer.',
                                                    'cols': "59",
-                                                   'rows': "1", }),
+                                                   'rows': "3", }),
                                         required=False)
     respone_type_2 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
@@ -234,7 +234,7 @@ class EditAnswerPartForm(forms.Form):
                                             attrs={'placeholder': 'Please ' +
                                                    'enter the answer.',
                                                    'cols': "59",
-                                                   'rows': "1", }),
+                                                   'rows': "3", }),
                                         required=False)
     respone_type_3 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
@@ -245,7 +245,7 @@ class EditAnswerPartForm(forms.Form):
                                             attrs={'placeholder': 'Please ' +
                                                    'enter the answer.',
                                                    'cols': "59",
-                                                   'rows': "1", }),
+                                                   'rows': "3", }),
                                         required=False)
     respone_type_4 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)

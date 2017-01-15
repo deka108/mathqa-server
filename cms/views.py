@@ -330,7 +330,7 @@ def api_create_question(request):
                                              question=question)
                     if (any(cd.get('subpart_content_1')) and
                             any(cd.get('respone_type_1'))):
-                        answer_part.subpart_name_1 = "a"
+                        answer_part.subpart_name_1 = "i"
                         answer_part.subpart_content_1 = cd.get(
                             'subpart_content_1')
                         answer_part.respone_type_1 = cd.get(
@@ -338,7 +338,7 @@ def api_create_question(request):
 
                     if (any(cd.get('subpart_content_2')) and
                             any(cd.get('respone_type_2'))):
-                        answer_part.subpart_name_2 = "b"
+                        answer_part.subpart_name_2 = "ii"
                         answer_part.subpart_content_2 = cd.get(
                             'subpart_content_2')
                         answer_part.respone_type_2 = cd.get(
@@ -346,7 +346,7 @@ def api_create_question(request):
 
                     if (any(cd.get('subpart_content_3')) and
                             any(cd.get('respone_type_3'))):
-                        answer_part.subpart_name_3 = "c"
+                        answer_part.subpart_name_3 = "iii"
                         answer_part.subpart_content_3 = cd.get(
                             'subpart_content_3')
                         answer_part.respone_type_3 = cd.get(
@@ -354,7 +354,7 @@ def api_create_question(request):
 
                     if (any(cd.get('subpart_content_4')) and
                             any(cd.get('respone_type_4'))):
-                        answer_part.subpart_name_4 = "d"
+                        answer_part.subpart_name_4 = "iv"
                         answer_part.subpart_content_4 = cd.get(
                             'subpart_content_4')
                         answer_part.respone_type_4 = cd.get(
@@ -476,7 +476,7 @@ def api_update_question(request):
 
                     if (any(cd.get('subpart_content_1')) and
                             any(cd.get('respone_type_1'))):
-                        answer_part.subpart_name_1 = "a"
+                        answer_part.subpart_name_1 = "i"
                         answer_part.subpart_content_1 = cd.get(
                             'subpart_content_1')
                         answer_part.respone_type_1 = cd.get(
@@ -484,7 +484,7 @@ def api_update_question(request):
 
                     if (any(cd.get('subpart_content_2')) and
                             any(cd.get('respone_type_2'))):
-                        answer_part.subpart_name_2 = "b"
+                        answer_part.subpart_name_2 = "ii"
                         answer_part.subpart_content_2 = cd.get(
                             'subpart_content_2')
                         answer_part.respone_type_2 = cd.get(
@@ -492,7 +492,7 @@ def api_update_question(request):
 
                     if (any(cd.get('subpart_content_3')) and
                             any(cd.get('respone_type_3'))):
-                        answer_part.subpart_name_3 = "c"
+                        answer_part.subpart_name_3 = "iii"
                         answer_part.subpart_content_3 = cd.get(
                             'subpart_content_3')
                         answer_part.respone_type_3 = cd.get(
@@ -500,7 +500,7 @@ def api_update_question(request):
 
                     if (any(cd.get('subpart_content_4')) and
                             any(cd.get('respone_type_4'))):
-                        answer_part.subpart_name_4 = "d"
+                        answer_part.subpart_name_4 = "iv"
                         answer_part.subpart_content_4 = cd.get(
                             'subpart_content_4')
                         answer_part.respone_type_4 = cd.get(
