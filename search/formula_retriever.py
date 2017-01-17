@@ -1,51 +1,67 @@
 """Search tables for formula using the IDF method"""
 from itertools import chain
 
+import ast
+import features_extractor as fe
 import math
+import re
 
 from meas_models.models import *
 
-import features_extractor as fe
-import re
 
 
-def formula_retrieval(sorted_sem_terms, k=20):
+
+def retrieve_formulas_from_inverted_index(term):
+    """
+
+    Args:
+        term:
+
+    Returns:
+
+    """
+    pass
+
+
+def retrieve_related_formulas(sorted_sem_terms, k=20):
     related_formulas = set()
 
     if sorted_sem_terms is None:
         return related_formulas
 
-    for element in range(len(sorted_sem_terms)):
-        for term in sorted_sem_terms[element]:
-            print term
-            print "."
-            try:
-                f_index = FormulaIndex.objects.get(pk=term)
-                docsids = re.findall('\d', f_index.docsids)  # formula ids
+    for term in sorted_sem_terms:
+        try:
+            f_index = FormulaIndex.objects.get(pk=term)
+            docsids = re.findall('\d+', f_index.docsids)
+            docsids = [int(docsid) for docsid in docsids]
 
-                formula_objs = Formula.objects.filter(pk__in=docsids,
-                                                      status__exact=True)
+            formulas = Formula.objects.filter(pk__in=docsids, status=True)
 
-                # Convert string to list
-                for obj in formula_objs:
-                    if obj.status:
-                        inorder_temp = eval(obj.inorder_term)
-                        obj.inorder_term = [term for term in
-                                            chain.from_iterable(inorder_temp)]
+            # Convert string to list
+            for formula in formulas:
+                if formula.status:
+                    inorder_temp = ast.literal_eval(formula.inorder_term)
+                    formula.inorder_term = [term for term in
+                                        chain.from_iterable(inorder_temp)]
 
-                        sorted_temp = eval(obj.sorted_term)
-                        obj.sorted_term = sorted_temp[len(sorted_temp) - 1]
+                    sorted_temp = ast.literal_eval(formula.sorted_term)
+                    formula.sorted_term = sorted_temp[len(sorted_temp) - 1]
 
-                        obj.structure_term = eval(obj.structure_term)
-                        obj.constant_term = eval(obj.constant_term)
-                        obj.variable = eval(obj.variable_term)
+                    formula.structure_term = ast.literal_eval(
+                        formula.structure_term)
+                    formula.constant_term = ast.literal_eval(
+                        formula.constant_term)
+                    formula.variable = ast.literal_eval(
+                        formula.variable_term)
 
-                        related_formulas.add(obj)
+                    related_formulas.add(formula)
 
-            except (KeyError, FormulaIndex.DoesNotExist):
-                pass
-        if len(related_formulas) >= k:
-            break
+                if len(related_formulas) >= k:
+                    break
+
+            return formulas
+        except (KeyError, FormulaIndex.DoesNotExist):
+            print("Couldn't find this term in the database.")
 
     return list(related_formulas)
 
@@ -181,15 +197,18 @@ def formulas_ranking(query_ino_terms, query_sort_1gram, query_struc_fea,
 
 
 def search_content_formula(latex_str):
-    query_sem_fea, query_struc_fea, query_cn_fea, query_var_fea = \
-        fe.generate_features(latex_str)
+    """
 
-    # semantic term in order
-    query_ino_terms = fe.generate_inorder_sem_terms(query_sem_fea)
-    # semantic term in sorted order
-    query_sort_terms = fe.generate_sorted_sem_terms(query_sem_fea)
+    Args:
+        latex_str:
 
-    related_formulas = formula_retrieval(query_sort_terms)
+    Returns:
+
+    """
+    query_ino_terms, query_sort_terms, query_struc_features, \
+    query_cn_features, query_var_features = fe.generate_features(latex_str)
+
+    related_formulas = retrieve_related_formulas(query_sort_terms)
 
     query_ino_terms = [term for term in chain.from_iterable(query_ino_terms)]
     query_sort_terms = query_sort_terms[len(query_sort_terms) - 1]
@@ -197,12 +216,13 @@ def search_content_formula(latex_str):
     N = Formula.objects.count()
 
     IDF_values = compute_IDF_values(query_ino_terms, query_sort_terms,
-                                    query_struc_fea, related_formulas, N)
+                                    query_struc_features, related_formulas, N)
 
     results, num_of_results = formulas_ranking(query_ino_terms,
                                                query_sort_terms,
-                                               query_struc_fea,
-                                               query_cn_fea, query_var_fea,
+                                               query_struc_features,
+                                               query_cn_features,
+                                               query_var_features,
                                                related_formulas,
                                                IDF_values, N)
 

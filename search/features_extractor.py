@@ -1,4 +1,4 @@
-"""Extract features from Formula"""
+"""Extracts features from formula."""
 from tempfile import TemporaryFile
 
 import xml.etree.ElementTree as ET
@@ -40,7 +40,7 @@ def print_dom_tree(domtree):
 
 def is_function(term):
     """
-    Checks whether a term is a LaTeX mathematical operator.
+    Checks if the term is a LaTeX mathematical operator.
 
     Source: http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html
 
@@ -92,7 +92,7 @@ def is_function(term):
                        'overrightarrow', 'overline', 'underline',
                        'overbrace', 'underbrace', 'sqrt', 'frac')
 
-    return term.endswith(operator_terms) or term == 'e' or term == 'd'
+    return term.endswith(operator_terms) or term == 'e'
 
 
 def generate_features(latex_str):
@@ -100,7 +100,7 @@ def generate_features(latex_str):
     Generates five formula features from a formula written as LaTeX string.
 
     Args:
-        latex_str:
+        latex_str: formula string in latex format.
 
     Returns:
         Five tuples corresponding to in order semantic terms, sorted semantic
@@ -114,7 +114,7 @@ def generate_features(latex_str):
     sem_features, struc_features, const_features, var_features = \
         extract_features(dom_tree)
 
-    # Extract inorder an sorted semantic terms
+    # Extract inorder and sorted semantic terms
     inorder_sem_terms = generate_inorder_sem_terms(sem_features)
     sorted_sem_terms = generate_sorted_sem_terms(sem_features)
 
@@ -135,7 +135,6 @@ def generate_mathmlstr(latex_str):
     """
     unescaped_latex = htmlparser.unescape(latex_str)
     mathml_str = l2m.convert(unescaped_latex)
-    print(mathml_str)
     return mathml_str
 
 
@@ -186,19 +185,19 @@ def extract_features(dom_tree):
 
         if event == 'start' and element.tag == 'mo':
             sem_features.append(element_text)
-            if len(stack_node) > 2:
+            if len(stack_node) > 3:
                 struc_features += extract_structural_features(stack_node,
                                                               element)
         elif event == 'start' and element.tag == 'mi' and is_function(
                 element_text):
             sem_features.append(element_text)
-            if len(stack_node) > 2:
+            if len(stack_node) > 3:
                 struc_features += extract_structural_features(stack_node,
                                                               element)
         elif element.tag != 'mrow' and element.tag != 'math' and event == \
                 'start' and element.findall('.//mi'):
             sem_features.append(element.tag)
-            if len(stack_node) > 2:
+            if len(stack_node) > 3:
                 struc_features += extract_structural_features(stack_node,
                                                               element)
         elif event == 'start' and element_text != 'e':
@@ -220,9 +219,9 @@ def extract_structural_features(stack_node, element, cn_var=False):
     Extract structural features from the node stack.
 
     Args:
-        stack_node:
-        element:
-        cn_var:
+        stack_node: stack of formula features.
+        element: current math element tag.
+        cn_var: boolean value that indicates the current element is a constant.
 
     Returns:
         List of structural features.
@@ -230,13 +229,13 @@ def extract_structural_features(stack_node, element, cn_var=False):
     nodes = ''
 
     if cn_var:
-        for node in stack_node[1:len(stack_node) - 1]:
+        for node in stack_node[2:len(stack_node) - 1]:
             nodes += node + '$'
         return nodes
     else:
-        for node in stack_node[1:len(stack_node) - 1]:
+        for node in stack_node[2:len(stack_node) - 1]:
             nodes += node + '$'
-        if not element.text:
+        if not element.text.strip():
             nodes += element.tag
         else:
             nodes += htmlparser.unescape(element.text)
@@ -245,7 +244,13 @@ def extract_structural_features(stack_node, element, cn_var=False):
 
 def generate_inorder_sem_terms(sem_features):
     """
-    Generates 2, 3, 4-grams of ordered semantic terms
+    Generates 2, 3, 4-grams of in order semantic terms.
+
+    Args:
+        sem_features: list of semantic features.
+
+    Returns:
+        List of inorder semantic terms.
     """
     terms = list()
 
@@ -272,6 +277,12 @@ def generate_sorted_sem_terms(sem_features):
     """
     Generates 1, 2, 3, 4-grams of lexicographically sorted semantic terms
     according to UTF-8 order.
+
+    Args:
+        sem_features: list of semantic features.
+
+    Returns:
+        List of semantic terms in lexicographic order.
     """
     terms = list()
 
@@ -284,16 +295,16 @@ def generate_sorted_sem_terms(sem_features):
 
     # 4 terms
     terms = [[sem_features[i] + '$' + sem_features[i + 1] + '$' +
-              sem_features[i + 2] + '$' + sem_features[i + 3]
-              for i in range(len(sem_features) - 3)]]
+             sem_features[i + 2] + '$' + sem_features[i + 3]
+             for i in range(len(sem_features) - 3)]]
 
     # 3 terms
-    terms += [[sem_features[i] + '$' + sem_features[i + 1] + '$'
-               + sem_features[i + 2] for i in range(len(sem_features) - 2)]]
+    terms += [[sem_features[i] + '$' + sem_features[i + 1] + '$' +
+              sem_features[i + 2] for i in range(len(sem_features) - 2)]]
 
     # 2 terms
     terms += [[sem_features[i] + '$' + sem_features[i + 1]
-               for i in range(len(sem_features) - 1)]]
+              for i in range(len(sem_features) - 1)]]
 
     # 1 term
     terms += [[sem_features[i] for i in range(len(sem_features))]]

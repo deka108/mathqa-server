@@ -8,11 +8,6 @@ import features_extractor as fe
 import re
 
 
-##############   REINDEX START  ##############
-# Assumption: database for formulas not available yet.
-# Otherwise, removing Formula is not necessary,
-# only updates the new / existing formula
-
 def reindex_all_formulas():
     """
     Drops and creates formula and formula index table.
@@ -38,17 +33,15 @@ def reindex_formulas_in_question(question_id):
     formulas = extract_formulas_from_question(question_id)
 
     for formula in formulas:
-        new_formula = Formula(content=formula, status=False)
+        new_formula = Formula(content=formula, status=False, question=question)
         new_formula.save()
-        question.formulas.add(new_formula)
 
-    question.save()
-    new_formulas = question.formulas.all()
+        try:
+            formula_id = new_formula.id
+            create_formula_index_model(formula, formula_id)
+        except (KeyError, Formula.DoesNotExist):
+            print "Error"
 
-    for new_formula in new_formulas:
-        latex_str = new_formula.content
-        formula_id = new_formula.id
-        update_formula_with_features(latex_str, formula_id)
 
 
 def extract_formulas_from_question(question_id):
@@ -73,19 +66,14 @@ def extract_formulas_from_question(question_id):
     return set(latex_formulas)
 
 
-#############   REINDEX END    ##############
-
-def update_formula_with_features(latex_str, formula_id):
+def create_formula_index_model(latex_str, formula_id):
     """
     Updates formula table with the extracted formula features and creates
     formula index table.
 
     Args:
-        latex_str:
-        formula_id:
-
-    Returns:
-
+        latex_str: formula string in latex format.
+        formula_id: formula id.
     """
     try:
         formula_obj = get_object_or_404(Formula, pk=formula_id)
@@ -106,24 +94,23 @@ def update_formula_with_features(latex_str, formula_id):
 
             # Create index term in FormulaIndex table
             for term in chain(inorder_sem_terms, sorted_sem_terms):
-                update_formula_index(formula_obj.id, term)
+                create_update_formula_index(formula_obj.id, term)
 
             for term in chain(struc_features, const_features, var_features):
-                update_formula_index(formula_obj.id, term)
+                create_update_formula_index(formula_obj.id, term)
 
     except (KeyError, Formula.DoesNotExist):
         print "Error"
 
 
-def update_formula_index(formula_id, term):
+def create_update_formula_index(formula_id, term):
     """
-    Updates inverted table that maps the terms to document ids (formula ids)
+    Create an inverted table of formula that maps terms to document ids
+    (formula ids), or updates it with the document id if it already exists.
+
     Args:
-        formula_id:
-        term:
-
-    Returns:
-
+        formula_id: formula id.
+        term: the formula feature.
     """
     try:
         f_index = FormulaIndex.objects.get(pk=term)
