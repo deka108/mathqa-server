@@ -120,7 +120,6 @@ def generate_features(latex_str):
 
     return inorder_sem_terms, sorted_sem_terms, struc_features, \
            const_features, var_features
-    # return sem_features, struc_features, const_features, var_features
 
 
 def generate_mathmlstr(latex_str):
@@ -186,27 +185,23 @@ def extract_features(dom_tree):
             element_text = htmlparser.unescape(element.text)
 
         if event == 'start' and element.tag == 'mo':
-            print(len(stack_node), element.tag, element_text, 'mo')
             sem_features.append(element_text)
             if len(stack_node) > 2:
                 struc_features += extract_structural_features(stack_node,
                                                               element)
         elif event == 'start' and element.tag == 'mi' and is_function(
                 element_text):
-            print(len(stack_node), element.tag, element_text, 'mi')
             sem_features.append(element_text)
             if len(stack_node) > 2:
                 struc_features += extract_structural_features(stack_node,
                                                               element)
         elif element.tag != 'mrow' and element.tag != 'math' and event == \
                 'start' and element.findall('.//mi'):
-            print(len(stack_node), element.tag, 'non_mi_or_mo')
             sem_features.append(element.tag)
             if len(stack_node) > 2:
                 struc_features += extract_structural_features(stack_node,
                                                               element)
         elif event == 'start' and element_text != 'e':
-            print(len(stack_node), element.tag, 'mi_and_not_function')
             if element.tag == 'mn':
                 cn_features.add(
                     extract_structural_features(stack_node, element,
