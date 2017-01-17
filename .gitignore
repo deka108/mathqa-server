@@ -91,11 +91,12 @@ TestingENV/
 .ropeproject
 
 # User-specific stuff:
+.idea
+.idea/
 .idea/workspace.xml
 .idea/tasks.xml
 
 # Sensitive or high-churn files:
-.idea/
 .idea/dataSources/
 .idea/dataSources.ids
 .idea/dataSources.xml
