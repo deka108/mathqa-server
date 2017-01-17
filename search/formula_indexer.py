@@ -1,6 +1,9 @@
+"""Update and creates an indexed formula table"""
+from itertools import chain
 from meas_models.models import *
-from .features_extractor import * as fe
 
+import bisect
+import features_extractor as fe
 import re
 
 ##############   REINDEX START  ##############
@@ -8,120 +11,103 @@ import re
 # Otherwise, removing Formula is not necessary, 
 # only updates the new / existing formula
 def reindex_all_formulas():
-	questions = Question.objects.all()
-
-	Formula.objects.all().delete()
+    questions = Question.objects.all()
+    
+    Formula.objects.all().delete()
     FormulaIndex.objects.all().delete()
 
     # Reindex formulas in every question 
-	for question in Question:
-		reindex_formulas_in_question(question.id)
+    for question in Question:
+        reindex_formulas_in_question(question.id)
 
 
 def reindex_formulas_in_question(question_id)
-	question = Question.objects.get(id=question_id)
-	formulas = extract_formulas_from_question(question_id)
+    question = Question.objects.get(id=question_id)
+    formulas = extract_formulas_from_question(question_id)
 
-	for formula in formulas:
-		new_formula = Formula(content=formula, status=False)
-		new_formula.save()
-		question.formulas.add(new_formula)
+    for formula in formulas:
+        new_formula = Formula(content=formula, status=False)
+        new_formula.save()
+        question.formulas.add(new_formula)
 
-	question.save()
+    question.save()
 
-	new_formulas = question.formulas.all()
-	
-	for formula in new_formulas:
-		latex_str = formula.content
-		formula_id = formula.id
+    new_formulas = question.formulas.all()
+    
+    for formula in new_formulas:
+        latex_str = formula.content
+        formula_id = formula.id
 
-		mathML = fe.convert_latex2mathml(latex_str)
-		create_index_model(mathML, formula_id)
+        mathML = fe.convert_latex2mathml(latex_str)
+        create_index_model(mathML, formula_id)
 
 
 def extract_formulas_from_question(question_id):
-	# content = Questions.objects.get(id=question_id).content
+    content = Question.objects.get(id=question_id).content
 
-	latex_formulas = []
-	bracket_notation = re.compile(r'\\\((.+)\\\)')
-	latex_formulas += bracket_notation.findall(content)
+    latex_formulas = []
+    bracket_notation = re.compile(r'\\\((.+)\\\)')
+    latex_formulas += bracket_notation.findall(content)
 
-	dollar_notation = re.compile(r'\$+(.+)\$+')
-	latex_formulas += dollar_notation.findall(content)
+    dollar_notation = re.compile(r'\$+(.+)\$+')
+    latex_formulas += dollar_notation.findall(content)
 
-	return latex_formulas
+    return latex_formulas
 
 #############   REINDEX END    ##############
 
 
-def insert_posting_list(posting_list, start, end, docid):
-    temp = (start+end)/2
-    if start == temp:
-        if long(posting_list[start]) > docid:
-            posting_list.insert(start, docid)
-        elif long(posting_list[start]) < docid < long(posting_list[end]):
-            posting_list.insert(end,docid)
-        elif long(posting_list[end]) < docid:
-            posting_list.append(docid)
-        else:
-            return False
-    else:        
-        if long(posting_list[temp]) > docid:
-            return insert_posting_list(posting_list, start, temp, docid)
-        elif long(posting_list[temp]) < docid:
-            return insert_posting_list(posting_list, temp, end, docid)
-        else:
-            return False
-
-    return True
-
-
-def create_formula_index(indexid, term):
+def create_index_model(mathml, formula_id):
+    """
+    Update formula table with the extracted formula features
+    """
     try:
-        f_index = FormulaIndex.objects.get(pk=term)
-        posting_list = (f_index.docsids.replace('#', ' ')).split()
-        if insert_posting_list(posting_list, 0, len(posting_list)-1, indexid):
-            temp = ''
-            for item in posting_list:
-                temp += '#' + str(item) + '#' 
-            f_index.docsids = temp
-            f_index.df = len(posting_list)               
-    except (KeyError, FormulaIndex.DoesNotExist):
-        f_index = FormulaIndex(term, '#'+str(indexid)+'#', 1)
-    
-    f_index.save()
-
-
-def create_index_model(mathml, id):
-	"""
-	Update formula table with the extracted formula features
-	"""
-    try:
-        formula_obj = get_object_or_404(Formula, pk=id)
+        formula_obj = get_object_or_404(Formula, pk=formula_id)
         
-        if formula_obj.status == 0:
-            #Extract four types of formula_obj
+        if not formula_obj.status:
+            #Extract four features of Formula
             (sem_features, struc_features, const_features, var_features) = fe.extract_features(mathml)            
             
             # Generate index terms
             inorder_sem_terms = fe.generate_inorder_sem_terms(sem_features)
             sorted_sem_terms = fe.generate_sorted_sem_terms(sem_features)
             
-            #Insert into formulas table
+            #Insert into formula table
             formula_obj.inorder_term = inorder_sem_terms
             formula_obj.sorted_term = sorted_sem_terms
             formula_obj.structure_term = struc_features
             formula_obj.constant_term = const_features
             formula_obj.variable_term = var_features
-            formula_obj.status = 1
+            formula_obj.status = True
             formula_obj.save()
             
             #Create index term in FormulaIndex table
-            for term in chain.from_iterable(inorder_sem_terms + sorted_sem_terms):
-                create_FormulaIndex(formula_obj.indexid, term)
+            for term in chain(inorder_sem_terms, sorted_sem_terms):
+                create_formula_index(formula_obj.id, term)
                 
             for term in chain(struc_features, const_features, var_features):            
-                create_FormulaIndex(formula_obj.indexid, term)
+                create_formula_index(formula_obj.id, term)
                                                       
     except (KeyError, Formula.DoesNotExist):
         print "Error"
+
+
+def create_formula_index(formula_id, term):
+    """
+    Inverted table that maps the formula term to document ids (formula ids)
+    """
+    try:
+        f_index = FormulaIndex.objects.get(pk=term)
+        docsids = re.findall('\d', f_index.docsids)
+        formulaid_str = str(formula_id)
+
+        if formulaid_str not in docsids:
+            bisect.insort(docsids, formulaid_str)
+
+        f_index.docsids = '#' + '#'.join(docsids) + '#'
+        f_index.df = len(docsids)
+
+    except (KeyError, FormulaIndex.DoesNotExist):
+        f_index = FormulaIndex(term, '#' + str(formula_id) + '#', 1)
+    
+    f_index.save()

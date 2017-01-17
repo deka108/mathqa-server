@@ -1,8 +1,15 @@
-from .features_extractor import * as fe
+"""Search tables for formula using the IDF method"""
+from itertools import chain
+from meas_models.models import *
+
+import features_extractor as fe
+import re
+
 
 
 def formula_retrieval(sorted_sem_terms, k=20):
     related_formulas = set()
+    
     if sorted_sem_terms is None:	
         return related_formulas
     
@@ -12,9 +19,10 @@ def formula_retrieval(sorted_sem_terms, k=20):
             print "."
             try:      
                 f_index = FormulaIndex.objects.get(pk=term)
-                posting_list  = (f_index.docsids.replace('#', ' ')).split()
+                docsids  = re.findall('\d', f_index.docsids) # formula ids
         
-                formula_objs = Formula.objects.filter(pk__in=posting_list, status__exact=True)                                  
+                formula_objs = Formula.objects.filter(pk__in=docsids, status__exact=True)                                  
+                
                 #Convert string to list
                 for obj in formula_objs:
                     if obj.status:

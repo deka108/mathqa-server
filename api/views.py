@@ -1,75 +1,178 @@
+# from drf_haystack.viewsets import HaystackViewSet
 from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 
 from meas_models.models import *
 from .serializers import *
 from .permissions import *
 
+import logging
 
-class TopicList(generics.ListCreateAPIView):
 
+logger = logging.getLogger(__name__)
+
+class TopicList(generics.ListAPIView):
+
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = TopicSerializer
+
+    def get_queryset(self):
+        queryset = Topic.objects.all()
+        subj_id = self.kwargs.get('subj_id')
+        if subj_id is not None:
+            queryset = queryset.filter(subject=subj_id)
+        return queryset
+
+
+class TopicDetail(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
 
-class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
-    queryset = Topic.objects.all()
-    serializer_class = TopicSerializer
+class ConceptList(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = ConceptSerializer
+
+    def get_queryset(self):
+        queryset = Concept.objects.all()
+        subj_id = self.kwargs.get('subj_id')
+        topic_id = self.kwargs.get('topic_id')
+        if subj_id is not None:
+            queryset = queryset.filter(topic__in=Topic.objects.filter(subject=subj_id))
+        elif topic_id is not None:
+            queryset = queryset.filter(topic=topic_id)
+
+        return queryset
 
 
-class ConceptList(generics.ListCreateAPIView):
-
+class ConceptDetail(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Concept.objects.all()
     serializer_class = ConceptSerializer
 
 
-class ConceptDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
-    queryset = Concept.objects.all()
-    serializer_class = ConceptSerializer
-
-
-class PaperList(generics.ListCreateAPIView):
+class PaperList(generics.ListAPIView):
 
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Paper.objects.all()
     serializer_class = PaperSerializer
 
 
-class PaperDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+class PaperDetail(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Paper.objects.all()
     serializer_class = PaperSerializer
 
 
-class QuestionList(generics.ListCreateAPIView):
+class QuestionList(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = QuestionSerializer
 
+    def get_queryset(self):
+        queryset = Question.objects.all()
+        subj_id = self.kwargs.get('subj_id')
+        topic_id = self.kwargs.get('topic_id')
+        concept_id = self.kwargs.get('concept_id')
+
+        if "sample" in self.request.path:
+            queryset = queryset.filter(keypoint__isnull=False)
+
+        if subj_id is not None:
+            queryset = queryset.filter(concept__in=Concept.objects.filter(topic__in=Topic.objects.filter(subject=subj_id)))
+        elif topic_id is not None:
+            queryset = queryset.filter(concept__in=Concept.objects.filter(topic=topic_id))
+        elif concept_id is not None:
+            queryset = queryset.filter(concept=concept_id)
+
+        return queryset
+
+
+class QuestionDetail(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
 
-class QuestionDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
-
-
-class AnswerPartList(generics.ListCreateAPIView):
+class AnswerPartList(generics.ListAPIView):
 
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = AnswerPart.objects.all()
     serializer_class = AnswerPartSerializer
 
 
-class AnswerPartDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+class AnswerPartDetail(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = AnswerPart.objects.all()
     serializer_class = AnswerPartSerializer
+
+
+class SubjectList(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+
+class SubjectDetail(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+
+class KeyPointList(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    serializer_class = KeyPointSerializer
+
+    def get_queryset(self):
+        queryset = KeyPoint.objects.all()
+        concept_id = self.kwargs.get('concept_id')
+
+        if concept_id is not None:
+            queryset = queryset.filter(concept=concept_id)
+
+        return queryset
+
+
+class KeyPointDetail(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = KeyPoint.objects.all()
+    serializer_class = KeyPointSerializer
+
+
+class FormulaList(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Formula.objects.all()
+    serializer_class = FormulaSerializer
+
+
+class FormulaDetail(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Formula.objects.all()
+    serializer_class = FormulaSerializer
+
+
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def search_formula(request):
+    if request.method == 'GET':
+        return Response({"message": "Hello, world!"})
+    elif request.method == 'POST':
+        query = request.data["data"]
+        queryset = Question.objects.filter(content__icontains=query)
+        serializer = QuestionSerializer(queryset, context={'request': request}, many=True)
+        return Response(serializer.data)
+
+# class SearchFormulaList(generics.GenericAPIView):
+#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+#     queryset = Subject.objects.all()
+#     serializer_class = SubjectSerializer
+
+# class QuestionSearchView(HaystackViewSet):
+#     index_models = [Question]
+#     serializer_class = QuestionHaystackSerializer
+
+
+class CreateUserView:
+    pass

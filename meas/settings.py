@@ -28,7 +28,12 @@ INSTALLED_APPS = (
     'webapp.apps.WebAppConfig',
 
     # Models
-    'meas_models.apps.MeasModelsConfig'
+    'meas_models.apps.MeasModelsConfig', 
+
+    # Haystack
+    'drf-haystack',
+    # 'haystack',
+    # 'whoosh',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -61,6 +66,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'meas.wsgi.application'
+
+# Whoosh
+# PROJECT_DIRECTORY = os.getcwd() 
+# WHOOSH_INDEX = os.path.join(PROJECT_DIRECTORY,'../whoosh/')
+
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+#     },
+#     'db': {
+#         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+#     },
+# }
 
 # Database
 DATABASES = {

@@ -161,8 +161,22 @@ class Formula(models.Model):
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=200)
     content = models.TextField()
+    status = models.BooleanField(default=True)
+    inorder_term = models.CharField(max_length=1024, null=True, blank=True)
+    sorted_term = models.CharField(max_length=1024, null=True, blank=True)
+    structure_term = models.CharField(max_length=1024, null=True, blank=True)
+    constant_term = models.CharField(max_length=1024, null=True, blank=True)
+    variable_term = models.CharField(max_length=1024, null=True, blank=True)
+
+
+class FormulaIndex(models.Model):
+    """
+    List of Formula Indices
+    """
+    indexkey = models.CharField('index key', primary_key=True, max_length=64)
+    docsids = models.CharField(max_length=9192, null=True, blank=True)
+    df = models.PositiveIntegerField('frequency', default=1, blank=True)
 
 
 class Question(models.Model):
