@@ -1,0 +1,179 @@
+{% extends 'cms/layout/base.html' %}
+
+{% load static %}
+{% load fontawesome %}
+
+{% block extended_head %}
+<script type="text/javascript">
+  function addStep(){
+      // Number of inputs to create
+    var number = document.getElementById("steps").value;
+    number++;
+    document.getElementById("steps").value = number;
+    // Container <div> where dynamic content will be placed
+    var container = document.getElementById("answer-container");
+    // Append a node with a random text
+    // Create an <input> element, set its type and name attributes
+    container.appendChild(document.createTextNode("= "));
+    var span = document.createElement("span");
+    span.id = "step" + number;
+    span.style.minWidth = '120px';
+    span.style.minHeight = '25px';
+    container.appendChild(span);
+    var hidden_input = document.createElement("input");
+    hidden_input.type = "hidden";
+    hidden_input.id = "hidden_step" + number;
+    hidden_input.name = "answer";
+    container.appendChild(hidden_input);
+    // Append a line break
+    container.appendChild(document.createElement("br"));
+    activateMathquill(number);
+  }
+
+  function removeStep(){
+      // Number of inputs to create
+    var number = document.getElementById("steps").value;
+    if (number <= 1) {
+      return;
+    }
+    number--;
+    document.getElementById("steps").value = number;
+    // Container <div> where dynamic content will be placed
+    var container = document.getElementById("answer-container");
+    //Remove <br> tag
+    container.removeChild(container.lastChild);
+    //Remove input tag
+    container.removeChild(container.lastChild);
+    //Remove span tag
+    container.removeChild(container.lastChild);
+    //Remove text tag
+    container.removeChild(container.lastChild);
+  }
+
+  function activateMathquill(step_number) {
+    source_id = 'step' + step_number;
+    target_id = 'hidden_step' + step_number;
+    var mathFieldSpan = document.getElementById(source_id);
+    var latexSpan = document.getElementById(target_id);
+
+    var MQ = MathQuill.getInterface(2); // for backcompat
+    var mathField = MQ.MathField(mathFieldSpan, {
+    spaceBehavesLikeTab: true, // configurable
+      handlers: {
+        edit: function() { // useful event handlers
+          latexSpan.value = mathField.latex(); // simple API
+        }
+      }
+    });
+  }
+
+  $('#answer_form').submit(function() {
+    var total_mark = document.getElementById('total_mark').value;
+    var steps = document.getElementById('steps').value;
+    var last_step_answer = document.getElementById('hidden_step' + steps).value;
+    var correct_answer = document.getElementById('rhs').value;
+
+    return true;
+    /*
+    if (steps < total_mark) {
+      //Must meet minimum steps according to the total mark.
+      alert('You must have at least ' + total_mark + ' steps.');
+      return false;
+    } else if (correct_answer != last_step_answer) {
+      //Final answer must the same as RHS
+      alert('Last step must be the same as RHS expression.');
+      return false;
+    } else {
+      //Find empty steps
+      for (var i = 1; i <= steps; i++) {
+        var step_answer = document.getElementById('hidden_step' + i).value;
+        if (step_answer == '') {
+          alert('You must not put any empty step(s).');
+          return false;
+        }
+      }
+      //Nothing else, proceed to submission
+      return true;
+    }
+    */
+  });
+
+  $(document).ready(function() {
+    //Divide the LHS and RHS of the equation
+    var lhs = document.getElementById('lhs');
+    var rhs = document.getElementById('rhs');
+
+
+    var question = "{{question.content}}";
+    var left_marker = question.indexOf('$');
+    var right_marker = question.lastIndexOf('$');
+
+    question = question.substring(left_marker + 1, right_marker);
+    var equal_sign_marker = question.indexOf('=');
+
+    var lhs_content = question.substring(0, equal_sign_marker);
+    var rhs_content = question.substring(equal_sign_marker + 1);
+
+    lhs_content = lhs_content.trim();
+    rhs_content = rhs_content.trim();
+    lhs.innerHTML = '$' + lhs_content + '$';
+    rhs.value = rhs_content;
+
+    //By default, add 1 steps
+    addStep();
+  });
+</script>
+{% endblock %}
+
+{% block breadcrumb %}
+  <ul class="breadcrumb">
+    <li>
+      {% fontawesome_icon 'home' color='grey' %}
+    </li>
+    <li class="active">
+      {% fontawesome_icon 'question' color='grey' %}
+      Question
+    </li>
+  </ul>
+{% endblock breadcrumb %}
+
+{% block main_title %}
+  <p class="display-section">Question | Topic</p>
+{% endblock main_title %}
+
+{% block main_content %}
+<h1>Trigonometry Question</h1>
+<span class="pull-right"> Question id: {{question.id}}</span>
+<center><p>{{question.content}}</p></center>
+
+
+<form id="answer_form" name="answer_form" method="POST">
+  {% csrf_token %}
+  <input type="hidden" class="form-control" id="id" name="id" value="{{question.id}}">
+  <input type="hidden" class="form-control" id="steps" name="steps" value="0">
+  <input type="hidden" class="form-control" id="total_mark" name="total_mark" value="{{question.total_mark}}">
+  <input type="hidden" class="form-control" id="rhs" name="rhs">
+
+  <div class="row">
+    <div class="col-md-6">
+      <p align="right" id="lhs" name="lhs">{{question.content}}</p>
+    </div>
+    <div class="col-md-6">
+      <div id="answer-container"></div>
+    </div>
+
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <a style="float:right" href="#" class="btn btn-default" onclick="addStep()" >Add Steps</a>
+    </div>
+    <div class="col-md-6">
+      <a style="float:left" href="#" class="btn btn-default" onclick="removeStep()" >Remove Steps</a>
+    </div>
+  </div>
+  <br>
+  <div class="col-md-12">
+    <center><button type="submit" class="btn btn-primary" >Submit</button></center>
+  </div>
+{% endblock main_content %}

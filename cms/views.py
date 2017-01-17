@@ -14,6 +14,8 @@ from meas_models.models import *
 from .forms import *
 from meas_common.basic import *
 
+import re
+
 
 # Topic
 def topic_index(request, subject_id=-1):
@@ -291,17 +293,31 @@ def api_create_question(request):
     if not request.user.is_superuser:
         return redirect('/login/')
 
-    question = Question(
-        question_type=request.POST.__getitem__('question_type'),
-        used_for=request.POST.__getitem__('used_for'),
-        mark=request.POST.__getitem__('mark'),
-        difficulty_level=request.POST.__getitem__(
-            'difficulty_level'),
-        content=request.POST.__getitem__('content'),
-        solution=request.POST.__getitem__('solution'),
-        answer=request.POST.__getitem__('answer'),
-        concept=Concept.objects.get(pk=request.POST.__getitem__('concept')),
-    )
+    question = ""
+
+    if any(request.POST.__getitem__('answer')):
+        question = Question(
+            question_type=request.POST.__getitem__('question_type'),
+            used_for=request.POST.__getitem__('used_for'),
+            mark=request.POST.__getitem__('mark'),
+            difficulty_level=request.POST.__getitem__(
+                'difficulty_level'),
+            content=request.POST.__getitem__('content'),
+            solution=request.POST.__getitem__('solution'),
+            answer=request.POST.__getitem__('answer'),
+            concept=Concept.objects.get(pk=request.POST.__getitem__('concept'))
+        )
+    else:
+        question = Question(
+            question_type=request.POST.__getitem__('question_type'),
+            used_for=request.POST.__getitem__('used_for'),
+            mark=request.POST.__getitem__('mark'),
+            difficulty_level=request.POST.__getitem__(
+                'difficulty_level'),
+            content=request.POST.__getitem__('content'),
+            solution=request.POST.__getitem__('solution'),
+            concept=Concept.objects.get(pk=request.POST.__getitem__('concept'))
+        )
 
     if any(request.POST.getlist('keypoint')):
         question.keypoint = KeyPoint.objects.get(
@@ -424,7 +440,12 @@ def api_update_question(request):
     question.mark = request.POST.__getitem__('mark')
     question.difficulty_level = request.POST.__getitem__('difficulty_level')
     question.respone_type = request.POST.__getitem__('respone_type')
-    question.answer = request.POST.__getitem__('answer')
+
+    if any(request.POST.__getitem__('answer')):
+        question.answer = request.POST.__getitem__('answer')
+    else:
+        question.answer = ""
+
     question.content = request.POST.__getitem__('content')
     question.solution = request.POST.__getitem__('solution')
 
@@ -536,10 +557,12 @@ def question_topic_detail(request, topic_id):
 
     topic = Topic.objects.get(pk=topic_id)
     concept = topic.concept_set.all()
+    questions = Question.objects.filter(concept__in=concept, question_type="PR")
+    for question in questions:
+        question = format_answer_box(question)
 
     return render(request, 'cms/question/questions.html', __user_info(
-        request, {"questions": Question.objects.filter(concept__in=concept,
-                                                       question_type="PR")}))
+        request, {"questions": questions}))
 
 
 def question_paper_detail(request, paper_id):
@@ -877,3 +900,50 @@ def __parts(clist, parts):
         clist.update(hash_part)
         i = i + 1
     return clist
+
+
+# TODO: put in the suitable file
+# Martinus
+# Jan 16, 2016
+def format_answer_box(question):
+    if question.answer != " ":
+        formatted_answer = substitute_answer_with_box(question.id, -1, question.answer, has_part=False)
+        setattr(question, "answer", formatted_answer)
+        print(question.answer)
+    else:
+        answer_parts = question.answerpart_set.all()
+        for answer in answer_parts:
+            answer.part_content = substitute_answer_with_box(answer.id, 0, answer.part_content)
+            if answer.subpart_name_1 == "i":
+                answer.subpart_content_1 = substitute_answer_with_box(answer.id, 1, answer.subpart_content_1)
+            if answer.subpart_name_2 == "ii":
+                answer.subpart_content_2 = substitute_answer_with_box(answer.id, 2, answer.subpart_content_2)
+            if answer.subpart_name_3 == "iii":
+                answer.subpart_content_3 = substitute_answer_with_box(answer.id, 3, answer.subpart_content_3)
+            if answer.subpart_name_4 == "iv":
+                answer.subpart_content_4 = substitute_answer_with_box(answer.id, 4, answer.subpart_content_4)
+        # Error: 'Question' object does not support item assignment
+        # question['answer_parts'] = answer_parts
+        setattr(question, "answer_parts", answer_parts)
+        try:
+            print(answer_parts[0].part_content)
+        except IndexError:
+            pass
+    return question
+
+
+def substitute_answer_with_box(answerpart_id, subpart_no, original_answer, has_part=True):
+    if not has_part:
+        subpart_no = 'q'
+    # Count the number of input in each part
+    answer_count = len(re.findall(r'(["])(?:(?=(\\?))\2.)*?\1', original_answer))
+    # Remove all answer
+    content = re.sub(r'(["])(?:(?=(\\?))\2.)*?\1', '""', original_answer)
+    for i in range(answer_count):
+        # Construct HTML tag
+        output_HTML_tag = '<span id="answer-' + str(answerpart_id)   + "-" + str(subpart_no) + "-" + str(i) + '"></span>'
+        output_HTML_tag += '<input type="hidden" name="answer-' + str(answerpart_id) + "-" + str(subpart_no) + '"' + 'id="hidden_answer-' + str(answerpart_id) + "-" + str(subpart_no) + "-" + str(i) + '" >'
+        # Substitute the answer with HTML tag (process each sub_part one by
+        # one)
+        content = re.sub(r'""', output_HTML_tag, content, 1)
+    return content
