@@ -92,3 +92,6 @@ TestingENV/
 
 # Setting for local development
 meas/development_settings.py
+
+.idea/
+
