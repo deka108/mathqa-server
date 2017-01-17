@@ -6,23 +6,20 @@ import HTMLParser
 import latex2mathml.converter as l2m
 import locale
 
-
 htmlparser = HTMLParser.HTMLParser()
 
 
 def write_dom_to_tempfile(root):
     """
-    Writes XML into a temporary file
+    Writes XML into a temporary file.
+
+    Args:
+        root: the root of MathML DOM tree.
+
+    Returns:
+        Temporary file of the MathML tree,
     """
-    # tree = ET.ElementTree(root)
-    # tmp = TemporaryFile(suffix=".xml")
-    # tree.write(tmp)
-    # tmp.seek(0)
-    # return tmp
-    for e in list(root[0]):
-        root.append(e)     
-    del root[0]
-    
+
     tree = ET.ElementTree(root)
     tempfile = TemporaryFile(suffix='.xml')
     tree.write(tempfile)
@@ -32,45 +29,126 @@ def write_dom_to_tempfile(root):
 
 def print_dom_tree(domtree):
     """
-    Debugging purposes
+    Prints DOM tree content.
+
+    Args:
+        domtree: a MathML DOM tree.
     """
-    for elt in domtree.iter(): 
+    for elt in domtree.iter():
         print("%s: '%s'" % (elt.tag, elt.text))
 
 
 def is_function(term):
     """
-    List of mathematical functions
+    Checks whether a term is a LaTeX mathematical operator.
+
+    Source: http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html
+
+    Args:
+        term: string to be checked.
+
+    Returns:
+        True if the term is a mathematical operator, false otherwise.
     """
-    operator_terms = ('lim', 'Lim', 'sin', 'cos', 'tan', 'sinh', 'cosh', 'tanh',
-                      'cot', 'sec', 'cosec', 'csc', 'log', 'ln', 'lg', 'det', 'gcd',
-                      'lcm', 'min', 'max', 'sqrt', 'root', 'frac', 'sub', 'sup',
-                      'under', 'alpha', 'beta', 'gamma', 'times', 'neg')
-    greek_letters = ('alpha', 'beta', 'gamma', 'delta' ,'epsilon', 'theta', 'Theta',
-        '')
-    return term.endswith(operator_terms) or term == 'e'
+    operator_terms = tuple()
+
+    # binary operators
+    operator_terms += ('pm', 'times', 'div', 'ast', 'dot', 'cap', 'cup',
+                       'vee', 'wedge', '+', '-', 'times', 'plus')
+    # relation operators
+    operator_terms += ('leq', 'geq', 'equiv', 'models', 'sim', 'simeq',
+                       'mid', 'parallel', 'subset', 'supset', 'approx',
+                       'subseteq', 'supseteq', 'cong', 'join', 'neq', 'propto'
+                                                                      'in',
+                       '=', '<', '>')
+    # punctuation operators
+    operator_terms += (',', 'colon', 'ldotp', 'cdotp')
+    # arrow operators
+    operator_terms += ('leftarrow', 'Leftarrow', 'rightarrow', 'Rightarrow',
+                       'leftrightarrow', 'Leftrightarrow', 'leftharpoonup',
+                       'leftharpoondown', 'rightleftharpoons',
+                       'rightharpoonup', 'rightharpoondown', 'mapsto')
+    # miscellaneous operators
+    operator_terms += ('ldots', 'cdots', 'vdots', 'ddots', 'forall', 'infty',
+                       'exists', 'nabla', 'neg', 'triangle', 'angle', 'bot',
+                       'prime', 'emptyset')
+    # vars sized operators
+    operator_terms += ('sum', 'prod', 'coprod', 'int', 'bigcap', 'bigcup',
+                       'bigodot', 'bigotimes', 'bigoplus')
+    # function operators
+    operator_terms += ('arccos', 'cos', 'csc', 'exp', 'limsup', 'min', 'sinh',
+                       'arcsin', 'cosh', 'deg', 'gcd', 'lg', 'ln', 'sup',
+                       'arctan', 'cot', 'det', 'lim', 'log', 'sec', 'tan',
+                       'arg', 'coth', 'dim', 'inf', 'liminf', 'max', 'sin',
+                       'tanh')
+    # delimiter operators
+    operator_terms += ('(', ')', 'uparrow', 'Uparrow', '[', ']',
+                       'downarrow', 'Downarrow', '{', '}', 'updownarrow',
+                       'Updownarrow', 'lfloor', 'rfloor', 'lceil', 'rceil',
+                       'langle', 'rangle', '/', 'backslash', '\\|', 'lgroup',
+                       'rgroup', '\\', '.', '\'')
+    # other operators
+    operator_terms += ('widetilde', 'widehat', 'overleftarrow',
+                       'overrightarrow', 'overline', 'underline',
+                       'overbrace', 'underbrace', 'sqrt', 'frac')
+
+    return term.endswith(operator_terms) or term == 'e' or term == 'd'
 
 
 def generate_features(latex_str):
     """
-    Converts latex string into MathML string, convert MathML string into a DOM tree,'
-    and generate four formula features
+    Generates five formula features from a formula written as LaTeX string.
+
+    Args:
+        latex_str:
+
+    Returns:
+        Five tuples corresponding to in order semantic terms, sorted semantic
+        terms, structural features, constant features and variable features.
+
     """
-    mathml_str = convert_latex2mathml(latex_str)
+    mathml_str = generate_mathmlstr(latex_str)
     dom_tree = construct_domtree(mathml_str)
-    return extract_features(dom_tree)
+
+    # Extract features from the formula
+    sem_features, struc_features, const_features, var_features = \
+        extract_features(dom_tree)
+
+    # Extract inorder an sorted semantic terms
+    inorder_sem_terms = generate_inorder_sem_terms(sem_features)
+    sorted_sem_terms = generate_sorted_sem_terms(sem_features)
+
+    return inorder_sem_terms, sorted_sem_terms, struc_features, \
+           const_features, var_features
+    # return sem_features, struc_features, const_features, var_features
 
 
-def convert_latex2mathml(latex_str):
+def generate_mathmlstr(latex_str):
     """
     Converts latex string to MathML string
+
+    Args:
+        latex_str: formula string in latex format.
+
+    Returns:
+        A mathml string representation of the formula.
+
     """
-    return l2m.convert(latex_str)
+    unescaped_latex = htmlparser.unescape(latex_str)
+    mathml_str = l2m.convert(unescaped_latex)
+    print(mathml_str)
+    return mathml_str
 
 
 def construct_domtree(mathml_str):
     """
-    Constructs DOM tree from MathML string
+    Constructs a DOM tree from MathML string.
+
+    Args:
+        mathml_str: MathML string.
+
+    Returns:
+        The root of the MathML tree representation.
     """
     root = ET.fromstring(mathml_str)
     return root
@@ -78,7 +156,15 @@ def construct_domtree(mathml_str):
 
 def extract_features(dom_tree):
     """
-    Extracts semantic, structural, variable, and constant features from a DOM tree
+    Extracts semantic, structural, variable, and constant features from a
+    DOM tree.
+
+    Args:
+        dom_tree: a MathML DOM tree.
+
+    Returns:
+        Four iterables corresponding to semantic, structural, variable and
+        constant features of a formula.
     """
     sem_features = list()
     struc_features = list()
@@ -86,8 +172,8 @@ def extract_features(dom_tree):
     var_features = set()
     stack_node = list()
 
-    et = write_dom_to_tempfile(dom_tree)
-    context = ET.iterparse(et, ['start', 'end'])
+    tf = write_dom_to_tempfile(dom_tree)
+    context = ET.iterparse(tf, ['start', 'end'])
 
     for event, element in context:
         if event == 'start':
@@ -95,45 +181,65 @@ def extract_features(dom_tree):
         else:
             stack_node.pop()
 
+        # converts to UTF-8
         if element.text:
             element_text = htmlparser.unescape(element.text)
 
         if event == 'start' and element.tag == 'mo':
+            print(len(stack_node), element.tag, element_text, 'mo')
             sem_features.append(element_text)
             if len(stack_node) > 2:
-                struc_features += extract_structural_features(stack_node, element)
-        elif event == 'start' and element.tag == 'mi' and is_function(element_text):
+                struc_features += extract_structural_features(stack_node,
+                                                              element)
+        elif event == 'start' and element.tag == 'mi' and is_function(
+                element_text):
+            print(len(stack_node), element.tag, element_text, 'mi')
             sem_features.append(element_text)
             if len(stack_node) > 2:
-                struc_features += extract_structural_features(stack_node, element)
-        elif element.tag != 'mrow' and element.tag != 'math' and \
-                event == 'start' and element.find('.//mi'):
+                struc_features += extract_structural_features(stack_node,
+                                                              element)
+        elif element.tag != 'mrow' and element.tag != 'math' and event == \
+                'start' and element.findall('.//mi'):
+            print(len(stack_node), element.tag, 'non_mi_or_mo')
             sem_features.append(element.tag)
             if len(stack_node) > 2:
-                struc_features += extract_structural_features(stack_node, element)
+                struc_features += extract_structural_features(stack_node,
+                                                              element)
         elif event == 'start' and element_text != 'e':
+            print(len(stack_node), element.tag, 'mi_and_not_function')
             if element.tag == 'mn':
-                cn_features.add(extract_structural_features(stack_node, element, True) + 'cn')
+                cn_features.add(
+                    extract_structural_features(stack_node, element,
+                                                True) + 'cn')
             elif element.tag == 'mi':
-                var_features.add(extract_structural_features(stack_node, element, True)
-                                      + 'var')
-    et.close()
+                var_features.add(
+                    extract_structural_features(stack_node, element, True)
+                    + 'var')
+    tf.close()
 
-    return (sem_features, struc_features, list(cn_features), list(var_features))
+    return sem_features, struc_features, list(cn_features), list(var_features)
 
 
 def extract_structural_features(stack_node, element, cn_var=False):
     """
-    Extract structural features
+    Extract structural features from the node stack.
+
+    Args:
+        stack_node:
+        element:
+        cn_var:
+
+    Returns:
+        List of structural features.
     """
     nodes = ''
 
     if cn_var:
-        for node in stack_node[1:len(stack_node)-1]:
+        for node in stack_node[1:len(stack_node) - 1]:
             nodes += node + '$'
         return nodes
     else:
-        for node in stack_node[1:len(stack_node)-1]:
+        for node in stack_node[1:len(stack_node) - 1]:
             nodes += node + '$'
         if not element.text:
             nodes += element.tag
@@ -152,12 +258,13 @@ def generate_inorder_sem_terms(sem_features):
         return terms
 
     # 4 terms
-    terms = [[sem_features[i] + '$' + sem_features[i + 1] + '$' + sem_features[i + 2]
-              + '$' + sem_features[i + 3] for i in range(len(sem_features) - 3)]]
+    terms = [[sem_features[i] + '$' + sem_features[i + 1] + '$' +
+              sem_features[i + 2] + '$' + sem_features[i + 3] for i in
+              range(len(sem_features) - 3)]]
 
     # 3 terms
-    terms += [[sem_features[i] + '$' + sem_features[i + 1] + '$' + sem_features[i + 2]
-               for i in range(len(sem_features)-2)]]
+    terms += [[sem_features[i] + '$' + sem_features[i + 1] + '$' +
+               sem_features[i + 2] for i in range(len(sem_features) - 2)]]
 
     # 2 terms
     terms += [[sem_features[i] + '$' + sem_features[i + 1]
@@ -168,7 +275,8 @@ def generate_inorder_sem_terms(sem_features):
 
 def generate_sorted_sem_terms(sem_features):
     """
-    Generates 1, 2, 3, 4-grams of lexigraphically sorted semantic terms
+    Generates 1, 2, 3, 4-grams of lexicographically sorted semantic terms
+    according to UTF-8 order.
     """
     terms = list()
 
@@ -180,18 +288,19 @@ def generate_sorted_sem_terms(sem_features):
     sem_features.sort(cmp=locale.strcoll)
 
     # 4 terms
-    terms = [[sem_features[i] + '$' + sem_features[i+1] + '$' + sem_features[i+2]
-              + '$' + sem_features[i+3] for i in range(len(sem_features)-3)]]
+    terms = [[sem_features[i] + '$' + sem_features[i + 1] + '$' +
+              sem_features[i + 2] + '$' + sem_features[i + 3]
+              for i in range(len(sem_features) - 3)]]
 
     # 3 terms
-    terms += [[sem_features[i] + '$' + sem_features[i+1] + '$'
-               + sem_features[i+2] for i in range(len(sem_features)-2)]]
+    terms += [[sem_features[i] + '$' + sem_features[i + 1] + '$'
+               + sem_features[i + 2] for i in range(len(sem_features) - 2)]]
 
     # 2 terms
-    terms += [[sem_features[i] + '$' + sem_features[i+1]
-               for i in range(len(sem_features)-1)]]
+    terms += [[sem_features[i] + '$' + sem_features[i + 1]
+               for i in range(len(sem_features) - 1)]]
 
     # 1 term
     terms += [[sem_features[i] for i in range(len(sem_features))]]
-    
+
     return terms

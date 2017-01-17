@@ -127,8 +127,8 @@ class Paper(models.Model):
     """
 
     def __str__(self):
-        return str(self.year) + " " + str(self.get_month_display()) + " " +\
-            str(self.number)
+        return str(self.year) + " " + str(self.get_month_display()) + " " + \
+               str(self.number)
 
     year = models.IntegerField()
     month = models.CharField(max_length=20, choices=MONTHS, default="1")
@@ -159,10 +159,10 @@ class Formula(models.Model):
     """
 
     def __str__(self):
-        return self.name
+        return self.content
 
     content = models.TextField()
-    status = models.BooleanField(default=True)
+    status = models.BooleanField(default=False)
     inorder_term = models.CharField(max_length=1024, null=True, blank=True)
     sorted_term = models.CharField(max_length=1024, null=True, blank=True)
     structure_term = models.CharField(max_length=1024, null=True, blank=True)
@@ -174,8 +174,8 @@ class FormulaIndex(models.Model):
     """
     List of Formula Indices
     """
-    indexkey = models.CharField('index key', primary_key=True, max_length=64)
-    docsids = models.CharField(max_length=9192, null=True, blank=True)
+    indexkey = models.CharField('index key', primary_key=True, max_length=255)
+    docsids = models.TextField(null=True, blank=True)
     df = models.PositiveIntegerField('frequency', default=1, blank=True)
 
 

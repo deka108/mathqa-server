@@ -6,28 +6,24 @@ from meas_models.models import *
 
 
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Topic
         fields = ('url', 'id', 'name', 'description', 'order', 'subject')
 
 
 class ConceptSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Concept
         fields = ('url', 'id', 'name', 'description', 'topic')
 
 
 class PaperSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Paper
         fields = ('url', 'id', 'year', 'month', 'number', 'no_of_question')
 
 
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Question
 
@@ -37,15 +33,15 @@ class QuestionSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class AnswerPartSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Question
-        fields = ('url', 'id', 'part_name', 'part_content', 'part_respone_type',
-                  'subpart_name_1', 'subpart_content_1', 'respone_type_1',
-                  'subpart_name_2', 'subpart_content_2', 'respone_type_2',
-                  'subpart_name_3', 'subpart_content_3', 'respone_type_3',
-                  'subpart_name_4', 'subpart_content_4', 'respone_type_4',
-                  'question')
+        fields = (
+        'url', 'id', 'part_name', 'part_content', 'part_respone_type',
+        'subpart_name_1', 'subpart_content_1', 'respone_type_1',
+        'subpart_name_2', 'subpart_content_2', 'respone_type_2',
+        'subpart_name_3', 'subpart_content_3', 'respone_type_3',
+        'subpart_name_4', 'subpart_content_4', 'respone_type_4',
+        'question')
 
 
 class SubjectSerializer(serializers.HyperlinkedModelSerializer):
@@ -69,8 +65,15 @@ class KeyPointSerializer(serializers.HyperlinkedModelSerializer):
 class FormulaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Formula
-        fields = ('id', 'content', 'status', 'inorder_term', 'sorted_term',
-          'structure_term', 'constant_term', 'variable_term')
+        fields = ('url', 'id', 'content', 'status', 'inorder_term',
+                  'sorted_term', 'structure_term', 'constant_term',
+                  'variable_term')
+
+
+class FormulaIndexSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = FormulaIndex
+        fields = ('indexkey', 'docsids', 'df')
 
 # class QuestionHaystackSerializer(HaystackSerializer):
 
