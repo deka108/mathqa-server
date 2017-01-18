@@ -109,7 +109,7 @@ def is_function(term):
     return term.endswith(function_terms)
 
 
-def generate_features(latex_str):
+def generate_features(latex_str, all=False):
     """
     Generates five formula features from a formula written as LaTeX string.
 
@@ -127,6 +127,9 @@ def generate_features(latex_str):
     # Extract features from the formula
     sem_features, struc_features, const_features, var_features = \
         extract_features(dom_tree)
+
+    if all:
+        return sem_features, struc_features, const_features, var_features
 
     # Extract inorder and sorted semantic terms
     inorder_sem_terms = generate_inorder_sem_terms(sem_features)

@@ -41,7 +41,6 @@ def search_formula(latex_str):
                                   query_struc_features, query_cn_features,
                                   query_var_features, related_formulas,
                                   idf_values, N)
-
     return results
 
 
@@ -354,7 +353,7 @@ def compute_var_matching_score(matching_var):
         matching_var: list of matching variable terms.
 
     Returns:
-        The variable matching score.
+        The variable matching sco
     """
     return len(matching_var)
 

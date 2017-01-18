@@ -161,6 +161,7 @@ class FormulaIndexList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = FormulaIndex.objects.all()
     serializer_class = FormulaIndexSerializer
+    print(FormulaIndex.objects.count())
 
 
 @api_view(['GET', 'POST'])
@@ -171,7 +172,8 @@ def search_text_db(request):
     elif request.method == 'POST':
         query = request.data["data"]
         queryset = Question.objects.filter(content__icontains=query)
-        serializer = QuestionSerializer(queryset, context={'request': request},
+        serializer = QuestionSerializer(queryset,
+                                        context={'request': request},
                                         many=True)
         return Response(serializer.data)
 
@@ -183,8 +185,11 @@ def search_formula(request):
         return Response({"message": "Hello, world!"})
     elif request.method == 'POST':
         query = request.data["content"]
-        fr.search_formula(query)
-        return Response(query)
+        questions = fr.search_formula(query)
+        serializer = QuestionSerializer(questions,
+                                        context={'request': request},
+                                        many=True)
+        return Response(serializer.data)
 
 
 @api_view(['GET'])
