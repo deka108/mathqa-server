@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from meas_models.models import *
 from search import formula_indexer as fi
+from search import formula_retriever as fr
 from .serializers import *
 from .permissions import *
 
@@ -164,7 +165,7 @@ class FormulaIndexList(generics.ListAPIView):
 
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.AllowAny,))
-def search_formula(request):
+def search_text_db(request):
     if request.method == 'GET':
         return Response({"message": "Hello, world!"})
     elif request.method == 'POST':
@@ -173,6 +174,17 @@ def search_formula(request):
         serializer = QuestionSerializer(queryset, context={'request': request},
                                         many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def search_formula(request):
+    if request.method == 'GET':
+        return Response({"message": "Hello, world!"})
+    elif request.method == 'POST':
+        query = request.data["content"]
+        fr.search_formula(query)
+        return Response(query)
 
 
 @api_view(['GET'])

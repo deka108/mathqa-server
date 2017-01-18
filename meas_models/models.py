@@ -153,32 +153,6 @@ class KeyPoint(models.Model):
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
 
 
-class Formula(models.Model):
-    """
-    List of formula
-    """
-
-    def __str__(self):
-        return self.content
-
-    content = models.TextField()
-    status = models.BooleanField(default=False)
-    inorder_term = models.CharField(max_length=1024, null=True, blank=True)
-    sorted_term = models.CharField(max_length=1024, null=True, blank=True)
-    structure_term = models.CharField(max_length=1024, null=True, blank=True)
-    constant_term = models.CharField(max_length=1024, null=True, blank=True)
-    variable_term = models.CharField(max_length=1024, null=True, blank=True)
-
-
-class FormulaIndex(models.Model):
-    """
-    List of Formula Indices
-    """
-    indexkey = models.CharField('index key', primary_key=True, max_length=255)
-    docsids = models.TextField(null=True, blank=True)
-    df = models.PositiveIntegerField('frequency', default=1, blank=True)
-
-
 class Question(models.Model):
     """
     List of questions
@@ -211,10 +185,36 @@ class Question(models.Model):
     paper = models.ForeignKey(
         Paper, on_delete=models.CASCADE, null=True, blank=True)
 
-    formulas = models.ManyToManyField(Formula, null=True, blank=True)
-
     def get_difficulty_level(self):
         return range(0, int(self.difficulty_level))
+
+
+class Formula(models.Model):
+    """
+    List of formula
+    """
+
+    def __str__(self):
+        return self.content
+
+    content = models.TextField()
+    status = models.BooleanField(default=False)
+    inorder_term = models.CharField(max_length=1024, null=True, blank=True)
+    sorted_term = models.CharField(max_length=1024, null=True, blank=True)
+    structure_term = models.CharField(max_length=1024, null=True, blank=True)
+    constant_term = models.CharField(max_length=1024, null=True, blank=True)
+    variable_term = models.CharField(max_length=1024, null=True, blank=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE,
+                                 null=True, blank=True)
+
+
+class FormulaIndex(models.Model):
+    """
+    List of Formula Indices
+    """
+    indexkey = models.CharField('index key', primary_key=True, max_length=255)
+    docsids = models.TextField(null=True, blank=True)
+    df = models.PositiveIntegerField('frequency', default=1, blank=True)
 
 
 class AnswerPart(models.Model):

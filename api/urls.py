@@ -89,7 +89,8 @@ urlpatterns = [
         name="formula-index-list"),
 
     # Search
-    url(r'^search/db$', views.search_formula, name="search_db_text"),
+    url(r'^search/db$', views.search_text_db, name="search_db_text"),
+    url(r'^fsearch/$', views.search_formula, name="search_formula"),
 
     # url(r'^searchf$', ),
 

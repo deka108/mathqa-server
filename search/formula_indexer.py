@@ -1,7 +1,6 @@
 """Update and creates an indexed formula table"""
 from itertools import chain
 from meas_models.models import *
-from rest_framework.generics import get_object_or_404
 
 import bisect
 import features_extractor as fe
@@ -32,6 +31,8 @@ def reindex_formulas_in_question(question_id):
     question = Question.objects.get(id=question_id)
     formulas = extract_formulas_from_question(question_id)
 
+    print("Question #%d generates %d formulas" % (question_id, len(formulas)))
+
     for formula in formulas:
         new_formula = Formula(content=formula, status=False, question=question)
         new_formula.save()
@@ -41,7 +42,6 @@ def reindex_formulas_in_question(question_id):
             create_formula_index_model(formula, formula_id)
         except (KeyError, Formula.DoesNotExist):
             print "Error"
-
 
 
 def extract_formulas_from_question(question_id):
@@ -76,7 +76,7 @@ def create_formula_index_model(latex_str, formula_id):
         formula_id: formula id.
     """
     try:
-        formula_obj = get_object_or_404(Formula, pk=formula_id)
+        formula_obj = Formula.objects.get(pk=formula_id)
 
         if not formula_obj.status:
             # Extract four features of a Formula

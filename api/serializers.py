@@ -67,7 +67,7 @@ class FormulaSerializer(serializers.HyperlinkedModelSerializer):
         model = Formula
         fields = ('url', 'id', 'content', 'status', 'inorder_term',
                   'sorted_term', 'structure_term', 'constant_term',
-                  'variable_term')
+                  'variable_term', 'question')
 
 
 class FormulaIndexSerializer(serializers.HyperlinkedModelSerializer):

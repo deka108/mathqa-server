@@ -38,9 +38,9 @@ def print_dom_tree(domtree):
         print("%s: '%s'" % (elt.tag, elt.text))
 
 
-def is_function(term):
+def is_operator_or_function(term):
     """
-    Checks if the term is a LaTeX mathematical operator.
+    Checks if the term is a LaTeX mathematical operator or function.
 
     Source: http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html
 
@@ -48,7 +48,7 @@ def is_function(term):
         term: string to be checked.
 
     Returns:
-        True if the term is a mathematical operator, false otherwise.
+        True if the term is a mathematical operator, False otherwise.
     """
     operator_terms = tuple()
 
@@ -75,12 +75,6 @@ def is_function(term):
     # vars sized operators
     operator_terms += ('sum', 'prod', 'coprod', 'int', 'bigcap', 'bigcup',
                        'bigodot', 'bigotimes', 'bigoplus')
-    # function operators
-    operator_terms += ('arccos', 'cos', 'csc', 'exp', 'limsup', 'min', 'sinh',
-                       'arcsin', 'cosh', 'deg', 'gcd', 'lg', 'ln', 'sup',
-                       'arctan', 'cot', 'det', 'lim', 'log', 'sec', 'tan',
-                       'arg', 'coth', 'dim', 'inf', 'liminf', 'max', 'sin',
-                       'tanh')
     # delimiter operators
     operator_terms += ('(', ')', 'uparrow', 'Uparrow', '[', ']',
                        'downarrow', 'Downarrow', '{', '}', 'updownarrow',
@@ -92,7 +86,27 @@ def is_function(term):
                        'overrightarrow', 'overline', 'underline',
                        'overbrace', 'underbrace', 'sqrt', 'frac')
 
-    return term.endswith(operator_terms) or term == 'e'
+    return is_function(term) or term.endswith(operator_terms) or term == 'e'
+
+
+def is_function(term):
+    """
+    Checks if the term is a LaTeX mathematical function.
+
+    Source: http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html
+
+    Args:
+        term: string to be checked.
+
+    Returns:
+        True if the term is a mathematical function, False otherwise.
+    """
+    function_terms = ('arccos', 'cos', 'csc', 'exp', 'limsup', 'min', 'sinh',
+                       'arcsin', 'cosh', 'deg', 'gcd', 'lg', 'ln', 'sup',
+                       'arctan', 'cot', 'det', 'lim', 'log', 'sec', 'tan',
+                       'arg', 'coth', 'dim', 'inf', 'liminf', 'max', 'sin',
+                       'tanh')
+    return term.endswith(function_terms)
 
 
 def generate_features(latex_str):
@@ -188,7 +202,7 @@ def extract_features(dom_tree):
             if len(stack_node) > 3:
                 struc_features += extract_structural_features(stack_node,
                                                               element)
-        elif event == 'start' and element.tag == 'mi' and is_function(
+        elif event == 'start' and element.tag == 'mi' and is_operator_or_function(
                 element_text):
             sem_features.append(element_text)
             if len(stack_node) > 3:
