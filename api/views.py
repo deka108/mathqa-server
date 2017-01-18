@@ -197,8 +197,7 @@ def search_formula(request):
 @permission_classes((permissions.AllowAny,))
 def search_formula_cluster(request):
     if request.method == 'GET':
-        fc.extract_all_distinct_features()
-        data = fc.create_formula_term_vector_model()
+        data = fc.transform_formulas(write_tfidf=True)
         return Response(data)
     elif request.method == 'POST':
         query = request.data["content"]

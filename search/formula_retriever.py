@@ -127,7 +127,8 @@ def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_fea,
     formula_indexes = FormulaIndex.objects.filter(pk__in=terms_collection)
     for formula_index in formula_indexes:
         if formula_index.df != 0:
-            idf_values[formula_index.indexkey] = math.log10(N/formula_index.df)
+            idf_values[formula_index.indexkey] = \
+                math.log10(float(N)/formula_index.df)
 
     return idf_values
 
@@ -210,13 +211,13 @@ def compute_formula_scores(query_ino_terms, query_sort_1gram, query_struc_fea,
 
         # Normalize score
         if sem_score_query != 0:
-            sem_score /= sem_score_query
+            sem_score /= float(sem_score_query)
         if struc_score_query != 0:
-            struc_score /= struc_score_query
+            struc_score /= float(struc_score_query)
         if cn_score_query != 0:
-            cn_score /= cn_score_query
+            cn_score /= float(cn_score_query)
         if var_score_query != 0:
-            var_score /= var_score_query
+            var_score /= float(var_score_query)
         score = compute_total_matching_score(sem_score, struc_score, cn_score,
                                              var_score)
 
@@ -378,4 +379,4 @@ def compute_total_matching_score(sem_score_norm, struc_score_norm,
         The total formula matching score.
     """
     return ((1 - a) * (sem_score_norm + struc_score_norm) +
-            a * (cn_score_norm + var_score_norm)) / 2
+            a * (cn_score_norm + var_score_norm)) / float(2)

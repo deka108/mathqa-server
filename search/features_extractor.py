@@ -102,18 +102,20 @@ def is_function(term):
         True if the term is a mathematical function, False otherwise.
     """
     function_terms = ('arccos', 'cos', 'csc', 'exp', 'limsup', 'min', 'sinh',
-                       'arcsin', 'cosh', 'deg', 'gcd', 'lg', 'ln', 'sup',
-                       'arctan', 'cot', 'det', 'lim', 'log', 'sec', 'tan',
-                       'arg', 'coth', 'dim', 'inf', 'liminf', 'max', 'sin',
-                       'tanh')
+                      'arcsin', 'cosh', 'deg', 'gcd', 'lg', 'ln', 'sup',
+                      'arctan', 'cot', 'det', 'lim', 'log', 'sec', 'tan',
+                      'arg', 'coth', 'dim', 'inf', 'liminf', 'max', 'sin',
+                      'tanh')
     return term.endswith(function_terms)
 
 
-def generate_features(latex_str, all=False):
+def generate_features(latex_str, raw=False):
     """
     Generates five formula features from a formula written as LaTeX string.
 
     Args:
+        raw: if True, this method returns semantic features before in-order
+        and sorted terms are generated.
         latex_str: formula string in latex format.
 
     Returns:
@@ -128,7 +130,7 @@ def generate_features(latex_str, all=False):
     sem_features, struc_features, const_features, var_features = \
         extract_features(dom_tree)
 
-    if all:
+    if raw:
         return sem_features, struc_features, const_features, var_features
 
     # Extract inorder and sorted semantic terms
@@ -312,16 +314,16 @@ def generate_sorted_sem_terms(sem_features):
 
     # 4 terms
     terms = [[sem_features[i] + '$' + sem_features[i + 1] + '$' +
-             sem_features[i + 2] + '$' + sem_features[i + 3]
-             for i in range(len(sem_features) - 3)]]
+              sem_features[i + 2] + '$' + sem_features[i + 3]
+              for i in range(len(sem_features) - 3)]]
 
     # 3 terms
     terms += [[sem_features[i] + '$' + sem_features[i + 1] + '$' +
-              sem_features[i + 2] for i in range(len(sem_features) - 2)]]
+               sem_features[i + 2] for i in range(len(sem_features) - 2)]]
 
     # 2 terms
     terms += [[sem_features[i] + '$' + sem_features[i + 1]
-              for i in range(len(sem_features) - 1)]]
+               for i in range(len(sem_features) - 1)]]
 
     # 1 term
     terms += [[sem_features[i] for i in range(len(sem_features))]]
