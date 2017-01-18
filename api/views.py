@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from meas_models.models import *
 from search import formula_indexer as fi
 from search import formula_retriever as fr
+from search import formula_transformation as fc
 from .serializers import *
 from .permissions import *
 
@@ -190,6 +191,18 @@ def search_formula(request):
                                         context={'request': request},
                                         many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def search_formula_cluster(request):
+    if request.method == 'GET':
+        fc.extract_all_distinct_features()
+        data = fc.create_formula_term_vector_model()
+        return Response(data)
+    elif request.method == 'POST':
+        query = request.data["content"]
+        return Response(query)
 
 
 @api_view(['GET'])

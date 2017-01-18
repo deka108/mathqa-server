@@ -78,12 +78,11 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
                     # 1-gram sorted semantic term
                     sorted_temp = ast.literal_eval(formula.sorted_term)
                     formula.sorted_term = sorted_temp[-1]
-
                     formula.structure_term = ast.literal_eval(
                         formula.structure_term)
                     formula.constant_term = ast.literal_eval(
                         formula.constant_term)
-                    formula.variable = ast.literal_eval(
+                    formula.variable_term = ast.literal_eval(
                         formula.variable_term)
 
                     related_formulas.add(formula)
@@ -127,7 +126,8 @@ def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_fea,
 
     formula_indexes = FormulaIndex.objects.filter(pk__in=terms_collection)
     for formula_index in formula_indexes:
-        idf_values[formula_index.indexkey] = math.log10(N / formula_index.df)
+        if formula_index.df != 0:
+            idf_values[formula_index.indexkey] = math.log10(N/formula_index.df)
 
     return idf_values
 
@@ -359,7 +359,7 @@ def compute_var_matching_score(matching_var):
 
 
 def compute_total_matching_score(sem_score_norm, struc_score_norm,
-                                 cn_score_norm, var_score_norm, a=0.2):
+                                 cn_score_norm, var_score_norm, a=0.1):
     """
     Computes overall formula features score.
 

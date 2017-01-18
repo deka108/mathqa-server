@@ -91,6 +91,8 @@ urlpatterns = [
     # Search
     url(r'^search/db$', views.search_text_db, name="search_db_text"),
     url(r'^fsearch/$', views.search_formula, name="search_formula"),
+    url(r'^csearch/$', views.search_formula_cluster,
+        name="search_formula_cluster"),
 
     # url(r'^searchf$', ),
 
