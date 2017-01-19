@@ -216,16 +216,15 @@ def extract_features(dom_tree):
 
         # converts to UTF-8
         if element.text:
-            # element_text = htmlparser.unescape(element.text)
-            element_text = element.text
+            element_text = htmlparser.unescape(element.text)
 
         if event == 'start' and element.tag == 'mo':
             sem_features.append(element_text)
             if len(stack_node) > 3:
                 struc_features += extract_structural_features(stack_node,
                                                               element)
-        elif event == 'start' and element.tag == 'mi' and is_operator_or_function(
-                element_text):
+        elif event == 'start' and element.tag == 'mi' and \
+                is_operator_or_function(element_text):
             sem_features.append(element_text)
             if len(stack_node) > 3:
                 struc_features += extract_structural_features(stack_node,
@@ -274,8 +273,7 @@ def extract_structural_features(stack_node, element, cn_var=False):
         if not element.text.strip():
             nodes += element.tag
         else:
-            # nodes += htmlparser.unescape(element.text)
-            nodes += element.text
+            nodes += htmlparser.unescape(element.text)
         return [nodes]
 
 

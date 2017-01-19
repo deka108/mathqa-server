@@ -1,5 +1,5 @@
 (dp0
-S'distinct_terms'
+S'total_distinct_terms'
 p1
 I69
 sS'all_terms'
