@@ -56,6 +56,7 @@ class EditConceptForm(forms.Form):
 class EditQuestionForm(forms.Form):
     id = forms.CharField(widget=forms.HiddenInput())
     formula = forms.ModelMultipleChoiceField(queryset=Formula.objects.all(),
+                                             required=False,
                                              widget=forms.SelectMultiple(
                                                  attrs={
                                                      'class': 'selectpicker',
@@ -65,7 +66,7 @@ class EditQuestionForm(forms.Form):
                                                      'data-selected-text-format':
                                                          "count > 1"}))
 
-    topic = forms.ModelChoiceField(empty_label="",
+    topic = forms.ModelChoiceField(empty_label="", required=False,
                                    queryset=Topic.objects.all(),
                                    widget=forms.Select(
                                        attrs={
@@ -108,7 +109,7 @@ class EditQuestionForm(forms.Form):
                                           'cols': "109",
                                           'rows': "10",
                                           "onkeyup": "Preview2.Update()"}))
-    answer = forms.CharField(label='Answer', max_length=1000,
+    answer = forms.CharField(label='Answer', max_length=1000, required=False,
                              widget=forms.Textarea(
                                    attrs={
                                        'placeholder': 'Please enter ' +
@@ -199,7 +200,7 @@ class EditAnswerPartForm(forms.Form):
                                    widget=forms.Textarea(
                                        attrs={
                                            'cols': "59",
-                                           'rows': "1",
+                                           'rows': "3",
                                            'placeholder': 'Please enter ' +
                                            'the answer of this part.', }),
                                    required=False)
@@ -212,7 +213,7 @@ class EditAnswerPartForm(forms.Form):
                                             attrs={'placeholder': 'Please ' +
                                                    'enter the answer.',
                                                    'cols': "59",
-                                                   'rows': "1", }),
+                                                   'rows': "3", }),
                                         required=False)
     respone_type_1 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
@@ -223,7 +224,7 @@ class EditAnswerPartForm(forms.Form):
                                             attrs={'placeholder': 'Please ' +
                                                    'enter the answer.',
                                                    'cols': "59",
-                                                   'rows': "1", }),
+                                                   'rows': "3", }),
                                         required=False)
     respone_type_2 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
@@ -234,7 +235,7 @@ class EditAnswerPartForm(forms.Form):
                                             attrs={'placeholder': 'Please ' +
                                                    'enter the answer.',
                                                    'cols': "59",
-                                                   'rows': "1", }),
+                                                   'rows': "3", }),
                                         required=False)
     respone_type_3 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),
@@ -245,7 +246,7 @@ class EditAnswerPartForm(forms.Form):
                                             attrs={'placeholder': 'Please ' +
                                                    'enter the answer.',
                                                    'cols': "59",
-                                                   'rows': "1", }),
+                                                   'rows': "3", }),
                                         required=False)
     respone_type_4 = forms.CharField(
         max_length=10., widget=forms.Select(choices=RESPONSE_TYPES),)
