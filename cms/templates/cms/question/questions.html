@@ -19,6 +19,48 @@
   </script>
 
   <script type="text/javascript">
+        function add_step(answerpart_id, subpart_no) {
+            // Container <div> where dynamic content will be placed
+            var container = document.getElementById("answer_container-" + answerpart_id + "-" + subpart_no);
+            // Append a node with a random text
+            // Append a line break
+            container.appendChild(document.createElement("br"));
+            // Create an <input> element, set its type and name attributes
+            container.appendChild(document.createTextNode("= "));
+            var container_id = "answer_container-" + answerpart_id + "-" + subpart_no;
+            // Minus one because the first span containing '='
+            var number = container.getElementsByTagName("span").length - 1;
+            var span = document.createElement("span");
+            span.name = "answer-" + answerpart_id + "-" + subpart_no;
+            span.id = "answer-" + answerpart_id + "-" + subpart_no + "-" + number;
+            span.style.minWidth = '120px';
+            span.style.minHeight = '25px';
+            container.appendChild(span);
+            var hidden_input = document.createElement("input");
+            hidden_input.type = "hidden";
+            hidden_input.id = "hidden_step" + number;
+            hidden_input.name = "answer";
+            container.appendChild(hidden_input);
+            activateMathquillSpan(answerpart_id, subpart_no, number);
+
+        }
+
+        function remove_step(answerpart_id, subpart_no) {
+            // Container <div> where dynamic content will be placed
+            var container = document.getElementById("answer_container-" + answerpart_id + "-" + subpart_no);
+            if (container.childNodes.length == 3) {
+                return;
+            }
+            //Remove input tag
+            container.removeChild(container.lastChild);
+            //Remove span tag
+            container.removeChild(container.lastChild);
+            //Remove text tag
+            container.removeChild(container.lastChild);
+            //Remove <br> tag
+            container.removeChild(container.lastChild);
+        }
+
       function activateMathquill() {
           var dirty_span_list = document.getElementsByTagName("span");
 		  var span_list = [];
