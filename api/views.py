@@ -91,27 +91,40 @@ def check_answer(request):
             answer = data['answer']
             question = Question.objects.get(pk=question_id)
             model_answer_content = question.answer
+            topic = question.concept.topic.name
+            answer_type = question.respone_type
         else:
             answerpart_id = data['id']
             subpart_no = data['subpart_no']
             answer = data['answer']
             answerpart = AnswerPart.objects.get(pk=answerpart_id)
+            topic = answerpart.question.concept.topic.name
             if subpart_no == 0:
                 model_answer_content = answerpart.part_content
+                answer_type = answerpart.part_respone_type
             elif subpart_no == 1:
                 model_answer_content = answerpart.subpart_content_1
+                answer_type = answerpart.respone_type_1
             elif subpart_no == 2:
                 model_answer_content = answerpart.subpart_content_2
+                answer_type = answerpart.respone_type_2
             elif subpart_no == 3:
                 model_answer_content = answerpart.subpart_content_3
+                answer_type = answerpart.respone_type_3
             else:
                 model_answer_content = answerpart.subpart_content_4
+                answer_type = answerpart.respone_type_4
+        # TODO: Fix data inconsistency problem
+        if answer_type == "Numberic":
+            answer_type = "Numeric"
+        elif answer_type == "EXPRESSION":
+            answer_type = "Expression"
         model_answer_list = extract_answers(model_answer_content)
         model_answer = "|".join(model_answer_list)
         correct_answer = {'answer': model_answer}
         user_answer = {'answer': answer}
         # TODO: Process wrong step
-        answer_correctness, wrong_step = answer_checker.check(correct_answer, user_answer)
+        answer_correctness, wrong_step = answer_checker.check(correct_answer, user_answer, topic=topic, answer_type=answer_type)
         result = dict()
         if data['type'] == 'q':
             result['type'] = 'q'

@@ -9,6 +9,7 @@
 
 from utilities import answer_formatter, expression_checker
 from utilities import trigonometry_prove_checker
+from utilities import text_similarity_checker
 
 #Check user answer
 '''
@@ -80,7 +81,8 @@ def check(correct_answer, user_answer, topic="Unknown", answer_type="Expression"
 	#Text similarity matching
 	elif answer_type == "Text":
 		##TODO: Code here
-		return False, -1
+		result = text_similarity_checker.check(correct_answer, user_answer)
+		return result, -1
 	#Sketch
 	elif answer_type == "Sketch":
 		##TODO: Code here
