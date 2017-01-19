@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from meas_models.models import *
 from search import formula_indexer as fi
 from search import formula_retriever as fr
-from search import formula_transformation as ft
+from search import formula_transformer as ft
 from search import formula_clustering as fc
 from .serializers import *
 from .permissions import *

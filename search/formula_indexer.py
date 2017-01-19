@@ -47,11 +47,12 @@ def reindex_formulas_in_question(question_id, create_formula=False):
             new_formula.save()
 
     formulas = question.formula_set.all()
-    try:
-        for formula in formulas:
+    for formula in formulas:
+        try:
             create_formula_index_model(formula.content, formula.id)
-    except (KeyError, Formula.DoesNotExist):
-        print "Could not create formula index."
+        except (KeyError, Formula.DoesNotExist) as e:
+            print(e)
+            print("Could not create formula index.")
 
 
 def extract_formulas_from_question(question_id):

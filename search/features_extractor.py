@@ -10,7 +10,7 @@ htmlparser = HTMLParser.HTMLParser()
 
 
 class LatexSyntaxError(Exception):
-    """Latext string cannot be parsed because of malformation."""
+    """Latex string cannot be parsed because of malformation."""
 
 
 def write_dom_to_tempfile(root):
@@ -21,7 +21,7 @@ def write_dom_to_tempfile(root):
         root: the root of MathML DOM tree.
 
     Returns:
-        Temporary file of the MathML tree,
+        Temporary file of the MathML tree.
     """
 
     tree = ET.ElementTree(root)
@@ -151,7 +151,7 @@ def generate_features(latex_str, raw=False):
 
 def generate_mathmlstr(latex_str):
     """
-    Converts latex string to MathML string
+    Converts latex string to MathML string.
 
     Args:
         latex_str: formula string in latex format.

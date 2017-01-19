@@ -1,7 +1,7 @@
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import KMeans
 
-import formula_transformation as ft
+import formula_transformer as ft
 import os
 
 SCRIPT_DIR = os.path.dirname(__file__)
@@ -15,7 +15,7 @@ TFIDF_VECTOR_FILE_PATH = os.path.join(DATA_PATH, "formula.tfidf.vector")
 
 
 def get_formula_term():
-    formula_feature_vectors = ft.read_normalized_tfidf_vector()
+    formula_feature_vectors = ft.read_normalized_tfidf_vectors()
     return formula_feature_vectors
 
 
