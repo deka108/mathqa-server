@@ -9,7 +9,7 @@ import locale
 htmlparser = HTMLParser.HTMLParser()
 
 
-class LatexSyntaxError(SyntaxError):
+class LatexSyntaxError(Exception):
     """Latext string cannot be parsed because of malformation."""
 
 
@@ -127,22 +127,26 @@ def generate_features(latex_str, raw=False):
         terms, structural features, constant features and variable features.
 
     """
-    mathml_str = generate_mathmlstr(latex_str)
-    dom_tree = construct_domtree(mathml_str)
+    try:
+        mathml_str = generate_mathmlstr(latex_str)
+        dom_tree = construct_domtree(mathml_str)
 
-    # Extract features from the formula
-    sem_features, struc_features, const_features, var_features = \
-        extract_features(dom_tree)
+        # Extract features from the formula
+        sem_features, struc_features, const_features, var_features = \
+            extract_features(dom_tree)
 
-    if raw:
-        return sem_features, struc_features, const_features, var_features
+        if raw:
+            return sem_features, struc_features, const_features, var_features
 
-    # Extract inorder and sorted semantic terms
-    inorder_sem_terms = generate_inorder_sem_terms(sem_features)
-    sorted_sem_terms = generate_sorted_sem_terms(sem_features)
+        # Extract inorder and sorted semantic terms
+        inorder_sem_terms = generate_inorder_sem_terms(sem_features)
+        sorted_sem_terms = generate_sorted_sem_terms(sem_features)
 
-    return inorder_sem_terms, sorted_sem_terms, struc_features, \
-           const_features, var_features
+        return inorder_sem_terms, sorted_sem_terms, struc_features, \
+               const_features, var_features
+
+    except Exception as e:
+        raise e
 
 
 def generate_mathmlstr(latex_str):
@@ -160,11 +164,10 @@ def generate_mathmlstr(latex_str):
 
     try:
         mathml_str = l2m.convert(unescaped_latex)
+        return mathml_str
     except Exception:
-        raise LatexSyntaxError("Unable to extract features from Formula. "
+        raise LatexSyntaxError("Unable to extract features from Formula. " +
                                "Please fix the formula latex.")
-
-    return mathml_str
 
 
 def construct_domtree(mathml_str):
@@ -177,8 +180,11 @@ def construct_domtree(mathml_str):
     Returns:
         The root of the MathML tree representation.
     """
-    root = ET.fromstring(mathml_str)
-    return root
+    try:
+        root = ET.fromstring(mathml_str)
+        return root
+    except ET.ParseError:
+        raise ET.ParseError("Unable to parse %s" % mathml_str)
 
 
 def extract_features(dom_tree):
@@ -210,7 +216,8 @@ def extract_features(dom_tree):
 
         # converts to UTF-8
         if element.text:
-            element_text = htmlparser.unescape(element.text)
+            # element_text = htmlparser.unescape(element.text)
+            element_text = element.text
 
         if event == 'start' and element.tag == 'mo':
             sem_features.append(element_text)
@@ -267,7 +274,8 @@ def extract_structural_features(stack_node, element, cn_var=False):
         if not element.text.strip():
             nodes += element.tag
         else:
-            nodes += htmlparser.unescape(element.text)
+            # nodes += htmlparser.unescape(element.text)
+            nodes += element.text
         return [nodes]
 
 

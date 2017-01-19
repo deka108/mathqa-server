@@ -60,7 +60,7 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
     if query_sort_sem_terms is None:
         return related_formulas
 
-    for term in query_sort_sem_terms:
+    for term in chain.from_iterable(query_sort_sem_terms):
         try:
             f_index = FormulaIndex.objects.get(pk=term)
             docsids = re.findall('\d+', f_index.docsids)
@@ -91,7 +91,7 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
                     break
 
         except (KeyError, FormulaIndex.DoesNotExist):
-            print("Couldn't find this term in the database.")
+            print("Couldn't find this term:%s in the database." % term)
 
     return list(related_formulas)
 

@@ -193,7 +193,7 @@ def search_text_db(request):
 @permission_classes((permissions.AllowAny,))
 def search_formula(request):
     if request.method == 'GET':
-        return Response({"message": "Hello, world!"})
+        return Response({"content":"x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}."})
     elif request.method == 'POST':
         query = request.data["content"]
         questions = fr.search_formula(query)
