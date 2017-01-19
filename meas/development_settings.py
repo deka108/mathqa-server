@@ -44,7 +44,10 @@ INSTALLED_APPS = (
     'meas_common.apps.MeasCommonConfig',
 
     # API
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
+
+    # Search
+    'search.apps.SearchConfig',
 )
 
 MIDDLEWARE_CLASSES = (

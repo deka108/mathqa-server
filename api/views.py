@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from meas_models.models import *
 from search import formula_indexer as fi
 from search import formula_retriever as fr
-from search import formula_transformation as fc
+from search import formula_transformation as ft
+from search import formula_clustering as fc
 from .serializers import *
 from .permissions import *
 
@@ -165,6 +166,15 @@ class FormulaIndexList(generics.ListAPIView):
     print(FormulaIndex.objects.count())
 
 
+@api_view(['GET'])
+@permission_classes((permissions.IsAuthenticated,))
+def reindex_all_formula(request):
+    if request.method == 'GET':
+        fi.reindex_all_formulas()
+        return Response("Formula and formula index table has been reindexed "
+                        "successfully.")
+
+
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.AllowAny,))
 def search_text_db(request):
@@ -197,31 +207,14 @@ def search_formula(request):
 @permission_classes((permissions.AllowAny,))
 def search_formula_cluster(request):
     if request.method == 'GET':
-        data = fc.transform_formulas(write_tfidf=True)
+        data = ft.transform_formulas()
         return Response(data)
     elif request.method == 'POST':
         query = request.data["content"]
-        return Response(query)
+        data = fc.generate_kmeans_cluster(query)
+        return Response(data)
 
-
-@api_view(['GET'])
-@permission_classes((permissions.IsAuthenticated,))
-def reindex_all_formula(request):
-    if request.method == 'GET':
-        fi.reindex_all_formulas()
-        return Response("Formula and formula index table has been reindexed "
-                        "successfully.")
-
-
-# class SearchFormulaList(generics.GenericAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Subject.objects.all()
-#     serializer_class = SubjectSerializer
 
 # class QuestionSearchView(HaystackViewSet):
 #     index_models = [Question]
 #     serializer_class = QuestionHaystackSerializer
-
-
-class CreateUserView:
-    pass

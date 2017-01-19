@@ -9,6 +9,10 @@ import locale
 htmlparser = HTMLParser.HTMLParser()
 
 
+class LatexSyntaxError(SyntaxError):
+    """Latext string cannot be parsed because of malformation."""
+
+
 def write_dom_to_tempfile(root):
     """
     Writes XML into a temporary file.
@@ -153,7 +157,13 @@ def generate_mathmlstr(latex_str):
 
     """
     unescaped_latex = htmlparser.unescape(latex_str)
-    mathml_str = l2m.convert(unescaped_latex)
+
+    try:
+        mathml_str = l2m.convert(unescaped_latex)
+    except Exception:
+        raise LatexSyntaxError("Unable to extract features from Formula. "
+                               "Please fix the formula latex.")
+
     return mathml_str
 
 
