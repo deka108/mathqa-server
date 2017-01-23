@@ -1,0 +1,1074 @@
+[
+  {
+    "id": "199501001",
+    "year": "1995",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 12
+  },
+  {
+    "id": "199501002",
+    "year": "1995",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 37
+  },
+  {
+    "id": "199502001",
+    "year": "1995",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 12
+  },
+  {
+    "id": "199502002",
+    "year": "1995",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 37
+  },
+  {
+    "id": "199503001",
+    "year": "1995",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 13
+  },
+  {
+    "id": "199504001",
+    "year": "1995",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 13
+  },
+  {
+    "id": "199601001",
+    "year": "1996",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 14
+  },
+  {
+    "id": "199601002",
+    "year": "1996",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 38
+  },
+  {
+    "id": "199602001",
+    "year": "1996",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 14
+  },
+  {
+    "id": "199602002",
+    "year": "1996",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 38
+  },
+  {
+    "id": "199603001",
+    "year": "1996",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 15
+  },
+  {
+    "id": "199604001",
+    "year": "1996",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 15
+  },
+  {
+    "id": "199701001",
+    "year": "1997",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 16
+  },
+  {
+    "id": "199701002",
+    "year": "1997",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 39
+  },
+  {
+    "id": "199702001",
+    "year": "1997",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 16
+  },
+  {
+    "id": "199702002",
+    "year": "1997",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 39
+  },
+  {
+    "id": "199703001",
+    "year": "1997",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 17
+  },
+  {
+    "id": "199703002",
+    "year": "1997",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 40
+  },
+  {
+    "id": "199703003",
+    "year": "1997",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 1
+  },
+  {
+    "id": "199704001",
+    "year": "1997",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 17
+  },
+  {
+    "id": "199704002",
+    "year": "1997",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 40
+  },
+  {
+    "id": "199704003",
+    "year": "1997",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 1
+  },
+  {
+    "id": "199801001",
+    "year": "1998",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 18
+  },
+  {
+    "id": "199801002",
+    "year": "1998",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 41
+  },
+  {
+    "id": "199802001",
+    "year": "1998",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 18
+  },
+  {
+    "id": "199802002",
+    "year": "1998",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 41
+  },
+  {
+    "id": "199803001",
+    "year": "1998",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 19
+  },
+  {
+    "id": "199803002",
+    "year": "1998",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 42
+  },
+  {
+    "id": "199803003",
+    "year": "1998",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 2
+  },
+  {
+    "id": "199804001",
+    "year": "1998",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 19
+  },
+  {
+    "id": "199804002",
+    "year": "1998",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 42
+  },
+  {
+    "id": "199804003",
+    "year": "1998",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 2
+  },
+  {
+    "id": "199901001",
+    "year": "1999",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 20
+  },
+  {
+    "id": "199901002",
+    "year": "1999",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 43
+  },
+  {
+    "id": "199902001",
+    "year": "1999",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 20
+  },
+  {
+    "id": "199902002",
+    "year": "1999",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 43
+  },
+  {
+    "id": "199903001",
+    "year": "1999",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 21
+  },
+  {
+    "id": "199903002",
+    "year": "1999",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 44
+  },
+  {
+    "id": "199903003",
+    "year": "1999",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 1
+  },
+  {
+    "id": "199904001",
+    "year": "1999",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 21
+  },
+  {
+    "id": "199904002",
+    "year": "1999",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 44
+  },
+  {
+    "id": "199904003",
+    "year": "1999",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 1
+  },
+  {
+    "id": "200001001",
+    "year": "2000",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 22
+  },
+  {
+    "id": "200001002",
+    "year": "2000",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 45
+  },
+  {
+    "id": "200002001",
+    "year": "2000",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 22
+  },
+  {
+    "id": "200002002",
+    "year": "2000",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 45
+  },
+  {
+    "id": "200003001",
+    "year": "2000",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 23
+  },
+  {
+    "id": "200003002",
+    "year": "2000",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 46
+  },
+  {
+    "id": "200003003",
+    "year": "2000",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 4
+  },
+  {
+    "id": "200004001",
+    "year": "2000",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 23
+  },
+  {
+    "id": "200004002",
+    "year": "2000",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 46
+  },
+  {
+    "id": "200004003",
+    "year": "2000",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 4
+  },
+  {
+    "id": "200101001",
+    "year": "2001",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 24
+  },
+  {
+    "id": "200101002",
+    "year": "2001",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 47
+  },
+  {
+    "id": "200102001",
+    "year": "2001",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 24
+  },
+  {
+    "id": "200102002",
+    "year": "2001",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 47
+  },
+  {
+    "id": "200103001",
+    "year": "2001",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 25
+  },
+  {
+    "id": "200103002",
+    "year": "2001",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 48
+  },
+  {
+    "id": "200103003",
+    "year": "2001",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 5
+  },
+  {
+    "id": "200104001",
+    "year": "2001",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 25
+  },
+  {
+    "id": "200104002",
+    "year": "2001",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 48
+  },
+  {
+    "id": "200104003",
+    "year": "2001",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 5
+  },
+  {
+    "id": "200201001",
+    "year": "2002",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 26
+  },
+  {
+    "id": "200201002",
+    "year": "2002",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 49
+  },
+  {
+    "id": "200202001",
+    "year": "2002",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 26
+  },
+  {
+    "id": "200202002",
+    "year": "2002",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 49
+  },
+  {
+    "id": "200203001",
+    "year": "2002",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 27
+  },
+  {
+    "id": "200203002",
+    "year": "2002",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 50
+  },
+  {
+    "id": "200203003",
+    "year": "2002",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 6
+  },
+  {
+    "id": "200204001",
+    "year": "2002",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 27
+  },
+  {
+    "id": "200204002",
+    "year": "2002",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 50
+  },
+  {
+    "id": "200204003",
+    "year": "2002",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 6
+  },
+  {
+    "id": "200301001",
+    "year": "2003",
+    "month": "June",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 28
+  },
+  {
+    "id": "200301002",
+    "year": "2003",
+    "month": "June",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 51
+  },
+  {
+    "id": "200302001",
+    "year": "2003",
+    "month": "June",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 28
+  },
+  {
+    "id": "200302002",
+    "year": "2003",
+    "month": "June",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 51
+  },
+  {
+    "id": "200303001",
+    "year": "2003",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 29
+  },
+  {
+    "id": "200303002",
+    "year": "2003",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 52
+  },
+  {
+    "id": "200303003",
+    "year": "2003",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 7
+  },
+  {
+    "id": "200304001",
+    "year": "2003",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 29
+  },
+  {
+    "id": "200304002",
+    "year": "2003",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 52
+  },
+  {
+    "id": "200304003",
+    "year": "2003",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 7
+  },
+  {
+    "id": "200403001",
+    "year": "2004",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 30
+  },
+  {
+    "id": "200403002",
+    "year": "2004",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 53
+  },
+  {
+    "id": "200403003",
+    "year": "2004",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 8
+  },
+  {
+    "id": "200404001",
+    "year": "2004",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 30
+  },
+  {
+    "id": "200404002",
+    "year": "2004",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 53
+  },
+  {
+    "id": "200404003",
+    "year": "2004",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 8
+  },
+  {
+    "id": "200503001",
+    "year": "2005",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 31
+  },
+  {
+    "id": "200503002",
+    "year": "2005",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 54
+  },
+  {
+    "id": "200503003",
+    "year": "2005",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 9
+  },
+  {
+    "id": "200504001",
+    "year": "2005",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 31
+  },
+  {
+    "id": "200504002",
+    "year": "2005",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 54
+  },
+  {
+    "id": "200504003",
+    "year": "2005",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 9
+  },
+  {
+    "id": "200603001",
+    "year": "2006",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 32
+  },
+  {
+    "id": "200603002",
+    "year": "2006",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 55
+  },
+  {
+    "id": "200603003",
+    "year": "2006",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 10
+  },
+  {
+    "id": "200604001",
+    "year": "2006",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 32
+  },
+  {
+    "id": "200604002",
+    "year": "2006",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 55
+  },
+  {
+    "id": "200604003",
+    "year": "2006",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 10
+  },
+  {
+    "id": "200703001",
+    "year": "2007",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 33
+  },
+  {
+    "id": "200703002",
+    "year": "2007",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 56
+  },
+  {
+    "id": "200703003",
+    "year": "2007",
+    "month": "November",
+    "number": 1,
+    "subject_id": 3,
+    "paperset_id": 11
+  },
+  {
+    "id": "200704001",
+    "year": "2007",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 33
+  },
+  {
+    "id": "200704002",
+    "year": "2007",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 56
+  },
+  {
+    "id": "200704003",
+    "year": "2007",
+    "month": "November",
+    "number": 2,
+    "subject_id": 3,
+    "paperset_id": 11
+  },
+  {
+    "id": "200803001",
+    "year": "2008",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 34
+  },
+  {
+    "id": "200803002",
+    "year": "2008",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 57
+  },
+  {
+    "id": "200804001",
+    "year": "2008",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 34
+  },
+  {
+    "id": "200804002",
+    "year": "2008",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 57
+  },
+  {
+    "id": "200903001",
+    "year": "2009",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 35
+  },
+  {
+    "id": "200903002",
+    "year": "2009",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 58
+  },
+  {
+    "id": "200904001",
+    "year": "2009",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 35
+  },
+  {
+    "id": "200904002",
+    "year": "2009",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 58
+  },
+  {
+    "id": "201003001",
+    "year": "2010",
+    "month": "November",
+    "number": 1,
+    "subject_id": 1,
+    "paperset_id": 36
+  },
+  {
+    "id": "201003002",
+    "year": "2010",
+    "month": "November",
+    "number": 1,
+    "subject_id": 2,
+    "paperset_id": 59
+  },
+  {
+    "id": "201004001",
+    "year": "2010",
+    "month": "November",
+    "number": 2,
+    "subject_id": 1,
+    "paperset_id": 36
+  },
+  {
+    "id": "201004002",
+    "year": "2010",
+    "month": "November",
+    "number": 2,
+    "subject_id": 2,
+    "paperset_id": 59
+  },
+  {
+    "id": "201201004",
+    "year": "2012",
+    "month": "St Hilda Primary SA2",
+    "number": 1,
+    "subject_id": 4,
+    "paperset_id": 1001
+  },
+  {
+    "id": "201202004",
+    "year": "2012",
+    "month": "St Hilda Primary SA2",
+    "number": 2,
+    "subject_id": 4,
+    "paperset_id": 1001
+  },
+  {
+    "id": "201203004",
+    "year": "2012",
+    "month": "Nan Hua Primary SA2",
+    "number": 1,
+    "subject_id": 4,
+    "paperset_id": 1002
+  },
+  {
+    "id": "201204004",
+    "year": "2012",
+    "month": "Nan Hua Primary SA2",
+    "number": 2,
+    "subject_id": 4,
+    "paperset_id": 1002
+  },
+  {
+    "id": "201205004",
+    "year": "2012",
+    "month": "Nanyang Primary SA2",
+    "number": 1,
+    "subject_id": 4,
+    "paperset_id": 1003
+  },
+  {
+    "id": "201206004",
+    "year": "2012",
+    "month": "Nanyang Primary SA2",
+    "number": 2,
+    "subject_id": 4,
+    "paperset_id": 1003
+  },
+  {
+    "id": "201207004",
+    "year": "2012",
+    "month": "Tao Nan Primary SA2",
+    "number": 1,
+    "subject_id": 4,
+    "paperset_id": 1004
+  },
+  {
+    "id": "201208004",
+    "year": "2012",
+    "month": "Tao Nan Primary SA2",
+    "number": 2,
+    "subject_id": 4,
+    "paperset_id": 1004
+  },
+  {
+    "id": "201209004",
+    "year": "2012",
+    "month": "Anglo Chinese School SA2",
+    "number": 1,
+    "subject_id": 4,
+    "paperset_id": 1005
+  },
+  {
+    "id": "201210004",
+    "year": "2012",
+    "month": "Anglo Chinese School SA2",
+    "number": 2,
+    "subject_id": 4,
+    "paperset_id": 1005
+  },
+  {
+    "id": "201211004",
+    "year": "2012",
+    "month": "Raffles Girls Primary SA2",
+    "number": 1,
+    "subject_id": 4,
+    "paperset_id": 1006
+  },
+  {
+    "id": "201212004",
+    "year": "2012",
+    "month": "Raffles Girls Primary SA2",
+    "number": 2,
+    "subject_id": 4,
+    "paperset_id": 1006
+  },
+  {
+    "id": "201213004",
+    "year": "2012",
+    "month": "Christian Brothers School SA2",
+    "number": 1,
+    "subject_id": 4,
+    "paperset_id": 1007
+  },
+  {
+    "id": "201214004",
+    "year": "2012",
+    "month": "Christian Brothers School SA2",
+    "number": 2,
+    "subject_id": 4,
+    "paperset_id": 1007
+  },
+  {
+    "id": "201215004",
+    "year": "2012",
+    "month": "Singapore Hokkien Huay Kwan SA2",
+    "number": 1,
+    "subject_id": 4,
+    "paperset_id": 1008
+  },
+  {
+    "id": "201216004",
+    "year": "2012",
+    "month": "Singapore Hokkien Huay Kwan SA2",
+    "number": 2,
+    "subject_id": 4,
+    "paperset_id": 1008
+  }
+]

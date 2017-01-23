@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "A'level",
+    "description": "Covers subjects in Junior College"
+  },
+  {
+    "id": 2,
+    "title": "O'level",
+    "description": "Covers subjects in Secondary School"
+  },
+  {
+    "id": 3,
+    "title": "Elementary",
+    "description": "Covers subjects in Primary School"
+  }
+]
