@@ -1,0 +1,415 @@
+id,title,type,topic_id,content
+148,Equation_Of_Normal,F,48,Differentiation - $$y - y_1 = -\frac{1}{m}(x - x_1)$$ (Equation of Normal)
+149,Equation_Of_Tangent,F,48,Differentiation - $$y - y_1 = m(x - x_1)$$ (Equation of Tangent)
+150,Gradient_Of_Curve,F,48,Differentiation - $$\frac{y_2 - y_1}{x_2 - x_1}$$ (Gradient of Curve)
+151,Chain_Rule,F,48,Differentiation - $$\frac{\mathrm{d} y}{\mathrm{d} x} = \frac{\mathrm{d} y}{\mathrm{d} u} \times \frac{\mathrm{d} u}{\mathrm{d} x}$$ (Chain Rule)
+152,Derivative_Of_Power,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} (ax^n) = anx^{n-1}$$
+153,Product_Rule,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} (uv) = u \frac{\mathrm{d} v}{\mathrm{d} x} \times v \frac{\mathrm{d} u}{\mathrm{d} x}$$ (Product Rule)
+154,Derivative_Of_Cosine_Power,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} (\cos^n x) = -n \cos^{n-1} x \sin x$$
+155,Quotient_Rule,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} (\frac{u}{v}) = \frac {v \frac{\mathrm{d} u}{\mathrm{d} x} - u \frac{\mathrm{d} v}{\mathrm{d} x}}{v^2}$$ (Quotient Rule)
+156,Derivative_Of_Sine_Power,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} (\sin^n x) = n \sin^{n-1} x \cos x$$
+157,Derivative_Of_Tangent,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} (\tan (ax + b)) = a \sec^2 (ax + b)$$
+158,Derivative_Of_Tangent_Power,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} (\tan^n x) = n \tan^{n-1} x \sec^2 x$$
+159,Derivative_Of_Exponentials,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} e^{f(x)} = f'(x) e^{f(x)}$$
+160,Derivative_Of_Cosine,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} \cos (ax+b) = -a \sin (ax+b)$$
+161,Derivative_Of_Natural_Log,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} \ln f(x) = \frac{f'(x)}{f(x)}$$
+162,Derivative_Of_Sine,F,48,Differentiation - $$\frac{\mathrm{d} }{\mathrm{d} x} \sin (ax+b) = a \cos (ax+b)$$
+163,Higher_Derivatives,F,48,Differentiation - $$\frac{\mathrm{d}^2 y}{\mathrm{d} x^2} = \frac{\mathrm{d} (\frac{\mathrm{d} y}{\mathrm{d} x})}{\mathrm{d} x}$$
+164,Indices_Identities_3,F,38,"Indices - $$(a^m)^n = a^{mn}$$, where a, m, n are positive integers"
+165,Indices_Identities_6,F,38,"Indices - $$a^0 = 1$$, where a is positive integer"
+166,Indices_Identities_2,F,38,"Indices - $$a^m \div a^n = a^{m-n}$$, where a, m, n are positive integers"
+167,Indices_Identities_5,F,38,"Indices - $$a^m \div b^m = (\frac{a}{b})^m$$, where a, b, m, n are positive integers"
+168,Indices_Identities_1,F,38,"Indices - $$a^m \times a^n = a^{m+n}$$, where a, m, n are positive integers"
+169,Indices_Identities_4,F,38,"Indices - $$a^m \times b^m = (a \times b)^m$$, where a, b, m, n are positive integers"
+170,Indices_Identities_7,F,38,"Indices - $$a^{-n} = \frac{1}{a^n}$$, where a, n are positive integers"
+171,Indices_Identities_8,F,38,"Indices - $$a^{\frac{1}{n}} = \sqrt[n]{a}$$, where a, n are positive integers"
+172,Indices_Identities_9,F,38,"Indices - $$a^{\frac{m}{n}} = \sqrt[n]{a^m} = (\sqrt[n]{a})^m$$, where a, m, n are positive integers"
+173,Indices_Identities_10,F,38,Indices - If $$a^x = a^y$$ then $$x = y$$ where $$a > 0$$ and $$a \neq 1$$
+174,Log_Of_One,F,43,Logarithms - $$\log_a 1 = 0$$
+175,Log_Of_Integer_Same_To_Base,F,43,Logarithms - $$\log_a a = 1$$
+176,Log_Change_Of_Base,F,43,"Logarithms - $$\log_a b = \frac{log_c b}{log_c a}$$, where $$a \neq 1$$ and $$a > 0$$, $$c \neq 1$$ and $$c > 0$$ (Change of Base)"
+177,Log_Product_law,F,43,Logarithms - $$\log_a m + \log_a n = \log_a (m \times n)$$ (Product Law)
+178,Log_Quotient_Law,F,43,Logarithms - $$\log_a m - \log_a n = \log_a \frac{m}{n}$$ (Quotient Law)
+179,Log_Power_Law,F,43,Logarithms - $$\log_a m^n = n \log_a m$$ (Power Law)
+180,Log_To_Indices,F,43,Logarithms - $$\log_a y = x$$ means $$a^x = y$$
+181,Deriving_Partial_Fraction_From_Linear_Fraction,F,40,"Partial Fraction - Case 1: Linear Fraction e.g. $$\frac{mx + n}{(ax + b)(cx + d)}$$, express in $$\frac{A}{ax + b} + \frac{C}{cx + d}$$"
+182,Deriving_Partial_Fraction_From_Repeated_Fraction,F,40,"Partial Fraction - Case 2: Repeated Fraction e.g. $$\frac{mx + n}{(ax + b)(cx + d)^2}$$, express in $$\frac{A}{ax + b} + \frac{B}{cx + d} + \frac{C}{(cx + d)^2}$$"
+183,Deriving_Partial_Fraction_From_Quadratic_Factor,F,40,"Partial Fraction - Case 3: Quadratic Factor which does not factorise e.g. $$\frac{mx + n}{(ax + b)(x^2 + c^2)}$$, express in $$\frac{A}{ax + b} + \frac{Bx + C}{x^2 + c^2}$$"
+184,Factor_Theorem,F,39,"Polynomial - $$ax-b$$, where $$a \neq 0$$, is a factor of the polynomial $$f(x) \Leftrightarrow f(\frac{b}{a}) = 0$$ (Factor Theorem)"
+186,Remainder_Theorem,F,39,"Polynomial - When the polynomial $$f(x)$$ is divided by $$ax-b$$ where $$a \neq 0$$, the remainder R is given by R = $$f(\frac{b}{a})$$. (Remainder Theorem)"
+188,Sum_Of_Roots,F,37,Quadratic Equations - $$\alpha + \beta = -\frac{b}{a}$$ (Sum of Roots)
+189,Product_Of_Roots,F,37,Quadratic Equations - $$\alpha\beta = \frac{c}{a}$$ (Product of Roots)
+190,Surds_Identities_3,F,38,Surds - $$(a \sqrt{m} + b \sqrt{n})(a \sqrt{m} - b \sqrt{n}) = a^2m - b^2n$$
+191,Surds_Identities_2,F,38,"Surds - $$\sqrt{a} \div \sqrt{b} = \sqrt{\frac{a}{b}}$$, where $$a \geq 0$$, b > 0"
+192,Surds_Identities_1,F,38,"Surds - $$\sqrt{a} \times \sqrt{b} = \sqrt{ab}$$, where $$a, b \geq 0$$"
+224,Mid-point_Of_Line,F,46,"Coordinate Geometry - Mid-point = $$(\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2})$$"
+225,Gradient_Of_Line,F,46,Coordinate Geometry - Gradient = $$\frac{y_2 - y_1}{x_2 - x_1}$$
+226,Equation_Of_Line,F,46,"Coordinate Geometry - Equation of Line = $$y - y_1 = m(x - x_1)$$, where m = gradient of line."
+227,Distance_Of_Line,F,46,Coordinate Geometry - Distance = $$\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$
+231,Equation_Of_Circle,F,46,"Coordinate Geometry - Equation of Circle = $$(x - a)^2 + (y - b)^2 = r^2$$, where $$(a,b)$$ is the centre and $$r$$ is the radius."
+232,Area_Of_Plane,F,47,Plane Geometry - Area of Plane = $$\frac{1}{2}\begin{vmatrix}x_1 & x_2 & x_3 & ...\\ y_1 & y_2 & y_3 & ...\end{vmatrix} = \frac{1}{2} [(x_1\cdot y_2 + x_2 \cdot y_3 + ... + x_{n-1} \cdot y_n)-(x_2 \cdot y_1 + x_3 \cdot y_2 + ... + x_n \cdot y_{n-1})]$$
+233,Binomial_Theorem,F,42,Binomial - $$(x + y)^n = x^n + \binom{n}{1} x^{n-1}y + \binom{n}{2} x^{n-2}y^2 + ... + \binom{n}{r} x^{n-r}y^r + ... + y^n$$
+234,Binomial_Term,F,42,"Binomial - $$(r + 1)$$th term is $${}^{n}\textrm{C}_r x^{n-r}y^r$$, where $${}^{n}\textrm{C}_r = \frac{n(n-1)...(n-r+1)}{1 \cdot 2...r}$$"
+237,Sine_Angles,F,45,"Trigonometry - $$\sin \theta = \frac{y}{r}, x \neq 0$$"
+238,Cosine_Angles,F,45,"Trigonometry - $$\cos \theta = \frac{x}{r}, x \neq 0$$"
+239,Tangent_Angles,F,45,"Trigonometry - $$\tan \theta = \frac{y}{x}, x \neq 0$$"
+240,Trigonometry_Identities_1,F,45,Trigonometry - $$\sin (-A) = -\sin A$$
+241,Trigonometry_Identities_2,F,45,Trigonometry - $$\cos (-A) = \cos A$$
+242,Trigonometry_Identities_3,F,45,Trigonometry - $$\tan (-A) = -\tan A$$
+243,Trigonometry_Identities_4,F,45,Trigonometry - $$\sin (90^{\circ} - A) = \cos A$$
+244,Trigonometry_Identities_5,F,45,Trigonometry - $$\cos (90^{\circ} - A) = \sin A$$
+245,Trigonometry_Identities_6,F,45,Trigonometry - $$\tan A = \frac{\sin A}{\cos A}$$
+246,Trigonometry_Identities_7,F,45,Trigonometry - $$\sec A = \frac{1}{\cos A}$$
+247,Trigonometry_Identities_8,F,45,Trigonometry - $$\csc A = \frac{1}{\sin A}$$
+248,Trigonometry_Identities_9,F,45,Trigonometry - $$\cot A = \frac{1}{\tan A}$$
+249,Trigonometry_Identities_10,F,45,Trigonometry - $$\sin^2 A + \cos^2 A = 1$$
+250,Trigonometry_Identities_11,F,45,Trigonometry - $$1 + \tan^2 A = \sec^2 A$$
+251,Trigonometry_Identities_12,F,45,Trigonometry - $$1 + \cot^2 A = csc^2 A$$
+252,Trigonometry_Identities_13,F,45,Trigonometry - $$\sin (A \pm B) = \sin A \cos B \pm \cos A \sin B$$
+253,Trigonometry_Identities_14,F,45,Trigonometry - $$\cos (A \pm B) = \cos A \cos B \mp \sin A \sin B$$
+254,Trigonometry_Identities_15,F,45,Trigonometry - $$\tan (A \pm B) = \frac{\tan A \pm \tan B}{1 \mp \tan A \tan B}$$
+255,Trigonometry_Identities_16,F,45,Trigonometry - $$\sin 2A = 2 \sin A \cos A$$
+256,Trigonometry_Identities_17,F,45,Trigonometry - $$\cos 2A = \cos^2 A - \sin^2 A = 1 - 2 \sin^2 A = 2 \cos^2 A - 1$$
+257,Trigonometry_Identities_18,F,45,Trigonometry - $$\tan 2A = \frac{2 \tan A}{1 - \tan^2 A}
+258,Trigonometry_Factor_Formulae_1,F,45,Trigonometry - $$\sin X + \sin Y = 2 \sin \frac{X + Y}{2} \cos {X - Y}{2}$$
+259,Trigonometry_Factor_Formulae_2,F,45,Trigonometry - $$\sin X - \sin Y = 2 \cos \frac{X + Y}{2} \sin {X - Y}{2}$$
+260,Trigonometry_Factor_Formulae_3,F,45,Trigonometry - $$\cos X + \cos Y = 2 \cos \frac{X + Y}{2} \cos {X - Y}{2}$$
+261,Trigonometry_Factor_Formulae_4,F,45,Trigonometry - $$\cos X - \cos Y = -2 \sin \frac{X + Y}{2} \sin {X - Y}{2}$$
+263,Trigonometry_Form_1,F,45,"Trigonometry - $$a \cos \theta \pm b \sin \theta = R \cos (\theta \mp \alpha)$$ where $$R = \sqrt{a^2 + b^2}, \tan \alpha = \frac{b}{a}$$, $$a$$ and $$b$$ are positive and $$\alpha$$ is acute"
+264,Trigonometry_Form_2,F,45,"Trigonometry - $$a \sin \theta \pm b \cos \theta = R \sin (\theta \pm \alpha)$$ where $$R = \sqrt{a^2 + b^2}, \tan \alpha = \frac{b}{a}$$, $$a$$ and $$b$$ are positive and $$\alpha$$ is acute"
+267,Matrix_Determinant,F,53,"Matrix - If $$A = \begin{pmatrix}a & b\\ c & d\end{pmatrix}$$, det A = ad - bc."
+268,Inverse_Matrix,F,53,"Matrix - If $$A = \begin{pmatrix}a & b\\ c & d\end{pmatrix}$$, $$A^{-1} = \frac{1}{ad - bc} A = \begin{pmatrix}d & -b\\ -c & a\end{pmatrix}, provided det $$A \neq 0$$."
+269,Identity_Matrix,F,53,Matrix - $$AA^{-1} = I$$
+271,Scalar_Matrix_Multiplication,F,53,"Matrix - If $$A = \begin{pmatrix}a & b\\ c & d\end{pmatrix}$$, $$2A = \begin{pmatrix}2 \cdot a & 2 \cdot b\\ 2 \cdot c & 2\cdot d\end{pmatrix}$$"
+272,Two_Matrices_Multiplication,F,53,"Matrix - If $$A = \begin{pmatrix}a \\ b\end{pmatrix}$$ and $$B = \begin{pmatrix}c & d \end{pmatrix}$$, $$AB = \begin{pmatrix}a \cdot c & a \cdot d\\ b \cdot c & b \cdot d\end{pmatrix}$$"
+273,Integration_By_Reverse_Of_Differentiation,F,49,"Integration - If $$\frac{\mathrm{d} }{\mathrm{d} x} [F(x)] = f(x)$$, then $$\int f(x) dx = F(x) + c$$ where $$c$$ is a constant."
+274,Basic_Integration_Formulae_1,F,49,Integration - $$\int [f(x) + g(x)] dx = \int f(x) dx + \int g(x) dx$$
+275,Basic_Integration_Formulae_2,F,49,Integration - $$\int kf(x) dx = k\int f(x) dx$$
+276,Basic_Integration_Formulae_3,F,49,"Integration - $$\int ax^n dx = \frac{ax^{n+1}}{n + 1} + c, n \neq -1$$"
+277,Basic_Integration_Formulae_4,F,49,"Integration - $$\int (ax + b)^n dx = \frac{(ax + b)^{n+1}}{(n + 1)a} + c, n\neq -1$$"
+278,Integral_Of_Cosine,F,49,Integration - $$\int \cos (ax + b) dx = \frac{1}{a} \sin (ax + b) + c$$
+279,Integral_Of_Sine,F,49,Integration - $$\int \sin (ax + b) dx = -\frac{1}{a} \cos (ax + b) + c$$
+280,Integral_Of_Secant_Square,F,49,Integration - $$\int \sec^2 (ax + b) dx = \frac{1}{a} \tan (ax + b) + c$$
+281,Integral_Of_Fraction_Function_1,F,49,Integration - $$\int \frac{1}{x} dx = \ln x + c$$
+282,Integral_Of_Fraction_Function_2,F,49,Integration - $$\int \frac{1}{ax + b} dx = \frac{1}{a} \ln (ax + b) + c$$
+283,Integral_Of_Fraction_Function_3,F,49,Integration - $$\int \frac{f'(x)}{f(x)} dx = \ln f(x) + c$$
+284,Integral_Of_Exponential_Function_1,F,49,Integration - $$\int e^x dx = e^x + c$$
+285,Integral_Of_Exponential_Function_2,F,49,Integration - $$\int e^{ax} dx = \frac{1}{a} e^{ax} + c$$
+286,Integral_Of_Exponential_Function_3,F,49,Integration - $$\int e^{ax + b} dx = \frac{1}{a} e^{ax + b} + c$$
+287,Definite_Integral,F,49,"Integration - If $$\int f(x) dx = F(x) + c$$, then $$\int_{a}^{b} f(x) dx = [F(x)]_a^b = F(b)-F(a)$$"
+288,Area_Bounded_By_Curve_y=f(x),F,49,"Integration - The area bounded by the curve $$y=f(x)$$, the x-axis and the lines $$x = a$$ and $$x = b (a < b)$$ is given by $$\int_{a}^{b} f(x) dx$$"
+289,Area_Bounded_By_Curve_x=f(y),F,49,"Integration - The area bounded by the curve $$x=f(y)$$, the y-axis and the lines $$y = a$$ and $$y = b$$ is given by $$\int_{a}^{b} f(y) dy$$"
+290,Kinematics_Distance_Using_Integration,F,49,"Integration - If the velocity $$v$$ of a particle is given as a function of time $$t$$, i.e. $$v = f(t)$$, then $$\int f(t) dt$$ will give the expression for the distance covered."
+291,Kinematics_Velocity_Using_Integration,F,49,"Integration - If the acceleration $$a$$ of a particle is given as a function of time $$t$$, i.e. $$a = f(t)$$, then $$\int f(t) dt$$ will give the expression for the velocity."
+292,Standard MacLaurin's Series Expansions,F,23,$$f(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 +  \frac{f'''(0)}{3!}x^3 + ... +  \frac{f^{(n)}(0)}{n!}x^n + ...$$
+304,General Equation of Circle,F,1,"The general equation of a circle with centre at $$(p,q)$$ and radius $$r$$ is $$(x - p)^2 + (y - q)^2 = r^2$$ with axes of symmetry $$x = p$$ and $$y = q$$ and point of symmetry $$(p,q)$$"
+305,General Equation of Ellipse,F,1,"The general equation of a ellipse with centre at $$(p,q)$$ and radii $$a$$ and $$b$$ is $$\frac{(x - p)^2}{a^2} + \frac{(y - q)^2}{b^2} = 1$$ with axes of symmetry $$x = p$$ and $$y = q$$ and point of symmetry $$(p,q)$$"
+306,General Equation of Hyperbola,F,1,"The general equation of a hyperbola with centre at $$(p,q)$$ and oblique asymptotes $$(y - q) = \pm \frac{b}{a}(x - p)$$ is $$\frac{(x - p)^2}{a^2} - \frac{(y - q)^2}{b^2} = 1$$ or $$\frac{(y - q)^2}{b^2} - \frac{(x - p)^2}{a^2} = 1$$with axes of symmetry $$x = p$$ and $$y = q$$ and point of symmetry $$(p,q)$$"
+328,Binomial Theorem,F,8,For any $$n \in {Z}^{+}$$ : $$(a + b)^n = a^n  + na^{n-1}b + \binom{n}{2}a^{n-2}b^2 + ..... + \binom{n}{n-2}a^2b^{n-2} + \binom{n}{n-1}ab^{n-1} + b^n$$ where $$\binom{n}{r}a^{n-r}b^r$$ is called General Term of Expansion.
+330,Expansion in Ascending Powers of x,F,8,$$(a + bx)^n = (a(1 + \frac{bx}{a}))^n = a^n(1 + \frac{bx}{a})^n = a^n(1 + n(\frac{bx}{a}) + \frac{n(n-1)}{2!}(\frac{bx}{a})^2 + \frac{n(n-1)(n-2)}{3!}(\frac{bx}{a})^3 + ... )$$. This expansion is valid for $$|\frac{bx}{a}| < 1 \implies | x | < \frac{a}{b} \implies -\frac{a}{b} < x < \frac{a}{b}$$
+331,Expansion in Descending Powers of x,F,8,$$(a + bx)^n = (bx(\frac{a}{bx} + 1))^n = (bx)^n(1 + \frac{a}{bx})^n = (bx)^n(1 + n(\frac{a}{bx}) + \frac{n(n-1)}{2!}(\frac{a}{bx})^2 + \frac{n(n-1)(n-2)}{3!}(\frac{a}{bx})^3 + .... )$$. This expansion is valid for $$|\frac{a}{bx}| < 1 \implies | x | > \frac{a}{b} \implies x < -\frac{a}{b}$$ or $$x > \frac{a}{b}$$
+333,Arithmetic Progression,F,9,"(i) General Form: $$a, a+d, a +2d, ... , a + (n-1)d , ...$$    
+;(ii) General Term $${T}_{n}$$: $${T}_{n} = a + (n - 1)d$$    
+;(iii) Common difference $$d$$: $$d = {T}_{n} - {T}_{n-1}$$    
+;(iv) Arithmetic Mean: $$\frac{{T}_{n-1}+{T}_{n+1}}{2} = {T}_{n} \implies  {T}_{n-1}+{T}_{n+1} = 2{T}_{n}$$    
+;(v) Sum of the first $$n$$ terms $${S}_{n}$$: $${S}_{n} = \frac{n}{2}(2a + (n - 1)d)$$ or $${S}_{n} = \frac{n}{2}(a + l)$$ where $$l = {T}_{n} = a + (n-1)d$$ "
+334,Geometric Progression,F,9,"(i) General Form: $$a, ar, ar^2, ar^3, ... ,ar^{n-1}, ...$$  
+;(ii) General Term $${T}_{n}$$: $${T}_{n} = ar^{n-1}$$  
+;(iii) Common Ratio $$r$$ : $$r = \frac{{T}_{n}}{{T}_{n-1}}$$  
+;(iv) Geometric Mean: $$\sqrt{{T}_{n-1} \times {T}_{n+1}} = {T}_{n} \implies {T}_{n-1} \times {T}_{n+1} = {{T}_{n}}^2$$  
+;(v) Geometric Series: $$a+ar+ar^2+ar^3+ ... + ar^{n-1} + ... $$  
+;(vi) Sum of the first n terms $${S}_{n}$$ : $${S}_{n} = \frac{a(1-r^n)}{1-r}$$ or $$\frac{a(r^n-1)}{r-1}$$"
+335,Convergent Infinite Geometric Series,F,9,$${S}_{\infty}$$ exists and $${S}_{\infty} = \frac{a}{1 - r}$$
+337,General Sequence and Series,F,9,"Given any series: $$S_{n} = {T}_{1} + {T}_{2} + {T}_{3} + ... + {T}_{n}$$ and $${S}_{n-1} = {T}_{1} + {T}_{2} + {T}_{3} + ... + {T}_{n-1}$$. Hence, $${T}_{n} = {S}_{n} - {S}_{n-1}$$"
+339,Rules of Summation - Rule 1,F,9,$$\sum_{r=1}^{n} a = a + a + a + ... + a = na$$ where $$a$$ is a constant. 
+340,Rules of Summation - Rule 2,F,9,$$\sum_{r=m}^{n} a = (n - m + 1)a$$ where $$a$$ is a constant.
+341,Rules of Summation - Rule 3,F,9,$$\sum_{r=1}^{n} r = 1 + 2 + 3 + ... + n = \frac{n}{2}(n + 1)$$
+342,Rules of Summation - Rule 4,F,9,$$\sum_{r=1}^{n} r^2 = 1^2 + 2^2 + 3^2 + .... + n^2 = \frac{n}{6}(n + 1)(2n + 1)$$
+343,Rules of Summation - Rule 5,F,9,$$\sum_{r=1}^{n} r^3 = 1^3 + 2^3 + 3^3 + .... + n^3 = (\frac{n}{2}(n + 1))^2$$
+344,Rules of Summation - Rule 6,F,9,$$\sum_{r =1}^{n} a^r = a + a^2 + a^3 + ... + a^n = \frac{a(1-a^n)}{1 - a}$$ or $$\frac{a(a^n - 1)}{a - 1}$$ where $$a$$ is a constant. $$\sum_{r = 1}^{\infty} a^r = a + a^2 + a^3 + ... = \frac{a}{1 - a}$$ where $$| a | < 1$$.
+345,General Rules of Summation 1,F,9,$$\sum_{r=1}^{n} \lambda {T}_{r} = \lambda \sum_{r=1}^{n} {T}_{r}$$ where $$\lambda$$ is a constant.
+346,General Rules of Summation 2,F,9,"$$\sum_{r=1}^{n} (\lambda {T}_{r} \pm \mu {U}_{r}) = \lambda \sum_{r=1}^{n} {T}_{r} \pm \mu \sum_{r=1}^{n} {U}_{r}$$ where $$\lambda , \mu$$ are constants."
+347,Limits of Summation - Rule 1,F,9,$$\sum_{r=0}^{n} {T}_{r} = {T}_{0} + \sum_{r=1}^{n} {T}_{r}$$
+348,Limits of Summation - Rule 2,F,9,$$\sum_{r=m}^{n} {T}_{r} = \sum_{r=1}^{n} {T}_{r} - \sum_{r=1}^{m-1} {T}_{r}$$
+349,Limits of Summation - Rule 3,F,9,$$\sum_{r=m}^{n} {T}_{r} = \sum_{r=m+k}^{n+k} {T}_{r-k}$$
+350,Summation by Method of Difference,F,9,"Given a series: $${u}_{1} + {u}_{2} + {u}_{3} + ... + {u}_{n} = \sum_{r=1}^{n} {u}_{r}$$, if the general term $${u}_{r}$$ can be represented as a difference of two expressions: $${u}_{r} \equiv f(r) - f(r+1)$$ where $$f$$ is an integer function of $$r \in Z$$
+; then $$\sum_{r=1}^{n} {u}_{r} = \sum_{r=1}^{n} (f(r) - f(r+1)) = f(1) - f(n+1)$$"
+351,Summation of General Infinite Series,F,9,$$\sum_{r=1}^{\infty} {u}_{r} = \lim_{n \to \infty} (\sum_{r=1}^{n} {u}_{r})$$
+367,Equation of Tangent,F,21,"Equation of the Tangent to the curve $$y = f(x)$$ at the point $$P(x_{1}, y_{1})$$ is given by $$\frac{y_{1} - y}{x_{1} - x} = m$$ or $$y - {y}_{1} = m(x -x_{1})$$ where $$m = \frac{dy}{dx}$$"
+368,Equation of Normal,F,21,"Equation of the Normal to the curve $$y = f(x)$$ at the point $$P(x_{1}, y_{1})$$ is given by $$\frac{y_{1} - y}{x_{1} - x} = - \frac{1}{m}$$ or $$y - {y}_{1} = -\frac{1}{m}(x -x_{1})$$ where $$m = \frac{dy}{dx}$$"
+375,Small Angle Approximations,F,23,"(i) $$\sin x \approx x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + ... , x \in R$$  
+;(ii)$$\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + ... , x \in R$$  
+;(iii)$$\tan x = x + \frac{x^3}{3} + \frac{2x^5}{15} + \frac{17x^7}{315} + ... , \frac{-\pi}{2} < x < \frac{\pi}{2}$$"
+403,Vector Theorems - Mid Point Theorem,F,12,Given two points A and B on the plane with position vectors a and b: The mid point M of AB with position vector m is given by: $$m = \frac{a + b}{2}$$
+404,Vector Theorems - Ratio Theorem,F,12,Given two points A and B on the plane with position vectors a and b: the point M with position vector m which divides AB internally in the ratio $$\lambda : \mu$$ is given by $$m = \frac{\mu a + \lambda b}{\lambda + \mu}$$
+405,Distance between Two Points in a Two - Dimensional Plane,F,12,"Given two points $$A(a_{1},a_{2})$$ and $$B(b_{1},b_{2})$$; distance between A and B is given by : $$AB = |\overrightarrow{AB}| = \sqrt{(b_{1} - a_{1})^2 + (b_{2} - a_{2})^2}$$"
+406,Distance between Two Points in a Three - Dimensional Plane,F,12,"Given two points $$A(a_{1},a_{2},a_{3})$$ and $$B(b_{1},b_{2},b_{3})$$; distance between A and B is given by : $$AB = |\overrightarrow{AB}| = \sqrt{(b_{1} - a_{1})^2 + (b_{2} - a_{2})^2 + (b_{3} - a_{3})^2}$$"
+407,Scalar Product of Two Vectors,F,12,"The Scalar Product or Dot Product or Inner Product of a and b, denoted by $$a \bullet b$$ is defined by $$a \bullet b = |a||b|\cos \theta$$ where $$\theta$$ is the angle between a and b"
+409,Scalar Product of Parallel and Perpendicular Vectors,F,12,"(a) Parallel Vectors: $$a // b$$ and in the same direction $$\iff a \bullet b = |a||b| = ab$$  
+;(b) Perpendicular Vectors: $$a \bot b \iff a \bullet b = 0$$"
+410,Scalar Product - Two Dimensional Vectors,F,12,$$a \bullet b = (a_{1}i + a_{2}j) \bullet (b_{1}i + b_{2}j) = a_{1}b_{1} + a_{2}b_{2}$$
+411,Scalar Product - Three Dimensional Vectors,F,12,$$a \bullet b = (a_{1}i + a_{2}j + a_{3}k) \bullet (b_{1}i + b_{2}j + b_{3}k) = a_{1}b_{1} + a_{2}b_{2} + a_{3}b_{3}$$
+412,Applications of Scalar Product - Angle Between Two Vectors,F,12,$$a \bullet b = |a||b| \cos \theta \Rightarrow \cos \theta = \frac{a \bullet b}{|a||b|} = \hat{a} \bullet \hat{b} \Rightarrow \theta = \cos^{-1} (\hat{a} \bullet \hat{b})$$
+413,Applications of Scalar Product - Projection,F,12,$$ p = |\frac{a \bullet b}{b}|$$ or $$|a \bullet \hat{b}|$$ 
+414,Vector Product of Two Vectors,F,12,$$a \times b = |a||b|\sin \theta \hat{n}$$ or $$ab \sin \theta \hat{n}$$ where $$\theta$$ is the angle between a and b and $$\hat{n}$$ is the unit vector perpendicular to both a and b
+416,Vector Product of Parallel and Perpendicular Vectors,F,12,"(a) Parallel Vectors: $$a // b \iff a \times b$$ and $$|a \times b| = 0$$  
+;(b) Perpendicular Vectors: $$a \bot b \iff a \times b = |a||b| \hat{n} = ab \hat{n}$$ and $$ |a \times b| = |a||b| = ab$$"
+417,Vector Product - Cartesian Component Form,F,12,$$a \times b = (a_{2}b_{3} - a_{3}b_{2})i - (a_{1}b_{3} - a_{3}b_{1})j + (a_{1}b_{2} - a_{2}b_{1})k$$
+419,Area of a Parallelogram,F,12,Area of parallelogram $$OACB = |a \times b|$$
+420,Area of a Triangle,F,12,Area of triangle $$OAB = \frac{1}{2}|a \times b|$$
+421,Vector Equation of a Straight Line,F,12,"(a) Given a Known Fixed Point and a Specified Direction: Given that a Line $$l$$ passes through a Fixed Point $$A$$ with Position Vector $$a = a_{1}i + a_{2}j + a_{3}k$$ and that line $$l$$ is parallel to a Specified Direction given by a Direction Vector $$b = b_{1}i + b_{2}j + b_{3}k$$ then a Vector Equation of the Line $$l$$ is given by: $$r = a + \lambda b$$, $$\lambda \in R$$  
+;
+;(b) Given that a Line $$l$$ passes through Two Fixed Points $$A$$ and $$B$$ with position vectors $$a$$ and $$b$$ respectively, then a direction vector of the line $$l$$ is given by $$\overrightarrow{AB} = b - a$$ or $$\overrightarrow{BA} = a- b$$, thus the Vector Equation of the Line $$l$$ is given by: $$r = a + \lambda (b - a)$$ or $$r = a + \lambda (a - b)$$ or $$r = b + \lambda (b - a)$$ or $$r = b + \lambda (a - b)$$ where $$\lambda \in R$$"
+422,Cartesian Equation of a Straight Line,F,12,$$\frac{x - a_{1}}{b_{1}} = \frac{y - a_{2}}{b_{2}} = \frac{z - a_{3}}{b_{3}}$$
+423,Vector Equation of a Plane - Parametric Form,F,12,"Given that a Plane $$\pi$$ passes through a Fixed Point $$A$$ with a position vector $$a = a_{1}i + a_{2}j + a_{3}k$$, and that $$\pi$$ is parallel to 2 non-parallel Direction Vectors $$b = b_{1}i + b_{2}j + b_{3}k$$ and $$c = c_{1}i + c_{2}j + c_{3}k$$, then a Vector Equation of the Plane $$\pi$$ in Parametric Form is given by: $$r = a + \lambda b + \mu c$$, where $$ \lambda , \mu \in R$$"
+424,Vector Equation of a Plane - Scalar Product Form,F,12,"Given that a Plane $$\pi$$ passes through a Fixed Point $$A$$ with a position vector $$a = a_{1}i + a_{2}j + a_{3}k$$, and that $$\pi$$ is perpendicular to a Normal Vector $$n = n_{1}i + n_{2}j + n_{3}k$$, then a Vector Equation of the Plane $$\pi$$ in Scalar Product Form is given by: $$r \bullet n = a \bullet n = p$$ or $$r \bullet \hat{n} = a \bullet \hat{n} = d$$"
+425,Vector Equation of a Plane - Cartesian,F,12,"Given that a plane $$\pi$$ passes through a Fixed Point $$A$$ with position vector $$a = a_{1}i + a_{2}j + a_{3}k$$, and that $$\pi$$ is perpendicular to a Normal Vector $$n = n_{1}i + n_{2}j + n_{3}k$$:
+;$$r \bullet n = a \bullet n$$
+;$$ax + by + cz = p$$ "
+433,Algebra of Complex Numbers,F,17,"(a) Equality of Complex Numbers:
+;$$z_{1} = z_{2} \iff x_{1} = x_{2}$$ and $$y_{1} = y_{2}$$
+;
+;(b) Addition of Complex Numbers:
+;$$z_{1} + z_{2} = (x_{1} + y_{1}i) + (x_{2} + y_{2}i) = (x_{1} + x_{2}) + (y_{1} + y_{2})i$$
+;
+;(c) Subtraction of Complex Numbers:
+;$$z_{1} - z_{2} = (x_{1} + y_{1}i) - (x_{2} + y_{2}i) = (x_{1} - x_{2}) + (y_{1} - y_{2})i$$
+;
+;(d) Multiplication of a Complex Number by a Real Number:
+;Given $$z = x + yi \in C$$ and $$k \in R$$
+;$$kz = k(x + yi) = kx + kyi$$
+;
+;(e) Multiplication of Complex Numbers:
+;$$z_{1}z_{2} = (x_{1} + y_{1}i) (x_{2} + y_{2}i) = x_{1}x_{2} + x_{1}y_{2}i + x_{2}y_{1}i - y_{1}y_{2} = (x_{1}x_{2} - y_{1}y_{2}) + (x_{2}y_{1} + x_{1}y_{2})i$$
+;
+;(f) Division of Complex Numbers:
+;$$\frac{z_{1}}{z_{2}} = \frac{z_{1}z_{2}^*}{z_{2}z_{2}^*} = \frac{(x_{1} + y_{1}i)(x_{2} - y_{2}i)}{(x_{2} + y_{2}i)(x_{2} - y_{2}i)} = \frac{(x_{1}x_{2} + y_{1}y_{2}) + (-x_{1}y_{2} + x_{2}y_{1})i}{x_{2}^2 + y_{2}^2}$$"
+437,Modulus of a Complex Number,F,17,"Modulus of $$z$$: $$r = |z| = |x + yi| = \sqrt{x^2 + y^2}$$
+"
+438,Complex Numbers in Trigonometric Form,F,17,"(a) Multiplication:
+;Let $$z_{1} = r_{1}(\cos \theta_{1} + i \sin \theta_{1})$$ and $$z_{2} = r_{2}(\cos \theta_{2} + i \sin \theta_{2})$$
+;Thus, $$z_{1}z_{2} = r_{1}r_{2}( \cos (\theta_{1} + \theta_{2}) + i \sin (\theta_{1} + \theta_{2}))$$
+;$$|z_{1}z_{2}|  = r_{1}r_{2} = |z_{1}||z_{2}|$$
+;$$arg(z_{1}z_{2}) = \theta_{1} + \theta_{2} = arg z_{1} + arg z_{2}$$
+;
+;(b) Division:
+;Let $$z_{1} = r_{1}(\cos \theta_{1} + i \sin \theta_{1})$$ and $$z_{2} = r_{2}(\cos \theta_{2} + i \sin \theta_{2})$$
+;$$\frac{z_{1}}{z_{2}} = \frac{r_{1}}{r_{2}}(\cos (\theta_{1} - \theta_{2}) + i \sin (\theta_{1} - \theta_{2}))$$
+;$$|\frac{z_{1}}{z_{2}}| = \frac{r_{1}}{r_{2}} = \frac{|z_{1}|}{|z_{2}|}$$
+;$$arg(\frac{z_{1}}{z_{2}}) = \theta_{1} - \theta_{2} = arg z_{1} - arg z_{2}$$ "
+439,Geometry of Complex Numbers in Trigonometric Form,F,17,"(a) Unit of Complex Numbers: 
+;A complex number with $$|z| = \sqrt{x^2 + y^2} = 1$$: $$z = \cos \theta + i \sin \theta$$
+;
+;(b) Negative of $$z$$
+;$$z = r (\cos \theta + i \sin \theta)$$
+;$$- z = r (\cos (\theta \pm \pi) + i \sin (\theta \pm \pi))$$
+;$$arg(-z) = \theta \pm \pi = arg(z) \pm \pi$$
+;
+;(c) Conjugate of $$z$$
+;$$z = r (\cos \theta + i \sin \theta)$$
+;$$z^* = r (\cos (-\theta) + i \sin (-\theta))$$
+;$$|z^*| = r = |z|$$
+;$$arg(z^*) = -\theta = - arg(z)$$
+;
+;(d) Reciprocal of $$z$$
+;$$z = r (\cos \theta + i \sin \theta)$$
+;$$\frac{1}{z} = \frac{1}{r}(\cos (-\theta) + i \sin (-\theta))$$
+;$$|\frac{1}{z}| = \frac{1}{r} = \frac{1}{|z|}$$ and $$arg(\frac{1}{z}) = -\theta = - arg(z)$$
+;
+;(e) $$kz$$
+;$$z = r (\cos \theta + i \sin \theta)$$
+;$$kz = kr (\cos \theta + i \sin \theta)$$
+;$$|kz| = kr = k|z|$$
+;$$arg(kz) = \theta = arg(z)$$
+;
+;(f) $$iz$$
+;$$z = r (\cos \theta + i \sin \theta)$$
+;$$iz = r (\cos (\theta + \pi/2) + i \sin (\theta + \pi/2))$$
+;$$|iz| = r = |z|$$
+;$$arg(iz) = \theta + \pi/2 = arg(z) + \pi/2$$"
+441,De Moivre's Theorem,F,17,"$$(\cos \theta + i \sin \theta)^n = \cos (n \theta) + i \sin (n \theta)$$
+;or $$(e^{i \theta})^n = e^{i (n \theta)}$$
+;
+;Given $$z = r(\cos \theta + i \sin \theta) = re^{i \theta}$$
+;Then $$z^n = r^n(\cos (n \theta) + i \sin (n \theta)) = r^ne^{i (n \theta)}$$
+;$$|z^n| = r^n = |z|^n$$
+;$$arg(z^n) = n \theta = n arg(z)$$ "
+448,Permutation,F,28,$$^{n}P_{r} = n(n - 1)(n - 2)(n - 3) ... (n - r + 1) = \frac{n!}{(n - r)!}$$
+449,Combination,F,28,"$$^{n}C_{r} = \frac{^{n}P_{r}}{r!} = \frac{n(n - 1)(n - 2)(n - 3) ... (n - r + 1)}{r!} = \frac{n!}{r!(n - r)!}$$
+"
+451,Circular Permutations,F,28,"The Number of Circular Permutations of $$n$$ distinct objects in which the $$n$$ distinct objects are arranged in a circle is given by $$\frac{n!}{n} = (n - 1)!$$
+
+The number of circular permutations of $$n$$ distinct objects taken $$r$$ objects at a time is given by $$\frac{^{n}P_{r}}{r} = \frac{n!}{r(n - r)!}$$ "
+453,Properties of Probability,F,29,"Given an experiment, with sample space $$S$$, and an event $$E$$:
+;(i) $$P(S) = 1$$ and $$P(\phi) = 0$$
+;(ii) $$0 \le P(E) \le 1$$
+;(iii)$$P(E') = 1 - P(E)$$"
+454,Probabilities of Combined Events,F,29,"(1) $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+;If A and B are mutually exclusive events then $$P(A \cup B) = P(A) + P(B)$$
+;
+;(2) $$P(A$$ or $$B) \equiv P(A \cup B)$$
+;(3) $$P(A$$ and $$B) \equiv P(A \cap B)$$
+;(4) $$P($$ neither $$A$$ nor $$B) \equiv P(A' \cap B') = P((A \cup B)') = 1 - P(A \cup B)$$
+;(5) $$P($$ not $$A$$ or not $$B) \equiv P(A' \cup B') = P((A \cap B)') = 1 - P(A \cap B)$$
+;(6) $$P(A$$ but not $$B) \equiv P(A \cap B') = P(A) - P(A \cap B)$$
+;(7) $$P(A$$ or not $$B) \equiv P(A \cup B') = 1 - (P(B) - P(A \cap B))$$
+;(8) $$P(A$$ or $$B$$ but not both $$) \equiv P((A \cup B) \cap (A \cap B)') = P(A \cup B) - P(A \cap B)$$"
+455,Conditional Probability,F,29,"Given that $$A$$ and $$B$$ are events of an experiment: $$P(A|B)$$ denotes the conditional probability of $$A$$ occurring, given that $$B$$ has already occurred.
+$$P(A|B) = \frac{n(A \cap B)}{n(B)}$$ or $$\frac{P(A \cap B)}{P(B)}$$
+$$P(B|A) = \frac{n(A \cap B)}{n(A)}$$ or $$\frac{P(A \cap B)}{P(A)}$$"
+457,Probabilities of Independent Events,F,29,"$$A$$ and $$B$$ are Independent Events:
+;(i) $$P(A|B) = P(A)$$
+;(ii) $$P(B|A) = P(B)$$
+;(iii) $$P(A \cap B) = P(A) \times P(B)$$"
+467,Expectation of a Discrete Random Variable,F,30,"The Expectation of $$X$$ denoted by $$E(X)$$, or the Mean of $$X$$ denoted by $$\mu$$, is defined as
+$$\mu = E(X) = \sum_{all x} x.P(X = x)$$"
+468,Expectation of the Binomial Distribution,F,30,"Given $$X \sim B(n,p)$$: $$\mu = E(X) = np$$"
+469,Variance and Standard Deviation of a Discrete Random Variable,F,30,"The Variance of $$X$$, denoted by $$Var(X)$$ or $$\sigma^2$$, is defined as
+;$$\sigma^2 = Var(X) = \sum_{all x}(x - \mu)^2.P(X = x)$$
+;
+;The Standard Deviation of $$X$$, denoted by $$SD(X)$$ or $$\sigma$$, is defined as
+;$$\sigma = SD(X) = \sqrt{SD(X)} = \sqrt{\sum_{all x}(x - \mu)^2.P(X = x)}$$"
+470,Variance and Standard Deviation of the Binomial Distribution,F,30,"Given $$X \sim B(n,p)$$:
+;$$\sigma^2 = Var(X) = npq$$
+;$$\sigma = SD(X) = \sqrt{npq}$$"
+471,Recurrence Formula for the Binomial Distribution,F,30,"Given $$X \sim B(n,p)$$:
+;$$P(X = r) = {}^{n}C_{r}p^rq^{n-r} = \frac{n!}{r!(n - r)!}p^rq^{n-r}$$
+;$$P(X = r +1) = {}^{n}C_{r+1}p^{r+1}q^{n-r-1} = \frac{n!}{(r+1)!(n - (r+1))!}p^{r+1}q^{n-(r+1)}$$
+;$$\frac{P(X = r +1)}{P(X = r)} = (\frac{n!}{(r+1)!(n - (r+1))!})(\frac{r!(n - r)!}{n!})\frac{p^{r+1}q^{n-(r+1)}}{p^rq^{n-r}} = \frac{(n - r)p}{(r + 1)q}$$
+;$$P(X = r +1) = \frac{(n - r)p}{(r + 1)q}P(X = r)$$"
+473,Poisson Distribution,F,30,"$$X \sim Po(\lambda)$$
+;(1) $$P(X = x) = \frac{e^{- \lambda}\lambda^{x}}{x!}$$ , $$x = 0,1,2, ...$$
+;(2) $$P(X \le x) = P(X = 0) + P(X = 1) + P(X = 2) + P(X = 3) + ... + P(X = x)$$
+;$$ = e^{- \lambda} + e^{- \lambda}\lambda + \frac{e^{- \lambda} \lambda^2}{2!} + \frac{e^{- \lambda}\lambda^3}{3!} + ... + \frac{e^{- \lambda} \lambda^x}{x!}$$
+;$$ = e^{- \lambda}(1 + \lambda + \frac{\lambda^2}{2!} + \frac{\lambda^3}{3!} + ... + \frac{\lambda^x}{x!}) = \sum_{r=0}^{x}\frac{e^{- \lambda}\lambda^r}{r!} = e^{- \lambda}\sum_{r=0}^{x}\frac{\lambda^r}{r!}$$
+;(3) $$E(X) = \lambda$$
+;(4) $$Var(X) = \lambda$$"
+474,Recurrence Formula for the Poisson Distribution,F,30,"Given $$X \sim Po(\lambda)$$:
+;$$P(X = r) = \frac{e^{-\lambda}\lambda^r}{r!}$$ and $$P(X = r + 1) = \frac{e^{- \lambda}\lambda^{r + 1}}{(r + 1)!}$$
+;$$\frac{P(X = r + 1)}{P(X = r)} = \frac{e^{- \lambda}\lambda^{r + 1}}{(r + 1)!} \times \frac{r!}{e^{-\lambda}\lambda^r} = \frac{\lambda}{r + 1}$$
+;$$P(X = r + 1) = \frac{\lambda}{r + 1}P(X = r)$$"
+476,Two Independent Random Variables,F,30,"Given any two random variables $$X$$ and $$Y$$: Their sum $$X + Y$$ and difference $$X - Y$$ are also random variables.
+;(i) $$E(X + Y) = E(X) + E(Y)$$
+;(ii) $$E(X - Y) = E(X) - E(Y)$$
+;(iii) $$Var(X + Y) = Var(X) + Var(Y)$$
+;(iv) $$Var(X - Y) = Var(X) - Var(Y)$$"
+477,Two Independent Poisson Random Variables,F,30,"Given that $$X$$ and $$Y$$ are two independent Poisson random variables, with means $$\alpha$$ and $$\beta$$ respectively:
+$$X \sim Po(\alpha)$$ and $$Y \sim Po(\beta)$$
+The sum $$X + Y$$ is also a Poisson Random Variable, with mean $$\alpha + \beta$$:
+$$X + Y \sim Po(\alpha + \beta)$$"
+479,Continuous Random Variables,F,32,"(a) Probability Density Function (pdf)
+;Given a continuous random variable $$X$$: the probability distribution of $$X$$ is defined by a function $$f(x)$$.
+;Probability that an observation $$x$$ will lie within the interval $$m \le x \le n$$: $$P(m \le X \le n) = \int_{m}^{n} f(x)dx$$
+;
+;(b) Cumulative Distribution Function (cdf)
+;Given a continuous random variable $$X$$, with pdf $$f(x)$$: the cumulative distribution function of $$X$$, denoted by $$F(x)$$, is defined as $$F(x) = P(X \le x) = \int_{-\infty}^{\infty}f(t)dt$$
+;
+;(c) Expectation of a Continuous Random Variable
+;Given a continuous random variable $$X$$, with pdf $$f(x)$$: The Expectation of $$X$$, or the Mean of $$X$$ denoted by $$\mu$$, is defined as $$\mu = E(X) = \int_{-\infty}^{\infty} x.f(x)dx$$
+;
+;(d) Variance and Standard Deviation
+;Given a continuous random variable $$X$$, with pdf $$f(x)$$ and mean $$\mu = E(X)$$: The Variance of $$X$$, denoted by $$Var(X)$$ or $$\sigma^{2}$$, is defined as:
+;$$\sigma^2 = Var(X) = E((X - \mu)^2) = \int_{- \infty}^{\infty}(x - \mu)^2.f(x)dx$$ or
+;$$\sigma^2 = Var(X) = E(X^2) - (E(X))^2 = \int_{- \infty}^{\infty} x^2.f(x)dx - (\int_{- \infty}^{\infty} x.f(x)dx)^2$$
+;The Standard Deviation of $$X$$, denoted by $$SD(X)$$ or $$\sigma$$, is defined as $$\sigma = SD(X) = \sqrt{Var(X)}$$
+;
+;(e) Median, Quartiles & Percentiles
+;Given a continuous random variable $$X$$, with cdf $$F(x)$$:
+;(i) Median of $$X$$, denoted by $$m$$, is the solution to the equation : $$F(x) = 1/2$$
+;(ii) Lower Quartile of $$X$$, denoted by $$q_{L}$$, is the solution to the equation : $$F(x) = 1/4$$
+;(iii) Upper Quartile of $$X$$, denoted by $$q_{U}$$, is the solution to the equation : $$F(x) = 3/4$$
+;(iv) $$\alpha$$-Percentile of $$X$$, denoted by $$X_{\alpha /100}$$, is the solution to the equation : $$F(x) = \alpha /100$$
+;Interquartile Range is $$q_{U} - q_{L}$$"
+480,Normal Distribution,F,32,"$$X \sim N(\mu, \sigma^2)$$
+;(1) $$f(x) = \frac{1}{\sigma \sqrt{2 \pi}}e^{\frac{- (x - \mu)^2}{2 \sigma^2}}$$ , $$-infty < x < \infty$$
+;(2) $$F(x) = \int_{- \infty}^{x} \frac{1}{\sigma \sqrt{2 \pi}}e^{\frac{- (t - \mu)^2}{2 \sigma^2}}dt$$ , $$-infty < x < \infty$$
+;(3) $$E(X) = \mu$$
+;(4) $$Var(X) = \sigma^2$$
+;(5) $$SD(X) = \sigma$$"
+481,Standard Normal Distribution,F,32,"$$Z \sim (N,0)$$
+;(1) $$\phi (z) = \frac{1}{\sigma \sqrt{2 \pi}}e^{\frac{-z^2}{2}}$$ , $$-infty < z < \infty$$
+;(2) $$\phi (z) = \int_{-\infty}^{z}\frac{1}{\sqrt{2 \pi}}e^{\frac{-t^2}{2}}dt$$ , $$-infty < z < \infty$$
+;(3) $$E(Z) = \mu = 0$$
+;(4) $$Var(Z) = \sigma^2 = 1$$
+;(5) $$SD(Z) = \sigma = 1$$ "
+497,Expectations and Variance of Sample Mean and Sample Total,F,33,"Let $$X$$ be a random variable with population mean $$E(X) = \mu$$ and population variance $$Var(X) = \sigma^{2}$$
+;Let $$X_{1} + X_{2} + X_{3} + ... + X_{n}$$ be a random sample of size $$n$$ from the distribution of $$X$$.
+;(1) Sample Mean: $$\overline{{X}_{n}} = \frac{X_{1} + X_{2} + X_{3} + ... + X_{n}}{n}$$
+;$$E(\overline{X}) = \mu$$ and $$Var(\overline{X}) = \frac{\sigma^2}{n}$$
+;(2) Sample Total: $$T_{n} = X_{1} + X_{2} + X_{3} + ... + X_{n}$$
+;$$E(T) = n\mu$$ and $$Var(T) = n\sigma^{2}$$"
+498,Sampling Distribution of Sample Mean and Sample Total  - Normal Distribution,F,33,"Given that a random variable $$X$$ has a normal distribution: $$X \sim N(\mu , \sigma^2)$$
+;Let $$X_{1} + X_{2} + X_{3} + ... + X_{n}$$ be a random sample of size of $$n$$ from the distribution of $$X$$.
+;(1) Sampling Distribution of the Sample Mean $$\overline{X}$$: $$\overline{{X}_{n}} = \frac{X_{1} + X_{2} + X_{3} + ... + X_{n}}{n} \sim N (\mu, \frac{\sigma^2}{n})$$
+;(2) Sampling Distribution of the Sample Total $$T$$: $$T_{n} = X_{1} + X_{2} + X_{3} + ... + X_{n} \sim N(n\mu, n\sigma^2)$$"
+500,Sample Statistics,F,33,"(1) Sample Mean: $$\overline{x}  = \frac{x_{1} + x_{2} + x_{3} + ... + x_{n}}{n} = \frac{\sigma x}{n}$$
+;(2) Sample Variance: $$s_{n}^{2} = \frac{\sum (x - \overline{x})^2}{n}$$ or $$\frac{\sum x^2}{n} - (\frac{\sum x}{n})^2$$
+;(3) Sample Standard Deviation: $$s_{n} = \sqrt{\frac{\sum (x - \overline{x})^2}{n}} = \sqrt{\frac{\sum x^2}{n} - (\frac{\sum x}{n})^2}$$"
+501,Unbiased Estimates,F,33,"(1) Unbiased Estimate for Population Mean:
+;Since $$E(\overline{X}) = \mu$$, thus $$\hat{\mu} = \overline{x} = \frac{\sum x}{n}$$
+;
+;(2) Unbiased Estimate for Population Variance
+;$$\hat{\sigma}^{2} = s^2 = \frac{n}{n - 1}s_{n}^2 = \frac{\sum (x - \overline{x})^2}{n-1} = \frac{1}{n - 1}(\sum x^2 - \frac{(\sum x)^2}{n})$$"
+511,Pearson Product - Moment Correlation Coefficient,F,35,"$$r = \frac{\sum(x - \overline{x})(y - \overline{y})}{\sqrt{(\sum (x - \overline{x})^2)(\sum (y - \overline{y})^2)}}$$ or $$\frac{\sum xy - \frac{\sum x \sum y}{n}}{\sqrt{(\sum x^2 - \frac{(\sum x)^2}{n})(\sum y^2 - \frac{(\sum y)^2}{n})}}$$ (Expanded Form)
+$$r = \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}$$"
+512,Least Squares Regression Line of y on x,F,35,"$$y - \overline{y} = b (x - \overline{x})$$ where $$b = \frac{S_{xy}}{S_{xx}} = \frac{\sum (x - \overline{x})(y - \overline{y})}{\sum (x - \overline{x})^2} = \frac{\sum xy - \frac{\sum x \sum y}{n}}{\sum x^2 - \frac{(\sum x)^2}{n}}$$
+$$y = a + bx$$ where $$a = \overline{y} - b \overline{x}$$"
+513,Least Squares Regression Line of x on y,F,35,"$$x - \overline{x} = d (y - \overline{y})$$ where $$d = \frac{S_{xy}}{S_{yy}} = \frac{\sum (x - \overline{x})(y - \overline{y})}{\sum (y - \overline{y})^2} = \frac{\sum xy - \frac{\sum x \sum y}{n}}{\sum y^2 - \frac{(\sum y)^2}{n}}$$
+$$x = c + dy$$ where $$c = \overline{x} - d \overline{y}$$"
+514,Relation between Correlation Coefficient  and Regression Coefficients,F,35,$$r^2 = bd = \frac{(S_{xy})^2}{S_{xx}S_{yy}} = \frac{(\sum (x - \overline{x})(y - \overline{y}))^2}{\sum (x - \overline{x})^2 \sum (y - \overline{y})^2}$$
+518,Trapezium Rule,F,36,"The trapezium rule is a numerical method for estimating integrals. It is most useful when there is no analytical answer to an integral, and only a number is needed. It works by approximating the area under the curve by a series of trapezia, then evaluating the areas and adding them up.
+;The formula for the integral rule is $$l = \frac{h}{2}(y_{0} + 2(y_{1} + y_{2} + ... + y_{n-1}) + y_{n})$$ where $$h$$ is the step size or the increment by which the values of $$x$$."
+519,Newton Raphson Method ,F,1,"Newton-Raphson Method: This is a fixed-point estimation method. 
+;The estimate starts at $$x_{1}$$,for a root of $$f(x) = 0$$. 
+;A tangent is then draw to the curve $$y = f(x)$$ at the point $$(x_{1}, f(x_{1}))$$. The point at which the tangent cuts the x-axis then gives the next approximation for the root, and the process is repeated.
+;The new estimate for the root is found using the iteration: $$x_{n+1} = x_{n} - \frac{f(x_{n})}{f'(x_{n})}$$"
+520,Linear Interpolation,F,1,"Linear interpolation is a method of curve fitting using linear polynomials.
+;To estimate the value of the root we join the y-values with a straight line and find where this crosses the x-axis.
+;
+;The formula for the next estimate for the root is: $$\frac{af(b) - bf(a)}{f(b) - f(a)}$$"
+523,Sine Rule,F,36,"In any triangle, the ratio of a side length to the sine of its opposite angle is the same for all three sides.
+;As a formula: 
+;$$\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C}$$"
+524,General Solution,F,36,"If $$\sin \theta = \sin \alpha$$, then $$\theta = n \pi + (-1)^n \alpha$$
+;If $$\cos \theta = \cos \alpha$$, then $$\theta = 2n \pi \pm \alpha$$
+;If $$\tan \theta = \tan \alpha$$, then $$\theta = n \pi + \alpha$$ 
+;where $$n$$ is any integer."
+525,Right Angled Triangle Properties,F,36,"From a right angled triangle we know that:
+;$$\tan \theta = \frac{\sin \theta}{\cos \theta}$$
+;In a right triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.
+;$$c^2 = a^2 + b^2$$"
+527,Cosine Rule,F,36,"In any triangle, given two sides and the included angle, the third side is given by the Law of Cosines formula:
+;$$c^2 = a^2 + b^2 – 2ab \cos (C)$$"
+963,Trigonometric Identities,F,36,"(i) $$\cos^{2} \theta + \sin^{2} \theta = 1$$
+;(ii) $$ 1 + \tan^{2} \theta = \sec^{2} \theta$$
+;(iii)$$ \cot^{2} \theta + 1 = cosec^{2} \theta$$
+;
+;"
+964,Compound Angle Identities,F,36,"(i) $$\sin (A + B) = \sin A \cos B + \cos A \sin B$$
+;(ii) $$\sin (A - B) = \sin A \cos B - \cos A \sin B$$
+;(iii) $$\cos (A + B) = \cos A \cos B  - \sin A \sin B$$
+;(iv) $$\cos (A - B) = \cos A \cos B + \sin A \sin B$$
+;(v) $$\tan (A + B) = \frac{\tan A + \tan B}{1 - \tan A \tan B}$$
+;(vi) $$\tan (A - B) = \frac{\tan A - \tan B}{1 + \tan A \tan B}$$"
+965,Double angle formulae,F,36,"(i) $$\sin 2A = 2 \sin A \cos A$$
+;(ii) $$\cos 2A = \cos^{2} A - \sin^{2} A$$
+;(iii)$$\tan 2A = \frac{2 \tan A}{1 - \tan^{2} A}$$"
+966,Half Angle Formulae,F,36,"(i) $$\sin 2A = \frac{2 \tan A}{1 + \tan^{2} A}$$
+;(ii) $$\cos 2A = \frac{1 - \tan^{2} A}{1 + \tan^{2} A}$$
+;
+;Replace $$2A$$ with $$x$$ and use $$T$$ for $$\tan (x/2)$$ "
+967,Factor Formulae,F,36,"If $$A + B = J$$ and $$A - B = K$$
+;(i) $$\sin J + \sin K = 2 \sin \frac{J + K}{2} \cos \frac{J - K}{2}$$
+;(ii) $$\sin J - \sin K = 2 \cos \frac{J + K}{2} \sin \frac{J - K}{2}$$
+;(iii) $$\cos J + \cos K = 2 \cos \frac{J + K}{2} \cos \frac{J - K}{2}$$
+;(iv) $$\cos J - \cos K = - 2 \sin \frac{J + K}{2} \sin \frac{J - K}{2}$$"
+1014,Area_of_circle,F,115,"Area of circle = \[\pi\]\[
+^2\]"
+1015,Area_Of_Square,F,115,Area of square = length x length
+1016,Area_Of_Triangle,F,115,Area of triangle = \[\frac{1}{2}\] x Base x Height
+1017,Circumference_of_circle,F,115,Circumference of circle = 2\[\pi\]r
+1018,Perimeter_Of_Square,F,115,Perimeter of square = length x 4
+1019,speed,F,115,Speed = \[\frac{distance}{time}\]
+1020,Volume_of_cuboid,F,115,Volume of cuboid = Length x breadth x height
+1037,Average,F,117,Average = \[\frac{Total amount}{Number of items}\]
+1042,Percentage,F,119,Percentage = \[\frac{Value}{Total}\] x 100%

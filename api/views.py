@@ -169,9 +169,8 @@ class FormulaIndexList(generics.ListAPIView):
 @api_view(['GET'])
 @permission_classes((permissions.IsAuthenticated,))
 def reindex_all_formula(request):
-    if request.method == 'GET':
-        fi.reindex_all_formulas()
-        return Response("Formula and formula index table has been reindexed "
+    fi.reindex_all_formulas()
+    return Response("Formula and formula index table has been reindexed "
                         "successfully.")
 
 

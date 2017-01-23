@@ -27,8 +27,11 @@ def search_formula(latex_str):
     related_formulas = retrieve_related_formulas(query_sort_terms)
 
     query_ino_terms = [term for term in chain.from_iterable(query_ino_terms)]
+    query_1gram_sort_terms = []
+
     # 1-gram sorted terms
-    query_1gram_sort_terms = query_sort_terms[-1]
+    if query_sort_terms:
+        query_1gram_sort_terms = query_sort_terms[-1]
 
     N = Formula.objects.count()
 

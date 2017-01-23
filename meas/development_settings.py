@@ -48,6 +48,17 @@ INSTALLED_APPS = (
 
     # Search
     'search.apps.SearchConfig',
+
+    # Import Export
+    'import_export',
+
+    # Haystack
+    # 'drf-haystack',
+    # 'haystack',
+    # 'whoosh',
+
+    # Django-Extensions
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -79,6 +90,19 @@ TEMPLATES = [
     },
 ]
 
+# Whoosh
+# PROJECT_DIRECTORY = os.getcwd() 
+# WHOOSH_INDEX = os.path.join(PROJECT_DIRECTORY,'../whoosh/')
+
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+#     },
+#     'db': {
+#         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+#     },
+# }
+
 WSGI_APPLICATION = 'meas.wsgi.application'
 
 # Database
@@ -89,6 +113,11 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '123456'
     }
+}
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }
 
 # Internationalization
