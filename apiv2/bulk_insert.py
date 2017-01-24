@@ -53,7 +53,7 @@ def insert_edu_level():
 
 # Subject
 # Old: id, title, edu_level_id, description
-# New: name, description, education_level
+# New: id, name, description, education_level
 def insert_subject():
     entries = read_csv(file_names["subject"])
     print(entries)
@@ -107,12 +107,12 @@ def insert_subconcept():
 
 # Keypoint
 # Old: id,title,type,topic_id,content
-# New: id,name,keypoint_type,content,concept
+# New: id,name,type,content,concept
 def insert_keypoint():
     entries = read_csv(file_names["keypoint"])
     keypoint_objects = [KeyPoint(id=int(entry["id"]),
                                  name=entry["title"],
-                                 keypoint_type=entry["type"],
+                                 type=entry["type"],
                                  content=entry["content"],
                                  concept=Concept.objects.get(
                                          id=entry['topic_id']))

@@ -1,22 +1,162 @@
-# # from drf_haystack.viewsets import HaystackViewSet
-# from rest_framework import generics
-# from rest_framework import viewsets
-# from rest_framework.decorators import api_view, permission_classes
-# from rest_framework.response import Response
-#
-# from apiv2.models import *
-# from search import formula_indexer as fi
-# from search import formula_retriever as fr
-# from search import formula_transformer as ft
-# from search import formula_clustering as fc
-# from .serializers import *
-# from .permissions import *
-#
-# import logging
-#
-# logger = logging.getLogger(__name__)
-#
-#
+# from drf_haystack.viewsets import HaystackViewSet
+# from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.schemas import get_schema_view
+
+from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as\
+    fr, formula_transformer as ft, formula_clustering as fc
+from apiv2.serializers import *
+from apiv2.permissions import *
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+schema_view = get_schema_view(title='MathQA API')
+
+
+class EducationLevelViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = EducationLevel.objects.all()
+    serializer_class = EducationLevelSerializer
+    permission_classes = (permissions.AllowAny,)
+
+
+class SubjectViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('education_level',)
+    # def get_queryset(self):
+    #     try:
+    #         education_level = EducationLevel.objects.get(pk=self.kwargs.get(
+    #             'education_level_id'))
+    #         return self.queryset.filter(education_level=education_level)
+    #     except EducationLevel.DoesNotExist:
+    #         education_level = None
+    #     return self.queryset
+
+
+class TopicViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('subject',)
+
+
+class ConceptViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Concept.objects.all()
+    serializer_class = ConceptSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('topic',)
+
+
+class SubconceptViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Subconcept.objects.all()
+    serializer_class = SubconceptSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('concept',)
+
+
+class PapersetViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Paperset.objects.all()
+    serializer_class = PapersetSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('subject',)
+
+
+class PaperViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Paper.objects.all()
+    serializer_class = PaperSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('paperset',)
+
+
+class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('concept', 'subconcept', 'paper', 'keypoints',
+                     'keywords', 'keywords')
+
+
+class SolutionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Solution.objects.all()
+    serializer_class = SolutionSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('question')
+
+
+class FormulaViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Formula.objects.all()
+    serializer_class = FormulaSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('concept', 'question')
+
+
+class FormulaIndexViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = FormulaIndex.objects.all()
+    serializer_class = FormulaIndexSerializer
+    permission_classes = (permissions.AllowAny,)
+
+
+class KeyPointViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = KeyPoint.objects.all()
+    serializer_class = KeyPointSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('concept', 'question')
+
+
+class KeywordViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Keyword.objects.all()
+    serializer_class = KeywordSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('name', 'question')
+
+
+@api_view(['POST'])
+@permission_classes((permissions.IsAuthenticated,))
+def reindex_all_formula(request):
+    user = request.data["username"]
+    pw = request.data["password"]
+
+    if user == "admin" and pw == "123456":
+        try:
+            fi.reindex_all_formulas()
+            return Response("Formula and formula index table has been " +
+                            "reindexed successfully.")
+        except Exception:
+            return Response("Unable to reindex the formula and formula index" +
+                            "table.")
+
+    else:
+        return Response("You must be an admin to perform database "
+                        "manipulation.")
+
 # class TopicList(generics.ListAPIView):
 #     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 #     serializer_class = TopicSerializer
@@ -52,22 +192,6 @@
 #         return queryset
 #
 #
-# class ConceptDetail(generics.RetrieveAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Concept.objects.all()
-#     serializer_class = ConceptSerializer
-#
-#
-# class PaperList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Paper.objects.all()
-#     serializer_class = PaperSerializer
-#
-#
-# class PaperDetail(generics.RetrieveAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Paper.objects.all()
-#     serializer_class = PaperSerializer
 #
 #
 # class QuestionList(generics.ListAPIView):
@@ -95,38 +219,7 @@
 #             queryset = queryset.filter(concept=concept_id)
 #
 #         return queryset
-#
-#
-# class QuestionDetail(generics.RetrieveAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Question.objects.all()
-#     serializer_class = QuestionSerializer
-#
-#
-# class AnswerPartList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = AnswerPart.objects.all()
-#     serializer_class = AnswerPartSerializer
-#
-#
-# class AnswerPartDetail(generics.RetrieveAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = AnswerPart.objects.all()
-#     serializer_class = AnswerPartSerializer
-#
-#
-# class SubjectList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Subject.objects.all()
-#     serializer_class = SubjectSerializer
-#
-#
-# class SubjectDetail(generics.RetrieveAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Subject.objects.all()
-#     serializer_class = SubjectSerializer
-#
-#
+
 # class KeyPointList(generics.ListAPIView):
 #     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 #     serializer_class = KeyPointSerializer
@@ -141,23 +234,6 @@
 #         return queryset
 #
 #
-# class KeyPointDetail(generics.RetrieveAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = KeyPoint.objects.all()
-#     serializer_class = KeyPointSerializer
-#
-#
-# class FormulaList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Formula.objects.all()
-#     serializer_class = FormulaSerializer
-#
-#
-# class FormulaDetail(generics.RetrieveAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Formula.objects.all()
-#     serializer_class = FormulaSerializer
-#
 #
 # class FormulaIndexList(generics.ListAPIView):
 #     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
@@ -166,12 +242,6 @@
 #     print(FormulaIndex.objects.count())
 #
 #
-# @api_view(['GET'])
-# @permission_classes((permissions.IsAuthenticated,))
-# def reindex_all_formula(request):
-#     fi.reindex_all_formulas()
-#     return Response("Formula and formula index table has been reindexed "
-#                         "successfully.")
 #
 #
 # @api_view(['GET', 'POST'])
@@ -212,8 +282,8 @@
 #         query = request.data["content"]
 #         data = fc.generate_kmeans_cluster(query)
 #         return Response(data)
-#
-#
-# # class QuestionSearchView(HaystackViewSet):
-# #     index_models = [Question]
-# #     serializer_class = QuestionHaystackSerializer
+
+
+# class QuestionSearchView(HaystackViewSet):
+#     index_models = [Question]
+#     serializer_class = QuestionHaystackSerializer

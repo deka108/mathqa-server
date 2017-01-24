@@ -106,7 +106,7 @@ class KeyPoint(models.Model):
         return self.name
 
     name = models.CharField(max_length=200)
-    keypoint_type = models.CharField(max_length=200)
+    type = models.CharField(max_length=200)
     content = models.TextField()
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
 
@@ -137,7 +137,7 @@ class Paper(models.Model):
     """
 
     def __str__(self):
-        return str(self.year) + " " + str(self.get_month_display()) + " " + \
+        return str(self.year) + " " + str(self.month) + " " + \
                str(self.number)
 
     id = models.CharField(max_length=64, primary_key=True, null=False)
