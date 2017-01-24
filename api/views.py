@@ -1,18 +1,16 @@
 # from drf_haystack.viewsets import HaystackViewSet
+import logging
+
 from rest_framework import generics
-from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
-from meas_models.models import *
-from search import formula_indexer as fi
-from search import formula_retriever as fr
-from search import formula_transformer as ft
-from search import formula_clustering as fc
-from .serializers import *
+from search.fsearch import formula_clustering as fc
+from search.fsearch import formula_indexer as fi
+from search.fsearch import formula_transformer as ft
+from search.fsearch import formula_retriever as fr
 from .permissions import *
-
-import logging
+from .serializers import *
 
 logger = logging.getLogger(__name__)
 

@@ -57,12 +57,25 @@ MONTHS = [
     ("12", 'December')
 ]
 
+# DIFFICULTIES = [
+#     ("1", 'Very Easy'),
+#     ("2", 'Easy'),
+#     ("3", 'Average'),
+#     ("4", 'Difficult'),
+#     ("5", 'Very Difficult'),
+# ]
+
 DIFFICULTIES = [
     ("1", 'Very Easy'),
     ("2", 'Easy'),
-    ("3", 'Average'),
-    ("4", 'Difficult'),
-    ("5", 'Very Difficult'),
+    ("3", 'Easy'),
+    ("4", 'Average'),
+    ("5", 'Average'),
+    ("6", 'Average'),
+    ("7", 'Difficult'),
+    ("8", 'Difficult'),
+    ("9", 'Very Difficult'),
+    ("10", 'Very Difficult'),
 ]
 
 MARKS = [(i, i) for i in range(10)]

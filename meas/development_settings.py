@@ -45,6 +45,7 @@ INSTALLED_APPS = (
 
     # API
     'api.apps.ApiConfig',
+    'apiv2.apps.Apiv2Config',
 
     # Search
     'search.apps.SearchConfig',
@@ -112,7 +113,15 @@ DATABASES = {
         'NAME': 'meas_development',
         'USER': 'root',
         'PASSWORD': '123456'
-    }
+    },
+    # 'postgresql': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'dbname',
+    #     'USER': 'dbuser',
+    #     'PASSWORD': 'dbpass',
+    #     'HOST': 'postgresql.example.com',
+    #     'PORT': '',
+    # }
 }
 
 GRAPH_MODELS = {
