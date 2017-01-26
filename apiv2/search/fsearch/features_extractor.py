@@ -1,4 +1,7 @@
 """Extracts features from formula."""
+import cgi
+
+import re
 from tempfile import TemporaryFile
 
 import xml.etree.ElementTree as ET
@@ -7,6 +10,7 @@ import latex2mathml.converter as l2m
 import locale
 
 htmlparser = HTMLParser.HTMLParser()
+open_tag = re.compile(r'>\s*(<)\s*<')
 
 
 class LatexSyntaxError(Exception):
@@ -58,15 +62,31 @@ def is_operator_or_function(term):
 
     # binary operators
     operator_terms += ('pm', 'times', 'div', 'ast', 'dot', 'cap', 'cup',
-                       'vee', 'wedge', '+', '-', 'times', 'plus')
+                       'vee', 'wedge', '+', '-', 'times', 'plus',
+                       u'\xb1', u'\xd7', u'\xf7',
+                       u'\u2211', u'\u2212', u'\u2215', u'\u2216', u'\u2217',
+                       u'\u2218', u'\u2219', u'\u221A', u'\u221D', u'\u221E',
+                       u'\u221F', u'\u2220', u'\u2225', u'\u2227', u'\u2228',
+                       u'\u2229', u'\u222A', u'\u222B')
+
     # relation operators
-    operator_terms += ('leq', 'geq', 'equiv', 'models', 'sim', 'simeq',
-                       'mid', 'parallel', 'subset', 'supset', 'approx',
-                       'subseteq', 'supseteq', 'cong', 'join', 'neq', 'propto'
-                                                                      'in',
-                       '=', '<', '>')
+    operator_terms += ('leq', 'geq', 'equiv', 'nequiv', 'models', 'sim',
+                       'simeq', 'mid', 'parallel', 'subset', 'supset',
+                       'approx', 'subseteq', 'supseteq', 'cong', 'join', 'neq',
+                       'proptoin', '=', '<', '>',
+                       u'\u2260', u'\u2261', u'\u2262', u'\u2263', u'\u2264',
+                       u'\u2265', u'\u2266', u'\u2267', u'\u2243',
+                       u'\u2282', u'\u2283', u'\u2284', u'\u2285', u'\u2286',
+                       u'\u2287', u'\u2288', u'\u2289', u'\u228A', u'\u228B',
+                       u'\u2A1D', u'\u2223', u'\u2239', u'\u223C', u'\u223D',
+                       u'\u2242', u'\u2243', u'\u2244', u'\u2245', u'\u2246',
+                       u'\u2247', u'\u2248', u'\u2249', u'\u224A', u'\u224B',
+                       u'\u224C', '!')
+
     # punctuation operators
-    operator_terms += (',', 'colon', 'ldotp', 'cdotp')
+    operator_terms += (',', 'colon', 'ldotp', 'cdotp', u'\u2234', u'\u2235',
+                       u'\u2236', u'\u2237')
+
     # arrow operators
     operator_terms += ('leftarrow', 'Leftarrow', 'rightarrow', 'Rightarrow',
                        'leftrightarrow', 'Leftrightarrow', 'leftharpoonup',
@@ -75,7 +95,7 @@ def is_operator_or_function(term):
     # miscellaneous operators
     operator_terms += ('ldots', 'cdots', 'vdots', 'ddots', 'forall', 'infty',
                        'exists', 'nabla', 'neg', 'triangle', 'angle', 'bot',
-                       'prime', 'emptyset')
+                       'prime', 'emptyset', u'\u2026')
     # vars sized operators
     operator_terms += ('sum', 'prod', 'coprod', 'int', 'bigcap', 'bigcup',
                        'bigodot', 'bigotimes', 'bigoplus')
@@ -109,7 +129,7 @@ def is_function(term):
                       'arcsin', 'cosh', 'deg', 'gcd', 'lg', 'ln', 'sup',
                       'arctan', 'cot', 'det', 'lim', 'log', 'sec', 'tan',
                       'arg', 'coth', 'dim', 'inf', 'liminf', 'max', 'sin',
-                      'tanh')
+                      'tanh', 'mathrm')
     return term.endswith(function_terms)
 
 
@@ -165,9 +185,9 @@ def generate_mathmlstr(latex_str):
     try:
         mathml_str = l2m.convert(unescaped_latex)
         return mathml_str
-    except Exception:
+    except IndexError, AttributeError:
         raise LatexSyntaxError("Unable to extract features from Formula. " +
-                               "Please fix the formula latex.")
+                               "Please fix the formula latex: %s" % unescaped_latex)
 
 
 def construct_domtree(mathml_str):
@@ -181,10 +201,13 @@ def construct_domtree(mathml_str):
         The root of the MathML tree representation.
     """
     try:
-        root = ET.fromstring(mathml_str)
+        mml_processed = open_tag.sub('>' + cgi.escape('<') + '<',
+                                        mathml_str)
+        root = ET.fromstring(mml_processed)
         return root
     except ET.ParseError:
-        raise ET.ParseError("Unable to parse %s" % mathml_str)
+        raise ET.ParseError("Unable to parse MathML DOM string %s" %
+                            mathml_str)
 
 
 def extract_features(dom_tree):

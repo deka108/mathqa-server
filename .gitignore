@@ -126,3 +126,6 @@ TestingENV/
 # JIRA plugin
 atlassian-ide-plugin.xml
 whoosh/
+
+#DEKA's own files
+/data_reconstruction

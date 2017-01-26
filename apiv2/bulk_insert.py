@@ -1,5 +1,6 @@
 import os
 import csv
+
 from .models import *
 from operator import itemgetter
 from itertools import groupby
@@ -29,6 +30,20 @@ file_names = {
 }
 
 
+def is_ascii(text):
+    if isinstance(text, unicode):
+        try:
+            text.encode('ascii')
+        except UnicodeEncodeError:
+            return False
+    else:
+        try:
+            text.decode('ascii')
+        except UnicodeDecodeError:
+            return False
+    return True
+
+
 # ORDER:
 def read_csv(file):
     data = []
@@ -51,12 +66,25 @@ def insert_edu_level():
     EducationLevel.objects.bulk_create(education_objects)
 
 
+def encode_edu_level_ascii():
+    entries = EducationLevel.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.description):
+            entry.description = entry.description.encode('ascii',
+                                                      'xmlcharrefreplace')
+        if not is_ascii(entry.name):
+            entry.name = entry.name.encode('ascii',
+                                                   'xmlcharrefreplace')
+        entry.save()
+
+
 # Subject
 # Old: id, title, edu_level_id, description
 # New: id, name, description, education_level
 def insert_subject():
     entries = read_csv(file_names["subject"])
-    print(entries)
+
     subject_objects = [Subject(id=int(entry['id']), name=entry['title'],
                                description=entry['description'],
                                education_level=
@@ -64,6 +92,18 @@ def insert_subject():
                                    pk=int(entry['edu_level_id'])))
                        for entry in entries]
     Subject.objects.bulk_create(subject_objects)
+
+
+def encode_subject_ascii():
+    entries = Subject.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.name):
+            entry.name = entry.name.encode('ascii', 'xmlcharrefreplace')
+        if not is_ascii(entry.description):
+            entry.description = \
+                entry.description.encode('ascii', 'xmlcharrefreplace')
+        entry.save()
 
 
 # Topic
@@ -79,17 +119,35 @@ def insert_topic():
     Topic.objects.bulk_create(topic_objects)
 
 
+def encode_topic_ascii():
+    entries = Topic.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.name):
+            entry.name = entry.name.encode('ascii', 'xmlcharrefreplace')
+        entry.save()
+
 # Concept
 # Old: id,block_id,title
 # New: id,name,topic
 def insert_concept():
     entries = read_csv(file_names["topic"])
     concept_objects = [Concept(id=int(entry['id']),
-                           name=entry['title'],
-                           topic=Topic.objects.get(
-                               id=entry['block_id']))
-                     for entry in entries]
+                               name=entry['title'],
+                               topic=Topic.objects.get(
+                                   id=entry['block_id']))
+                       for entry in entries]
     Concept.objects.bulk_create(concept_objects)
+
+
+def encode_concept_ascii():
+    entries = Concept.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.name):
+            entry.name = entry.name.encode('ascii', 'xmlcharrefreplace')
+
+        entry.save()
 
 
 # Subconcept
@@ -105,6 +163,16 @@ def insert_subconcept():
     Subconcept.objects.bulk_create(subconcept_objects)
 
 
+def encode_subconcept_ascii():
+    entries = Subconcept.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.name):
+            entry.name = entry.name.encode('ascii', 'xmlcharrefreplace')
+
+        entry.save()
+
+
 # Keypoint
 # Old: id,title,type,topic_id,content
 # New: id,name,type,content,concept
@@ -115,9 +183,24 @@ def insert_keypoint():
                                  type=entry["type"],
                                  content=entry["content"],
                                  concept=Concept.objects.get(
-                                         id=entry['topic_id']))
+                                     id=entry['topic_id']))
                         for entry in entries]
     KeyPoint.objects.bulk_create(keypoint_objects)
+
+
+def encode_keypoint_ascii():
+    entries = KeyPoint.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.name):
+            entry.name = entry.name.encode('ascii', 'xmlcharrefreplace')
+        if not is_ascii(entry.type):
+            entry.type = \
+                entry.type.encode('ascii', 'xmlcharrefreplace')
+        if not is_ascii(entry.content):
+            entry.content = \
+                entry.content.encode('ascii', 'xmlcharrefreplace')
+        entry.save()
 
 
 # Keyword
@@ -126,10 +209,22 @@ def insert_keypoint():
 def insert_keyword():
     entries = read_csv(file_names["keyword"])
     keyword_objects = [Keyword(id=int(entry["id"]),
-                                 name=entry["title"],
-                                 content=entry["content"])
-                        for entry in entries]
+                               name=entry["title"],
+                               content=entry["content"])
+                       for entry in entries]
     Keyword.objects.bulk_create(keyword_objects)
+
+
+def encode_keyword_ascii():
+    entries = Keyword.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.name):
+            entry.name = entry.name.encode('ascii', 'xmlcharrefreplace')
+        if not is_ascii(entry.content):
+            entry.content = entry.content.encode('ascii', 'xmlcharrefreplace')
+
+        entry.save()
 
 
 # Paperset
@@ -144,6 +239,15 @@ def insert_paperset():
                         for entry in entries]
     Paperset.objects.bulk_create(paperset_objects)
 
+
+def encode_paperset_ascii():
+    entries = Keyword.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.name):
+            entry.name = entry.name.encode('ascii', 'xmlcharrefreplace')
+
+        entry.save()
 
 # Paper
 # Old:id,year,month,number,subject_id,paperset_id
@@ -162,10 +266,25 @@ def insert_paper():
     Paper.objects.bulk_create(paper_objects)
 
 
+def encode_paper_ascii():
+    entries = Paper.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.month):
+            entry.month = entry.month.encode('ascii', 'xmlcharrefreplace')
+
+        entry.save()
+
+
 # Question
 # Old:
-    # Question: id,paper_id,question_no,content,topic_id,subtopic_id,marks,
-        # source, difficulty
+# Question: id,paper_id,question_no,content,topic_id,subtopic_id,marks,
+# source, difficulty
+
+def read_question():
+    entries = read_csv(file_names["question"])
+    return entries
+
 
 # New: id,question_type,used_for,marks,difficulty_level,response_type,
 # source,content,concept,subconcept,paper,keypoints,keywords
@@ -185,6 +304,31 @@ def insert_question():
                                  )
                         for entry in entries]
     Question.objects.bulk_create(question_objects)
+
+
+def encode_question_unicode():
+    questions = Question.objects.all()
+
+    for non_ascii in filter(lambda x: not is_ascii(x.content),
+                            questions):
+        non_ascii.content = \
+            non_ascii.content.encode('ascii', 'xmlcharrefreplace')
+        non_ascii.save()
+
+
+def encode_question_ascii():
+    entries = Question.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.source):
+            entry.source = entry.source.encode('ascii', 'xmlcharrefreplace')
+        if not is_ascii(entry.content):
+            entry.content = entry.content.encode('ascii',
+                                                 'xmlcharrefreplace')
+        if not is_ascii(entry.response_type):
+            entry.response_type = entry.response_type.encode('ascii',
+                                                 'xmlcharrefreplace')
+        entry.save()
 
 
 # Tag: question_id,tagdefinition_id
@@ -229,6 +373,31 @@ def insert_solution():
     Solution.objects.bulk_create(solution_objects)
 
 
+def encode_solution_ascii():
+    entries = Solution.objects.all()
+
+    for entry in entries:
+        if not is_ascii(entry.content):
+            entry.content = entry.content.encode('ascii', 'xmlcharrefreplace')
+
+        entry.save()
+
+
+def encode_all():
+    encode_edu_level_ascii()
+    encode_subject_ascii()
+    encode_topic_ascii()
+    encode_concept_ascii()
+    encode_subconcept_ascii()
+    encode_keypoint_ascii()
+    encode_keyword_ascii()
+    encode_paper_ascii()
+    encode_paperset_ascii()
+    encode_question_ascii()
+    encode_solution_ascii()
+    print("successfully safe encoded sql elements to html entities")
+
+
 # Formula
 def insert_formula():
     pass
@@ -242,3 +411,4 @@ def insert_formula_index():
 # Image
 def insert_image():
     pass
+

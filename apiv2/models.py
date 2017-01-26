@@ -216,11 +216,11 @@ class Formula(models.Model):
 
     content = models.TextField()
     status = models.BooleanField(default=False)
-    inorder_term = models.CharField(max_length=1024, null=True, blank=True)
-    sorted_term = models.CharField(max_length=1024, null=True, blank=True)
-    structure_term = models.CharField(max_length=1024, null=True, blank=True)
-    constant_term = models.CharField(max_length=1024, null=True, blank=True)
-    variable_term = models.CharField(max_length=1024, null=True, blank=True)
+    inorder_term = models.TextField(max_length=1024, null=True, blank=True)
+    sorted_term = models.TextField(max_length=1024, null=True, blank=True)
+    structure_term = models.TextField(max_length=1024, null=True, blank=True)
+    constant_term = models.TextField(max_length=1024, null=True, blank=True)
+    variable_term = models.TextField(max_length=1024, null=True, blank=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE,
                                  null=True, blank=True)
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE,

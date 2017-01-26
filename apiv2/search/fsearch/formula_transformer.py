@@ -1,5 +1,5 @@
 from collections import Counter
-from meas_models.models import *
+from apiv2.models import *
 
 import ast
 import math

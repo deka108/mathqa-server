@@ -1,10 +1,21 @@
 """Update and creates an indexed formula table"""
 from itertools import chain
-from meas_models.models import *
+from apiv2.models import *
 
 import bisect
 import features_extractor as fe
 import re
+
+DOLLAR_NOTATION = re.compile(r'\$\$([^\$]+)\$\$')
+PAREN_NOTATION = re.compile(r'\\\(([^\(]+)\\\)')
+BRACKET_NOTATION = re.compile(r'\\\[([^\[]+)\\\]')
+
+LEFTP_PATTERN = re.compile(r'\(')
+RIGHTP_PATTERN = re.compile(r'\)')
+LEFTB_PATTERN = re.compile(r'\[')
+RIGHTB_PATTERN = re.compile(r'\]')
+
+MATHRM_PATTERN = re.compile(r'\\mathrm')
 
 
 def reindex_all_formulas(reset_formula=False):
@@ -26,6 +37,9 @@ def reindex_all_formulas(reset_formula=False):
     # Reindex formulas in every question 
     for question in questions:
         reindex_formulas_in_question(question.id, reset_formula)
+        print("Successfully reindex question %s" % question.id)
+
+    print("Finished reindexing")
 
 
 def reindex_formulas_in_question(question_id, create_formula=False):
@@ -38,8 +52,8 @@ def reindex_formulas_in_question(question_id, create_formula=False):
     """
     question = Question.objects.get(id=question_id)
 
-    if create_formula:
-        formulas = extract_formulas_from_question(question_id)
+    if create_formula or not question.formula_set.exists():
+        formulas = extract_formulas_from_content(question.content)
 
         for formula_str in formulas:
             new_formula = Formula(content=formula_str, status=False,
@@ -55,7 +69,7 @@ def reindex_formulas_in_question(question_id, create_formula=False):
             print("Could not create formula index.")
 
 
-def extract_formulas_from_question(question_id):
+def extract_formulas_from_content(content):
     """
     Extract latex formulas from a question.
 
@@ -65,16 +79,25 @@ def extract_formulas_from_question(question_id):
     Returns:
         List of latex formulas.
     """
-    content = Question.objects.get(id=question_id).content
-
     latex_formulas = []
-    dollar_notation = re.compile(r'\$+([^\$]+)\$+')
-    latex_formulas += dollar_notation.findall(content)
+    latex_formulas += DOLLAR_NOTATION.findall(content)
+    latex_formulas += PAREN_NOTATION.findall(content)
+    latex_formulas += BRACKET_NOTATION.findall(content)
+    latex_formulas = list(set(latex_formulas))
 
-    bracket_notation = re.compile(r'\\\(([^$]+)\\\)')
-    latex_formulas += bracket_notation.findall(content)
+    return escape_bracket_parens_mathrm(latex_formulas)
 
-    return set(latex_formulas)
+# Need to fix integral
+# integral has to be //int_{sub}^{sup}
+# REGEX:
+
+
+def escape_bracket_parens_mathrm(formulas):
+    for i in range(len(formulas)):
+        formula = formulas[i]
+        formula = MATHRM_PATTERN.sub('', formula)
+        formulas[i] = formula
+    return formulas
 
 
 def create_formula_index_model(latex_str, formula_id):

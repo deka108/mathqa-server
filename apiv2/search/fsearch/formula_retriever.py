@@ -1,6 +1,6 @@
 """Search tables for formula using the IDF method"""
 from itertools import chain
-from meas_models.models import *
+from apiv2.models import *
 
 import ast
 import features_extractor as fe
@@ -8,6 +8,7 @@ import math
 import re
 
 
+# TODO: Need to extract formula from latex first
 def search_formula(latex_str):
     """
     Performs inverted index searching to find questions with the closest
@@ -130,7 +131,7 @@ def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_fea,
     formula_indexes = FormulaIndex.objects.filter(pk__in=terms_collection)
     for formula_index in formula_indexes:
         if formula_index.df != 0:
-            idf_values[formula_index.indexkey] = \
+            idf_values[formula_index.term_index] = \
                 math.log10(float(N)/formula_index.df)
 
     return idf_values

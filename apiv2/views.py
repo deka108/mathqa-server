@@ -31,14 +31,6 @@ class SubjectViewSet(viewsets.ReadOnlyModelViewSet):
 
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('education_level',)
-    # def get_queryset(self):
-    #     try:
-    #         education_level = EducationLevel.objects.get(pk=self.kwargs.get(
-    #             'education_level_id'))
-    #         return self.queryset.filter(education_level=education_level)
-    #     except EducationLevel.DoesNotExist:
-    #         education_level = None
-    #     return self.queryset
 
 
 class TopicViewSet(viewsets.ReadOnlyModelViewSet):
@@ -138,150 +130,63 @@ class KeywordViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ('name', 'question')
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @permission_classes((permissions.IsAuthenticated,))
 def reindex_all_formula(request):
-    user = request.data["username"]
-    pw = request.data["password"]
-
+    user = request.data.get("username")
+    pw = request.data.get("password")
     if user == "admin" and pw == "123456":
         try:
-            fi.reindex_all_formulas()
+            fi.reindex_all_formulas(reset_formula=True)
             return Response("Formula and formula index table has been " +
                             "reindexed successfully.")
-        except Exception:
+        except Exception as e:
+            print(e)
             return Response("Unable to reindex the formula and formula index" +
-                            "table.")
-
+                            " table.")
     else:
         return Response("You must be an admin to perform database "
                         "manipulation.")
 
-# class TopicList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     serializer_class = TopicSerializer
-#
-#     def get_queryset(self):
-#         queryset = Topic.objects.all()
-#         subj_id = self.kwargs.get('subj_id')
-#         if subj_id is not None:
-#             queryset = queryset.filter(subject=subj_id)
-#         return queryset
-#
-#
-# class TopicDetail(generics.RetrieveAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = Topic.objects.all()
-#     serializer_class = TopicSerializer
-#
-#
-# class ConceptList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     serializer_class = ConceptSerializer
-#
-#     def get_queryset(self):
-#         queryset = Concept.objects.all()
-#         subj_id = self.kwargs.get('subj_id')
-#         topic_id = self.kwargs.get('topic_id')
-#         if subj_id is not None:
-#             queryset = queryset.filter(
-#                 topic__in=Topic.objects.filter(subject=subj_id))
-#         elif topic_id is not None:
-#             queryset = queryset.filter(topic=topic_id)
-#
-#         return queryset
-#
-#
-#
-#
-# class QuestionList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     serializer_class = QuestionSerializer
-#
-#     def get_queryset(self):
-#         queryset = Question.objects.all()
-#         subj_id = self.kwargs.get('subj_id')
-#         topic_id = self.kwargs.get('topic_id')
-#         concept_id = self.kwargs.get('concept_id')
-#
-#         if "sample" in self.request.path:
-#             queryset = queryset.filter(keypoint__isnull=False)
-#         elif "real" in self.request.path:
-#             queryset = queryset.filter(keypoint__isnull=True)
-#
-#         if subj_id is not None:
-#             queryset = queryset.filter(concept__in=Concept.objects.filter(
-#                 topic__in=Topic.objects.filter(subject=subj_id)))
-#         elif topic_id is not None:
-#             queryset = queryset.filter(
-#                 concept__in=Concept.objects.filter(topic=topic_id))
-#         elif concept_id is not None:
-#             queryset = queryset.filter(concept=concept_id)
-#
-#         return queryset
 
-# class KeyPointList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     serializer_class = KeyPointSerializer
-#
-#     def get_queryset(self):
-#         queryset = KeyPoint.objects.all()
-#         concept_id = self.kwargs.get('concept_id')
-#
-#         if concept_id is not None:
-#             queryset = queryset.filter(concept=concept_id)
-#
-#         return queryset
-#
-#
-#
-# class FormulaIndexList(generics.ListAPIView):
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#     queryset = FormulaIndex.objects.all()
-#     serializer_class = FormulaIndexSerializer
-#     print(FormulaIndex.objects.count())
-#
-#
-#
-#
-# @api_view(['GET', 'POST'])
-# @permission_classes((permissions.AllowAny,))
-# def search_text_db(request):
-#     if request.method == 'GET':
-#         return Response({"message": "Hello, world!"})
-#     elif request.method == 'POST':
-#         query = request.data["data"]
-#         queryset = Question.objects.filter(content__icontains=query)
-#         serializer = QuestionSerializer(queryset,
-#                                         context={'request': request},
-#                                         many=True)
-#         return Response(serializer.data)
-#
-#
-# @api_view(['GET', 'POST'])
-# @permission_classes((permissions.AllowAny,))
-# def search_formula(request):
-#     if request.method == 'GET':
-#         return Response({"content":"x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}."})
-#     elif request.method == 'POST':
-#         query = request.data["content"]
-#         questions = fr.search_formula(query)
-#         serializer = QuestionSerializer(questions,
-#                                         context={'request': request},
-#                                         many=True)
-#         return Response(serializer.data)
-#
-#
-# @api_view(['GET', 'POST'])
-# @permission_classes((permissions.AllowAny,))
-# def search_formula_cluster(request):
-#     if request.method == 'GET':
-#         data = ft.transform_formulas()
-#         return Response(data)
-#     elif request.method == 'POST':
-#         query = request.data["content"]
-#         data = fc.generate_kmeans_cluster(query)
-#         return Response(data)
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def search_text_db(request):
+    if request.method == 'GET':
+        return Response({"message": "Hello, world!"})
+    elif request.method == 'POST':
+        query = request.data["data"]
+        queryset = Question.objects.filter(content__icontains=query)
+        serializer = QuestionSerializer(queryset,
+                                        context={'request': request},
+                                        many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def search_formula(request):
+    if request.method == 'GET':
+        return Response({"content":"x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}."})
+    elif request.method == 'POST':
+        query = request.data.get("content")
+        questions = fr.search_formula(query)
+        serializer = QuestionSerializer(questions,
+                                        context={'request': request},
+                                        many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def search_formula_cluster(request):
+    if request.method == 'GET':
+        data = ft.transform_formulas()
+        return Response(data)
+    elif request.method == 'POST':
+        query = request.data["content"]
+        data = fc.generate_kmeans_cluster(query)
+        return Response(data)
 
 
 # class QuestionSearchView(HaystackViewSet):
