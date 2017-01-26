@@ -89,6 +89,83 @@
     //
     Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
     Preview.callback.autoReset = true;  // make sure it can run more than once
+
+    var Preview2 = {
+      delay: 150,        // delay after keystroke before updating
+      preview: null,     // filled in by Init below
+      buffer: null,      // filled in by Init below
+      timeout: null,     // store setTimout id
+      mjRunning: false,  // true when MathJax is processing
+      mjPending: false,  // true when a typeset has been queued
+      oldText: null,     // used to check if an update is needed
+      //
+      //  Get the preview and buffer DIV's
+      //
+      Init: function () {
+        this.preview = document.getElementById("MathPreview2");
+        this.buffer = document.getElementById("MathBuffer2");
+      },
+      //
+      //  Switch the buffer and preview, and display the right one.
+      //  (We use visibility:hidden rather than display:none since
+      //  the results of running MathJax are more accurate that way.)
+      //
+      SwapBuffers: function () {
+        var buffer = this.preview, preview = this.buffer;
+        this.buffer = buffer; this.preview = preview;
+        buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+        preview.style.position = ""; preview.style.visibility = "";
+      },
+      //
+      //  This gets called when a key is pressed in the textarea.
+      //  We check if there is already a pending update and clear it if so.
+      //  Then set up an update to occur after a small delay (so if more keys
+      //    are pressed, the update won't occur until after there has been
+      //    a pause in the typing).
+      //  The callback function is set up below, after the Preview object is set up.
+      //
+      Update: function () {
+        if (this.timeout) {clearTimeout(this.timeout)}
+        this.timeout = setTimeout(this.callback,this.delay);
+      },
+      //
+      //  Creates the preview and runs MathJax on it.
+      //  If MathJax is already trying to render the code, return
+      //  If the text hasn't changed, return
+      //  Otherwise, indicate that MathJax is running, and start the
+      //    typesetting.  After it is done, call PreviewDone.
+      //
+      CreatePreview: function () {
+        Preview2.timeout = null;
+        if (this.mjPending) return;
+        var text = document.getElementById("id_solution").value;
+        if (text === this.oldtext) return;
+        if (this.mjRunning) {
+          this.mjPending = true;
+          MathJax.Hub.Queue(["CreatePreview",this]);
+        } else {
+          this.buffer.innerHTML = this.oldtext = text;
+          this.mjRunning = true;
+          MathJax.Hub.Queue(
+      ["Typeset",MathJax.Hub,this.buffer],
+      ["PreviewDone",this]
+          );
+        }
+      },
+      //
+      //  Indicate that MathJax is no longer running,
+      //  and swap the buffers to show the results.
+      //
+      PreviewDone: function () {
+        this.mjRunning = this.mjPending = false;
+        this.SwapBuffers();
+      }
+    };
+    //
+    //  Cache a callback to the CreatePreview action
+    //
+    Preview2.callback = MathJax.Callback(["CreatePreview",Preview2]);
+    Preview2.callback.autoReset = true;  // make sure it can run more than once
   </script>
 {% endblock %}
 
@@ -130,6 +207,10 @@
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
+                <b>Topic</b> <span class="custom-asterisk">(*)</span>
+                {{ form.topic }}
+              </li>
+              <li role="presentation" class="pull-right">
                 <b>Concept</b> <span class="custom-asterisk">(*)</span>
                 {{ form.concept }}
               </li>
@@ -139,15 +220,9 @@
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
               <li id="question_type" role="presentation" class="pull-left">
-                <b>Question type</b> <span class="custom-asterisk">(*)</span>
-                <div class="styled-select slate">
-                  {{ form.question_type }}
-                </div>
-              </li>
-              <li id="paper" role="presentation">
-                <b>Paper</b> <span class="custom-asterisk">(*)</span>
+                <b>Key points</b>
                 <div>
-                  {{ form.paper }}
+                  {{ form.keypoint }}
                 </div>
               </li>
             </ul>
@@ -164,29 +239,31 @@
                   </a>
                 </div>
               </li>
-              <li id="question_type" role="presentation" class="pull-right">
-                <b>Key Points</b>
-                <div>
-                  {{ form.keypoint }}
-                </div>
-              </li>
             </ul>
           </li>
 
+
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
-              <li role="presentation">
+              <li id="question_type" role="presentation" class="pull-left">
+                <b>Question type</b> <span class="custom-asterisk">(*)</span>
+                <div class="styled-select slate">
+                  {{ form.question_type }}
+                </div>
+              </li>
+              <li id="paper" role="presentation">
+                <b>Paper</b> <span class="custom-asterisk">(*)</span>
+                <div>
+                  {{ form.paper }}
+                </div>
+              </li>
+              <li role="presentation" class="pull-right">
                  Used for <span class="custom-asterisk">(*)</span>
                 <div class="styled-select slate">
                   {{ form.used_for }}
                 </div>
               </li>
-            </ul>
-          </li>
-
-          <li class="custom-component" role="presentation">
-            <ul class="nav nav-pills custom-inside">
-              <li role="presentation" class="pull-left">
+              <li role="presentation" class="pull-right">
                 Response type <span class="custom-asterisk">(*)</span>
                 <div class="styled-select slate">
                   {{ form.respone_type }}
@@ -218,6 +295,11 @@
               <li role="presentation" class="pull-left">
                 <b>Content</b> <span class="custom-asterisk">(*)</span>
               </li>
+            </ul>
+          </li>
+
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
               <li role="presentation">
                 {{ form.content }}
               </li>
@@ -226,9 +308,6 @@
 
           <li class="custom-component" role="presentation">
             <ul class="nav nav-pills custom-inside">
-              <li role="presentation" class="pull-left">
-                <b>Preview</b> <span class="custom-asterisk">(*)</span>
-              </li>
               <li role="presentation" class="pull-left">
                 <div id="MathPreview"></div>
                 <div id="MathBuffer"></div>
@@ -244,8 +323,25 @@
               <li role="presentation" class="pull-left">
                 <b>Solution</b> <span class="custom-asterisk">(*)</span>
               </li>
+            </ul>
+          </li>
+
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
               <li role="presentation" class="pull-left">
                 {{ form.solution }}
+              </li>
+            </ul>
+          </li>
+
+          <li class="custom-component" role="presentation">
+            <ul class="nav nav-pills custom-inside">
+              <li role="presentation" class="pull-left">
+                <div id="MathPreview2"></div>
+                <div id="MathBuffer2"></div>
+                <script>
+                  Preview2.Init();
+                </script>
               </li>
             </ul>
           </li>
@@ -305,25 +401,12 @@
                     </ul>
 
                     <ul class="nav nav-pills">
-                      <li>
-                        {{ sform.subpart_name_1 }}
-                        {% if sform.subpart_name_1.errors %}
-                            {% for error in sform.subpart_name_1.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
-                        {% endif %}
+                      <li class="pull-left">
+                        &nbsp &nbsp &nbsp
+                        <b> i. </b>
                       </li>
 
-                      <li>
-                        {{ sform.subpart_content_1 }}
-                        {% if sform.subpart_content_1.errors %}
-                            {% for error in sform.subpart_content_1.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
-                        {% endif %}
-                      </li>
-
-                      <li>
+                      <li class="pull-right">
                         <div class="styled-select slate">
                           {{ sform.respone_type_1 }}
                         </div>
@@ -333,28 +416,24 @@
                             {% endfor %}
                         {% endif %}
                       </li>
+
+                      <li class="pull-right">
+                        {{ sform.subpart_content_1 }}
+                        {% if sform.subpart_content_1.errors %}
+                            {% for error in sform.subpart_content_1.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
                     </ul>
 
-                    <ul class="nav nav-pills">
-                      <li>
-                        {{ sform.subpart_name_2 }}
-                        {% if sform.subpart_name_2.errors %}
-                            {% for error in sform.subpart_name_2.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
-                        {% endif %}
+                     <ul class="nav nav-pills">
+                      <li class="pull-left">
+                        &nbsp &nbsp &nbsp
+                        <b> ii. </b>
                       </li>
 
-                      <li>
-                        {{ sform.subpart_content_2 }}
-                        {% if sform.subpart_content_2.errors %}
-                            {% for error in sform.subpart_content_2.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
-                        {% endif %}
-                      </li>
-
-                      <li>
+                      <li class="pull-right">
                         <div class="styled-select slate">
                           {{ sform.respone_type_2 }}
                         </div>
@@ -364,28 +443,25 @@
                             {% endfor %}
                         {% endif %}
                       </li>
+
+                      <li class="pull-right">
+                        {{ sform.subpart_content_2 }}
+                        {% if sform.subpart_content_2.errors %}
+                            {% for error in sform.subpart_content_2.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
                     </ul>
 
-                    <ul class="nav nav-pills">
-                      <li>
-                        {{ sform.subpart_name_3 }}
-                        {% if sform.subpart_name_3.errors %}
-                            {% for error in sform.subpart_name_3.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
-                        {% endif %}
+                     <ul class="nav nav-pills">
+                      <li class="pull-left">
+                        &nbsp &nbsp &nbsp
+                        <b> iii. </b>
                       </li>
 
-                      <li>
-                        {{ sform.subpart_content_3 }}
-                        {% if sform.subpart_content_3.errors %}
-                            {% for error in sform.subpart_content_3.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
-                        {% endif %}
-                      </li>
-
-                      <li>
+                      <li class="pull-right">
                         <div class="styled-select slate">
                           {{ sform.respone_type_3 }}
                         </div>
@@ -395,37 +471,44 @@
                             {% endfor %}
                         {% endif %}
                       </li>
+
+                      <li class="pull-right">
+                        {{ sform.subpart_content_3 }}
+                        {% if sform.subpart_content_3.errors %}
+                            {% for error in sform.subpart_content_3.errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        {% endif %}
+                      </li>
+
                     </ul>
 
-                    <ul class="nav nav-pills">
-                      <li>
-                        {{ sform.subpart_name_4 }}
-                        {% if sform.subpart_name_4.errors %}
-                            {% for error in sform.subpart_name_4.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
-                        {% endif %}
+                     <ul class="nav nav-pills">
+                      <li class="pull-left">
+                        &nbsp &nbsp &nbsp
+                        <b> iv. </b>
                       </li>
 
-                      <li>
-                        {{ sform.subpart_content_4 }}
-                        {% if sform.subpart_content_4.errors %}
-                            {% for error in sform.subpart_content_4.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
-                        {% endif %}
-                      </li>
-
-                      <li>
+                      <li class="pull-right">
                         <div class="styled-select slate">
                           {{ sform.respone_type_4 }}
                         </div>
                         {% if sform.respone_type_4.errors %}
-                            {% for error in sform.respone_type_4.errors %}
-                                {{ error|escape }}
-                            {% endfor %}
+                          {% for error in sform.respone_type_4.errors %}
+                            {{ error|escape }}
+                          {% endfor %}
                         {% endif %}
                       </li>
+
+                      <li class="pull-right">
+                        {{ sform.subpart_content_4 }}
+                        {% if sform.subpart_content_4.errors %}
+                          {% for error in sform.subpart_content_4.errors %}
+                            {{ error|escape }}
+                          {% endfor %}
+                        {% endif %}
+                      </li>
+
                     </ul>
 
                   </div>

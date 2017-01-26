@@ -129,3 +129,8 @@ whoosh/
 
 #DEKA's own files
 /data_reconstruction
+
+# Setting for local development
+meas/development_settings.py
+
+.idea/

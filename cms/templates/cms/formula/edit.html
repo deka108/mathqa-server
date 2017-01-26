@@ -105,6 +105,10 @@
   </div>
 {% endblock breadcrumb %}
 
+{% block main_title %}
+  <p class="display-section">Edit Formula</p>
+{% endblock main_title %}
+
 {% block main_content %}
   <form action="/cms/api_update_formula/" method="post">
     {% csrf_token %}

@@ -107,4 +107,9 @@ urlpatterns += [
     url(r'^api-token-auth/', rest_views.obtain_auth_token),
 ]
 
+# For assessment
+urlpatterns += [
+    url(r'^check_answer/$', views.check_answer, name='check_answer'),
+]
+
 urlpatterns = format_suffix_patterns(urlpatterns)

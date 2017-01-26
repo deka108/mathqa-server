@@ -14,6 +14,8 @@ from meas_models.models import *
 from .forms import *
 from meas_common.basic import *
 
+import re
+
 
 # Topic
 def topic_index(request, subject_id=-1):
@@ -291,17 +293,31 @@ def api_create_question(request):
     if not request.user.is_superuser:
         return redirect('/login/')
 
-    question = Question(
-        question_type=request.POST.__getitem__('question_type'),
-        used_for=request.POST.__getitem__('used_for'),
-        mark=request.POST.__getitem__('mark'),
-        difficulty_level=request.POST.__getitem__(
-            'difficulty_level'),
-        content=request.POST.__getitem__('content'),
-        solution=request.POST.__getitem__('solution'),
-        answer=request.POST.__getitem__('answer'),
-        concept=Concept.objects.get(pk=request.POST.__getitem__('concept')),
-    )
+    question = ""
+
+    if any(request.POST.__getitem__('answer')):
+        question = Question(
+            question_type=request.POST.__getitem__('question_type'),
+            used_for=request.POST.__getitem__('used_for'),
+            mark=request.POST.__getitem__('mark'),
+            difficulty_level=request.POST.__getitem__(
+                'difficulty_level'),
+            content=request.POST.__getitem__('content'),
+            solution=request.POST.__getitem__('solution'),
+            answer=request.POST.__getitem__('answer'),
+            concept=Concept.objects.get(pk=request.POST.__getitem__('concept'))
+        )
+    else:
+        question = Question(
+            question_type=request.POST.__getitem__('question_type'),
+            used_for=request.POST.__getitem__('used_for'),
+            mark=request.POST.__getitem__('mark'),
+            difficulty_level=request.POST.__getitem__(
+                'difficulty_level'),
+            content=request.POST.__getitem__('content'),
+            solution=request.POST.__getitem__('solution'),
+            concept=Concept.objects.get(pk=request.POST.__getitem__('concept'))
+        )
 
     if any(request.POST.getlist('keypoint')):
         question.keypoint = KeyPoint.objects.get(
@@ -328,37 +344,33 @@ def api_create_question(request):
                                              part_respone_type=cd.get(
                                                  'part_respone_type'),
                                              question=question)
-                    if (any(cd.get('subpart_name_1')) and
-                            any(cd.get('subpart_content_1')) and
+                    if (any(cd.get('subpart_content_1')) and
                             any(cd.get('respone_type_1'))):
-                        answer_part.subpart_name_1 = cd.get('subpart_name_1')
+                        answer_part.subpart_name_1 = "i"
                         answer_part.subpart_content_1 = cd.get(
                             'subpart_content_1')
                         answer_part.respone_type_1 = cd.get(
                             'respone_type_1')
 
-                    if (any(cd.get('subpart_name_2')) and
-                            any(cd.get('subpart_content_2')) and
+                    if (any(cd.get('subpart_content_2')) and
                             any(cd.get('respone_type_2'))):
-                        answer_part.subpart_name_2 = cd.get('subpart_name_2')
+                        answer_part.subpart_name_2 = "ii"
                         answer_part.subpart_content_2 = cd.get(
                             'subpart_content_2')
                         answer_part.respone_type_2 = cd.get(
                             'respone_type_2')
 
-                    if (any(cd.get('subpart_name_3')) and
-                            any(cd.get('subpart_content_3')) and
+                    if (any(cd.get('subpart_content_3')) and
                             any(cd.get('respone_type_3'))):
-                        answer_part.subpart_name_3 = cd.get('subpart_name_3')
+                        answer_part.subpart_name_3 = "iii"
                         answer_part.subpart_content_3 = cd.get(
                             'subpart_content_3')
                         answer_part.respone_type_3 = cd.get(
                             'respone_type_3')
 
-                    if (any(cd.get('subpart_name_4')) and
-                            any(cd.get('subpart_content_4')) and
+                    if (any(cd.get('subpart_content_4')) and
                             any(cd.get('respone_type_4'))):
-                        answer_part.subpart_name_4 = cd.get('subpart_name_4')
+                        answer_part.subpart_name_4 = "iv"
                         answer_part.subpart_content_4 = cd.get(
                             'subpart_content_4')
                         answer_part.respone_type_4 = cd.get(
@@ -383,8 +395,10 @@ def create_question(request):
     EditAnswerPartFormSet = formset_factory(EditAnswerPartForm, extra=1)
     formset = EditAnswerPartFormSet()
 
-    return render(request, 'cms/question/create.html', __user_info(request,
-                  {'form': EditQuestionForm(), 'formset': formset}))
+    return render(request, 'cms/question/create.html',
+                  __user_info(request,
+                              {'form': EditQuestionForm(),
+                               'formset': formset}))
 
 
 def edit_question(request, question_id):
@@ -426,7 +440,12 @@ def api_update_question(request):
     question.mark = request.POST.__getitem__('mark')
     question.difficulty_level = request.POST.__getitem__('difficulty_level')
     question.respone_type = request.POST.__getitem__('respone_type')
-    question.answer = request.POST.__getitem__('answer')
+
+    if any(request.POST.__getitem__('answer')):
+        question.answer = request.POST.__getitem__('answer')
+    else:
+        question.answer = ""
+
     question.content = request.POST.__getitem__('content')
     question.solution = request.POST.__getitem__('solution')
 
@@ -476,37 +495,33 @@ def api_update_question(request):
                     answer_part.part_content = cd.get('part_content')
                     answer_part.part_respone_type = cd.get('part_respone_type')
 
-                    if (any(cd.get('subpart_name_1')) and
-                            any(cd.get('subpart_content_1')) and
+                    if (any(cd.get('subpart_content_1')) and
                             any(cd.get('respone_type_1'))):
-                        answer_part.subpart_name_1 = cd.get('subpart_name_1')
+                        answer_part.subpart_name_1 = "i"
                         answer_part.subpart_content_1 = cd.get(
                             'subpart_content_1')
                         answer_part.respone_type_1 = cd.get(
                             'respone_type_1')
 
-                    if (any(cd.get('subpart_name_2')) and
-                            any(cd.get('subpart_content_2')) and
+                    if (any(cd.get('subpart_content_2')) and
                             any(cd.get('respone_type_2'))):
-                        answer_part.subpart_name_2 = cd.get('subpart_name_2')
+                        answer_part.subpart_name_2 = "ii"
                         answer_part.subpart_content_2 = cd.get(
                             'subpart_content_2')
                         answer_part.respone_type_2 = cd.get(
                             'respone_type_2')
 
-                    if (any(cd.get('subpart_name_3')) and
-                            any(cd.get('subpart_content_3')) and
+                    if (any(cd.get('subpart_content_3')) and
                             any(cd.get('respone_type_3'))):
-                        answer_part.subpart_name_3 = cd.get('subpart_name_3')
+                        answer_part.subpart_name_3 = "iii"
                         answer_part.subpart_content_3 = cd.get(
                             'subpart_content_3')
                         answer_part.respone_type_3 = cd.get(
                             'respone_type_3')
 
-                    if (any(cd.get('subpart_name_4')) and
-                            any(cd.get('subpart_content_4')) and
+                    if (any(cd.get('subpart_content_4')) and
                             any(cd.get('respone_type_4'))):
-                        answer_part.subpart_name_4 = cd.get('subpart_name_4')
+                        answer_part.subpart_name_4 = "iv"
                         answer_part.subpart_content_4 = cd.get(
                             'subpart_content_4')
                         answer_part.respone_type_4 = cd.get(
@@ -542,10 +557,12 @@ def question_topic_detail(request, topic_id):
 
     topic = Topic.objects.get(pk=topic_id)
     concept = topic.concept_set.all()
+    questions = Question.objects.filter(concept__in=concept, question_type="PR")
+    for question in questions:
+        question = format_answer_box(question)
 
     return render(request, 'cms/question/questions.html', __user_info(
-        request, {"questions": Question.objects.filter(concept__in=concept,
-                                                       question_type="PR")}))
+        request, {"questions": questions}))
 
 
 def question_paper_detail(request, paper_id):
@@ -883,3 +900,116 @@ def __parts(clist, parts):
         clist.update(hash_part)
         i = i + 1
     return clist
+
+
+# TODO: put in the suitable file
+# Martinus
+# Jan 16, 2016
+def format_answer_box(question):
+    if question.answer != " ":
+        formatted_answer = substitute_answer_with_box(question.id, None, question.respone_type, question.answer, topic=question.concept.topic.name, has_subpart=False)
+        setattr(question, "answer", formatted_answer)
+        print(question.answer)
+    else:
+        answer_parts = question.answerpart_set.all()
+        for answer in answer_parts:
+            answer.part_content = substitute_answer_with_box(answer.id, 0, answer.part_respone_type, answer.part_content, topic=question.concept.topic.name)
+            if answer.subpart_name_1 == "i":
+                answer.subpart_content_1 = substitute_answer_with_box(answer.id, 1, answer.respone_type_1, answer.subpart_content_1, topic=question.concept.topic.name)
+            if answer.subpart_name_2 == "ii":
+                answer.subpart_content_2 = substitute_answer_with_box(answer.id, 2, answer.respone_type_2, answer.subpart_content_2, topic=question.concept.topic.name)
+            if answer.subpart_name_3 == "iii":
+                answer.subpart_content_3 = substitute_answer_with_box(answer.id, 3, answer.respone_type_3, answer.subpart_content_3, topic=question.concept.topic.name)
+            if answer.subpart_name_4 == "iv":
+                answer.subpart_content_4 = substitute_answer_with_box(answer.id, 4, answer.respone_type_4, answer.subpart_content_4, topic=question.concept.topic.name)
+        # Error: 'Question' object does not support item assignment
+        # question['answer_parts'] = answer_parts
+        setattr(question, "answer_parts", answer_parts)
+        try:
+            print(answer_parts[0].part_content)
+        except IndexError:
+            pass
+    return question
+
+
+def substitute_answer_with_box(answerpart_id, subpart_no, answer_type, original_answer, topic="Unknown", has_subpart=True):
+    if not has_subpart:
+        subpart_no = 'q'
+    # Count the number of input in each part
+    answer_count = len(re.findall(r'(["])(?:(?=(\\?))\2.)*?\1', original_answer))
+    # Remove all answer
+    content = re.sub(r'(["])(?:(?=(\\?))\2.)*?\1', '""', original_answer)
+    for i in range(answer_count):
+        # Construct HTML tag
+        if answer_type == "Numberic" or answer_type == "EXPRESSION":
+            output_HTML_tag = '<span id="answer-' + str(answerpart_id)   + "-" + str(subpart_no) + \
+                "-" + str(i) + '"></span>'
+            output_HTML_tag += '<input type="hidden" name="answer-' + str(answerpart_id) + "-" + \
+                str(subpart_no) + '"' + 'id="hidden_answer-' + str(answerpart_id) + "-" + \
+                str(subpart_no) + "-" + str(i) + '" >'
+            # Substitute the answer with HTML tag (process each sub_part one by one)
+            if not has_subpart:
+                print output_HTML_tag
+            content = re.sub(r'""', output_HTML_tag, content, 1)
+        elif answer_type == "Text":
+            output_HTML_tag = '<input type="text" name="answer-' + str(answerpart_id) + "-" + \
+                str(subpart_no) + '"' + 'id="hidden_answer-' + str(answerpart_id) + "-" + str(subpart_no) + "-" + \
+                str(i) + '" >'
+            # Substitute the answer with HTML tag (process each sub_part one by one)
+            content = re.sub(r'""', output_HTML_tag, content, 1)
+        elif answer_type == "Prove" and topic == "Trigonometry":
+            lhs_question = '$' + 'LHS (under development)' + '$'
+            output_HTML_tag = '<div class="row"><div id="col-md-6">'
+            output_HTML_tag += lhs_question
+            output_HTML_tag += '</div><div id="col-md-6"><div id="answer_container-' + str(answerpart_id) + "-" + str(subpart_no) + '">'
+            output_HTML_tag += "<span>= </span>"
+            output_HTML_tag += '<span style="min-width:120px; min-height:25px;" id="answer-' + str(answerpart_id) + "-" + str(subpart_no) + \
+                              "-" + str(i) + '"></span>'
+            output_HTML_tag += '<input type="hidden" name="answer-' + str(answerpart_id) + "-" + \
+                               str(subpart_no) + '"' + 'id="hidden_answer-' + str(answerpart_id) + "-" + \
+                               str(subpart_no) + "-" + str(i) + '" >'
+            output_HTML_tag += '</div>'
+            output_HTML_tag += '<div id="answer_button_container-' + str(answerpart_id) + "-" + str(subpart_no) + '">'
+            output_HTML_tag += '<div class="col-md-6">'
+            output_HTML_tag += '<a style="float:right" href="#" class="btn btn-default" onclick="add_step(' + str(answerpart_id) + ','
+            if subpart_no == 'q':
+                output_HTML_tag += "'q'"
+            else:
+                output_HTML_tag += str(subpart_no)
+            output_HTML_tag += ')" >Add Steps</a>'
+            output_HTML_tag += '</div><div class="col-md-6">'
+            output_HTML_tag += '<a style="float:left" href="#" class="btn btn-default" onclick="remove_step(' + str(answerpart_id) + ','
+            if subpart_no == 'q':
+                output_HTML_tag += "'q'"
+            else:
+                output_HTML_tag += str(subpart_no)
+            output_HTML_tag += ')" >Remove Steps</a>'
+            output_HTML_tag += '</div></div></div></div>'
+            content = output_HTML_tag
+            break
+        elif answer_type == "Prove" and topic == "Plane Geometry":
+            output_HTML_tag = '<center><div id="answer_container-' + str(answerpart_id) + "-" + str(subpart_no) + '">'
+            output_HTML_tag += "<span></span>"
+            output_HTML_tag += '<span style="min-width:120px; min-height:25px;" id="answer-' + str(answerpart_id) + "-" + str(subpart_no) + \
+                              "-" + str(i) + '"></span>'
+            output_HTML_tag += '<input type="hidden" name="answer-' + str(answerpart_id) + "-" + \
+                               str(subpart_no) + '"' + 'id="hidden_answer-' + str(answerpart_id) + "-" + \
+                               str(subpart_no) + "-" + str(i) + '" >'
+            output_HTML_tag += '</div>'
+            output_HTML_tag += '<div id="answer_button_container-' + str(answerpart_id) + "-" + str(subpart_no) + '">'
+            output_HTML_tag += '<div class="col-md-6">'
+            output_HTML_tag += '<a style="float:left" href="#" class="btn btn-default" onclick="remove_step(' + str(answerpart_id) + ','
+            if subpart_no == 'q':
+                output_HTML_tag += "'q'"
+            else:
+                output_HTML_tag += str(subpart_no)
+            output_HTML_tag += ')" >Remove Steps</a>'
+            output_HTML_tag += '</div></div></center>'
+            content = output_HTML_tag
+            break
+        else:
+            print(answer_type + " " + topic)
+            output_HTML_tag = "Unknown error"
+            # Substitute the answer with HTML tag (process each sub_part one by one)
+            content = re.sub(r'""', output_HTML_tag, content, 1)
+    return content

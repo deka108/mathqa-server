@@ -17,6 +17,178 @@
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
   </script>
+
+  <script type="text/javascript">
+        function add_step(answerpart_id, subpart_no) {
+            // Container <div> where dynamic content will be placed
+            var container = document.getElementById("answer_container-" + answerpart_id + "-" + subpart_no);
+            // Append a node with a random text
+            // Append a line break
+            container.appendChild(document.createElement("br"));
+            // Create an <input> element, set its type and name attributes
+            container.appendChild(document.createTextNode("= "));
+            var container_id = "answer_container-" + answerpart_id + "-" + subpart_no;
+            // Minus one because the first span containing '='
+            var number = container.getElementsByTagName("span").length - 1;
+            var span = document.createElement("span");
+            span.name = "answer-" + answerpart_id + "-" + subpart_no;
+            span.id = "answer-" + answerpart_id + "-" + subpart_no + "-" + number;
+            span.style.minWidth = '120px';
+            span.style.minHeight = '25px';
+            container.appendChild(span);
+            var hidden_input = document.createElement("input");
+            hidden_input.type = "hidden";
+            hidden_input.id = "hidden_step" + number;
+            hidden_input.name = "answer";
+            container.appendChild(hidden_input);
+            activateMathquillSpan(answerpart_id, subpart_no, number);
+
+        }
+
+        function remove_step(answerpart_id, subpart_no) {
+            // Container <div> where dynamic content will be placed
+            var container = document.getElementById("answer_container-" + answerpart_id + "-" + subpart_no);
+            if (container.childNodes.length == 3) {
+                return;
+            }
+            //Remove input tag
+            container.removeChild(container.lastChild);
+            //Remove span tag
+            container.removeChild(container.lastChild);
+            //Remove text tag
+            container.removeChild(container.lastChild);
+            //Remove <br> tag
+            container.removeChild(container.lastChild);
+        }
+
+      function activateMathquill() {
+          var dirty_span_list = document.getElementsByTagName("span");
+		  var span_list = [];
+		  //Get the ID of all answer box span
+		  for (var i = 0; i < dirty_span_list.length; i++) {
+			  var span_id = dirty_span_list[i].id;
+			  var position = span_id.indexOf("answer");
+			  if (position != -1) {
+				  span_list.push(span_id);
+			  }
+		  }
+		  no_span = span_list.length;
+		  for (var i = 0; i < no_span; i++) {
+              span_details = span_list[i].split("-");
+              //Remove the keyword 'answer' from the list
+              span_details = span_details.slice(1);
+              activateMathquillSpan(span_details[0], span_details[1], span_details[2]);
+          }
+      }
+
+      function activateMathquillSpan(answerpart_id, subpart_no, i) {
+          source_id = 'answer-' + answerpart_id + "-" + subpart_no + "-" + i;
+	      target_id = 'hidden_answer-' + answerpart_id + "-" + subpart_no + "-" + i;
+		  var mathFieldSpan = document.getElementById(source_id);
+		  var latexSpan = document.getElementById(target_id);
+		  var MQ = MathQuill.getInterface(2); // for backcompat
+		  var mathField = MQ.MathField(mathFieldSpan, {
+		      spaceBehavesLikeTab: true, // configurable
+                  handlers: {
+		            edit: function() { // useful event handler
+                    latexSpan.value = mathField.latex(); // simple API
+                  }
+		      }
+		  });
+      }
+
+      $(document).ready(function() {
+		  activateMathquill();
+	  });
+
+      function check_answer(id, subpart_no, has_part) {
+          var answer = {};
+          if (has_part === false) {
+              var answer_component_list = document.getElementsByName("answer-" + id + "-" + "q");
+              var answer_list = [];
+              for (var i = 0; i < answer_component_list.length; i++) {
+                  answer_list.push(answer_component_list[i].value);
+              }
+              answer_list = answer_list.join("|");
+              answer['type'] = 'q';
+              answer['id'] = id;
+              answer['answer'] = answer_list;
+          } else {
+              var answer_component_list = document.getElementsByName("answer-" + id + "-" + subpart_no);
+              var answer_list = [];
+
+              for (var i = 0; i < answer_component_list.length; i++) {
+                  answer_list.push(answer_component_list[i].value);
+              }
+              answer_list = answer_list.join("|");
+              answer['type'] = 'a';
+              answer['id'] = id;
+              answer['subpart_no'] = subpart_no;
+              answer['answer'] = answer_list;
+          }
+
+          var csrftoken = $.cookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+              // these HTTP methods do not require CSRF protection
+              return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+		  }
+
+		  $.ajaxSetup({
+		      beforeSend: function(xhr, settings) {
+		          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+		              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			      }
+		      }
+          });
+
+          $.ajax('/api/check_answer/', {
+			  type : 'POST',
+			  contentType : 'application/json',
+			  data : JSON.stringify(answer),
+			  success: function(data) {
+				  var JSONresult = JSON.parse(JSON.stringify(data));
+				  var type = JSONresult['type'];
+				  var id = JSONresult['id'];
+                  var subpart_no = JSONresult['subpart_no'];
+				  var result = JSONresult['result'];
+				  if (type === 'q') {
+				    display_answer_result(id, subpart_no, result, false);
+                  } else {
+				    display_answer_result(id, subpart_no, result);
+                  }
+
+			  },
+			  error: function(data, status, error) {
+			  }
+		 });
+
+      }
+
+      function reset_answer_result(id, subpart_no, has_part) {
+          if (has_part === false) {
+              var answer_result_component = document.getElementById("answer_result-q-" + id);
+              answer_result_component.innerHTML = "";
+          } else {
+              var answer_result_component = document.getElementById("answer_result-" + id + "-" + subpart_no);
+              answer_result_component.innerHTML = "";
+          }
+
+         }
+
+      function display_answer_result(id, subpart_no, result, has_part) {
+          reset_answer_result(id, subpart_no, has_part);
+          if (has_part === false) {
+              var answer_result_component = document.getElementById("answer_result-q-" + id);
+              answer_result_component.innerHTML = result;
+          } else {
+              var answer_result_component = document.getElementById("answer_result-" + id + "-" + subpart_no);
+              answer_result_component.innerHTML = result;
+          }
+
+      }
+
+  </script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -36,7 +208,6 @@
 {% endblock main_title %}
 
 {% block main_content %}
-  <a href="/cms/create_question">
     <button type="button" class="btn btn-success new-button">
       Add new Question
     </button>
@@ -65,47 +236,64 @@
                       {{ question.content | safe }}
                       </br>
                       <hr>
-                      Answer </br>
-                      {% for answerpart in question.answerpart_set.all %}
-                        <div class="panel panel-default">
-                          <div class="panel-heading">
-                            ( {{ answerpart.part_name }} )
-                             {{ answerpart.part_content }}
-                          </div>
-                          <div class="panel-body">
-                            <div class="rows">
-                              <div class="col-sm-1"></div>
-                              <div class="col-sm-1">
-                                {{ answerpart.subpart_name_1 }}. &nbsp
-                                {{ answerpart.subpart_name_2 }}. &nbsp
-                                {{ answerpart.subpart_name_3 }}. &nbsp
-                                {{ answerpart.subpart_name_4 }}. &nbsp
+                      Answer
+                        </br>
+                        {% if question.answer != " " %}
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                 {{ question.answer | safe }}
+                                 <input type="button" value="Check" onclick="check_answer({{ question.id }}, -1, false)" >
+                                 <span id="answer_result-q-{{ question.id }}" ></span>
                               </div>
-                              <div class="col-sm-4">
-                                <input class="input-box"></input>
-                                <input class="input-box"></input>
-                                <input class="input-box"></input>
-                                <input class="input-box"></input>
-                              </div>
-                              <div class="col-sm-2">
-                                <a type="button" class="btn btn-default">
-                                  Check
-                                </a>
-                                <a type="button" class="btn btn-default">
-                                  Check
-                                </a>
-                                <a type="button" class="btn btn-default">
-                                  Check
-                                </a>
-                                <a type="button" class="btn btn-default">
-                                  Check
-                                </a>
-                              </div>
-                              <div class="col-sm-4"></div>
                             </div>
-                          </div>
-                        </div>
-                      {% endfor %}
+                        {% else %}
+                            {% for answerpart in question.answer_parts %}
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                ( {{ answerpart.part_name }} )
+                                 {{ answerpart.part_content | safe }}
+                                 <input type="button" value="Check" onclick="check_answer({{ answerpart.id }}, 0)" >
+                                 <span id="answer_result-{{ answerpart.id }}-0" ></span>
+                              </div>
+                              <div class="panel-body">
+                                <ul class="nav nav-pills nav-stacked">
+                                  <li>
+                                    {% if answerpart.subpart_name_1 == "i" %}
+                                      ( {{ answerpart.subpart_name_1 }} )
+                                        {{ answerpart.subpart_content_1 | safe }}
+                                      <input type="button" value="Check" onclick="check_answer({{ answerpart.id }}, 1)" >
+                                      <span id="answer_result-{{ answerpart.id }}-1" ></span>
+                                    {% endif %}
+                                  </li>
+                                  <li>
+                                    {% if answerpart.subpart_name_2 == "ii" %}
+                                      ( {{ answerpart.subpart_name_2 }} )
+                                        {{ answerpart.subpart_content_2 | safe }}
+                                      <input type="button" value="Check" onclick="check_answer({{ answerpart.id }}, 2)" >
+                                      <span id="answer_result-{{ answerpart.id }}-2" ></span>
+                                    {% endif %}
+                                  </li>
+                                  <li>
+                                    {% if answerpart.subpart_name_3 == "iii" %}
+                                      ( {{ answerpart.subpart_name_3 }} )
+                                        {{ answerpart.subpart_content_3 | safe }}
+                                      <input type="button" value="Check" onclick="check_answer({{ answerpart.id }}, 3)" >
+                                      <span id="answer_result-{{ answerpart.id }}-3" ></span>
+                                    {% endif %}
+                                  </li>
+                                  <li>
+                                    {% if answerpart.subpart_name_4 == "iv" %}
+                                      ( {{ answerpart.subpart_name_4 }} )
+                                        {{ answerpart.subpart_content_4 | safe }}
+                                      <input type="button" value="Check" onclick="check_answer({{ answerpart.id }}, 4)" >
+                                      <span id="answer_result-{{ answerpart.id }}-4" ></span>
+                                    {% endif %}
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          {% endfor %}
+                        {%  endif %}
                    </div>
                    <div class="modal-footer">
                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
