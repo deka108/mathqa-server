@@ -85,7 +85,7 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
 
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('concept', 'subconcept', 'paper', 'keypoints',
-                     'keywords', 'keywords')
+                     'keywords')
 
 
 class SolutionViewSet(viewsets.ReadOnlyModelViewSet):
@@ -94,7 +94,7 @@ class SolutionViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('question')
+    filter_fields = ('question',)
 
 
 class FormulaViewSet(viewsets.ReadOnlyModelViewSet):
@@ -118,7 +118,7 @@ class KeyPointViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('concept', 'question')
+    filter_fields = ('concept', 'question', 'type')
 
 
 class KeywordViewSet(viewsets.ReadOnlyModelViewSet):

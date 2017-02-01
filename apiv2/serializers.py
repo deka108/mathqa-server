@@ -7,97 +7,97 @@ from rest_framework import serializers
 from apiv2.models import *
 
 
-class EducationLevelSerializer(serializers.HyperlinkedModelSerializer):
+class EducationLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationLevel
-        fields = ('url', 'id', 'name', 'description')
+        fields = ('id', 'name', 'description')
 
 
-class SubjectSerializer(serializers.HyperlinkedModelSerializer):
+class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ('url', 'id', 'name', 'description', 'education_level')
+        fields = ('id', 'name', 'description', 'education_level')
 
 
-class TopicSerializer(serializers.HyperlinkedModelSerializer):
+class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ('url', 'id', 'name', 'subject')
+        fields = ('id', 'name', 'subject')
 
 
-class ConceptSerializer(serializers.HyperlinkedModelSerializer):
+class ConceptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Concept
-        fields = ('url', 'id', 'name', 'topic')
+        fields = ('id', 'name', 'topic')
 
 
-class SubconceptSerializer(serializers.HyperlinkedModelSerializer):
+class SubconceptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subconcept
-        fields = ('url', 'id', 'name', 'concept')
+        fields = ('id', 'name', 'concept')
 
 
-class KeyPointSerializer(serializers.HyperlinkedModelSerializer):
+class KeyPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = KeyPoint
-        fields = ('url', 'id', 'name', 'type', 'content', 'concept',
+        fields = ('id', 'name', 'type', 'content', 'concept',
                   'question_set')
 
 
-class KeywordSerializer(serializers.HyperlinkedModelSerializer):
+class KeywordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Keyword
-        fields = ('url', 'id', 'name', 'content', 'question_set')
+        fields = ('id', 'name', 'content', 'question_set')
 
 
-class PapersetSerializer(serializers.HyperlinkedModelSerializer):
+class PapersetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paper
-        fields = ('url', 'id', 'name', 'subject')
+        fields = ('id', 'name', 'subject')
 
 
-class PaperSerializer(serializers.HyperlinkedModelSerializer):
+class PaperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paper
-        fields = ('url', 'id', 'year', 'month', 'number', 'no_of_question',
+        fields = ('id', 'year', 'month', 'number', 'no_of_question',
                   'subject', 'paperset')
 
 
-class QuestionSerializer(serializers.HyperlinkedModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
 
-        fields = ('url', 'id', 'content', 'concept', 'is_sample', 'subconcept',
+        fields = ('id', 'content', 'concept', 'is_sample', 'subconcept',
                   'difficulty_level', 'marks', 'keypoints', 'keywords',
                   'paper', 'source', 'used_for', 'response_type',
                   'question_type', 'paper')
 
 
-class SolutionSerializer(serializers.HyperlinkedModelSerializer):
+class SolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
-        fields = ('url', 'id', 'question', 'content')
+        fields = ('id', 'question', 'content')
 
 
-class FormulaSerializer(serializers.HyperlinkedModelSerializer):
+class FormulaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Formula
-        fields = ('url', 'id', 'content', 'status', 'inorder_term',
+        fields = ('id', 'content', 'status', 'inorder_term',
                   'sorted_term', 'structure_term', 'constant_term',
                   'variable_term', 'question', 'concept')
 
 
-class FormulaIndexSerializer(serializers.HyperlinkedModelSerializer):
+class FormulaIndexSerializer(serializers.ModelSerializer):
     class Meta:
         model = FormulaIndex
         fields = ('term_index', 'docsids', 'df')
 
 
-class AnswerPartSerializer(serializers.HyperlinkedModelSerializer):
+class AnswerPartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = (
-        'url', 'id', 'part_name', 'part_content', 'part_respone_type',
+        'id', 'part_name', 'part_content', 'part_respone_type',
         'subpart_name_1', 'subpart_content_1', 'respone_type_1',
         'subpart_name_2', 'subpart_content_2', 'respone_type_2',
         'subpart_name_3', 'subpart_content_3', 'respone_type_3',
@@ -105,10 +105,10 @@ class AnswerPartSerializer(serializers.HyperlinkedModelSerializer):
         'question')
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'id', 'username', 'password', 'email')
+        fields = ('id', 'username', 'password', 'email')
 
 
 # class QuestionHaystackSerializer(HaystackSerializer):
