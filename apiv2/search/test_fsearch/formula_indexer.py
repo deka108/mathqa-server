@@ -4,36 +4,37 @@ from itertools import chain
 
 import re
 
-import apiv2.search.utils.formula_extractor as fe
-import apiv2.search.utils.formula_features_extractor as ffe
+from apiv2.search.utils import formula_extractor as fe
+from apiv2.search.utils import formula_features_extractor as ffe
 from apiv2.models import *
+from apiv2.search.utils import check_tokenizer as ct
 
 
-def reindex_all_formulas(reset_formula=False):
+def reindex_formulas_in_test_questions(reset_formula=False):
     """
     Reindex the formula and formula index table.
 
     Args:
         reset_formula: Option to drop the formula index table and recreates it.
     """
-    questions = Question.objects.all()
-
     if reset_formula:
-        Formula.objects.all().delete()
+        TestFormula.objects.all().delete()
     else:
-        Formula.objects.all().update(status=False)
+        TestFormula.objects.all().update(status=False)
 
-    FormulaIndex.objects.all().delete()
+    TestFormulaIndex.objects.all().delete()
+
+    question_ids = ct.read_test_questionids()
 
     # Reindex formulas in every question 
-    for question in questions:
-        reindex_formulas_in_question(question.id, reset_formula)
-        print("Successfully reindex question %s" % question.id)
+    for qid in question_ids:
+        reindex_formulas_in_test_question(qid, reset_formula)
+        print("Successfully reindex question %s" % qid)
 
     print("Finished reindexing")
 
 
-def reindex_formulas_in_question(question_id, create_formula=False):
+def reindex_formulas_in_test_question(question_id, create_formula=False):
     """
     Creates formula and formula index table from a question.
 
@@ -54,13 +55,13 @@ def reindex_formulas_in_question(question_id, create_formula=False):
     formulas = question.formula_set.all()
     for formula in formulas:
         try:
-            create_formula_index_model(formula.content, formula.id)
-        except (KeyError, Formula.DoesNotExist) as e:
+            create_test_formula_index_model(formula.content, formula.id)
+        except (KeyError, TestFormula.DoesNotExist) as e:
             print(e)
             print("Could not create formula index.")
 
 
-def create_formula_index_model(latex_str, formula_id):
+def create_test_formula_index_model(latex_str, formula_id):
     """
     Updates formula table with the extracted formula features and creates
     formula index table.
@@ -70,7 +71,7 @@ def create_formula_index_model(latex_str, formula_id):
         formula_id: formula id.
     """
     try:
-        formula_obj = Formula.objects.get(pk=formula_id)
+        formula_obj = TestFormula.objects.get(pk=formula_id)
 
         if not formula_obj.status:
             # Extract four features of a Formula
@@ -86,18 +87,18 @@ def create_formula_index_model(latex_str, formula_id):
             formula_obj.status = True
             formula_obj.save()
 
-            # Create index term in FormulaIndex table
+            # Create index term in TestFormulaIndex table
             for term in chain.from_iterable(inorder_sem_terms+sorted_sem_terms):
-                create_update_formula_index(formula_obj.id, term)
+                create_update_test_formula_index(formula_obj.id, term)
 
             for term in chain(struc_features, const_features, var_features):
-                create_update_formula_index(formula_obj.id, term)
+                create_update_test_formula_index(formula_obj.id, term)
 
-    except (KeyError, Formula.DoesNotExist) as err:
+    except (KeyError, TestFormula.DoesNotExist) as err:
         print err
 
 
-def create_update_formula_index(formula_id, term):
+def create_update_test_formula_index(formula_id, term):
     """
     Create an inverted table of formula that maps terms to document ids
     (formula ids), or updates it with the document id if it already exists.
@@ -108,7 +109,7 @@ def create_update_formula_index(formula_id, term):
     """
 
     try:
-        f_index = FormulaIndex.objects.get(pk=term)
+        f_index = TestFormulaIndex.objects.get(pk=term)
         formulaid_str = str(formula_id)
         docsids = re.findall('\d+', f_index.docsids)
 
@@ -117,7 +118,7 @@ def create_update_formula_index(formula_id, term):
             f_index.docsids = '#' + '#'.join(docsids) + '#'
             f_index.df = len(docsids)
 
-    except (KeyError, FormulaIndex.DoesNotExist):
-        f_index = FormulaIndex(term, '#' + str(formula_id) + '#', 1)
+    except (KeyError, TestFormulaIndex.DoesNotExist):
+        f_index = TestFormulaIndex(term, '#' + str(formula_id) + '#', 1)
 
     f_index.save()

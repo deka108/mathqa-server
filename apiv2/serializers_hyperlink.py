@@ -90,7 +90,22 @@ class FormulaSerializer(serializers.HyperlinkedModelSerializer):
 class FormulaIndexSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FormulaIndex
-        fields = ('term_index', 'docsids', 'df')
+        fields = ('url', 'term_index', 'docsids', 'df')
+
+
+class TestFormulaIndexSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestFormulaIndex
+        fields = ('url', 'term_index', 'docsids', 'df')
+
+
+class TestFormulaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestFormula
+        fields = ('ur', 'id', 'content', 'status', 'inorder_term',
+                  'sorted_term', 'structure_term', 'constant_term',
+                  'variable_term', 'question', 'concept')
+
 
 
 class AnswerPartSerializer(serializers.HyperlinkedModelSerializer):

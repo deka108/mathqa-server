@@ -1,5 +1,3 @@
-# from drf_haystack.viewsets import HaystackViewSet
-# from django_filters.rest_framework import DjangoFilterBackend
 import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
@@ -109,6 +107,21 @@ class FormulaViewSet(viewsets.ReadOnlyModelViewSet):
 class FormulaIndexViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = FormulaIndex.objects.all()
     serializer_class = FormulaIndexSerializer
+    permission_classes = (permissions.AllowAny,)
+
+
+class TestFormulaViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = TestFormula.objects.all()
+    serializer_class = TestFormulaSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('concept', 'question')
+
+
+class TestFormulaIndexViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = TestFormulaIndex.objects.all()
+    serializer_class = TestFormulaIndexSerializer
     permission_classes = (permissions.AllowAny,)
 
 

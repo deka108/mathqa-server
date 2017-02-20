@@ -40,7 +40,7 @@ def search_formula(latex_str):
         if query_sort_terms:
             query_1gram_sort_terms = query_sort_terms[-1]
 
-        N = Formula.objects.count()
+        N = TestFormula.objects.count()
 
         # Compute idf values
         idf_values = compute_idf_values(query_ino_terms, query_1gram_sort_terms,
@@ -72,11 +72,11 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
 
     for term in chain.from_iterable(query_sort_sem_terms):
         try:
-            f_index = FormulaIndex.objects.get(pk=term)
+            f_index = TestFormulaIndex.objects.get(pk=term)
             docsids = re.findall('\d+', f_index.docsids)
             docsids = [int(docsid) for docsid in docsids]
 
-            formulas = Formula.objects.filter(pk__in=docsids, status=True)
+            formulas = TestFormula.objects.filter(pk__in=docsids, status=True)
 
             # Convert string to list
             for formula in formulas:
@@ -100,7 +100,7 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
                 if len(related_formulas) >= k:
                     break
 
-        except (KeyError, FormulaIndex.DoesNotExist):
+        except (KeyError, TestFormulaIndex.DoesNotExist):
             print("Couldn't find this term:%s in the database." % term)
 
     return list(related_formulas)
@@ -134,7 +134,7 @@ def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_fea,
                                     rel_formula.sorted_term +
                                     rel_formula.structure_term))
 
-    formula_indexes = FormulaIndex.objects.filter(pk__in=terms_collection)
+    formula_indexes = TestFormulaIndex.objects.filter(pk__in=terms_collection)
     for formula_index in formula_indexes:
         if formula_index.df != 0:
             idf_values[formula_index.term_index] = \

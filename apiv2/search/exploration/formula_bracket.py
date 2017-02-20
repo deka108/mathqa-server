@@ -13,3 +13,4 @@ FORMULAS = {
     TRIGONOMETRY: [''],
     EXPONENTS: ['']
 }
+

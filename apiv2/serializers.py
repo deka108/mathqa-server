@@ -86,6 +86,20 @@ class FormulaSerializer(serializers.ModelSerializer):
                   'variable_term', 'question', 'concept')
 
 
+class TestFormulaIndexSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestFormulaIndex
+        fields = ('term_index', 'docsids', 'df')
+
+
+class TestFormulaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestFormula
+        fields = ('id', 'content', 'status', 'inorder_term',
+                  'sorted_term', 'structure_term', 'constant_term',
+                  'variable_term', 'question', 'concept')
+
+
 class FormulaIndexSerializer(serializers.ModelSerializer):
     class Meta:
         model = FormulaIndex

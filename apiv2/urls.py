@@ -20,6 +20,8 @@ router.register(r'questions', views.QuestionViewSet)
 router.register(r'solutions', views.SolutionViewSet)
 router.register(r'formulas', views.FormulaViewSet)
 router.register(r'formula_indexes', views.FormulaIndexViewSet)
+router.register(r'test_formulas', views.TestFormulaViewSet)
+router.register(r'testformula_indexes', views.TestFormulaIndexViewSet)
 router.register(r'keypoints', views.KeyPointViewSet)
 router.register(r'keywords', views.KeywordViewSet)
 
@@ -42,7 +44,9 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^schema/$', views.schema_view),
     url(r'^formula/reindex_all$', views.reindex_all_formula),
-    url(r'^check_token/$', views.check_token),
+    url(r'^formula/reindex_test$', views.reindex_test_formula),
+    url(r'^check_token/(?P<concept_id>[0-9]+)$', views.check_token),
+    url(r'^check_tokens/$', views.check_token_questions)
     # real vs sample questions
     # url(r'^sample_questions'),
     # url(r'^real_questions'),
