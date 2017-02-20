@@ -84,12 +84,12 @@ class Concept(models.Model):
         return self.name
 
     name = models.CharField(max_length=200)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='concepts')
 
 
 # Subtopic [Hidden],  used for display only
 class Subconcept(models.Model):
-    concept = models.ForeignKey(Concept, null=True)
+    concept = models.ForeignKey(Concept, null=True, related_name='subconcepts')
     name = models.TextField(null=True)
 
     def __str__(self):
@@ -108,7 +108,7 @@ class KeyPoint(models.Model):
     name = models.CharField(max_length=200)
     type = models.CharField(max_length=200)
     content = models.TextField()
-    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE, related_name='keypoints')
 
 
 # TagDefinitions which have the type of K or F
@@ -125,7 +125,7 @@ class Paperset(models.Model):
     Category of papers.
     """
     name = models.TextField(null=True)
-    subject = models.ForeignKey(Subject, null=False)
+    subject = models.ForeignKey(Subject, null=False, related_name='papersets')
 
     def __str__(self):
         return str(self.name)
@@ -183,10 +183,13 @@ class Question(models.Model):
     content = models.TextField(null=False, blank=False)
     is_sample = models.BooleanField(default=False, blank=False)
 
-    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
-    subconcept = models.ForeignKey(Subconcept, null=True, blank=True)
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE, 
+        related_name='questions')
+    subconcept = models.ForeignKey(Subconcept, null=True, blank=True, 
+        related_name='questions')
     paper = models.ForeignKey(Paper,
-                              on_delete=models.CASCADE, null=True, blank=True)
+                              on_delete=models.CASCADE, null=True, blank=True,
+                              related_name='questions')
 
     keypoints = models.ManyToManyField(KeyPoint)
     keywords = models.ManyToManyField(Keyword)

@@ -40,19 +40,18 @@ class SubconceptSerializer(serializers.ModelSerializer):
 class KeyPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = KeyPoint
-        fields = ('id', 'name', 'type', 'content', 'concept',
-                  'question_set')
+        fields = ('id', 'name', 'type', 'content', 'concept')
 
 
 class KeywordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Keyword
-        fields = ('id', 'name', 'content', 'question_set')
+        fields = ('id', 'name', 'content')
 
 
 class PapersetSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Paper
+        model = Paperset
         fields = ('id', 'name', 'subject')
 
 

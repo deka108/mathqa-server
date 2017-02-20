@@ -167,7 +167,6 @@ class FormulaIndexList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = FormulaIndex.objects.all()
     serializer_class = FormulaIndexSerializer
-    print(FormulaIndex.objects.count())
 
 
 @api_view(['GET'])

@@ -1,10 +1,13 @@
-import json
-import re
 import HTMLParser
-import latex2mathml.converter as lml
+import json
 
+import apiv2.search.fsearch.formula_extractor
+import latex2mathml.converter as lml
+import re
+
+import apiv2.search.utils.formula_features_extractor
+from apiv2.search.utils import formula_features_extractor as fe
 from .models import *
-from search.fsearch import features_extractor as fe, formula_indexer as fi
 
 INT_NOTATION = re.compile(r'\\int\^.+')
 h = HTMLParser.HTMLParser()
@@ -18,7 +21,7 @@ def check_question_content():
     broken = []
 
     for question in questions:
-        formulastrs = fi.extract_formulas_from_content(question.content)
+        formulastrs = apiv2.search.utils.formula_extractor.extract_formulas_from_text(question.content)
 
         try:
             for formulastr in formulastrs:
@@ -46,7 +49,7 @@ def check_keypoint_content():
     broken = []
 
     for keypoint in keypoints:
-        formulastrs = fi.extract_formulas_from_content(keypoint.content)
+        formulastrs = apiv2.search.utils.formula_extractor.extract_formulas_from_text(keypoint.content)
 
         try:
             for formulastr in formulastrs:
@@ -74,7 +77,7 @@ def check_solution_content():
     broken = []
 
     for solution in solutions:
-        formulastrs = fi.extract_formulas_from_content(solution.content)
+        formulastrs = apiv2.search.utils.formula_extractor.extract_formulas_from_text(solution.content)
 
         try:
             for formulastr in formulastrs:

@@ -1,4 +1,5 @@
 from apiv2 import views
+from apiv2 import views_hyperlink as hviews
 
 from django.conf.urls import url, include
 from rest_framework import routers
@@ -14,6 +15,7 @@ router.register(r'topics', views.TopicViewSet)
 router.register(r'concepts', views.ConceptViewSet)
 router.register(r'subconcepts', views.SubconceptViewSet)
 router.register(r'papersets', views.PapersetViewSet)
+router.register(r'papers', views.PaperViewSet)
 router.register(r'questions', views.QuestionViewSet)
 router.register(r'solutions', views.SolutionViewSet)
 router.register(r'formulas', views.FormulaViewSet)
@@ -21,18 +23,26 @@ router.register(r'formula_indexes', views.FormulaIndexViewSet)
 router.register(r'keypoints', views.KeyPointViewSet)
 router.register(r'keywords', views.KeywordViewSet)
 
+router.register(r'heducation_levels', hviews.EducationLevelViewSet)
+router.register(r'hsubjects', hviews.SubjectViewSet)
+router.register(r'htopics', hviews.TopicViewSet)
+router.register(r'hconcepts', hviews.ConceptViewSet)
+router.register(r'hsubconcepts', hviews.SubconceptViewSet)
+router.register(r'hpapersets', hviews.PapersetViewSet)
+router.register(r'hpapers', hviews.PaperViewSet)
+router.register(r'hquestions', hviews.QuestionViewSet)
+router.register(r'hsolutions', hviews.SolutionViewSet)
+router.register(r'hformulas', hviews.FormulaViewSet)
+router.register(r'hformula_indexes', hviews.FormulaIndexViewSet)
+router.register(r'hkeypoints', hviews.KeyPointViewSet)
+router.register(r'hkeywords', hviews.KeywordViewSet)
+
 
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^schema/$', views.schema_view),
     url(r'^formula/reindex_all$', views.reindex_all_formula),
-
-    # search
-    url(r'^dsearch/$', views.search_text_db, name="search_db_text"),
-    url(r'^fsearch/$', views.search_formula, name="search_formula"),
-    url(r'^csearch/$', views.search_formula_cluster,
-        name="search_formula_cluster"),
-
+    url(r'^check_token/$', views.check_token),
     # real vs sample questions
     # url(r'^sample_questions'),
     # url(r'^real_questions'),

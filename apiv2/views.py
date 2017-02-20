@@ -1,21 +1,30 @@
 # from drf_haystack.viewsets import HaystackViewSet
 # from django_filters.rest_framework import DjangoFilterBackend
+import logging
+
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework import viewsets, status
+from rest_framework.decorators import api_view, permission_classes, list_route
+from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 from rest_framework.schemas import get_schema_view
 
-from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as\
-    fr, formula_transformer as ft, formula_clustering as fc
-from apiv2.serializers import *
 from apiv2.permissions import *
-
-import logging
+from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as\
+    fr
+from apiv2.serializers import *
 
 logger = logging.getLogger(__name__)
 
 schema_view = get_schema_view(title='MathQA API')
+
+SEARCH_TYPE = "type"
+VALID_QUERY_PARAMS = ["q", "query"]
+
+SEARCH_DATABASE = "d"
+SEARCH_FORMULA = "f"
+SEARCH_IMAGE_TEXT = "i"
+SEARCH_TAG = "t"
 
 
 class EducationLevelViewSet(viewsets.ReadOnlyModelViewSet):
@@ -78,6 +87,24 @@ class PaperViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ('paperset',)
 
 
+def search_database(query, request):
+    questions = Question.objects.filter(content__icontains=query)
+    if questions:
+        serializer = (QuestionSerializer(questions,
+                                         context={'request': request},
+                                         many=True))
+        return serializer
+
+
+def search_formula(query, request):
+    questions = fr.search_formula(query)
+    if questions:
+        serializer = QuestionSerializer(questions,
+                                        context={'request': request},
+                                        many=True)
+        return serializer
+
+
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
@@ -86,6 +113,38 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('concept', 'subconcept', 'paper', 'keypoints',
                      'keywords')
+
+    @list_route(url_path="search")
+    def search(self, request):
+        params = request.query_params
+
+        for p in VALID_QUERY_PARAMS:
+            if p in params:
+                query = params[p]
+
+                if query:
+                    # Search type specified
+                    if SEARCH_TYPE in params:
+                        search_type = params[SEARCH_TYPE]
+
+                        if search_type == SEARCH_DATABASE:
+                            serializer = search_database(query, request)
+                        elif search_type == SEARCH_FORMULA:
+                            serializer = search_formula(query, request)
+                        elif search_type == SEARCH_TAG:
+                            pass
+                        else:
+                            ParseError("Only formula, database, and text "
+                                       "search are allowed")
+                    # No type specified
+                    else:
+                        serializer = search_database(query, request)
+
+                    if serializer:
+                        return Response(serializer.data)
+                    return Response(status=status.HTTP_204_NO_CONTENT)
+
+        raise ParseError(detail="Query parameter is required.")
 
 
 class SolutionViewSet(viewsets.ReadOnlyModelViewSet):
@@ -131,6 +190,12 @@ class KeywordViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def get_formula_token(request):
+    pass
+
+
+@api_view(['GET', 'POST'])
 @permission_classes((permissions.IsAuthenticated,))
 def reindex_all_formula(request):
     user = request.data.get("username")
@@ -149,45 +214,10 @@ def reindex_all_formula(request):
                         "manipulation.")
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
-def search_text_db(request):
-    if request.method == 'GET':
-        return Response({"message": "Hello, world!"})
-    elif request.method == 'POST':
-        query = request.data["data"]
-        queryset = Question.objects.filter(content__icontains=query)
-        serializer = QuestionSerializer(queryset,
-                                        context={'request': request},
-                                        many=True)
-        return Response(serializer.data)
-
-
-@api_view(['GET', 'POST'])
-@permission_classes((permissions.AllowAny,))
-def search_formula(request):
-    if request.method == 'GET':
-        return Response({"content":"x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}."})
-    elif request.method == 'POST':
-        query = request.data.get("content")
-        questions = fr.search_formula(query)
-        serializer = QuestionSerializer(questions,
-                                        context={'request': request},
-                                        many=True)
-        return Response(serializer.data)
-
-
-@api_view(['GET', 'POST'])
-@permission_classes((permissions.AllowAny,))
-def search_formula_cluster(request):
-    if request.method == 'GET':
-        data = ft.transform_formulas()
-        return Response(data)
-    elif request.method == 'POST':
-        query = request.data["content"]
-        data = fc.generate_kmeans_cluster(query)
-        return Response(data)
-
+def check_token(request):
+    pass
 
 # class QuestionSearchView(HaystackViewSet):
 #     index_models = [Question]

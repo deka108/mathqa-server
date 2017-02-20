@@ -1,14 +1,16 @@
 """Search tables for formula using the IDF method"""
-from itertools import chain
-from apiv2.models import *
-
 import ast
-import features_extractor as fe
 import math
+from itertools import chain
+
+import apiv2.search.fsearch.formula_extractor
 import re
 
+import apiv2.search.utils.formula_features_extractor
+from apiv2.models import *
+from apiv2.search.utils import formula_features_extractor as fe
 
-# TODO: Need to extract formula from latex first
+
 def search_formula(latex_str):
     """
     Performs inverted index searching to find questions with the closest
@@ -20,32 +22,36 @@ def search_formula(latex_str):
     Returns:
         List of questions that has the closest formula match with the query.
     """
-    # Query feature extraction
-    query_ino_terms, query_sort_terms, query_struc_features, \
-    query_cn_features, query_var_features = fe.generate_features(latex_str)
+    # Extract latex formula
+    formulas = apiv2.search.utils.formula_extractor.extract_formulas_from_text(latex_str)
 
-    # Retrieve related formulas
-    related_formulas = retrieve_related_formulas(query_sort_terms)
+    if formulas:
+        # Query feature extraction
+        query_ino_terms, query_sort_terms, query_struc_features, \
+        query_cn_features, query_var_features = fe.generate_features(formulas[0])
 
-    query_ino_terms = [term for term in chain.from_iterable(query_ino_terms)]
-    query_1gram_sort_terms = []
+        # Retrieve related formulas
+        related_formulas = retrieve_related_formulas(query_sort_terms)
 
-    # 1-gram sorted terms
-    if query_sort_terms:
-        query_1gram_sort_terms = query_sort_terms[-1]
+        query_ino_terms = [term for term in chain.from_iterable(query_ino_terms)]
+        query_1gram_sort_terms = []
 
-    N = Formula.objects.count()
+        # 1-gram sorted terms
+        if query_sort_terms:
+            query_1gram_sort_terms = query_sort_terms[-1]
 
-    # Compute idf values
-    idf_values = compute_idf_values(query_ino_terms, query_1gram_sort_terms,
-                                    query_struc_features, related_formulas, N)
+        N = Formula.objects.count()
 
-    # Rank formula result
-    results = rank_formula_result(query_ino_terms, query_1gram_sort_terms,
-                                  query_struc_features, query_cn_features,
-                                  query_var_features, related_formulas,
-                                  idf_values, N)
-    return results
+        # Compute idf values
+        idf_values = compute_idf_values(query_ino_terms, query_1gram_sort_terms,
+                                        query_struc_features, related_formulas, N)
+
+        # Rank formula result
+        results = rank_formula_result(query_ino_terms, query_1gram_sort_terms,
+                                      query_struc_features, query_cn_features,
+                                      query_var_features, related_formulas,
+                                      idf_values, N)
+        return results
 
 
 def retrieve_related_formulas(query_sort_sem_terms, k=20):

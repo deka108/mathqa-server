@@ -1,21 +1,11 @@
 """Update and creates an indexed formula table"""
-from itertools import chain
-from apiv2.models import *
-
 import bisect
-import features_extractor as fe
+from itertools import chain
+
 import re
 
-DOLLAR_NOTATION = re.compile(r'\$\$([^\$]+)\$\$')
-PAREN_NOTATION = re.compile(r'\\\(([^\(]+)\\\)')
-BRACKET_NOTATION = re.compile(r'\\\[([^\[]+)\\\]')
-
-LEFTP_PATTERN = re.compile(r'\(')
-RIGHTP_PATTERN = re.compile(r'\)')
-LEFTB_PATTERN = re.compile(r'\[')
-RIGHTB_PATTERN = re.compile(r'\]')
-
-MATHRM_PATTERN = re.compile(r'\\mathrm')
+import apiv2.search.utils.formula_features_extractor as fe
+from apiv2.models import *
 
 
 def reindex_all_formulas(reset_formula=False):
@@ -53,7 +43,7 @@ def reindex_formulas_in_question(question_id, create_formula=False):
     question = Question.objects.get(id=question_id)
 
     if create_formula or not question.formula_set.exists():
-        formulas = extract_formulas_from_content(question.content)
+        formulas = extract_formulas_from_text(question.content)
 
         for formula_str in formulas:
             new_formula = Formula(content=formula_str, status=False,
@@ -67,37 +57,6 @@ def reindex_formulas_in_question(question_id, create_formula=False):
         except (KeyError, Formula.DoesNotExist) as e:
             print(e)
             print("Could not create formula index.")
-
-
-def extract_formulas_from_content(content):
-    """
-    Extract latex formulas from a question.
-
-    Args:
-        question_id: question id.
-
-    Returns:
-        List of latex formulas.
-    """
-    latex_formulas = []
-    latex_formulas += DOLLAR_NOTATION.findall(content)
-    latex_formulas += PAREN_NOTATION.findall(content)
-    latex_formulas += BRACKET_NOTATION.findall(content)
-    latex_formulas = list(set(latex_formulas))
-
-    return escape_bracket_parens_mathrm(latex_formulas)
-
-# Need to fix integral
-# integral has to be //int_{sub}^{sup}
-# REGEX:
-
-
-def escape_bracket_parens_mathrm(formulas):
-    for i in range(len(formulas)):
-        formula = formulas[i]
-        formula = MATHRM_PATTERN.sub('', formula)
-        formulas[i] = formula
-    return formulas
 
 
 def create_formula_index_model(latex_str, formula_id):

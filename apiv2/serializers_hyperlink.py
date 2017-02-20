@@ -52,7 +52,7 @@ class KeywordSerializer(serializers.HyperlinkedModelSerializer):
 
 class PapersetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Paper
+        model = Paperset
         fields = ('url', 'id', 'name', 'subject')
 
 
