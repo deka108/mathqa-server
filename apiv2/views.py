@@ -11,7 +11,7 @@ from apiv2.permissions import *
 from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as fr
 from apiv2.search.test_fsearch import formula_retriever as tfr, \
     formula_indexer as tfi
-from apiv2.search.utils import check_tokenizer as ct
+from apiv2.search.test_fsearch import check_tokenizer as ct
 from apiv2.serializers import *
 
 logger = logging.getLogger(__name__)
@@ -96,16 +96,6 @@ def search_database(query, request):
         return serializer
 
 
-def search_test_database(query, request):
-    questions = ct.get_test_questions_from_ids()
-    filtered_questions = questions.filter(content__icontains=query)
-    if filtered_questions:
-        serializer = (QuestionSerializer(filtered_questions,
-                                         context={'request': request},
-                                         many=True))
-        return serializer
-
-
 def search_formula(query, request):
     questions = fr.search_formula(query)
     if questions:
@@ -115,10 +105,18 @@ def search_formula(query, request):
         return serializer
 
 
+def search_test_database(query, request):
+    filtered_questions = TestQuestion.objects.filter(content__icontains=query)
+    if filtered_questions:
+        serializer = (TestQuestionSerializer(filtered_questions,
+                                         context={'request': request},
+                                         many=True))
+        return serializer
+
 def search_test_formula(query, request):
     questions = tfr.search_formula(query)
     if questions:
-        serializer = QuestionSerializer(questions,
+        serializer = TestQuestionSerializer(questions,
                                         context={'request': request},
                                         many=True)
         return serializer
@@ -165,7 +163,17 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
 
         raise ParseError(detail="Query parameter is required.")
 
-    @list_route(url_path="test_search")
+
+class TestQuestionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = TestQuestion.objects.all()
+    serializer_class = TestQuestionSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('concept', 'subconcept', 'paper', 'keypoints',
+                     'keywords')
+
+    @list_route(url_path="search")
     def test_search(self, request):
         params = request.query_params
 
@@ -296,14 +304,9 @@ def reindex_test_formula(request):
     user = request.data.get("username")
     pw = request.data.get("password")
     if user == "admin" and pw == "123456":
-        try:
-            tfi.reindex_formulas_in_test_questions(reset_formula=True)
-            return Response("Formula and formula index table has been " +
-                            "reindexed successfully.")
-        except Exception as e:
-            print(e)
-            return Response("Unable to reindex the formula and formula index" +
-                            " table.")
+        tfi.reindex_formulas_in_test_questions(reset_formula=True)
+        return Response("Formula and formula index table has been " +
+                        "reindexed successfully.")
     else:
         return Response("You must be an admin to perform database "
                         "manipulation.")

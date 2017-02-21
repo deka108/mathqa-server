@@ -5,7 +5,7 @@ from itertools import chain
 
 import re
 
-from apiv2.models import *
+from apiv2.models import TestFormulaIndex, TestFormula
 from apiv2.search.utils import formula_extractor as fe
 from apiv2.search.utils import formula_features_extractor as ffe
 
@@ -306,7 +306,7 @@ def compute_sem_matching_score(matched_sort_1gram, unmatched_sort_1gram,
             sem_score += idf_values.get(term)
 
             # if the matching terms is a function
-            if fe.is_function(term):
+            if ffe.is_function(term):
                 num_of_func += 1
 
     sem_score += num_of_func * math.log10(N)

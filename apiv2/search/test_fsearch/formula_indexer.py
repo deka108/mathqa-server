@@ -4,10 +4,10 @@ from itertools import chain
 
 import re
 
+from apiv2.search.test_fsearch import util
+from apiv2.models import TestFormula, TestFormulaIndex, TestQuestion
 from apiv2.search.utils import formula_extractor as fe
 from apiv2.search.utils import formula_features_extractor as ffe
-from apiv2.models import *
-from apiv2.search.utils import check_tokenizer as ct
 
 
 def reindex_formulas_in_test_questions(reset_formula=False):
@@ -24,7 +24,7 @@ def reindex_formulas_in_test_questions(reset_formula=False):
 
     TestFormulaIndex.objects.all().delete()
 
-    question_ids = ct.read_test_questionids()
+    question_ids = util.read_test_question_ids()
 
     # Reindex formulas in every question 
     for qid in question_ids:
@@ -42,17 +42,17 @@ def reindex_formulas_in_test_question(question_id, create_formula=False):
         create_formula: Option to to create new formulas from the question.
         question_id: question id
     """
-    question = Question.objects.get(id=question_id)
+    question = TestQuestion.objects.get(id=question_id)
 
-    if create_formula or not question.formula_set.exists():
+    if create_formula or not question.testformula_set.exists():
         formulas = fe.extract_formulas_from_text(question.content)
 
         for formula_str in formulas:
-            new_formula = Formula(content=formula_str, status=False,
+            new_formula = TestFormula(content=formula_str, status=False,
                                   question=question)
             new_formula.save()
 
-    formulas = question.formula_set.all()
+    formulas = question.testformula_set.all()
     for formula in formulas:
         try:
             create_test_formula_index_model(formula.content, formula.id)

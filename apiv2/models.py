@@ -198,6 +198,54 @@ class Question(models.Model):
         return range(0, int(self.difficulty_level))
 
 
+class TestQuestion(models.Model):
+    """
+    List of questions
+    """
+
+    def __str__(self):
+        return self.content
+
+    id = models.CharField(max_length=64, primary_key=True, null=False)
+    category = models.CharField(max_length=250, null=True)
+    question_type = models.CharField(
+        max_length=2,
+        choices=QUESTION_TYPES,
+        default="EX",
+        blank=True)
+    used_for = models.CharField(
+        max_length=2,
+        choices=USED_FOR,
+        default="ON",
+        blank=True)
+    marks = models.IntegerField(default=1)
+    difficulty_level = models.CharField(
+        max_length=2,
+        choices=DIFFICULTIES,
+        default="1")
+    response_type = models.CharField(
+        max_length=10,
+        choices=RESPONSE_TYPES,
+        default=TEXT)
+    source = models.TextField(null=False)
+    content = models.TextField(null=False, blank=False)
+    is_sample = models.BooleanField(default=False, blank=False)
+
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE,
+        related_name='test_questions')
+    subconcept = models.ForeignKey(Subconcept, null=True, blank=True,
+        related_name='test_questions')
+    paper = models.ForeignKey(Paper,
+                              on_delete=models.CASCADE, null=True, blank=True,
+                              related_name='test_questions')
+
+    keypoints = models.ManyToManyField(KeyPoint)
+    keywords = models.ManyToManyField(Keyword)
+
+    def get_difficulty_level(self):
+        return range(0, int(self.difficulty_level))
+
+
 class Solution(models.Model):
     """
     List of Solutions
@@ -254,7 +302,7 @@ class TestFormula(models.Model):
     structure_term = models.TextField(max_length=1024, null=True, blank=True)
     constant_term = models.TextField(max_length=1024, null=True, blank=True)
     variable_term = models.TextField(max_length=1024, null=True, blank=True)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE,
+    question = models.ForeignKey(TestQuestion, on_delete=models.CASCADE,
                                  null=True, blank=True)
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE,
                                 null=True, blank=True)

@@ -103,7 +103,7 @@ def is_operator_or_function(term):
     operator_terms += ('(', ')', 'uparrow', 'Uparrow', '[', ']',
                        'downarrow', 'Downarrow', '{', '}', 'updownarrow',
                        'Updownarrow', 'lfloor', 'rfloor', 'lceil', 'rceil',
-                       'langle', 'rangle', '/', 'backslash', '\\|', 'lgroup',
+                       'langle', 'rangle', '/', 'backslash', '|', 'lgroup',
                        'rgroup', '\\', '.', '\'')
     # other operators
     operator_terms += ('widetilde', 'widehat', 'overleftarrow',

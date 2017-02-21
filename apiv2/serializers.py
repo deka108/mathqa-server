@@ -72,6 +72,16 @@ class QuestionSerializer(serializers.ModelSerializer):
                   'question_type', 'paper')
 
 
+class TestQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestQuestion
+
+        fields = ('id', 'category', 'content', 'concept', 'is_sample',
+                  'subconcept', 'difficulty_level', 'marks',
+                  'paper', 'source', 'response_type',
+                  'question_type', 'paper')
+
+
 class SolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
