@@ -9,8 +9,8 @@ from rest_framework.schemas import get_schema_view
 
 from apiv2.permissions import *
 from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as fr
-from apiv2.search.test_fsearch import formula_retriever as tfr, \
-    formula_indexer as tfi
+from apiv2.search.test_fsearch import testformula_retriever as tfr, \
+    testformula_indexer as tfi
 from apiv2.search.test_fsearch import check_tokenizer as ct
 from apiv2.serializers import *
 
@@ -171,7 +171,7 @@ class TestQuestionViewSet(viewsets.ReadOnlyModelViewSet):
 
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('concept', 'subconcept', 'paper', 'keypoints',
-                     'keywords')
+                     'keywords', 'category')
 
     @list_route(url_path="search")
     def test_search(self, request):

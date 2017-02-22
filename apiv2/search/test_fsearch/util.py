@@ -1,17 +1,50 @@
 import itertools
 import os
 
-from apiv2.models import TestQuestion
-
 try:
    import cPickle as pickle
 except:
    import pickle
 
 
-TXT_FILE = os.path.join(os.path.dirname(__file__), 'test_q.txt')
-MQID_PICKLE_FILE = os.path.join(os.path.dirname(__file__), "map_qids.pickle")
-QID_PICKLE_FILE = os.path.join(os.path.dirname(__file__), "qids.pickle")
+TXT_FILE = os.path.join(os.path.dirname(__file__), 'new_test_q.txt')
+MQID_PICKLE_FILE = os.path.join(os.path.dirname(__file__),
+                                "new_map_qids.pickle")
+QID_PICKLE_FILE = os.path.join(os.path.dirname(__file__), "new_qids.pickle")
+INFO_FILE = os.path.join(os.path.dirname(__file__), "testdata_info.txt")
+
+from apiv2.models import TestQuestion, Question
+
+
+def insert_test_questions(reset=True):
+    test_questions = read_test_questions_mids()
+
+    if reset:
+        TestQuestion.objects.all().delete()
+
+    for topic in test_questions:
+        print(topic)
+        for test_id in test_questions[topic]:
+            question = Question.objects.get(pk=test_id)
+            new_test_question = TestQuestion(
+                id=question.id,
+                category=topic,
+                marks=question.marks,
+                difficulty_level=question.difficulty_level,
+                source = question.source,
+                content=question.content,
+                concept=question.concept,
+                subconcept=question.subconcept,
+                paper = question.paper
+            )
+            new_test_question.save()
+
+
+def reset_questions():
+    write_test_questions_to_pickle()
+    write_test_questionids_to_pickle()
+
+    insert_test_questions()
 
 
 def read_test_questions_mids():
@@ -72,3 +105,26 @@ def get_question_content(qids):
         question_content[qid] = question.content
 
     return question_content
+
+
+def get_test_question_info():
+    mqids = read_test_questions_mids()
+    overall_info = "Total topic: %s" % len(mqids)
+    total_questions = 0
+
+    with open(INFO_FILE, mode='w') as f:
+        print(overall_info)
+        f.write(overall_info + "\n")
+        for topic in mqids:
+            total_question = len(mqids[topic])
+            total_questions += total_question
+
+            topic_info = "%s: %s" % (topic, str(total_question))
+            print(topic_info)
+            f.write(topic_info)
+            f.write("\n")
+
+        total = "Total questions: %s" % str(total_questions)
+        print(total)
+        f.write(total)
+

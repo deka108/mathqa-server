@@ -20,7 +20,16 @@ def check_question_token_from_concept(concept):
     return check_question_token_from_questions(questions)
 
 
-def check_question_token_from_question_ids(question_ids, write_to_file=False,
+def check_test_questions():
+    test_questions = util.read_test_questions_mids()
+    for topic in test_questions:
+        check_question_token_from_question_ids(test_questions[topic], True,
+                                               topic)
+        print(topic + " is written!")
+    print("Success!")
+
+
+def check_question_token_from_question_ids(question_ids, write_to_file=True,
                                         file_name=None):
     question_formula_mathml = {}
     for qid in question_ids:
@@ -37,7 +46,7 @@ def check_question_token_from_question_ids(question_ids, write_to_file=False,
     return question_formula_mathml
 
 
-def check_question_token_from_questions(questions, write_to_file=False,
+def check_question_token_from_questions(questions, write_to_file=True,
                                         file_name="random"):
     question_formula_mathml = {}
     for question in questions:
@@ -51,15 +60,6 @@ def check_question_token_from_questions(questions, write_to_file=False,
             json.dump(question_formula_mathml, f)
 
     return question_formula_mathml
-
-
-def check_test_questions():
-    test_questions = util.read_test_questions_mids()
-    for test_q in test_questions:
-        check_question_token_from_question_ids(test_questions[test_q], True,
-                                               test_q)
-        print(test_q + " is written!")
-    print("Success!")
 
 
 def formula_mathmlstr(text):

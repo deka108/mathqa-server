@@ -10,31 +10,27 @@ from apiv2.search.utils import formula_extractor as fe
 from apiv2.search.utils import formula_features_extractor as ffe
 
 
-def reindex_formulas_in_test_questions(reset_formula=False):
+def reindex_formulas_in_test_questions():
     """
     Reindex the formula and formula index table.
 
     Args:
         reset_formula: Option to drop the formula index table and recreates it.
     """
-    if reset_formula:
-        TestFormula.objects.all().delete()
-    else:
-        TestFormula.objects.all().update(status=False)
-
+    TestFormula.objects.all().delete()
     TestFormulaIndex.objects.all().delete()
 
     question_ids = util.read_test_question_ids()
 
     # Reindex formulas in every question 
     for qid in question_ids:
-        reindex_formulas_in_test_question(qid, reset_formula)
+        reindex_formulas_in_test_question(qid)
         print("Successfully reindex question %s" % qid)
 
     print("Finished reindexing")
 
 
-def reindex_formulas_in_test_question(question_id, create_formula=False):
+def reindex_formulas_in_test_question(question_id):
     """
     Creates formula and formula index table from a question.
 
@@ -44,13 +40,12 @@ def reindex_formulas_in_test_question(question_id, create_formula=False):
     """
     question = TestQuestion.objects.get(id=question_id)
 
-    if create_formula or not question.testformula_set.exists():
-        formulas = fe.extract_formulas_from_text(question.content)
+    formulas = fe.extract_formulas_from_text(question.content)
 
-        for formula_str in formulas:
-            new_formula = TestFormula(content=formula_str, status=False,
+    for formula_str in formulas:
+        new_formula = TestFormula(content=formula_str, status=False,
                                   question=question)
-            new_formula.save()
+        new_formula.save()
 
     formulas = question.testformula_set.all()
     for formula in formulas:
