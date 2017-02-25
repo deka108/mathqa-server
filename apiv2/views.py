@@ -3,7 +3,7 @@ import logging
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, permission_classes, list_route
-from rest_framework.exceptions import ParseError
+from rest_framework.exceptions import ParseError, AuthenticationFailed, NotFound
 from rest_framework.response import Response
 from rest_framework.schemas import get_schema_view
 
@@ -11,6 +11,8 @@ from apiv2.permissions import *
 from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as fr
 from apiv2.search.test_fsearch import testformula_retriever as tfr, \
     testformula_indexer as tfi
+from apiv2.search.test_fsearch.utils import test_formula_util as tfu
+from apiv2.search.utils import formula_features_extractor as ffe
 from apiv2.search.test_fsearch import check_tokenizer as ct
 from apiv2.serializers import *
 
@@ -228,13 +230,19 @@ class FormulaIndexViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
 
+class TestFormulaCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = TestFormulaCategory.objects.all()
+    serializer_class = TestFormulaCategorySerializer
+    permission_classes = (permissions.AllowAny, )
+
+
 class TestFormulaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TestFormula.objects.all()
     serializer_class = TestFormulaSerializer
     permission_classes = (permissions.AllowAny,)
 
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('concept', 'question')
+    filter_fields = ('categories', 'questions')
 
 
 class TestFormulaIndexViewSet(viewsets.ReadOnlyModelViewSet):
@@ -279,6 +287,19 @@ def check_token_questions(request):
     questions = request.data.get("data").split(' ')
     return Response(questions)
 
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def check_mathml_str(request):
+    formula_str = request.data.get("formula")
+    return Response(ffe._generate_mathmlstr(formula_str))
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def check_formula_token(request):
+    return "hello"
+    # formula_str = request.data.get("formula")
+    # return Response(ffe._generate_mathmlstr(formula_str))
+
 
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.IsAuthenticated,))
@@ -292,10 +313,10 @@ def reindex_all_formula(request):
                             "reindexed successfully.")
         except Exception as e:
             print(e)
-            return Response("Unable to reindex the formula and formula index" +
+            return NotFound("Unable to reindex the formula and formula index" +
                             " table.")
     else:
-        return Response("You must be an admin to perform database "
+        return AuthenticationFailed("You must be an admin to perform database "
                         "manipulation.")
 
 @api_view(['POST'])
@@ -307,6 +328,22 @@ def reindex_test_formula(request):
         tfi.reindex_formulas_in_test_questions(reset_formula=True)
         return Response("Formula and formula index table has been " +
                         "reindexed successfully.")
+    else:
+        return AuthenticationFailed("You must be an admin to perform database "
+                        "manipulation.")
+
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def create_test_formula(request):
+    user = request.data.get("username")
+    pw = request.data.get("password")
+    if user == "admin" and pw == "123456":
+        test_formula = request.data.get("formula")
+        if tfu.insert_test_formula(test_formula):
+            return Response("Test formula has been received successfully.")
+        else:
+            return Response("Test formula already exist in the database.")
     else:
         return Response("You must be an admin to perform database "
                         "manipulation.")

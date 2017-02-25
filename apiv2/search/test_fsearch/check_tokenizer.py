@@ -1,13 +1,10 @@
 import json
 
-import os
-
 from apiv2.models import *
-from apiv2.search.test_fsearch import util
+from apiv2.search.test_fsearch.utils import test_questions_util
+from apiv2.search.test_fsearch.utils.paths import JSON_FILE
 from apiv2.search.utils import formula_extractor as fe
 from apiv2.search.utils import formula_features_extractor as ffe
-
-JSON_FILE = os.path.join(os.path.dirname(__file__), "%s") + ".json"
 
 
 def check_question_from_concepts(concepts):
@@ -16,12 +13,12 @@ def check_question_from_concepts(concepts):
 
 
 def check_question_token_from_concept(concept):
-    questions = util.get_questions_from_concept(concept)
+    questions = test_questions_util.get_questions_from_concept(concept)
     return check_question_token_from_questions(questions)
 
 
 def check_test_questions():
-    test_questions = util.read_test_questions_mids()
+    test_questions = test_questions_util.read_test_questions_mids()
     for topic in test_questions:
         check_question_token_from_question_ids(test_questions[topic], True,
                                                topic)

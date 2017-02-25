@@ -116,7 +116,7 @@ class TestFormulaViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('concept', 'question')
+    filter_fields = ('categories', 'questions')
 
 
 class TestFormulaIndexViewSet(viewsets.ReadOnlyModelViewSet):

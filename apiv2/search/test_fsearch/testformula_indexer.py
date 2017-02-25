@@ -4,8 +4,8 @@ from itertools import chain
 
 import re
 
-from apiv2.search.test_fsearch import util
 from apiv2.models import TestFormula, TestFormulaIndex, TestQuestion
+from apiv2.search.test_fsearch.utils import test_questions_util
 from apiv2.search.utils import formula_extractor as fe
 from apiv2.search.utils import formula_features_extractor as ffe
 
@@ -20,9 +20,9 @@ def reindex_formulas_in_test_questions():
     TestFormula.objects.all().delete()
     TestFormulaIndex.objects.all().delete()
 
-    question_ids = util.read_test_question_ids()
+    question_ids = test_questions_util.read_test_question_ids()
 
-    # Reindex formulas in every question 
+    # Reindex formulas in every question
     for qid in question_ids:
         reindex_formulas_in_test_question(qid)
         print("Successfully reindex question %s" % qid)

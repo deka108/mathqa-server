@@ -107,7 +107,6 @@ class TestFormulaSerializer(serializers.ModelSerializer):
                   'variable_term', 'question', 'concept')
 
 
-
 class AnswerPartSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Question

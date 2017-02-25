@@ -34,9 +34,6 @@ INSTALLED_APPS = (
     'webapp.apps.WebAppConfig',
 
     # Models
-<<<<<<< HEAD
-    'meas_models.apps.MeasModelsConfig', 
-=======
     'meas_models.apps.MeasModelsConfig',
 
     # CMS
@@ -50,7 +47,6 @@ INSTALLED_APPS = (
 
     # Assessment
     'assessment.apps.AssessmentConfig'
->>>>>>> 49cddcfffc72577e49166c88d0f16d4cb811e06e
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,9 +102,6 @@ USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-<<<<<<< HEAD
-STATIC_URL = '/static/'
-=======
 STATIC_URL = '/static/'
 
 LOGOUT_REDIRECT_URL = '/'
@@ -205,4 +198,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
->>>>>>> 49cddcfffc72577e49166c88d0f16d4cb811e06e

@@ -287,6 +287,10 @@ class FormulaIndex(models.Model):
     df = models.PositiveIntegerField('frequency', default=1, blank=True)
 
 
+class TestFormulaCategory(models.Model):
+    name = models.CharField(max_length=200, primary_key=True)
+
+
 class TestFormula(models.Model):
     """
     List of formula
@@ -295,17 +299,16 @@ class TestFormula(models.Model):
     def __str__(self):
         return self.content
 
-    content = models.TextField()
+    content = models.TextField(max_length=1024)
     status = models.BooleanField(default=False)
     inorder_term = models.TextField(max_length=1024, null=True, blank=True)
     sorted_term = models.TextField(max_length=1024, null=True, blank=True)
     structure_term = models.TextField(max_length=1024, null=True, blank=True)
     constant_term = models.TextField(max_length=1024, null=True, blank=True)
     variable_term = models.TextField(max_length=1024, null=True, blank=True)
-    question = models.ForeignKey(TestQuestion, on_delete=models.CASCADE,
-                                 null=True, blank=True)
-    concept = models.ForeignKey(Concept, on_delete=models.CASCADE,
-                                null=True, blank=True)
+    # question = models.ManyToManyField(TestQuestion, null=True, blank=True)
+    questions = models.TextField(max_length=1024, null=True, blank=True)
+    categories = models.ManyToManyField(TestFormulaCategory)
 
 
 class TestFormulaIndex(models.Model):
