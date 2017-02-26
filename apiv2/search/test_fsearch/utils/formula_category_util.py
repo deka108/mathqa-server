@@ -3,16 +3,15 @@ from apiv2.models import TestFormulaCategory
 
 
 def insert_formula_category(reset_formula=False, categories=None):
-    if (reset_formula):
-        TestFormulaCategory.objects.delete()
+    if reset_formula:
+        TestFormulaCategory.objects.all().delete()
 
     if not categories:
         categories = fb.FORMULA_CATEGORIES
 
     for category in categories:
         try:
-            TestFormulaCategory.objects.get(
-                name=category)
+            TestFormulaCategory.objects.get(name=category)
             print("Category already exists!")
         except TestFormulaCategory.DoesNotExist:
             test_formula_category = TestFormulaCategory(name=category)

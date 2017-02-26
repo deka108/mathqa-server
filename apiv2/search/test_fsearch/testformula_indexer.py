@@ -50,13 +50,29 @@ def reindex_formulas_in_test_question(question_id):
     formulas = question.testformula_set.all()
     for formula in formulas:
         try:
-            create_test_formula_index_model(formula.content, formula.id)
+            create_test_formula_index_model(formula.id)
         except (KeyError, TestFormula.DoesNotExist) as e:
             print(e)
             print("Could not create formula index.")
 
 
-def create_test_formula_index_model(latex_str, formula_id):
+def reindex_formulas_in_test_formulas(reset=False, formula_ids=None):
+    if formula_ids:
+        all_formulas = TestFormula.objects.filter(pk__in=formula_ids)
+    else:
+        all_formulas = TestFormula.objects.all()
+
+    # if reset=False, it'll only update formulas that haven't been reindexed
+    #  before
+    if reset:
+        all_formulas.update(status=False)
+
+    for formula in all_formulas:
+        if not formula.status:
+            create_test_formula_index_model(formula.id)
+
+
+def create_test_formula_index_model(formula_id):
     """
     Updates formula table with the extracted formula features and creates
     formula index table.
@@ -71,7 +87,8 @@ def create_test_formula_index_model(latex_str, formula_id):
         if not formula_obj.status:
             # Extract four features of a Formula
             inorder_sem_terms, sorted_sem_terms, struc_features, \
-            const_features, var_features = ffe.generate_features(latex_str)
+            const_features, var_features = ffe.generate_features(
+                formula_obj.content)
 
             # Insert features into formula table
             formula_obj.inorder_term = inorder_sem_terms

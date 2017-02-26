@@ -7,9 +7,11 @@ const URL = {
     TESTSEARCH_FORMULA: BASE_URL + '/questions/search/type=f&q?=',
     GET_FORMULA_CATEGORIES: BASE_URL + '/test_formula_categories/',
     GET_TEST_FORMULAS: BASE_URL + '/test_formulas/',
+    UPDATE_TEST_FORMULA: BASE_URL + '/update_test_formula/',
     CHECK_MATHML: BASE_URL + '/check_mathml/',
-    CHECK_FORMULA_TOKEN: BASE_URL + '/check_formula_token/',
-    POST_NEW_FORMULA: BASE_URL + '/create_test_formula/',
+    // CHECK_FORMULA_TOKEN: BASE_URL + '/check_formula_token/',
+    // POST_TEST_FORMULA: BASE_URL + '/create_test_formula/',
+    CUD_TEST_FORMULA: BASE_URL + '/cud_test_formula/',
 }
 
 export default URL;

@@ -111,7 +111,7 @@ class TestFormulaIndexSerializer(serializers.ModelSerializer):
 class TestFormulaSerializer(serializers.ModelSerializer):
     class Meta:
         model = TestFormula
-        fields = ('id', 'content', 'category', 'status', 'inorder_term',
+        fields = ('id', 'content', 'categories', 'status', 'inorder_term',
                   'sorted_term', 'structure_term', 'constant_term',
                   'variable_term', 'questions')
 

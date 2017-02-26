@@ -4,7 +4,9 @@ const EVENTS = {
     FORMULA_CATEGORIES_RECEIVED: 'categories-received',
     MATHML_RECEIVED: 'mathml-received',
     FORMULA_TOKEN_RECEIVED: 'formula-token-received',
-    ON_FORMULA_POSTED: 'new-formula-posted'
+    FORMULA_CREATED: 'new-formula-posted',
+    FORMULA_UPDATED: 'formula-updated',
+    FORMULA_DELETED: 'formula-deleted'
 }
 
 export default EVENTS;

@@ -108,7 +108,7 @@ def is_operator_or_function(term):
     # other operators
     operator_terms += ('widetilde', 'widehat', 'overleftarrow',
                        'overrightarrow', 'overline', 'underline',
-                       'overbrace', 'underbrace', 'sqrt', 'frac')
+                       'overbrace', 'underbrace', 'sqrt', 'frac', 'mathrm')
 
     return is_function(term) or term.endswith(operator_terms) or term == 'e'
 

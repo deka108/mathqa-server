@@ -325,7 +325,7 @@ def reindex_test_formula(request):
     user = request.data.get("username")
     pw = request.data.get("password")
     if user == "admin" and pw == "123456":
-        tfi.reindex_formulas_in_test_questions(reset_formula=True)
+        tfi.reindex_formulas_in_test_formulas()
         return Response("Formula and formula index table has been " +
                         "reindexed successfully.")
     else:
@@ -341,9 +341,62 @@ def create_test_formula(request):
     if user == "admin" and pw == "123456":
         test_formula = request.data.get("formula")
         if tfu.insert_test_formula(test_formula):
-            return Response("Test formula has been received successfully.")
+            return Response("Test formula has been created successfully.")
         else:
             return Response("Test formula already exist in the database.")
+    else:
+        return Response("You must be an admin to perform database "
+                        "manipulation.")
+
+
+@api_view(['PUT'])
+@permission_classes((permissions.AllowAny,))
+def update_test_formula(request):
+    user = request.data.get("username")
+    pw = request.data.get("password")
+    if user == "admin" and pw == "123456":
+        test_formula = request.data.get("formula")
+        if tfu.update_test_formula(test_formula):
+            return Response("Test formula has been updated successfully.")
+        else:
+            return Response("Fails to update test formula.")
+    else:
+        return Response("You must be an admin to perform database "
+                        "manipulation.")
+
+
+@api_view(['POST', 'PUT', 'PATCH', 'DELETE'])
+@permission_classes((permissions.AllowAny,))
+def cud_test_formula(request):
+    user = request.data.get("username")
+    pw = request.data.get("password")
+    if user == "admin" and pw == "123456":
+        test_formula = request.data.get("formula")
+
+        if test_formula:
+            if request.method == 'POST':
+                if tfu.insert_test_formula(test_formula):
+                    return Response("Test formula has been created "
+                                    "successfully.")
+                else:
+                    return Response("Test formula already exist in "
+                                    "the database.")
+
+            elif request.method == 'PUT' or request.method == 'PATCH':
+                if tfu.update_test_formula(test_formula):
+                    return Response("Test formula has been updated "
+                                    "successfully.")
+                else:
+                    return Response("Fails to update test formula.")
+
+            elif request.method == 'DELETE':
+                if tfu.delete_test_formula(test_formula):
+                    return Response("Test formula has been deleted "
+                                    "successfully.")
+                else:
+                    return Response("Fails to delete test formula.")
+
+
     else:
         return Response("You must be an admin to perform database "
                         "manipulation.")

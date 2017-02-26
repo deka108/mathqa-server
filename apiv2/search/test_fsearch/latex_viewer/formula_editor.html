@@ -23,7 +23,7 @@
         <div class="card">
             <md-card>
                 <md-card-content>
-                    <form id='formulaEditor' name="formulaEditor" ng-submit="checkMathml()" ng-controller="LatexFormController">
+                    <form id='formulaEditor' name="formulaEditor" ng-submit="checkMathml($event)" ng-controller="LatexFormController">
                         <div layout="column" layout-fill>
                             <h2>Insert Formula</h2>
                             <md-input-container class="md-block">

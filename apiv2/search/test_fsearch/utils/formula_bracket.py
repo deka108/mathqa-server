@@ -9,6 +9,7 @@ LOGARITHMS = 'logarithms'
 POLYNOMIAL = 'polynomial'
 SURDS = 'surds'
 TRIGONOMETRY = 'trigonometry'
+OTHERS = 'others'
 
 ARITHMETICS = 'arithmetic'
 RELATIONS = 'relations'
@@ -17,7 +18,7 @@ LIMIT = 'limit'
 
 FORMULA_CATEGORIES = [ABSOLUTE, DIFFERENTIATION, EXPONENTIAL, FRACTION,
                   INEQUALITY, INTEGRAL, LOGARITHMS, POLYNOMIAL, SURDS,
-                      TRIGONOMETRY]
+                      TRIGONOMETRY, SERIES, OTHERS]
 
 # FORMULAS = {
 #     ARITHMETICS: [''],

@@ -1,18 +1,26 @@
 function FormulaDataService($http, $rootScope, URL, EVENTS) {
-    function _on_mathml_received(data) {
-        $rootScope.$broadcast(EVENTS.MATHML_RECEIVED, data);
+    function _on_mathml_received() {
+        $rootScope.$broadcast(EVENTS.MATHML_RECEIVED);
     }
 
-    function _on_formula_categories_received(data) {
-        $rootScope.$broadcast(EVENTS.FORMULA_CATEGORIES_RECEIVED, data);
+    function _on_formula_categories_received() {
+        $rootScope.$broadcast(EVENTS.FORMULA_CATEGORIES_RECEIVED);
     }
 
-    function _update_formula_categories(newData) {
-        formulaCategories = newData;
+    function _on_formula_received() {
+        $rootScope.$broadcast(EVENTS.FORMULA_RECEIVED);
     }
 
-    function _on_formula_posted() {
-        $rootScope.$broadcast(EVENTS.ON_FORMULA_POSTED);
+    function _on_formula_created() {
+        $rootScope.$broadcast(EVENTS.FORMULA_CREATED);
+    }
+
+    function _on_formula_updated() {
+        $rootScope.$broadcast(EVENTS.FORMULA_UPDATED);
+    }
+
+    function _on_formula_deleted() {
+        $rootScope.$broadcast(EVENTS.FORMULA_DELETED);
     }
 
     function _on_error(response) {
@@ -21,13 +29,40 @@ function FormulaDataService($http, $rootScope, URL, EVENTS) {
         }
     }
 
-    var formulaCategories = null;
+    function _update_formula_categories(newData) {
+        formulaCategories = newData;
+    }
+
+    function _update_formulas(newData) {
+        formulas = newData;
+    }
+
+    function _update_mathml_formula(newData) {
+        formulaMathml = newData;
+    }
+
+    let formulaMathml = null;
+    let formulaCategories = null;
+    let formulas = null;
 
     this.getFormulaCategories = function() {
-        if (formulaCategories) return formulaCategories;
+        return formulaCategories;
+    }
+
+    this.getMathmlFormula = function() {
+        return formulaMathml;
+    }
+
+    this.getFormulas = function() {
+        return formulas;
+    }
+
+    this.retrieveFormulaCategories = function() {
+        if (formulaCategories) { _on_formula_categories_received(); }
         return $http.get(URL.GET_FORMULA_CATEGORIES).then(
             function success(response) {
-                _on_formula_categories_received(response.data);
+                _update_formula_categories(response.data);
+                _on_formula_categories_received();
             },
             function error(response) {
                 _on_error(response);
@@ -41,33 +76,65 @@ function FormulaDataService($http, $rootScope, URL, EVENTS) {
         return $http.post(URL.CHECK_MATHML, JSON.stringify(formulaData))
             .then(
                 function success(response) {
-                    _on_mathml_received(response.data);
+                    _update_mathml_formula(response.data);
+                    _on_mathml_received();
                 },
                 function error(response) {
                     _on_error(response);
                 });
     }
 
-    this.getFormulas = function() {
-        return $http.get(URL.GET_FORMULAS).then(
+    this.retrieveFormulas = function() {
+        return $http.get(URL.GET_TEST_FORMULAS).then(
             function success(response) {
-                _on_formula_received(response.data);
+                _update_formulas(response.data);
+                _on_formula_received();
             },
             function error(response) {
                 _on_error(response);
             });
     }
 
-    this.postFormula = function(data) {
+    this.createFormula = function(data) {
         let formulaData = {
             "formula": data,
             "username": "admin",
             "password": "123456"
         }
-        console.log(formulaData);
-        return $http.post(URL.POST_NEW_FORMULA, JSON.stringify(formulaData))
+        return $http.post(URL.CUD_TEST_FORMULA, JSON.stringify(formulaData))
             .then(function success(response) {
-                _on_formula_posted();
+                console.log(response);
+                _on_formula_created();
+            }, function error(response) {
+                _on_error(response);
+            });
+    }
+
+    this.updateFormula = function(data) {
+        let formulaData = {
+            "formula": data,
+            "username": "admin",
+            "password": "123456"
+        }
+        return $http.patch(URL.CUD_TEST_FORMULA, JSON.stringify(formulaData))
+            .then(function success(response) {
+                console.log(response);
+                _on_formula_updated();
+            }, function error(response) {
+                _on_error(response);
+            });
+    }
+
+    this.deleteFormula = function(data) {
+        let formulaData = {
+            "formula": data,
+            "username": "admin",
+            "password": "123456"
+        }
+        return $http.delete(URL.CUD_TEST_FORMULA, JSON.stringify(formulaData))
+            .then(function success(response) {
+                console.log(response);
+                _on_formula_deleted();
             }, function error(response) {
                 _on_error(response);
             });
