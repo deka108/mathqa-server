@@ -1,4 +1,5 @@
 function LatexFormController($scope, $mdDialog, FormulaDataService, EVENTS) {
+    $scope.pageTitle = "Formula Editor";
     FormulaDataService.retrieveFormulaCategories();
 
     function DialogController($scope, $mdDialog) {

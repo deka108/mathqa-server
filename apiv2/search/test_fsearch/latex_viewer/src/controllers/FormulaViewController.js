@@ -1,4 +1,4 @@
-function FormulaViewController($scope, $mdDialog, $mdEditDialog, FormulaDataService, EVENTS) {
+function FormulaViewController($scope, $mdDialog, $mdEditDialog, $window, FormulaDataService, LoginService, EVENTS) {
     function _setLatexStr(newLatex) {
         $scope.latexStr = "$$" + newLatex + "$$";
     }
@@ -11,6 +11,7 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, FormulaDataServ
         $scope.dialogEvent = newEvent;
     }
 
+    $scope.pageTitle = "Formula Viewer";
     FormulaDataService.retrieveFormulaCategories();
     $scope.promise = FormulaDataService.retrieveFormulas();
     $scope.latexStr = null;
@@ -31,6 +32,7 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, FormulaDataServ
 
     $scope.$on(EVENTS.MATHML_RECEIVED, function() {
         _setMathmlStr(FormulaDataService.getMathmlFormula());
+        let parentEl = document.getElementById("body");
         $mdDialog.show({
             contentElement: '#mathmlDialog',
             parent: angular.element(document.body),
@@ -40,8 +42,12 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, FormulaDataServ
     });
 
     $scope.query = {
-        order: 'questions'
+        order: 'questions',
+        limit: 100,
+        page: 1
     };
+
+    $scope.limitOptions = [50, 100];
 
     $scope.editContent = function(evt, formula) {
         evt.stopPropagation();
@@ -101,6 +107,37 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, FormulaDataServ
         return false;
     }
 
+    $scope.changePage = function(page, limit) {
+        console.log(page, limit);
+    }
+
+    $scope.updateResults = function() {
+        $scope.limitOptions = [50, 100, $scope.results.length];
+    }
+
+    $scope.openFormulaEditor = function() {
+        $window.open('formula_editor.html', '_blank');
+    }
+
+    $scope.reindexFormula = function(someFormulas) {
+        if (LoginService.getToken()) {
+            let data = {
+                headers: LoginService.getTokenHeader(),
+            }
+
+            if (!someFormulas) {
+                data.formulas = null;
+            } else {
+                if (someFormulas instanceof Array) {
+                    data.formulas = someFormulas;
+                } else {
+                    data.formulas = [someFormulas];
+                }
+            }
+
+            FormulaDataService.reindexFormula(data);
+        }
+    }
 }
 
-export default ['$scope', '$mdDialog', '$mdEditDialog', 'FormulaDataService', 'EVENTS', FormulaViewController];
+export default ['$scope', '$mdDialog', '$mdEditDialog', '$window', 'FormulaDataService', 'LoginService', 'EVENTS', FormulaViewController];

@@ -1,6 +1,7 @@
 from apiv2 import views
 from apiv2 import views_hyperlink as hviews
 
+from django.contrib.auth import views as auth_views
 from django.conf.urls import url, include
 from rest_framework import routers
 from rest_framework.authtoken import views as rest_views
@@ -52,10 +53,7 @@ urlpatterns = [
     url(r'^check_mathml/$', views.check_mathml_str),
     url(r'^check_formula_token/$', views.check_formula_token),
     url(r'^cud_test_formula/$', views.cud_test_formula),
-
-    # url(r'^create_test_formula/$', views.create_test_formula),
-    # url(r'^update_test_formula/$', views.update_test_formula),
-
+    url(r'^reindex_test_formula/$', views.reindex_test_formula),
     # account
     # url(r'^register/$', ),
     # url(r'^logout/$', ),
@@ -67,4 +65,7 @@ urlpatterns += [
     url(r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', rest_views.obtain_auth_token),
+    url(r'^auth/', include('djoser.urls.authtoken')),
+    url(r'^login/', auth_views.login),
+    url(r'^logout/', auth_views.logout),
 ]

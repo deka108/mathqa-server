@@ -1,6 +1,7 @@
 import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.auth import logout
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, permission_classes, list_route
 from rest_framework.exceptions import ParseError, AuthenticationFailed, NotFound
@@ -319,49 +320,26 @@ def reindex_all_formula(request):
         return AuthenticationFailed("You must be an admin to perform database "
                         "manipulation.")
 
+
 @api_view(['POST'])
 @permission_classes((permissions.IsAuthenticated,))
 def reindex_test_formula(request):
     user = request.data.get("username")
     pw = request.data.get("password")
     if user == "admin" and pw == "123456":
-        tfi.reindex_formulas_in_test_formulas()
+        reset = request.data.get("reset")
+        formulas = request.data.get("formulas")
+        print("Received formula reindexing request!")
+        if formulas:
+            tfi.reindex_test_formulas(reset=True, formulas=formulas)
+        elif reset:
+            tfi.reindex_test_formulas(reset=True)
+        else:
+            tfi.reindex_test_formulas(reset=False)
         return Response("Formula and formula index table has been " +
                         "reindexed successfully.")
     else:
         return AuthenticationFailed("You must be an admin to perform database "
-                        "manipulation.")
-
-
-@api_view(['POST'])
-@permission_classes((permissions.AllowAny,))
-def create_test_formula(request):
-    user = request.data.get("username")
-    pw = request.data.get("password")
-    if user == "admin" and pw == "123456":
-        test_formula = request.data.get("formula")
-        if tfu.insert_test_formula(test_formula):
-            return Response("Test formula has been created successfully.")
-        else:
-            return Response("Test formula already exist in the database.")
-    else:
-        return Response("You must be an admin to perform database "
-                        "manipulation.")
-
-
-@api_view(['PUT'])
-@permission_classes((permissions.AllowAny,))
-def update_test_formula(request):
-    user = request.data.get("username")
-    pw = request.data.get("password")
-    if user == "admin" and pw == "123456":
-        test_formula = request.data.get("formula")
-        if tfu.update_test_formula(test_formula):
-            return Response("Test formula has been updated successfully.")
-        else:
-            return Response("Fails to update test formula.")
-    else:
-        return Response("You must be an admin to perform database "
                         "manipulation.")
 
 
@@ -395,7 +373,8 @@ def cud_test_formula(request):
                                     "successfully.")
                 else:
                     return Response("Fails to delete test formula.")
-
+        else:
+            return Response("Fails to manipulate test formula database")
 
     else:
         return Response("You must be an admin to perform database "

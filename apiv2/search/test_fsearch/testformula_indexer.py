@@ -56,19 +56,25 @@ def reindex_formulas_in_test_question(question_id):
             print("Could not create formula index.")
 
 
-def reindex_formulas_in_test_formulas(reset=False, formula_ids=None):
-    if formula_ids:
+def _get_formula_ids(formulas):
+    return [formula.get(u'id') for formula in formulas]
+
+
+def reindex_test_formulas(reset=False, formulas=None):
+    if formulas:
+        formula_ids = _get_formula_ids(formulas)
         all_formulas = TestFormula.objects.filter(pk__in=formula_ids)
     else:
         all_formulas = TestFormula.objects.all()
 
     # if reset=False, it'll only update formulas that haven't been reindexed
-    #  before
+    # before
     if reset:
         all_formulas.update(status=False)
 
     for formula in all_formulas:
         if not formula.status:
+            print("Reindexing formula: #%d" % formula.id)
             create_test_formula_index_model(formula.id)
 
 

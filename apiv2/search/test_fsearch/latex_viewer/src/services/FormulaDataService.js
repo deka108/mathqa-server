@@ -1,4 +1,4 @@
-function FormulaDataService($http, $rootScope, URL, EVENTS) {
+function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
     function _on_mathml_received() {
         $rootScope.$broadcast(EVENTS.MATHML_RECEIVED);
     }
@@ -140,6 +140,25 @@ function FormulaDataService($http, $rootScope, URL, EVENTS) {
             });
     }
 
+    this.reindexFormula = function(data) {
+        let postData = {
+            "username": "admin",
+            "password": "123456",
+            "formulas": data.formulas,
+            "reset": true
+        }
+        return $http({
+            method: 'POST',
+            url: URL.REINDEX_TEST_FORMULA,
+            data: JSON.stringify(postData),
+            headers: data.headers
+        }).then(function success(response) {
+                console.log(response)
+            },
+            function error(response) {
+                _on_error(response);
+            });
+    }
 }
 
-export default ['$http', '$rootScope', 'URL', 'EVENTS', FormulaDataService];
+export default ['$http', '$rootScope', 'LoginService', 'URL', 'EVENTS', FormulaDataService];

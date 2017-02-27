@@ -1,3 +1,11 @@
 .card {
     width: 80%;
 }
+
+.loginForm {
+    width: 50%;
+}
+
+.latexPreview {
+    padding-left: 5%;
+}

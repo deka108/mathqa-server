@@ -6,7 +6,9 @@ const EVENTS = {
     FORMULA_TOKEN_RECEIVED: 'formula-token-received',
     FORMULA_CREATED: 'new-formula-posted',
     FORMULA_UPDATED: 'formula-updated',
-    FORMULA_DELETED: 'formula-deleted'
+    FORMULA_DELETED: 'formula-deleted',
+    LOGIN: 'login',
+    LOGOUT: 'logout',
 }
 
 export default EVENTS;

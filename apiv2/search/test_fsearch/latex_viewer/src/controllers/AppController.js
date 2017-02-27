@@ -1,11 +1,28 @@
-function AppController($scope, EVENTS, QuestionDataService) {
-    QuestionDataService.retrieveData();
+function AppController($scope, EVENTS, LoginService) {
+    $scope.isLogin = false;
+    $scope.userData = {
+        'username': 'dekauliya',
+        'password': '123456'
+    };
 
-    $scope.$on(EVENTS.QUESTION_RECEIVED, function(evt, data) {
-        $scope.questions = data;
-        console.log($scope.questions);
-        renderMathInElement(document.body);
+    $scope.$on(EVENTS.LOGIN, function() {
+        $scope.isLogin = true;
     });
+
+    $scope.$on(EVENTS.LOGOUT, function() {
+        $scope.isLogin = false;
+    });
+
+    $scope.login = function() {
+        LoginService.login();
+    };
+
+    $scope.logout = function() {
+        LoginService.logout();
+        $scope.isLogin = false;
+    };
+
+
 }
 
-export default ['$scope', 'EVENTS', 'QuestionDataService', AppController];
+export default ['$scope', 'EVENTS', 'LoginService', AppController];
