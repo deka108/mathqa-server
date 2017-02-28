@@ -123,7 +123,7 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
             "username": "admin",
             "password": "123456"
         }
-        return $http.post(URL.CUD_TEST_FORMULA, JSON.stringify(formulaData))
+        return $http.post(URL.CREATE_UPDATE_TEST_FORMULA, JSON.stringify(formulaData))
             .then(function success(response) {
                 console.log(response);
                 _on_formula_created();
@@ -138,7 +138,7 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
             "username": "admin",
             "password": "123456"
         }
-        return $http.patch(URL.CUD_TEST_FORMULA, JSON.stringify(formulaData))
+        return $http.patch(URL.CREATE_UPDATE_TEST_FORMULA, JSON.stringify(formulaData))
             .then(function success(response) {
                 console.log(response);
                 _on_formula_updated();

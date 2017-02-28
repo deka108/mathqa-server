@@ -52,7 +52,7 @@ def search_formula(latex_str):
     return results
 
 
-def retrieve_related_formulas(query_sort_sem_terms, k=10):
+def retrieve_related_formulas(query_sort_sem_terms, k=20):
     """
     Retrieves related formulas of thq query.
 
@@ -100,11 +100,11 @@ def retrieve_related_formulas(query_sort_sem_terms, k=10):
                     # union of formulas
                     related_formulas.add(formula)
 
-            if len(related_formulas) >= k:
-                break
-
         except (KeyError, TestFormulaIndex.DoesNotExist):
             print("Couldn't find this term:%s in the database." % term)
+
+        if len(related_formulas) >= k:
+            break
 
     return list(related_formulas)
 
@@ -140,7 +140,7 @@ def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_features,
     formula_indexes = TestFormulaIndex.objects.filter(pk__in=terms_collection)
     for formula_index in formula_indexes:
         idf_values[formula_index.term_index] = \
-            math.log10(float(N)/formula_index.df)
+            math.log10(float(N) / formula_index.df)
 
     return idf_values
 
@@ -210,6 +210,12 @@ def compute_formula_scores(query_ino_terms, query_sort_1gram, query_struc_fea,
                                        query_struc_fea, query_cn_fea,
                                        query_var_fea,
                                        idf_values, N)
+    print("query_sem_score: %s, query_struc_score: %s, query_cn_score: %s, "
+          "query_var_score: %s" % (str(sem_score_query),
+                                   str(struc_score_query),
+                                   str(cn_score_query),
+                                   str(var_score_query)))
+
     for rel_formula in related_formulas:
         sem_score, struc_score, cn_score, var_score = \
             compute_formula_feature_scores(query_ino_terms, query_sort_1gram,
@@ -221,16 +227,31 @@ def compute_formula_scores(query_ino_terms, query_sort_1gram, query_struc_fea,
                                            rel_formula.constant_term,
                                            rel_formula.variable_term,
                                            idf_values, N)
+        print("rel_sem_score: %s, rel_struc_score: %s, rel_cn_score: %s, "
+              "rel_var_score: %s" % (str(sem_score), str(struc_score),
+                                     str(cn_score), str(var_score)))
 
         # Normalize score
         if sem_score_query != 0:
             sem_score /= float(sem_score_query)
+        else:
+            sem_score = 0
+
         if struc_score_query != 0:
             struc_score /= float(struc_score_query)
+        else:
+            struc_score = 0
+
         if cn_score_query != 0:
             cn_score /= float(cn_score_query)
+        else:
+            cn_score = 0
+
         if var_score_query != 0:
             var_score /= float(var_score_query)
+        else:
+            var_score = 0
+
         score = compute_total_matching_score(sem_score, struc_score, cn_score,
                                              var_score)
 
@@ -266,10 +287,6 @@ def compute_formula_feature_scores(query_ino_ngram, query_sort_1gram,
         Semantic feature matching score, structural matching feature score,
         constant feature matching score and variable matching feature score.
     """
-    print("Computing feature scores, 1 gram sorted terms")
-    print(query_sort_1gram)
-    print(rel_sort_1gram)
-
     # Semantic matching score
     sem_score = compute_sem_matching_score(
         set(query_sort_1gram) & set(rel_sort_1gram),

@@ -131,6 +131,6 @@ whoosh/
 /data_reconstruction
 
 # Setting for local development
-meas/development_settings.py
+# meas/development_settings.py
 
 .idea/
