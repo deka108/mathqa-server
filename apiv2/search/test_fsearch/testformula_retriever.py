@@ -21,40 +21,38 @@ def search_formula(latex_str):
     Returns:
         List of questions that has the closest formula match with the query.
     """
-    # Extract latex formula
-    formulas = fe.extract_formulas_from_text(latex_str)
+    # Query feature extraction
+    query_ino_terms, query_sort_terms, query_struc_features, \
+    query_cn_features, query_var_features = ffe.generate_features(latex_str)
 
-    if formulas:
-        # Query feature extraction
-        query_ino_terms, query_sort_terms, query_struc_features, \
-        query_cn_features, query_var_features = ffe.generate_features(
-            formulas[0])
+    print("features: ")
+    print(ffe.generate_features(latex_str))
 
-        # Retrieve related formulas
-        related_formulas = retrieve_related_formulas(query_sort_terms)
+    # Retrieve related formulas
+    related_formulas = retrieve_related_formulas(query_sort_terms)
 
-        query_ino_terms = [term for term in chain.from_iterable(query_ino_terms)]
-        query_1gram_sort_terms = []
+    query_ino_terms = [term for term in chain.from_iterable(query_ino_terms)]
+    query_1gram_sort_terms = []
 
-        # 1-gram sorted terms
-        if query_sort_terms:
-            query_1gram_sort_terms = query_sort_terms[-1]
+    # 1-gram sorted terms
+    if query_sort_terms:
+        query_1gram_sort_terms = query_sort_terms[-1]
 
-        N = TestFormula.objects.count()
+    N = TestFormula.objects.count()
 
-        # Compute idf values
-        idf_values = compute_idf_values(query_ino_terms, query_1gram_sort_terms,
-                                        query_struc_features, related_formulas, N)
+    # Compute idf values
+    idf_values = compute_idf_values(query_ino_terms, query_1gram_sort_terms,
+                                    query_struc_features, related_formulas, N)
 
-        # Rank formula result
-        results = rank_formula_result(query_ino_terms, query_1gram_sort_terms,
-                                      query_struc_features, query_cn_features,
-                                      query_var_features, related_formulas,
-                                      idf_values, N)
-        return results
+    # Rank formula result
+    results = rank_formula_result(query_ino_terms, query_1gram_sort_terms,
+                                  query_struc_features, query_cn_features,
+                                  query_var_features, related_formulas,
+                                  idf_values, N)
+    return results
 
 
-def retrieve_related_formulas(query_sort_sem_terms, k=20):
+def retrieve_related_formulas(query_sort_sem_terms, k=10):
     """
     Retrieves related formulas of thq query.
 
@@ -70,12 +68,15 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
     if query_sort_sem_terms is None:
         return related_formulas
 
+    # use the n-gram semantic terms to retrieve relevant formulas
     for term in chain.from_iterable(query_sort_sem_terms):
         try:
+            # retrieve from inverted index
             f_index = TestFormulaIndex.objects.get(pk=term)
             docsids = re.findall('\d+', f_index.docsids)
             docsids = [int(docsid) for docsid in docsids]
 
+            # filter formulas based on formula ids found in inverted index
             formulas = TestFormula.objects.filter(pk__in=docsids, status=True)
 
             # Convert string to list
@@ -85,7 +86,8 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
                     formula.inorder_term = [term for term in
                                             chain.from_iterable(inorder_temp)]
 
-                    # 1-gram sorted semantic term
+                    # only 1-gram sorted semantic term is used for formula
+                    # ranking
                     sorted_temp = ast.literal_eval(formula.sorted_term)
                     formula.sorted_term = sorted_temp[-1]
                     formula.structure_term = ast.literal_eval(
@@ -95,10 +97,11 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
                     formula.variable_term = ast.literal_eval(
                         formula.variable_term)
 
+                    # union of formulas
                     related_formulas.add(formula)
 
-                if len(related_formulas) >= k:
-                    break
+            if len(related_formulas) >= k:
+                break
 
         except (KeyError, TestFormulaIndex.DoesNotExist):
             print("Couldn't find this term:%s in the database." % term)
@@ -106,7 +109,7 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
     return list(related_formulas)
 
 
-def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_fea,
+def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_features,
                        related_formulas, N):
     """
     Computes the idf values for the query and related formula terms.
@@ -118,7 +121,7 @@ def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_fea,
     Args:
         query_ino_terms: List of in-order semantic terms of the query.
         query_sort_terms: List of 1-gram sorted semantic terms of the query.
-        query_struc_fea: List of the structural features of the query.
+        query_struc_features: List of the structural features of the query.
         related_formulas: List of related formulas.
         N: Total number of formulas.
 
@@ -127,7 +130,7 @@ def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_fea,
     """
     idf_values = dict()
     terms_collection = set(query_ino_terms + query_sort_terms +
-                           query_struc_fea)
+                           query_struc_features)
 
     for rel_formula in related_formulas:
         terms_collection.update(set(rel_formula.inorder_term +
@@ -136,9 +139,8 @@ def compute_idf_values(query_ino_terms, query_sort_terms, query_struc_fea,
 
     formula_indexes = TestFormulaIndex.objects.filter(pk__in=terms_collection)
     for formula_index in formula_indexes:
-        if formula_index.df != 0:
-            idf_values[formula_index.term_index] = \
-                math.log10(float(N)/formula_index.df)
+        idf_values[formula_index.term_index] = \
+            math.log10(float(N)/formula_index.df)
 
     return idf_values
 
@@ -172,9 +174,8 @@ def rank_formula_result(query_ino_terms, query_sort_1gram, query_struc_fea,
     results = []
 
     for (rel_formula, score) in scores:
-        question = rel_formula.question
-        if question not in results:
-            results.append(question)
+        print(rel_formula, score)
+        results.append(rel_formula)
 
     return results
 
@@ -199,6 +200,8 @@ def compute_formula_scores(query_ino_terms, query_sort_1gram, query_struc_fea,
         List of tuples containing the related formula and its matching score.
     """
     scores = list()
+
+    # normalization denominator
     sem_score_query, struc_score_query, cn_score_query, var_score_query = \
         compute_formula_feature_scores(query_ino_terms, query_sort_1gram,
                                        query_struc_fea, query_cn_fea,
@@ -263,6 +266,10 @@ def compute_formula_feature_scores(query_ino_ngram, query_sort_1gram,
         Semantic feature matching score, structural matching feature score,
         constant feature matching score and variable matching feature score.
     """
+    print("Computing feature scores, 1 gram sorted terms")
+    print(query_sort_1gram)
+    print(rel_sort_1gram)
+
     # Semantic matching score
     sem_score = compute_sem_matching_score(
         set(query_sort_1gram) & set(rel_sort_1gram),

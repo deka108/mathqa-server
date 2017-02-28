@@ -1,53 +1,20 @@
 function FormulaViewController($scope, $mdDialog, $mdEditDialog, $window, FormulaDataService, LoginService, EVENTS) {
-    function _setLatexStr(newLatex) {
-        $scope.latexStr = "$$" + newLatex + "$$";
-    }
-
-    function _setMathmlStr(newMathml) {
-        $scope.mathmlStr = newMathml;
-    }
-
-    function _setDialogEvent(newEvent) {
-        $scope.dialogEvent = newEvent;
-    }
-
     $scope.pageTitle = "Formula Viewer";
-    FormulaDataService.retrieveFormulaCategories();
     $scope.promise = FormulaDataService.retrieveFormulas();
-    $scope.latexStr = null;
-    $scope.mathmlStr = null;
-    $scope.dialogEvent = null;
 
     $scope.$on(EVENTS.FORMULA_RECEIVED, function() {
         $scope.formulas = FormulaDataService.getFormulas();
     });
 
-    $scope.$on(EVENTS.FORMULA_CATEGORIES_RECEIVED, function() {
-        $scope.formulaCategories = FormulaDataService.getFormulaCategories();
-    });
 
     $scope.$on(EVENTS.FORMULA_UPDATED, function() {
         console.log("Formula updated!");
     });
 
-    $scope.$on(EVENTS.MATHML_RECEIVED, function() {
-        _setMathmlStr(FormulaDataService.getMathmlFormula());
-        let parentEl = document.getElementById("body");
-        $mdDialog.show({
-            contentElement: '#mathmlDialog',
-            parent: angular.element(document.body),
-            targetEvent: $scope.dialogEvent,
-            clickOutsideToClose: true
-        });
+    $scope.$on(EVENTS.FORMULA_DELETED, function() {
+        console.log("Formula deleted!");
+        $scope.refreshData();
     });
-
-    $scope.query = {
-        order: 'questions',
-        limit: 100,
-        page: 1
-    };
-
-    $scope.limitOptions = [50, 100];
 
     $scope.editContent = function(evt, formula) {
         evt.stopPropagation();
@@ -88,27 +55,7 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, $window, Formul
 
     $scope.refreshData = function() {
         $scope.promise = FormulaDataService.retrieveFormulas();
-    }
-
-    $scope.showMathmlDialog = function(evt, formula) {
-        _setLatexStr(formula.content);
-        _setDialogEvent(evt);
-        FormulaDataService.retrieveMathml(formula.content);
-    }
-
-    $scope.filterByCategory = function(formula) {
-        if (!$scope.selectedCategories || $scope.selectedCategories.indexOf("all") != -1) {
-            return true;
-        } else {
-            for (let i = 0; i < formula.categories.length; i++) {
-                if ($scope.selectedCategories.indexOf(formula.categories[i]) != -1) return true;
-            }
-        }
-        return false;
-    }
-
-    $scope.changePage = function(page, limit) {
-        console.log(page, limit);
+        FormulaDataService.retrieveFormulaCategories();
     }
 
     $scope.updateResults = function() {
@@ -116,7 +63,7 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, $window, Formul
     }
 
     $scope.openFormulaEditor = function() {
-        $window.open('formula_editor.html', '_blank');
+        $window.open('insert_formula.html', '_blank');
     }
 
     $scope.reindexFormula = function(someFormulas) {
@@ -125,17 +72,19 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, $window, Formul
                 headers: LoginService.getTokenHeader(),
             }
 
-            if (!someFormulas) {
-                data.formulas = null;
-            } else {
-                if (someFormulas instanceof Array) {
-                    data.formulas = someFormulas;
-                } else {
-                    data.formulas = [someFormulas];
-                }
-            }
+            // if (!someFormulas) {
+            //     data.formulas = null;
+            // } else {
+            //     if (someFormulas instanceof Array) {
+            //         data.formulas = someFormulas;
+            //     } else {
+            //         data.formulas = [someFormulas];
+            //     }
+            // }
 
             FormulaDataService.reindexFormula(data);
+        } else {
+            console.error("Need to login first!!");
         }
     }
 }

@@ -8,12 +8,13 @@ const URL = {
     TESTSEARCH_FORMULA: BASE_URL + '/questions/search/type=f&q?=',
     GET_FORMULA_CATEGORIES: BASE_URL + '/test_formula_categories/',
     GET_TEST_FORMULAS: BASE_URL + '/test_formulas/',
-    UPDATE_TEST_FORMULA: BASE_URL + '/update_test_formula/',
     CHECK_MATHML: BASE_URL + '/check_mathml/',
-    CUD_TEST_FORMULA: BASE_URL + '/cud_test_formula/',
+    CREATE_UPDATE_TEST_FORMULA: BASE_URL + '/create_update_test_formula/',
+    DELETE_TEST_FORMULA: BASE_URL + '/delete_test_formula/',
     REINDEX_TEST_FORMULA: BASE_URL + '/reindex_test_formula/',
     LOGIN: BASE_URL + '/auth/login/',
-    LOGOUT: BASE_URL + '/auth/logout/'
+    LOGOUT: BASE_URL + '/auth/logout/',
+    SEARCH_TEST_FORMULA: BASE_URL + '/search_test_formula/'
 }
 
 export default URL;

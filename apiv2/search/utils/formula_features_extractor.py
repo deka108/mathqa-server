@@ -108,7 +108,7 @@ def is_operator_or_function(term):
     # other operators
     operator_terms += ('widetilde', 'widehat', 'overleftarrow',
                        'overrightarrow', 'overline', 'underline',
-                       'overbrace', 'underbrace', 'sqrt', 'frac', 'mathrm')
+                       'overbrace', 'underbrace', 'sqrt', 'frac')
 
     return is_function(term) or term.endswith(operator_terms) or term == 'e'
 
@@ -127,9 +127,9 @@ def is_function(term):
     """
     function_terms = ('arccos', 'cos', 'csc', 'exp', 'limsup', 'min', 'sinh',
                       'arcsin', 'cosh', 'deg', 'gcd', 'lg', 'ln', 'sup',
-                      'arctan', 'cot', 'det', 'lim', 'log', 'sec', 'tan',
-                      'arg', 'coth', 'dim', 'inf', 'liminf', 'max', 'sin',
-                      'tanh', 'mathrm')
+                      'arctan', 'cot', 'det', 'lim', 'sin', 'log', 'sec',
+                      'tan', 'arg', 'coth', 'dim', 'inf', 'liminf', 'max',
+                      'tanh' )
     return term.endswith(function_terms)
 
 

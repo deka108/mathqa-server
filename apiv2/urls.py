@@ -52,8 +52,10 @@ urlpatterns = [
     url(r'^check_tokens/$', views.check_token_questions),
     url(r'^check_mathml/$', views.check_mathml_str),
     url(r'^check_formula_token/$', views.check_formula_token),
-    url(r'^cud_test_formula/$', views.cud_test_formula),
+    url(r'^create_update_test_formula/$', views.create_update_test_formula),
+    url(r'^delete_test_formula/$', views.delete_test_formula),
     url(r'^reindex_test_formula/$', views.reindex_test_formula),
+    url(r'^search_test_formula/$', views.search_test_formula),
     # account
     # url(r'^register/$', ),
     # url(r'^logout/$', ),

@@ -10,19 +10,19 @@ from apiv2.search.utils import formula_extractor as fe
 from apiv2.search.utils import formula_features_extractor as ffe
 
 
-def search_formula(latex_str):
+def search_formula(question_str):
     """
     Performs inverted index searching to find questions with the closest
     match with the query.
 
     Args:
-        latex_str: formula string in latex format.
+        question_str: formula string in latex format.
 
     Returns:
         List of questions that has the closest formula match with the query.
     """
     # Extract latex formula
-    formulas = fe.extract_formulas_from_text(latex_str)
+    formulas = fe.extract_formulas_from_text(question_str)
 
     if formulas:
         # Query feature extraction

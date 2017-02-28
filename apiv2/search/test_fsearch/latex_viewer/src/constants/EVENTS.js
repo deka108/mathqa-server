@@ -9,6 +9,7 @@ const EVENTS = {
     FORMULA_DELETED: 'formula-deleted',
     LOGIN: 'login',
     LOGOUT: 'logout',
+    SEARCH_RECEIVED: 'search-received'
 }
 
 export default EVENTS;

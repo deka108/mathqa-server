@@ -23,6 +23,10 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
         $rootScope.$broadcast(EVENTS.FORMULA_DELETED);
     }
 
+    function _on_formula_search_received() {
+        $rootScope.$broadcast(EVENTS.SEARCH_RECEIVED);
+    }
+
     function _on_error(response) {
         if (response.status > 0) {
             console.error(response);
@@ -41,9 +45,19 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
         formulaMathml = newData;
     }
 
+    function _update_formula_results(newData) {
+        formulaResults = newData;
+    }
+
+    function _update_deleted_formula(newData) {
+        deletedFormula = newData;
+    }
+
     let formulaMathml = null;
     let formulaCategories = null;
     let formulas = null;
+    let formulaResults = null;
+    let deletedFormula = null;
 
     this.getFormulaCategories = function() {
         return formulaCategories;
@@ -53,8 +67,16 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
         return formulaMathml;
     }
 
+    this.getDeletedFormula = function() {
+        return deletedFormula;
+    }
+
     this.getFormulas = function() {
         return formulas;
+    }
+
+    this.getFormulaResults = function() {
+        return formulaResults;
     }
 
     this.retrieveFormulaCategories = function() {
@@ -131,9 +153,10 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
             "username": "admin",
             "password": "123456"
         }
-        return $http.delete(URL.CUD_TEST_FORMULA, JSON.stringify(formulaData))
+        return $http.post(URL.DELETE_TEST_FORMULA, JSON.stringify(formulaData))
             .then(function success(response) {
                 console.log(response);
+                _update_deleted_formula(data);
                 _on_formula_deleted();
             }, function error(response) {
                 _on_error(response);
@@ -144,9 +167,11 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
         let postData = {
             "username": "admin",
             "password": "123456",
-            "formulas": data.formulas,
-            "reset": true
-        }
+        };
+
+        // "formulas": data.formulas,
+        // "reset": true
+
         return $http({
             method: 'POST',
             url: URL.REINDEX_TEST_FORMULA,
@@ -157,6 +182,20 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
             },
             function error(response) {
                 _on_error(response);
+            });
+    }
+
+    this.searchFormula = function(query) {
+        let data = {
+            query: query
+        }
+        return $http.post(URL.SEARCH_TEST_FORMULA, JSON.stringify(data))
+            .then(function success(response) {
+                console.log(response);
+                _update_formula_results(response.data);
+                _on_formula_search_received();
+            }, function error(response) {
+                _on_error(response)
             });
     }
 }

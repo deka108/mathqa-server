@@ -60,22 +60,18 @@ def _get_formula_ids(formulas):
     return [formula.get(u'id') for formula in formulas]
 
 
-def reindex_test_formulas(reset=False, formulas=None):
-    if formulas:
-        formula_ids = _get_formula_ids(formulas)
-        all_formulas = TestFormula.objects.filter(pk__in=formula_ids)
-    else:
-        all_formulas = TestFormula.objects.all()
+def reindex_test_formulas():
+    all_formulas = TestFormula.objects.all()
+    print("Formula count: %s" % all_formulas.count())
 
-    # if reset=False, it'll only update formulas that haven't been reindexed
-    # before
-    if reset:
-        all_formulas.update(status=False)
+    # reset status to false
+    all_formulas.update(status=False)
+    count = 0
 
     for formula in all_formulas:
-        if not formula.status:
-            print("Reindexing formula: #%d" % formula.id)
-            create_test_formula_index_model(formula.id)
+        count += create_test_formula_index_model(formula.id)
+
+    print("Total formulas reindexed: %d" % count)
 
 
 def create_test_formula_index_model(formula_id):
@@ -112,8 +108,12 @@ def create_test_formula_index_model(formula_id):
             for term in chain(struc_features, const_features, var_features):
                 create_update_test_formula_index(formula_obj.id, term)
 
+            print("Reindexing formula: #%d" % formula_obj.id)
+            return 1
     except (KeyError, TestFormula.DoesNotExist) as err:
         print err
+
+    return 0
 
 
 def create_update_test_formula_index(formula_id, term):

@@ -15,6 +15,8 @@ import AppController from 'src/controllers/AppController';
 import FormulaViewController from 'src/controllers/FormulaViewController';
 import LatexFormController from 'src/controllers/LatexFormController';
 import LoginController from 'src/controllers/LoginController';
+import SearchController from 'src/controllers/SearchController';
+import LatexTableController from 'src/controllers/LatexTableController';
 import FormulaDataService from 'src/services/FormulaDataService';
 import LoginService from 'src/services/LoginService';
 import QuestionDataService from 'src/services/QuestionDataService';
@@ -37,6 +39,8 @@ export default angular.module('viewer-app', ['ngMaterial', 'katex', 'ngMessages'
     .controller('FormulaViewController', FormulaViewController)
     .controller('LatexFormController', LatexFormController)
     .controller('LoginController', LoginController)
+    .controller('LatexTableController', LatexTableController)
+    .controller('SearchController', SearchController)
     .service('QuestionDataService', QuestionDataService)
     .service('FormulaDataService', FormulaDataService)
     .service('LoginService', LoginService);

@@ -1,7 +1,6 @@
 import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
-from django.contrib.auth import logout
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, permission_classes, list_route
 from rest_framework.exceptions import ParseError, AuthenticationFailed, NotFound
@@ -108,23 +107,6 @@ def search_formula(query, request):
         return serializer
 
 
-def search_test_database(query, request):
-    filtered_questions = TestQuestion.objects.filter(content__icontains=query)
-    if filtered_questions:
-        serializer = (TestQuestionSerializer(filtered_questions,
-                                         context={'request': request},
-                                         many=True))
-        return serializer
-
-def search_test_formula(query, request):
-    questions = tfr.search_formula(query)
-    if questions:
-        serializer = TestQuestionSerializer(questions,
-                                        context={'request': request},
-                                        many=True)
-        return serializer
-
-
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
@@ -149,8 +131,8 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
 
                         if search_type == SEARCH_DATABASE:
                             serializer = search_database(query, request)
-                        elif search_type == SEARCH_FORMULA:
-                            serializer = search_formula(query, request)
+                        # elif search_type == SEARCH_FORMULA:
+                        #     serializer = search_formula(query, request)
                         elif search_type == SEARCH_TAG:
                             pass
                         else:
@@ -165,6 +147,15 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
                     return Response(status=status.HTTP_204_NO_CONTENT)
 
         raise ParseError(detail="Query parameter is required.")
+
+
+def search_test_database(query, request):
+    filtered_questions = TestQuestion.objects.filter(content__icontains=query)
+    if filtered_questions:
+        serializer = (TestQuestionSerializer(filtered_questions,
+                                             context={'request': request},
+                                             many=True))
+        return serializer
 
 
 class TestQuestionViewSet(viewsets.ReadOnlyModelViewSet):
@@ -297,9 +288,8 @@ def check_mathml_str(request):
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
 def check_formula_token(request):
-    return "hello"
-    # formula_str = request.data.get("formula")
-    # return Response(ffe._generate_mathmlstr(formula_str))
+    formula_str = request.data.get("formula")
+    return Response(ffe.generate_features(formula_str))
 
 
 @api_view(['GET', 'POST'])
@@ -321,31 +311,49 @@ def reindex_all_formula(request):
                         "manipulation.")
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @permission_classes((permissions.IsAuthenticated,))
 def reindex_test_formula(request):
-    user = request.data.get("username")
-    pw = request.data.get("password")
-    if user == "admin" and pw == "123456":
-        reset = request.data.get("reset")
-        formulas = request.data.get("formulas")
-        print("Received formula reindexing request!")
-        if formulas:
-            tfi.reindex_test_formulas(reset=True, formulas=formulas)
-        elif reset:
-            tfi.reindex_test_formulas(reset=True)
-        else:
-            tfi.reindex_test_formulas(reset=False)
-        return Response("Formula and formula index table has been " +
-                        "reindexed successfully.")
-    else:
+    if request.method == 'GET':
+        return Response(
+            {"username": "admin", "password": "123456", "reset": True})
+    elif request.method == 'POST':
+        user = request.data.get("username")
+        pw = request.data.get("password")
+        if user == "admin" and pw == "123456":
+            try:
+                tfi.reindex_test_formulas()
+                return Response("Formula and formula index table has been " +
+                            "reindexed successfully.")
+            except Exception as e:
+                print(e)
+                return NotFound("Unable to reindex the formula and formula "
+                                "index table.")
         return AuthenticationFailed("You must be an admin to perform database "
-                        "manipulation.")
+                            "manipulation.")
 
 
-@api_view(['POST', 'PUT', 'PATCH', 'DELETE'])
+@api_view(['GET', 'POST'])
 @permission_classes((permissions.AllowAny,))
-def cud_test_formula(request):
+def search_test_formula(request):
+    if request.method == 'GET':
+        return Response('{"query": "\sin(x)"}')
+    elif request.method == 'POST':
+        query = request.data.get("query")
+        if query:
+            rel_formulas = tfr.search_formula(query)
+            if rel_formulas:
+                serializer = TestFormulaSerializer(rel_formulas,
+                                                   context={'request': request},
+                                                   many=True)
+                return Response(serializer.data)
+        else:
+            ParseError("Unable to search: query unavailable")
+
+
+@api_view(['POST', 'PUT', 'PATCH'])
+@permission_classes((permissions.AllowAny,))
+def create_update_test_formula(request):
     user = request.data.get("username")
     pw = request.data.get("password")
     if user == "admin" and pw == "123456":
@@ -356,25 +364,34 @@ def cud_test_formula(request):
                 if tfu.insert_test_formula(test_formula):
                     return Response("Test formula has been created "
                                     "successfully.")
-                else:
-                    return Response("Test formula already exist in "
+                return Response("Test formula already exist in "
                                     "the database.")
 
             elif request.method == 'PUT' or request.method == 'PATCH':
                 if tfu.update_test_formula(test_formula):
                     return Response("Test formula has been updated "
                                     "successfully.")
-                else:
-                    return Response("Fails to update test formula.")
+                return Response("Fails to update test formula.")
+        return Response("Fails to manipulate test formula database")
 
-            elif request.method == 'DELETE':
-                if tfu.delete_test_formula(test_formula):
-                    return Response("Test formula has been deleted "
-                                    "successfully.")
-                else:
-                    return Response("Fails to delete test formula.")
-        else:
-            return Response("Fails to manipulate test formula database")
+    else:
+        return Response("You must be an admin to perform database "
+                        "manipulation.")
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def delete_test_formula(request):
+    user = request.data.get("username")
+    pw = request.data.get("password")
+    if user == "admin" and pw == "123456":
+        test_formula = request.data.get("formula")
+
+        if test_formula:
+            if tfu.delete_test_formula(test_formula):
+                return Response("Test formula has been deleted "
+                                "successfully.")
+            return Response("Fails to delete test formula.")
+        return Response("Fails to manipulate test formula database")
 
     else:
         return Response("You must be an admin to perform database "
