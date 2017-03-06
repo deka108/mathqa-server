@@ -6,34 +6,28 @@ import re
 
 import apiv2.search.utils.formula_extractor as fe
 import apiv2.search.utils.formula_features_extractor as ffe
-from apiv2.models import *
+from apiv2.models import Question, Formula, FormulaIndex
 
 
-def reindex_all_formulas(reset_formula=False):
+def reindex_formulas_in_questions(question_ids):
     """
     Reindex the formula and formula index table.
 
     Args:
         reset_formula: Option to drop the formula index table and recreates it.
     """
-    questions = Question.objects.all()
-
-    if reset_formula:
-        Formula.objects.all().delete()
-    else:
-        Formula.objects.all().update(status=False)
-
     FormulaIndex.objects.all().delete()
 
-    # Reindex formulas in every question 
-    for question in questions:
-        reindex_formulas_in_question(question.id, reset_formula)
-        print("Successfully reindex question %s" % question.id)
+    # Reindex formulas in every question
+    for qid in question_ids:
+        reindex_formulas_in_question(qid)
+        print("Successfully reindex question %s" % qid)
 
     print("Finished reindexing")
 
 
-def reindex_formulas_in_question(question_id, create_formula=False):
+# using latex
+def reindex_formulas_in_question(question_id):
     """
     Creates formula and formula index table from a question.
 
@@ -43,24 +37,42 @@ def reindex_formulas_in_question(question_id, create_formula=False):
     """
     question = Question.objects.get(id=question_id)
 
-    if create_formula or not question.formula_set.exists():
-        formulas = fe.extract_formulas_from_text(question.content)
+    formulas = fe.extract_formulas_from_text(question.content)
 
-        for formula_str in formulas:
-            new_formula = Formula(content=formula_str, status=False,
-                                  question=question)
-            new_formula.save()
+    for formula_str in formulas:
+        new_formula = Formula(content=formula_str, status=False,
+                              question=question)
+        new_formula.save()
 
     formulas = question.formula_set.all()
     for formula in formulas:
         try:
-            create_formula_index_model(formula.content, formula.id)
+            create_formula_index_model(formula.id)
         except (KeyError, Formula.DoesNotExist) as e:
             print(e)
             print("Could not create formula index.")
 
 
-def create_formula_index_model(latex_str, formula_id):
+def _get_formula_ids(formulas):
+    return [formula.get(u'id') for formula in formulas]
+
+
+# using pre-defined formulas
+def reindex_all_formulas():
+    all_formulas = Formula.objects.all()
+    print("Formula count: %s" % all_formulas.count())
+
+    # reset status to false
+    all_formulas.update(status=False)
+    count = 0
+
+    for formula in all_formulas:
+        count += create_formula_index_model(formula.id)
+
+    print("Total formulas reindexed: %d" % count)
+
+
+def create_formula_index_model(formula_id):
     """
     Updates formula table with the extracted formula features and creates
     formula index table.
@@ -75,7 +87,8 @@ def create_formula_index_model(latex_str, formula_id):
         if not formula_obj.status:
             # Extract four features of a Formula
             inorder_sem_terms, sorted_sem_terms, struc_features, \
-            const_features, var_features = ffe.generate_features(latex_str)
+            const_features, var_features = ffe.generate_features(
+                formula_obj.content)
 
             # Insert features into formula table
             formula_obj.inorder_term = inorder_sem_terms
@@ -93,8 +106,12 @@ def create_formula_index_model(latex_str, formula_id):
             for term in chain(struc_features, const_features, var_features):
                 create_update_formula_index(formula_obj.id, term)
 
+            print("Reindexing formula: #%d" % formula_obj.id)
+            return 1
     except (KeyError, Formula.DoesNotExist) as err:
         print err
+
+    return 0
 
 
 def create_update_formula_index(formula_id, term):

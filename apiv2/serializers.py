@@ -91,9 +91,26 @@ class SolutionSerializer(serializers.ModelSerializer):
 class FormulaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Formula
-        fields = ('id', 'content', 'status', 'inorder_term',
+        fields = ('id', 'content', 'categories', 'status', 'inorder_term',
                   'sorted_term', 'structure_term', 'constant_term',
-                  'variable_term', 'question', 'concept')
+                  'variable_term', 'questions', 'concept')
+
+
+class FormulaCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestFormulaCategory
+        fields = ('name',)
+
+
+class FormulaIndexSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestFormulaIndex
+        fields = ('term_index', 'docsids', 'df')
+
+
+class FormulaSearchResultSerializer(serializers.Serializer):
+    rel_formula = FormulaSerializer(read_only=True)
+    questions = QuestionSerializer(read_only=True, many=True)
 
 
 class TestFormulaCategorySerializer(serializers.ModelSerializer):
@@ -114,11 +131,6 @@ class TestFormulaSerializer(serializers.ModelSerializer):
         fields = ('id', 'content', 'categories', 'status', 'inorder_term',
                   'sorted_term', 'structure_term', 'constant_term',
                   'variable_term', 'questions')
-
-class FormulaIndexSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FormulaIndex
-        fields = ('term_index', 'docsids', 'df')
 
 
 class AnswerPartSerializer(serializers.ModelSerializer):

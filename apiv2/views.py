@@ -11,6 +11,7 @@ from apiv2.permissions import *
 from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as fr
 from apiv2.search.test_fsearch import testformula_retriever as tfr, \
     testformula_indexer as tfi
+from apiv2.search.utils import formula_util as fu
 from apiv2.search.test_fsearch.utils import test_formula_util as tfu
 from apiv2.search.utils import formula_features_extractor as ffe
 from apiv2.search.test_fsearch import check_tokenizer as ct
@@ -98,15 +99,6 @@ def search_database(query, request):
         return serializer
 
 
-def search_formula(query, request):
-    questions = fr.search_formula(query)
-    if questions:
-        serializer = QuestionSerializer(questions,
-                                        context={'request': request},
-                                        many=True)
-        return serializer
-
-
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
@@ -131,8 +123,6 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
 
                         if search_type == SEARCH_DATABASE:
                             serializer = search_database(query, request)
-                        # elif search_type == SEARCH_FORMULA:
-                        #     serializer = search_formula(query, request)
                         elif search_type == SEARCH_TAG:
                             pass
                         else:
@@ -213,7 +203,13 @@ class FormulaViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('concept', 'question')
+    filter_fields = ('concept', 'questions')
+
+
+class FormulaCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = FormulaCategory.objects.all()
+    serializer_class = FormulaCategorySerializer
+    permission_classes = (permissions.AllowAny, )
 
 
 class FormulaIndexViewSet(viewsets.ReadOnlyModelViewSet):
@@ -295,19 +291,87 @@ def check_formula_token(request):
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.IsAuthenticated,))
 def reindex_all_formula(request):
+    if request.method == 'GET':
+        return Response(
+            {"username": "admin", "password": "123456", "reset": True})
+    elif request.method == 'POST':
+        user = request.data.get("username")
+        pw = request.data.get("password")
+        if user == "admin" and pw == "123456":
+            try:
+                fi.reindex_all_formulas()
+                return Response("Formula and formula index table has been " +
+                            "reindexed successfully.")
+            except Exception as e:
+                print(e)
+                return NotFound("Unable to reindex the formula and formula "
+                                "index table.")
+        return AuthenticationFailed("You must be an admin to perform database "
+                            "manipulation.")
+
+
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def search_formula(request):
+    if request.method == 'GET':
+        return Response({"query": "\sin(x)"})
+    elif request.method == 'POST':
+        query = request.data.get("query")
+        if query:
+            results = fr.search_formula(query)
+            if results:
+                serializer = FormulaSearchResultSerializer(
+                    results, context={'request': request}, many=True)
+                return Response(serializer.data)
+        else:
+            ParseError("Unable to search: query unavailable")
+
+
+@api_view(['POST', 'PUT', 'PATCH'])
+@permission_classes((permissions.AllowAny,))
+def create_update_formula(request):
     user = request.data.get("username")
     pw = request.data.get("password")
     if user == "admin" and pw == "123456":
-        try:
-            fi.reindex_all_formulas(reset_formula=True)
-            return Response("Formula and formula index table has been " +
-                            "reindexed successfully.")
-        except Exception as e:
-            print(e)
-            return NotFound("Unable to reindex the formula and formula index" +
-                            " table.")
+        formula = request.data.get("formula")
+
+        if formula:
+            if request.method == 'POST':
+                if fu.insert_formula(formula):
+                    return Response("Test formula has been created "
+                                    "successfully.")
+                return Response("Test formula already exist in the database. "
+                                "But I added new question id to that formula "
+                                "if it doesn't exist before")
+
+            elif request.method == 'PUT' or request.method == 'PATCH':
+                if fu.update_formula(formula):
+                    return Response("Test formula has been updated "
+                                    "successfully.")
+                return Response("Fails to update test formula.")
+        return Response("Fails to manipulate test formula database")
+
     else:
-        return AuthenticationFailed("You must be an admin to perform database "
+        return Response("You must be an admin to perform database "
+                        "manipulation.")
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def delete_formula(request):
+    user = request.data.get("username")
+    pw = request.data.get("password")
+    if user == "admin" and pw == "123456":
+        formula = request.data.get("formula")
+
+        if formula:
+            if fu.delete_formula(formula):
+                return Response("Test formula has been deleted "
+                                "successfully.")
+            return Response("Fails to delete test formula.")
+        return Response("Fails to manipulate test formula database")
+
+    else:
+        return Response("You must be an admin to perform database "
                         "manipulation.")
 
 
@@ -337,7 +401,7 @@ def reindex_test_formula(request):
 @permission_classes((permissions.AllowAny,))
 def search_test_formula(request):
     if request.method == 'GET':
-        return Response('{"query": "\sin(x)"}')
+        return Response({"query": "\sin(x)"})
     elif request.method == 'POST':
         query = request.data.get("query")
         if query:
@@ -347,6 +411,7 @@ def search_test_formula(request):
                                                    context={'request': request},
                                                    many=True)
                 return Response(serializer.data)
+            return Response("Unable to find related formulas")
         else:
             ParseError("Unable to search: query unavailable")
 

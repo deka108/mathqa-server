@@ -21,6 +21,7 @@ router.register(r'questions', views.QuestionViewSet)
 router.register(r'test_questions', views.TestQuestionViewSet)
 router.register(r'solutions', views.SolutionViewSet)
 router.register(r'formulas', views.FormulaViewSet)
+router.register(r'formula_categories', views.FormulaCategoryViewSet)
 router.register(r'formula_indexes', views.FormulaIndexViewSet)
 router.register(r'test_formulas', views.TestFormulaViewSet)
 router.register(r'test_formula_categories', views.TestFormulaCategoryViewSet)
@@ -46,19 +47,20 @@ router.register(r'hkeywords', hviews.KeywordViewSet)
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^schema/$', views.schema_view),
-    url(r'^formula/reindex_all$', views.reindex_all_formula),
-    url(r'^formula/reindex_test$', views.reindex_test_formula),
+
+    url(r'^reindex_all_formula/$', views.reindex_all_formula),
+    url(r'^search_formula/$', views.search_formula),
+    url(r'^create_update_formula/$', views.create_update_formula),
+    url(r'^delete_formula/$', views.delete_formula),
+
     url(r'^check_token/(?P<concept_id>[0-9]+)$', views.check_token),
-    url(r'^check_tokens/$', views.check_token_questions),
     url(r'^check_mathml/$', views.check_mathml_str),
     url(r'^check_formula_token/$', views.check_formula_token),
+
     url(r'^create_update_test_formula/$', views.create_update_test_formula),
     url(r'^delete_test_formula/$', views.delete_test_formula),
     url(r'^reindex_test_formula/$', views.reindex_test_formula),
     url(r'^search_test_formula/$', views.search_test_formula),
-    # account
-    # url(r'^register/$', ),
-    # url(r'^logout/$', ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

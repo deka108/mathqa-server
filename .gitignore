@@ -134,3 +134,8 @@ whoosh/
 # meas/development_settings.py
 
 .idea/
+
+# Angular
+node_modules/
+jspm_packages/
+etc/

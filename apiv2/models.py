@@ -198,6 +198,14 @@ class Question(models.Model):
         return range(0, int(self.difficulty_level))
 
 
+class QuestionText(models.Model):
+    content = models.TextField(null=False, blank=False)
+    question = models.ForeignKey(Question,
+                                    on_delete=models.CASCADE,
+                                    null=False, blank=False,
+                                    related_name='question_text')
+
+
 class TestQuestion(models.Model):
     """
     List of questions
@@ -257,6 +265,10 @@ class Solution(models.Model):
         return str(self.id)
 
 
+class FormulaCategory(models.Model):
+    name = models.CharField(max_length=200, primary_key=True)
+
+
 class Formula(models.Model):
     """
     List of formula
@@ -272,10 +284,10 @@ class Formula(models.Model):
     structure_term = models.TextField(max_length=1024, null=True, blank=True)
     constant_term = models.TextField(max_length=1024, null=True, blank=True)
     variable_term = models.TextField(max_length=1024, null=True, blank=True)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE,
-                                 null=True, blank=True)
+    questions = models.ManyToManyField(Question)
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE,
                                 null=True, blank=True)
+    categories = models.ManyToManyField(FormulaCategory)
 
 
 class FormulaIndex(models.Model):

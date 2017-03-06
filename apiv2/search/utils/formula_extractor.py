@@ -1,13 +1,20 @@
 import re
 
-DOLLAR_NOTATION = re.compile(r'\$\$([^\$]+)\$\$')
+DOUBLE_DOLLAR_NOTATION = re.compile(r'\$\$([^\$]+)\$\$')
 PAREN_NOTATION = re.compile(r'\\\(([^\(]+)\\\)')
 BRACKET_NOTATION = re.compile(r'\\\[([^\[]+)\\\]')
+SINGLE_DOLLAR_NOTATION = re.compile(r'\$([^\$]+)\$')
 LEFTP_PATTERN = re.compile(r'\(')
 RIGHTP_PATTERN = re.compile(r'\)')
 LEFTB_PATTERN = re.compile(r'\[')
 RIGHTB_PATTERN = re.compile(r'\]')
 MATHRM_PATTERN = re.compile(r'\\mathrm')
+
+
+def extract_latex_from_raw_query(text):
+    if text[0] == "$" and text[-1] == "$":
+        return text.strip("$")
+    return text
 
 
 def extract_formulas_from_text(text):
@@ -21,7 +28,7 @@ def extract_formulas_from_text(text):
         List of latex formulas.
     """
     latex_formulas = []
-    latex_formulas += DOLLAR_NOTATION.findall(text)
+    latex_formulas += DOUBLE_DOLLAR_NOTATION.findall(text)
     latex_formulas += PAREN_NOTATION.findall(text)
     latex_formulas += BRACKET_NOTATION.findall(text)
     latex_formulas = list(set(latex_formulas))
