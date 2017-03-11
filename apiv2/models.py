@@ -48,6 +48,9 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
+    def __unicode__(self):
+        return self.name
+
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=1000)
 
@@ -151,6 +154,14 @@ class Paper(models.Model):
     paperset = models.ForeignKey(Paperset, null=False)
 
 
+class FormulaCategory(models.Model):
+    def __str__(self):
+        return str(self.name)
+        
+    name = models.CharField(max_length=200, primary_key=True)
+    
+
+
 class Question(models.Model):
     """
     List of questions
@@ -181,6 +192,7 @@ class Question(models.Model):
         default=TEXT)
     source = models.TextField(null=False)
     content = models.TextField(null=False, blank=False)
+    content_cleaned_text = models.TextField(blank=True)
     is_sample = models.BooleanField(default=False, blank=False)
 
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE, 
@@ -191,6 +203,7 @@ class Question(models.Model):
                               on_delete=models.CASCADE, null=True, blank=True,
                               related_name='questions')
 
+    formula_categories = models.ManyToManyField(FormulaCategory)
     keypoints = models.ManyToManyField(KeyPoint)
     keywords = models.ManyToManyField(Keyword)
 
@@ -263,10 +276,6 @@ class Solution(models.Model):
 
     def __str__(self):
         return str(self.id)
-
-
-class FormulaCategory(models.Model):
-    name = models.CharField(max_length=200, primary_key=True)
 
 
 class Formula(models.Model):

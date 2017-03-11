@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <title>Question Viewer</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./jspm_packages/github/angular/bower-material@1.1.3/angular-material.css" />
+    <link href="./jspm_packages/npm/angular-material-data-table@0.10.10/dist/md-data-table.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./style/app.css" />
+    <link rel="stylesheet" href="./jspm_packages/npm/katex@0.7.1/dist/katex.min.css" />
+    <script src="./jspm_packages/npm/katex@0.7.1/dist/katex.min.js"></script>
+    <script src="./jspm_packages/npm/katex@0.7.1/dist/contrib/auto-render.min.js"></script>
+</head>
+
+<body ng-cloak ng-controller="AppController" layout="column" layout-fill>
+    <div ng-controller="QuestionViewController" id="parentEl">
+        <div ng-include src="'toolbar.html'"></div>
+        <md-content ng-controller="SearchController">
+            <div layout="column" layout-align="start center" layout-fill>
+                <div layout="column" style="width: 80%" layout-padding>
+                    <md-card>
+                        <md-card-content>
+                            <div layout="column">
+                                <h3>Search a Question</h3>
+                                <form name="queryEditor" ng-submit="queryEditor.$valid && search(rawLatex)">
+                                    <div layout="column" layout-align="start center">
+                                        <div layout-fill>
+                                            <md-input-container class="md-block">
+                                                <label>Search Query</label>
+                                                <input name="rawLatex" type="text" ng-model="rawLatex" required>
+                                                <span class="md-caption">Please provide your query.</span>
+                                                <div ng-messages="queryEditor.rawLatex.$error">
+                                                    <div ng-message="required">This field is required.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div layout="row" layout-fill style="padding-bottom: 2em;" ng-if="searchType == 'formula'">
+                                            <span style="padding-right: 2em;">LaTeX Preview</span>
+                                            <katex bind=rawLatex class="latexPreview"></katex>
+                                        </div>
+                                        <div layout="row" layout-fill layout-align="start">
+                                            <span style="padding-right: 2em;">Search Type</span>
+                                            <md-input-container>
+                                                <md-radio-group layout="row" name="searchType" ng-model="searchType" required layout-xs="column">
+                                                    <md-radio-button value="questionId" class="md-primary">Question Id</md-radio-button>
+                                                    <md-radio-button value="conceptId" class="md-primary">Concept Id</md-radio-button>
+                                                    <md-radio-button value="subconceptId" class="md-primary">Subconcept Id</md-radio-button>
+                                                    <md-radio-button value="fulltext" class="md-primary">Full Text</md-radio-button>
+                                                    <md-radio-button class="md-primary" value="db">Text Db</md-radio-button>
+                                                    <md-radio-button class="md-primary" value="formula">Formula</md-radio-button>
+                                                </md-radio-group>
+                                                <div ng-messages="queryEditor.searchType.$error">
+                                                    <div ng-message="required">This field is required.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div layout="row" layout-align="end start" layout-fill>
+                                            <md-button type="submit" class="md-raised md-primary">Search</md-button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <h3>Filter Formula Categories</h3>
+                                <md-input-container>
+                                    <label>Filter formulas</label>
+                                    <md-select ng-model="selectedCategories " ng-change="updateResults()" multiple>
+                                        <md-option><em>all</em></md-option>
+                                        <md-option ng-value="category.name " ng-repeat="category in formulaCategories ">{{category.name}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+
+                <div layout="column" style="width: 80%" layout-padding>
+                    <h3>Search Results: {{ resultCount }} </h3>
+                    <md-card ng-repeat="result in results">
+                        <md-card-content>
+                            <div layout="column">
+                                <div layout="column" ng-if="searchType == 'formula'">
+                                    <h3>Relevant Formula:</h3>
+                                    <katex bind=result.rel_formula.content></katex>
+                                </div>
+                                <div layout="column">
+                                    <h3>Question {{ result.question.id }}:</h3>
+                                    <div flex katex auto-render bind=result.question.content></div>
+                                </div>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                    <md-card ng-repeat="question in questions">
+                        <md-card-content>
+                            <div layout="column">
+                                <div layout="column">
+                                    <h3>Question {{ question.id }}:</h3>
+                                    <div katex auto-render bind=question.content></div>
+                                </div>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+
+        </md-content>
+    </div>
+
+    <script src="jspm_packages/system.js " type="text/javascript "></script>
+    <script src="config.js " type="text/javascript "></script>
+    <script type="text/javascript ">
+        System
+            .import('src/boot/boot')
+            .catch(console.error.bind(console)); // make sure any errors print to console
+    </script>
+
+</body>
+
+</html>

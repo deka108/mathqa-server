@@ -56,8 +56,8 @@ INSTALLED_APPS = (
 
     # Haystack
     # 'drf-haystack',
-    # 'haystack',
-    # 'whoosh',
+    'haystack',
+    # 'whoosh_index',
 
     # Django-Extensions
     'django_extensions',
@@ -123,17 +123,14 @@ TEMPLATES = [
 ]
 
 # Whoosh
-# PROJECT_DIRECTORY = os.getcwd() 
-# WHOOSH_INDEX = os.path.join(PROJECT_DIRECTORY,'../whoosh/')
+WHOOSH_INDEX = os.path.join(BASE_DIR, 'whoosh_index')
 
-# HAYSTACK_CONNECTIONS = {
-#     'default': {
-#         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-#     },
-#     'db': {
-#         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-#     },
-# }
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': WHOOSH_INDEX,
+    },
+}
 
 WSGI_APPLICATION = 'meas.wsgi.application'
 
@@ -145,14 +142,6 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '123456'
     },
-    # 'postgresql': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'dbname',
-    #     'USER': 'dbuser',
-    #     'PASSWORD': 'dbpass',
-    #     'HOST': 'postgresql.example.com',
-    #     'PORT': '',
-    # }
 }
 
 GRAPH_MODELS = {
@@ -269,4 +258,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',),
+
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
 }

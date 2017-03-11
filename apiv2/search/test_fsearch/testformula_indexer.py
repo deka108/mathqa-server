@@ -5,9 +5,9 @@ from itertools import chain
 import re
 
 from apiv2.models import TestFormula, TestFormulaIndex, TestQuestion
+from apiv2.search.fsearch import formula_features_extractor as ffe
 from apiv2.search.test_fsearch.utils import test_questions_util
-from apiv2.search.utils import formula_extractor as fe
-from apiv2.search.utils import formula_features_extractor as ffe
+from apiv2.search.fsearch import formula_extractor as fe
 
 
 def reindex_formulas_in_test_questions():

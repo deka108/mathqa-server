@@ -5,8 +5,8 @@ import apiv2.search.fsearch.formula_extractor
 import latex2mathml.converter as lml
 import re
 
-import apiv2.search.utils.formula_features_extractor
-from apiv2.search.utils import formula_features_extractor as fe
+import apiv2.search.fsearch.formula_features_extractor
+from apiv2.search.fsearch import formula_features_extractor as fe
 from .models import *
 
 INT_NOTATION = re.compile(r'\\int\^.+')

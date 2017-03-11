@@ -125,7 +125,6 @@ TestingENV/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
-whoosh/
 
 #DEKA's own files
 /data_reconstruction
@@ -139,3 +138,17 @@ whoosh/
 node_modules/
 jspm_packages/
 etc/
+.vscode/
+apiv2/data_reconstruction/
+excludect_data.json
+initial_data.json
+search/fsearch/*
+/apiv2/unused/
+/apiv2/search/test_fsearch/
+/apiv2/search/exploration/
+/apiv2/latex_img/
+/search/
+/no_content_no_auth.json
+/untitled.txt
+/text8.zip
+/db.json

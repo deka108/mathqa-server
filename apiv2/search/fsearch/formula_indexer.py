@@ -4,8 +4,8 @@ from itertools import chain
 
 import re
 
-import apiv2.search.utils.formula_extractor as fe
-import apiv2.search.utils.formula_features_extractor as ffe
+import apiv2.search.fsearch.formula_extractor as fe
+import apiv2.search.fsearch.formula_features_extractor as ffe
 from apiv2.models import Question, Formula, FormulaIndex
 
 
@@ -59,6 +59,7 @@ def _get_formula_ids(formulas):
 
 # using pre-defined formulas
 def reindex_all_formulas():
+    FormulaIndex.objects.all().delete()
     all_formulas = Formula.objects.all()
     print("Formula count: %s" % all_formulas.count())
 
@@ -81,7 +82,7 @@ def create_formula_index_model(formula_id):
         latex_str: formula string in latex format.
         formula_id: formula id.
     """
-    try:
+    try:    
         formula_obj = Formula.objects.get(pk=formula_id)
 
         if not formula_obj.status:
@@ -106,7 +107,7 @@ def create_formula_index_model(formula_id):
             for term in chain(struc_features, const_features, var_features):
                 create_update_formula_index(formula_obj.id, term)
 
-            print("Reindexing formula: #%d" % formula_obj.id)
+            print("Reindexed formula: #%d" % formula_obj.id)
             return 1
     except (KeyError, Formula.DoesNotExist) as err:
         print err

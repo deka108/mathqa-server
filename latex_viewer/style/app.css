@@ -1,0 +1,19 @@
+.card {
+    width: 80%;
+}
+
+.loginForm {
+    width: 50%;
+}
+
+.latexPreview {
+    padding-left: 5%;
+}
+
+.dialog-container {
+    width: 50%;
+}
+
+#loading-bar .bar {
+    position: relative;
+}

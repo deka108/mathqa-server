@@ -1,10 +1,10 @@
 import json
 
 from apiv2.models import *
+from apiv2.search.fsearch import formula_features_extractor as ffe
 from apiv2.search.test_fsearch.utils import test_questions_util
 from apiv2.search.test_fsearch.utils.paths import JSON_FILE
-from apiv2.search.utils import formula_extractor as fe
-from apiv2.search.utils import formula_features_extractor as ffe
+from apiv2.search.fsearch import formula_extractor as fe
 
 
 def check_question_from_concepts(concepts):

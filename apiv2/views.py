@@ -1,33 +1,28 @@
 import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_haystack.viewsets import HaystackViewSet
+from haystack.query import SearchQuerySet
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, permission_classes, list_route
-from rest_framework.exceptions import ParseError, AuthenticationFailed, NotFound
+from rest_framework.exceptions import ParseError, AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.schemas import get_schema_view
 
 from apiv2.permissions import *
-from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as fr
-from apiv2.search.test_fsearch import testformula_retriever as tfr, \
-    testformula_indexer as tfi
-from apiv2.search.utils import formula_util as fu
-from apiv2.search.test_fsearch.utils import test_formula_util as tfu
-from apiv2.search.utils import formula_features_extractor as ffe
+from apiv2.search.constants import *
+from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as\
+    fr, formula_features_extractor as ffe
 from apiv2.search.test_fsearch import check_tokenizer as ct
+from apiv2.search.utils import formula_util as fu, question_util as qu, \
+    solution_util as su
+from apiv2.search.utils import text_util as tu
 from apiv2.serializers import *
+from apiv2.unused.views_test import search_test_database, search_test_formula
 
 logger = logging.getLogger(__name__)
 
 schema_view = get_schema_view(title='MathQA API')
-
-SEARCH_TYPE = "type"
-VALID_QUERY_PARAMS = ["q", "query"]
-
-SEARCH_DATABASE = "d"
-SEARCH_FORMULA = "f"
-SEARCH_IMAGE_TEXT = "i"
-SEARCH_TAG = "t"
 
 
 class EducationLevelViewSet(viewsets.ReadOnlyModelViewSet):
@@ -90,15 +85,6 @@ class PaperViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ('paperset',)
 
 
-def search_database(query, request):
-    questions = Question.objects.filter(content__icontains=query)
-    if questions:
-        serializer = (QuestionSerializer(questions,
-                                         context={'request': request},
-                                         many=True))
-        return serializer
-
-
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
@@ -108,44 +94,69 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ('concept', 'subconcept', 'paper', 'keypoints',
                      'keywords')
 
-    @list_route(url_path="search")
-    def search(self, request):
-        params = request.query_params
 
-        for p in VALID_QUERY_PARAMS:
-            if p in params:
-                query = params[p]
+def search_database(query, request):
+    questions = Question.objects.filter(content__icontains=query)
+    results = [{"rel_formula": None, "question": question}
+               for question in questions]
 
-                if query:
-                    # Search type specified
-                    if SEARCH_TYPE in params:
-                        search_type = params[SEARCH_TYPE]
-
-                        if search_type == SEARCH_DATABASE:
-                            serializer = search_database(query, request)
-                        elif search_type == SEARCH_TAG:
-                            pass
-                        else:
-                            ParseError("Only formula, database, and text "
-                                       "search are allowed")
-                    # No type specified
-                    else:
-                        serializer = search_database(query, request)
-
-                    if serializer:
-                        return Response(serializer.data)
-                    return Response(status=status.HTTP_204_NO_CONTENT)
-
-        raise ParseError(detail="Query parameter is required.")
-
-
-def search_test_database(query, request):
-    filtered_questions = TestQuestion.objects.filter(content__icontains=query)
-    if filtered_questions:
-        serializer = (TestQuestionSerializer(filtered_questions,
-                                             context={'request': request},
-                                             many=True))
+    if questions:
+        serializer = SearchResultSerializer(results,
+                                            context={'request': request},
+                                            many=True)
         return serializer
+
+
+def search_text(query, request):
+    query = tu.preprocess_query(query)
+
+    questions = SearchQuerySet().filter(
+        content_cleaned_text=query).highlight()[:SEARCH_LIMIT]
+
+    results = [{"rel_formula": None, "question": question.object}
+               for question in questions]
+
+    if results:
+        serializer = SearchResultSerializer(results,
+                                            context={'request':request},
+                                            many=True)
+        return serializer
+
+
+def search_formula(query, request):
+    results = fr.search_formula(query)
+
+    if results:
+        serializer = SearchResultSerializer(results,
+                                            context={'request', request},
+                                            many=True)
+        return serializer
+
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def search(request):
+    query = request.query_params.get("query")
+    search_type = request.query_params.get("type")
+
+    if query:
+        if search_type:
+            if search_type == SEARCH_DATABASE:
+                serializer = search_database(query, request)
+            elif search_type == SEARCH_TEXT:
+                serializer = search_text(query, request)
+            elif search_type == SEARCH_FORMULA:
+                serializer = search_formula(query, request)
+            else:
+                raise ParseError(FORMULA_SEARCH_NOT_ALLOWED)
+        else:
+            serializer = search_database(query, request)
+
+        if serializer:
+            return Response(serializer.data)
+        return Response(SEARCH_NOT_FOUND, status=status.HTTP_204_NO_CONTENT)
+
+    raise ParseError(FORMULA_SEARCH_NO_QUERY)
 
 
 class TestQuestionViewSet(viewsets.ReadOnlyModelViewSet):
@@ -173,11 +184,9 @@ class TestQuestionViewSet(viewsets.ReadOnlyModelViewSet):
                         serializer = search_test_database(query, request)
                     elif search_type == SEARCH_FORMULA:
                         serializer = search_test_formula(query, request)
-                    elif search_type == SEARCH_TAG:
+                    elif search_type == SEARCH_TEXT:
                         pass
-                    else:
-                        ParseError("Only formula, database, and text "
-                                   "search are allowed")
+                    raise ParseError(FORMULA_SEARCH_NOT_ALLOWED)
                 else:
                     serializer = search_test_database(query, request)
 
@@ -185,7 +194,7 @@ class TestQuestionViewSet(viewsets.ReadOnlyModelViewSet):
                     return Response(serializer.data)
                 return Response(status=status.HTTP_204_NO_CONTENT)
 
-        raise ParseError(detail="Query parameter is required.")
+        raise ParseError(FORMULA_SEARCH_NO_QUERY)
 
 
 class SolutionViewSet(viewsets.ReadOnlyModelViewSet):
@@ -300,31 +309,50 @@ def reindex_all_formula(request):
         if user == "admin" and pw == "123456":
             try:
                 fi.reindex_all_formulas()
-                return Response("Formula and formula index table has been " +
-                            "reindexed successfully.")
+                return Response(FORMULA_INDEXING_SUCCESS)
             except Exception as e:
                 print(e)
-                return NotFound("Unable to reindex the formula and formula "
-                                "index table.")
-        return AuthenticationFailed("You must be an admin to perform database "
-                            "manipulation.")
+                return Response(FORMULA_INDEXING_FAIL,
+                                status=status.HTTP_400_BAD_REQUEST)
+        raise AuthenticationFailed()
 
 
 @api_view(['GET', 'POST'])
 @permission_classes((permissions.AllowAny,))
-def search_formula(request):
+def search_formula_post(request):
     if request.method == 'GET':
         return Response({"query": "\sin(x)"})
     elif request.method == 'POST':
         query = request.data.get("query")
+
         if query:
             results = fr.search_formula(query)
             if results:
-                serializer = FormulaSearchResultSerializer(
+                serializer = SearchResultSerializer(
                     results, context={'request': request}, many=True)
                 return Response(serializer.data)
-        else:
-            ParseError("Unable to search: query unavailable")
+            else:
+                return Response(SEARCH_NOT_FOUND,
+                                status=status.HTTP_204_NO_CONTENT)
+        raise ParseError(FORMULA_SEARCH_NO_QUERY)
+
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def search_formula_get(request):
+    if request.method == 'GET':
+        query = request.query_params.get("query")
+
+        if query:
+            results = fr.search_formula(query)
+            if results:
+                serializer = SearchResultSerializer(
+                    results, context={'request': request}, many=True)
+                return Response(serializer.data)
+            else:
+                return Response(SEARCH_NOT_FOUND,
+                                status=status.HTTP_204_NO_CONTENT)
+        raise ParseError(FORMULA_SEARCH_NO_QUERY)
 
 
 @api_view(['POST', 'PUT', 'PATCH'])
@@ -337,26 +365,80 @@ def create_update_formula(request):
 
         if formula:
             if request.method == 'POST':
+                print("Formula to be inserted: " + str(formula))
                 if fu.insert_formula(formula):
-                    return Response("Test formula has been created "
-                                    "successfully.")
-                return Response("Test formula already exist in the database. "
-                                "But I added new question id to that formula "
-                                "if it doesn't exist before")
+                    print(FORMULA_CREATION_SUCCESS)
+                    return Response(FORMULA_CREATION_SUCCESS)
+                print(FORMULA_CREATION_EXIST)
+                return Response(FORMULA_CREATION_EXIST)
 
             elif request.method == 'PUT' or request.method == 'PATCH':
-                if fu.update_formula(formula):
-                    return Response("Test formula has been updated "
-                                    "successfully.")
-                return Response("Fails to update test formula.")
-        return Response("Fails to manipulate test formula database")
+                print("Formula to be updated: " + str(formula))
+                updated_formula = fu.update_formula(formula)
+                if updated_formula:
+                    serializer = FormulaSerializer(updated_formula)
+                    print(FORMULA_UPDATE_SUCCESS)
+                    return Response(serializer.data)
+                print(FORMULA_UPDATE_FAIL)
+                return Response(FORMULA_UPDATE_FAIL,
+                                status=status.HTTP_400_BAD_REQUEST)
+        return Response(FORMULA_DB_CRUD_FAIL,
+                        status=status.HTTP_400_BAD_REQUEST)
 
-    else:
-        return Response("You must be an admin to perform database "
-                        "manipulation.")
+    raise AuthenticationFailed(AUTHENTICATION_FAIL)
+
+
+@api_view(['PUT', 'PATCH'])
+@permission_classes((permissions.IsAuthenticated,))
+def update_question(request):
+    user = request.data.get("username")
+    pw = request.data.get("password")
+    if user == "admin" and pw == "123456":
+        question = request.data.get("question")
+
+        if question:
+            if request.method == 'PUT' or request.method == 'PATCH':
+                print("Question to be updated: " + str(question))
+                updated_question = qu.update_question(question)
+                if updated_question:
+                    serializer = QuestionSerializer(updated_question)
+                    print(QUESTION_UPDATE_SUCCESS)
+                    return Response(serializer.data)
+                print(QUESTION_UPDATE_FAIL)
+                return Response(QUESTION_UPDATE_FAIL,
+                                status=status.HTTP_400_BAD_REQUEST)
+        return Response(QUESTION_DB_CRUD_FAIL,
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    raise AuthenticationFailed(AUTHENTICATION_FAIL)
+
+@api_view(['PUT', 'PATCH'])
+@permission_classes((permissions.IsAuthenticated,))
+def update_solution(request):
+    user = request.data.get("username")
+    pw = request.data.get("password")
+    if user == "admin" and pw == "123456":
+        solution = request.data.get("solution")
+
+        if solution:
+            if request.method == 'PUT' or request.method == 'PATCH':
+                print("Solution to be updated: " + str(solution))
+                updated_solution = su.update_solution(solution)
+                if updated_solution:
+                    serializer = SolutionSerializer(updated_solution)
+                    print(SOLUTION_UPDATE_SUCCESS)
+                    return Response(serializer.data)
+                print(SOLUTION_UPDATE_FAIL)
+                return Response(SOLUTION_UPDATE_FAIL,
+                                status=status.HTTP_400_BAD_REQUEST)
+        return Response(SOLUTION_DB_CRUD_FAIL,
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    raise AuthenticationFailed(AUTHENTICATION_FAIL)
+
 
 @api_view(['POST'])
-@permission_classes((permissions.AllowAny,))
+@permission_classes((permissions.IsAuthenticated,))
 def delete_formula(request):
     user = request.data.get("username")
     pw = request.data.get("password")
@@ -364,100 +446,25 @@ def delete_formula(request):
         formula = request.data.get("formula")
 
         if formula:
-            if fu.delete_formula(formula):
-                return Response("Test formula has been deleted "
-                                "successfully.")
-            return Response("Fails to delete test formula.")
-        return Response("Fails to manipulate test formula database")
-
-    else:
-        return Response("You must be an admin to perform database "
-                        "manipulation.")
-
-
-@api_view(['GET', 'POST'])
-@permission_classes((permissions.IsAuthenticated,))
-def reindex_test_formula(request):
-    if request.method == 'GET':
-        return Response(
-            {"username": "admin", "password": "123456", "reset": True})
-    elif request.method == 'POST':
-        user = request.data.get("username")
-        pw = request.data.get("password")
-        if user == "admin" and pw == "123456":
-            try:
-                tfi.reindex_test_formulas()
-                return Response("Formula and formula index table has been " +
-                            "reindexed successfully.")
-            except Exception as e:
-                print(e)
-                return NotFound("Unable to reindex the formula and formula "
-                                "index table.")
-        return AuthenticationFailed("You must be an admin to perform database "
-                            "manipulation.")
-
-
-@api_view(['GET', 'POST'])
-@permission_classes((permissions.AllowAny,))
-def search_test_formula(request):
-    if request.method == 'GET':
-        return Response({"query": "\sin(x)"})
-    elif request.method == 'POST':
-        query = request.data.get("query")
-        if query:
-            rel_formulas = tfr.search_formula(query)
-            if rel_formulas:
-                serializer = TestFormulaSerializer(rel_formulas,
-                                                   context={'request': request},
-                                                   many=True)
+            print("Formula to be deleted: " + str(formula))
+            deleted_formula = fu.delete_formula(formula)
+            if deleted_formula:
+                serializer = FormulaSerializer(deleted_formula)
+                print(FORMULA_DELETION_SUCCESS)
                 return Response(serializer.data)
-            return Response("Unable to find related formulas")
-        else:
-            ParseError("Unable to search: query unavailable")
+        print(FORMULA_DELETION_FAIL)
+        return Response(FORMULA_DELETION_FAIL,
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    raise AuthenticationFailed(AUTHENTICATION_FAIL)
 
 
-@api_view(['POST', 'PUT', 'PATCH'])
-@permission_classes((permissions.AllowAny,))
-def create_update_test_formula(request):
-    user = request.data.get("username")
-    pw = request.data.get("password")
-    if user == "admin" and pw == "123456":
-        test_formula = request.data.get("formula")
+class QuestionSearchView(HaystackViewSet):
 
-        if test_formula:
-            if request.method == 'POST':
-                if tfu.insert_test_formula(test_formula):
-                    return Response("Test formula has been created "
-                                    "successfully.")
-                return Response("Test formula already exist in "
-                                    "the database.")
+    # `index_models` is an optional list of which models you would like to include
+    # in the search result. You might have several models indexed, and this provides
+    # a way to filter out those of no interest for this particular view.
+    # (Translates to `SearchQuerySet().models(*index_models)` behind the scenes.
+    index_models = [Question]
 
-            elif request.method == 'PUT' or request.method == 'PATCH':
-                if tfu.update_test_formula(test_formula):
-                    return Response("Test formula has been updated "
-                                    "successfully.")
-                return Response("Fails to update test formula.")
-        return Response("Fails to manipulate test formula database")
-
-    else:
-        return Response("You must be an admin to perform database "
-                        "manipulation.")
-
-@api_view(['POST'])
-@permission_classes((permissions.AllowAny,))
-def delete_test_formula(request):
-    user = request.data.get("username")
-    pw = request.data.get("password")
-    if user == "admin" and pw == "123456":
-        test_formula = request.data.get("formula")
-
-        if test_formula:
-            if tfu.delete_test_formula(test_formula):
-                return Response("Test formula has been deleted "
-                                "successfully.")
-            return Response("Fails to delete test formula.")
-        return Response("Fails to manipulate test formula database")
-
-    else:
-        return Response("You must be an admin to perform database "
-                        "manipulation.")
+    serializer_class = QuestionHaystackSerializer

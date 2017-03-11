@@ -1,10 +1,9 @@
 from django.contrib.auth.models import User
+from drf_haystack.serializers import HaystackSerializer
 from rest_framework import serializers
 
-# from drf_haystack.serializers import HaystackSerializer
-# from search.search_indexes import QuestionIndex
-
 from apiv2.models import *
+from apiv2.search_indexes import QuestionIndex
 
 
 class EducationLevelSerializer(serializers.ModelSerializer):
@@ -14,45 +13,56 @@ class EducationLevelSerializer(serializers.ModelSerializer):
 
 
 class SubjectSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Subject
         fields = ('id', 'name', 'description', 'education_level')
+        # depth = 1
 
 
 class TopicSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Topic
         fields = ('id', 'name', 'subject')
+        # depth = 1
 
 
 class ConceptSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Concept
         fields = ('id', 'name', 'topic')
+        # depth = 1
 
 
 class SubconceptSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Subconcept
         fields = ('id', 'name', 'concept')
+        # depth = 1
 
 
 class KeyPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = KeyPoint
         fields = ('id', 'name', 'type', 'content', 'concept')
+        # depth = 1
 
 
 class KeywordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Keyword
         fields = ('id', 'name', 'content')
+        # depth = 1
 
 
 class PapersetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paperset
         fields = ('id', 'name', 'subject')
+        # depth = 1
 
 
 class PaperSerializer(serializers.ModelSerializer):
@@ -60,16 +70,20 @@ class PaperSerializer(serializers.ModelSerializer):
         model = Paper
         fields = ('id', 'year', 'month', 'number', 'no_of_question',
                   'subject', 'paperset')
+        # depth = 1
 
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
 
-        fields = ('id', 'content', 'concept', 'is_sample', 'subconcept',
-                  'difficulty_level', 'marks', 'keypoints', 'keywords',
+        fields = ('id', 'content', 'content_cleaned_text', 'concept',
+                  'formula_set',
+                  'is_sample', 'subconcept', 'difficulty_level', 'marks',
+                  'keypoints', 'keywords',
                   'paper', 'source', 'used_for', 'response_type',
                   'question_type', 'paper')
+        # depth = 1
 
 
 class TestQuestionSerializer(serializers.ModelSerializer):
@@ -80,12 +94,14 @@ class TestQuestionSerializer(serializers.ModelSerializer):
                   'subconcept', 'difficulty_level', 'marks',
                   'paper', 'source', 'response_type',
                   'question_type', 'paper')
+        # depth = 1
 
 
 class SolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
         fields = ('id', 'question', 'content')
+        # depth = 1
 
 
 class FormulaSerializer(serializers.ModelSerializer):
@@ -94,23 +110,28 @@ class FormulaSerializer(serializers.ModelSerializer):
         fields = ('id', 'content', 'categories', 'status', 'inorder_term',
                   'sorted_term', 'structure_term', 'constant_term',
                   'variable_term', 'questions', 'concept')
+        # depth = 1
 
 
 class FormulaCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = TestFormulaCategory
+        model = FormulaCategory
         fields = ('name',)
+
+        # depth = 1
 
 
 class FormulaIndexSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TestFormulaIndex
+        model = FormulaIndex
         fields = ('term_index', 'docsids', 'df')
 
+        # depth = 1
 
-class FormulaSearchResultSerializer(serializers.Serializer):
+
+class SearchResultSerializer(serializers.Serializer):
     rel_formula = FormulaSerializer(read_only=True)
-    questions = QuestionSerializer(read_only=True, many=True)
+    question = QuestionSerializer(read_only=True)
 
 
 class TestFormulaCategorySerializer(serializers.ModelSerializer):
@@ -151,16 +172,18 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'password', 'email')
 
 
-# class QuestionHaystackSerializer(HaystackSerializer):
+class QuestionHaystackSerializer(HaystackSerializer):
 
-#     class Meta:
-#         # The `index_classes` attribute is a list of which search indexes
-#         # we want to include in the search.
-#         index_classes = [QuestionIndex]
+    class Meta:
+        # The `index_classes` attribute is a list of which search indexes
+        # we want to include in the search.
+        index_classes = [QuestionIndex]
 
-#         # The `fields` contains all the fields we want to include.
-#         # NOTE: Make sure you don't confuse these with model attributes. These
-#         # fields belong to the search index!
-#         fields = ["text", "question_type", "used_for", "mark",
-#                   "difficulty_level", "respone_type", "content",
-#                   "solution", "answer", "concept", "keypoint"]
+        # The `fields` contains all the fields we want to include.
+        # NOTE: Make sure you don't confuse these with model attributes. These
+        # fields belong to the search index!
+        fields = ('id', 'content', 'content_cleaned_text', 'concept', 'formula_set',
+                  'is_sample', 'subconcept', 'difficulty_level', 'marks',
+                  'keypoints', 'keywords',
+                  'paper', 'source', 'used_for', 'response_type',
+                  'question_type', 'paper')

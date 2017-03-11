@@ -6,8 +6,8 @@ from itertools import chain
 import re
 
 from apiv2.models import Formula, FormulaIndex
-from apiv2.search.utils import formula_extractor as fe
-from apiv2.search.utils import formula_features_extractor as ffe
+from apiv2.search.fsearch import formula_features_extractor as ffe, \
+    formula_extractor as fe
 
 
 def search_formula(latex_str):
@@ -22,14 +22,12 @@ def search_formula(latex_str):
         List of questions that has the closest formula match with the query.
     """
     latex_str = fe.extract_latex_from_raw_query(latex_str)
-    print("query: %s" % latex_str)
+    print("query:")
+    print(latex_str)
 
     # Query feature extraction
     query_ino_terms, query_sort_terms, query_struc_features, \
     query_cn_features, query_var_features = ffe.generate_features(latex_str)
-
-    print("features: ")
-    print(ffe.generate_features(latex_str))
 
     # Retrieve related formulas
     related_formulas = retrieve_related_formulas(query_sort_terms)
@@ -179,10 +177,15 @@ def rank_formula_result(query_ino_terms, query_sort_1gram, query_struc_fea,
     print("Number of formula retrived: %d" % len(scores))
     for (rel_formula, score) in scores:
         print(rel_formula, score)
-        results.append({
-            "rel_formula": rel_formula,
-            "questions": rel_formula.questions,
-        })
+
+        if rel_formula.questions.count() > 0:
+            results += [{"rel_formula": rel_formula, "question": q} for q in
+                    rel_formula.questions.all()]
+        else:
+            results += [{
+                "rel_formula": rel_formula,
+                "question": None,
+            }]
 
     return results
 
@@ -401,7 +404,7 @@ def compute_var_matching_score(matching_var):
 
 
 def compute_total_matching_score(sem_score_norm, struc_score_norm,
-                                 cn_score_norm, var_score_norm, a=0.1):
+                                 cn_score_norm, var_score_norm, a=0.2):
     """
     Computes overall formula features score.
 

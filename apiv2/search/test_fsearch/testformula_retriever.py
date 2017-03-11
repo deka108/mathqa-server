@@ -6,8 +6,7 @@ from itertools import chain
 import re
 
 from apiv2.models import TestFormulaIndex, TestFormula
-from apiv2.search.utils import formula_extractor as fe
-from apiv2.search.utils import formula_features_extractor as ffe
+from apiv2.search.fsearch import formula_features_extractor as ffe
 
 
 def search_formula(latex_str):

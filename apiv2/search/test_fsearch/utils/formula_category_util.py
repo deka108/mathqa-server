@@ -1,5 +1,5 @@
-import formula_bracket as fb
 from apiv2.models import TestFormulaCategory
+from apiv2.search.utils import formula_bracket as fb
 
 
 def insert_formula_categories(reset_formula=False, categories=None):
