@@ -196,7 +196,9 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
     this.searchFormula = function(query) {
         let startTime = new Date();
 
-        return $http.get(URL.SEARCH_FORMULA + encodeURIComponent(query))
+        return $http.get(URL.SEARCH_FORMULA + encodeURIComponent(query), {
+                ignoreLoadingBar: true
+            })
             .then(function success(response) {
                 let endTime = new Date();
                 // console.log(response.data);

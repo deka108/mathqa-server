@@ -1,6 +1,9 @@
 <div id="loading-bar-container"></div>
 <md-toolbar class="md-table-toolbar">
     <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleNav()">
+            <md-icon style="color: white ">menu</md-icon>
+        </md-button>
         <h2 md-truncate flex>{{ pageTitle }}</h2>
         <div ng-if="pageTitle == 'Formula Viewer'">
             <md-button class="md-icon-button " ng-click="refreshData() ">
@@ -15,3 +18,18 @@
         </md-button>
     </div>
 </md-toolbar>
+<md-sidenav class="md-sidenav-left" md-component-id="leftNav" md-whiteframe="4">
+    <md-toolbar class="md-primary">
+        <h1 class="md-toolbar-tools">Available Pages</h1>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-button ng-click="close()" class="md-primary" hide-gt-md>
+            Close Sidenav Left
+        </md-button>
+        <md-list flex>
+            <md-list-item ng-repeat="(pageName, pageTemplate) in pages" ng-click="goToPage(pageTemplate)">
+                <p>{{ pageName }}</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>

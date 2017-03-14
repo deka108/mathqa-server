@@ -1,4 +1,4 @@
-function SearchController($scope, EVENTS, DataService, FormulaDataService) {
+function SearchController($scope, EVENTS, DataService) {
     $scope.pageTitle = "Search View";
 
     $scope.search = function(query) {
@@ -24,19 +24,6 @@ function SearchController($scope, EVENTS, DataService, FormulaDataService) {
         }
     }
 
-    $scope.searchFormula = function(query) {
-        FormulaDataService.searchFormula(query);
-    }
-
-    $scope.$on(EVENTS.FORMULA_SEARCH_RECEIVED, function() {
-        let results = FormulaDataService.getFormulaResults();
-        let formulas = [];
-        results.forEach(function(result) {
-            formulas.push(result.rel_formula);
-        });
-        $scope.formulas = formulas;
-    });
-
     $scope.$on(EVENTS.SEARCH_RECEIVED, function() {
         $scope.results = DataService.getSearchResults();
         $scope.questions = "";
@@ -58,4 +45,4 @@ function SearchController($scope, EVENTS, DataService, FormulaDataService) {
     });
 }
 
-export default ['$scope', 'EVENTS', 'DataService', 'FormulaDataService', SearchController];
+export default ['$scope', 'EVENTS', 'DataService', SearchController];

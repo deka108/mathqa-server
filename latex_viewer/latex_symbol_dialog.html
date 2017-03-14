@@ -2,30 +2,34 @@
 <div layout="column" class="dialog-container" layout-align="start scretch" layout-padding>
     <md-dialog>
         <div layout="column" layout-padding layout-fill>
-            <md-input-container>
-                <label>Select Type of Symbols</label>
-                <md-select ng-model="selectedTitle " ng-change="updateSymbols() ">
-                    <md-option ng-repeat="(text, title) in all_titles " ng-value="text ">{{ title }}</md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container>
-                <label>Select Symbols</label>
-                <md-select ng-model="selectedSymbol ">
-                    <md-option ng-repeat="symbol in symbols " ng-click="updateLatex($index) " ng-value="symbol.text ">{{ symbol.symbol }}</md-option>
-                </md-select>
-            </md-input-container>
-            <div layout="column" layout-align="start scretch">
-                <h4>Latex Preview</h4>
-                <katex bind="selectedSymbolLatex "></katex>
-            </div>
-            <div layout="row" layout-align="end start">
-                <md-button class="md-raised md-primary" ng-click="cancel()">
-                    Cancel
-                </md-button>
-                <md-button class="md-raised md-primary" ng-click="confirm()">
-                    Insert Symbol
-                </md-button>
-            </div>
+            <form id='symbolDialogForm' name="symbolDialogForm" ng-submit="confirm()">
+                <div layout="column">
+                    <md-input-container>
+                        <label>Select Type of Symbols</label>
+                        <md-select ng-model="symbolData.selectedTitle " ng-change="updateSymbols() ">
+                            <md-option ng-repeat="(text, title) in all_titles " ng-value="text ">{{ title }}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container ng-if="symbolData.selectedTitle">
+                        <label>Select Symbols</label>
+                        <md-select ng-model="symbolData.selectedSymbol">
+                            <md-option ng-repeat="symbol in symbolData.symbols " ng-click="updateLatex($index) " ng-value="symbol.text ">{{ symbol.symbol }}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="column" layout-align="start scretch">
+                    <h4>Latex Preview</h4>
+                    <katex bind="symbolData.selectedSymbolLatex "></katex>
+                </div>
+                <div layout="row" layout-align="end start">
+                    <md-button class="md-raised md-primary" ng-click="cancel()">
+                        Cancel
+                    </md-button>
+                    <md-button class="md-raised md-primary" type="submit">
+                        Insert Symbol
+                    </md-button>
+                </div>
+            </form>
         </div>
     </md-dialog>
 </div>

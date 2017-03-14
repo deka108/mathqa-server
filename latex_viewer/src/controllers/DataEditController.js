@@ -36,8 +36,8 @@ function DataController($scope, EVENTS, DataService, LoginService) {
     }
 
     $scope.$on(EVENTS.DATA_RECEIVED, function() {
-        $scope.data = DataService.getData();
-        console.log($scope.data);
+        let data = DataService.getData();
+        $scope.formulaData.rawLatex = data.content;
     });
 
 }

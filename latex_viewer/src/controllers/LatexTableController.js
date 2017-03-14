@@ -66,6 +66,20 @@ function LatexTableController($scope, $mdDialog, $mdEditDialog, $window, Formula
         $scope.limitOptions = [50, 100, $scope.results.length];
     }
 
+
+    $scope.searchFormula = function(query) {
+        $scope.promise = FormulaDataService.searchFormula(query);
+    }
+
+    $scope.$on(EVENTS.FORMULA_SEARCH_RECEIVED, function() {
+        let results = FormulaDataService.getFormulaResults();
+        let formulas = [];
+        results.forEach(function(result) {
+            formulas.push(result.rel_formula);
+        });
+        $scope.formulas = formulas;
+    });
+
 }
 
 export default ['$scope', '$mdDialog', '$mdEditDialog', '$window', 'FormulaDataService', 'EVENTS', LatexTableController];

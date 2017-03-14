@@ -19,9 +19,9 @@
 </head>
 
 <body ng-cloak ng-controller="AppController" layout="column" layout-fill>
-    <div ng-controller="DataEditController" id="parentEl">
+    <div ng-controller="LatexFormController" id="parentEl">
         <div ng-include src="'toolbar.html'"></div>
-        <md-content>
+        <md-content ng-controller="DataEditController">
             <div layout="column" layout-align="start center" layout-fill>
                 <div layout="column" style="width: 80%" layout-padding>
                     <md-card>
@@ -61,11 +61,14 @@
                                 <div layout="column">
                                     <md-input-container>
                                         <label>Data Content</label>
-                                        <textarea name="content" rows="5" md-select-on-focus ng-model="data.content"></textarea>
+                                        <textarea id="rawLatex" name="rawLatex" rows="5" md-select-on-focus ng-model="formulaData.rawLatex"></textarea>
                                     </md-input-container>
-                                    <div>
-                                        <span class="caption">Preview:</span>
-                                        <div katex auto-render bind=data.content></div>
+                                    <div layout="column">
+                                        <md-button class="md-raised md-primary" ng-click="displayLatexDialog($event)">Insert Symbol</md-button>
+                                    </div>
+                                    <div ng-if="formulaData.rawLatex">
+                                        <h3>Preview:</h3>
+                                        <div katex auto-render bind=formulaData.rawLatex></div>
                                     </div>
                                     <md-button type="submit" class="md-raised md-primary">Update</md-button>
                                 </div>
