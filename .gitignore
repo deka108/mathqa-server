@@ -150,5 +150,14 @@ search/fsearch/*
 /search/
 /no_content_no_auth.json
 /untitled.txt
-/text8.zip
 /db.json
+/search_apiv2.png
+/search_model.dot
+/search_api.png
+/output.png
+/qids.pickle
+/visualize_project.png
+/all_data.json
+/fix_formula
+/fi_index.json
+/fix.txt
