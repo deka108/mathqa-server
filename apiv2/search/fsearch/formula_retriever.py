@@ -21,7 +21,7 @@ def search_formula(latex_str):
     Returns:
         List of questions that has the closest formula match with the query.
     """
-    latex_str = fe.extract_latex_from_raw_query(latex_str)
+    latex_str = fe.extract_latex_from_raw_latex_query(latex_str)
     print("query:")
     print(latex_str)
 
@@ -74,11 +74,10 @@ def retrieve_related_formulas(query_sort_sem_terms, k=20):
         try:
             # retrieve from inverted index
             f_index = FormulaIndex.objects.get(pk=term)
-            docsids = re.findall('\d+', f_index.docsids)
-            docsids = [int(docsid) for docsid in docsids]
 
             # filter formulas based on formula ids found in inverted index
-            formulas = Formula.objects.filter(pk__in=docsids, status=True)
+            formulas = f_index.formulas.all()
+            formulas = formulas.filter(status=True)
 
             # Convert string to list
             for formula in formulas:

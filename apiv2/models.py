@@ -304,7 +304,7 @@ class FormulaIndex(models.Model):
     List of Formula Indices
     """
     term_index = models.CharField(primary_key=True, max_length=255)
-    docsids = models.TextField(null=True, blank=True)
+    formulas = models.ManyToManyField(Formula)
     df = models.PositiveIntegerField('frequency', default=1, blank=True)
 
 

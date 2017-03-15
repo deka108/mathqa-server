@@ -26,5 +26,12 @@
         "registry": "npm"
       }
     }
+  },
+  "devDependencies": {
+    "grunt-angular-architecture-graph": "^0.2.7",
+    "gulp-angular-architecture-graph": "0.0.5"
+  },
+  "dependencies": {
+    "grunt": "^1.0.1"
   }
 }

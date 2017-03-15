@@ -68,12 +68,12 @@ def reindex_all_formulas():
     count = 0
 
     for formula in all_formulas:
-        count += create_formula_index_model(formula.id)
+        count += create_formula_index_model(formula)
 
     print("Total formulas reindexed: %d" % count)
 
 
-def create_formula_index_model(formula_id):
+def create_formula_index_model(formula_obj):
     """
     Updates formula table with the extracted formula features and creates
     formula index table.
@@ -82,9 +82,7 @@ def create_formula_index_model(formula_id):
         latex_str: formula string in latex format.
         formula_id: formula id.
     """
-    try:    
-        formula_obj = Formula.objects.get(pk=formula_id)
-
+    try:
         if not formula_obj.status:
             # Extract four features of a Formula
             inorder_sem_terms, sorted_sem_terms, struc_features, \
@@ -102,10 +100,10 @@ def create_formula_index_model(formula_id):
 
             # Create index term in FormulaIndex table
             for term in chain.from_iterable(inorder_sem_terms+sorted_sem_terms):
-                create_update_formula_index(formula_obj.id, term)
+                create_update_formula_index(formula_obj, term)
 
             for term in chain(struc_features, const_features, var_features):
-                create_update_formula_index(formula_obj.id, term)
+                create_update_formula_index(formula_obj, term)
 
             print("Reindexed formula: #%d" % formula_obj.id)
             return 1
@@ -115,7 +113,7 @@ def create_formula_index_model(formula_id):
     return 0
 
 
-def create_update_formula_index(formula_id, term):
+def create_update_formula_index(formula_obj, term):
     """
     Create an inverted table of formula that maps terms to document ids
     (formula ids), or updates it with the document id if it already exists.
@@ -127,15 +125,12 @@ def create_update_formula_index(formula_id, term):
 
     try:
         f_index = FormulaIndex.objects.get(pk=term)
-        formulaid_str = str(formula_id)
-        docsids = re.findall('\d+', f_index.docsids)
-
-        if formulaid_str not in docsids:
-            bisect.insort(docsids, formulaid_str)
-            f_index.docsids = '#' + '#'.join(docsids) + '#'
-            f_index.df = len(docsids)
+        f_index.formulas.add(formula_obj)
 
     except (KeyError, FormulaIndex.DoesNotExist):
-        f_index = FormulaIndex(term, '#' + str(formula_id) + '#', 1)
+        f_index = FormulaIndex(term_index=term)
+        f_index.save()
+        f_index.formulas.add(formula_obj)
 
+    f_index.df = f_index.formulas.all().count()
     f_index.save()

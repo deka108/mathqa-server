@@ -11,9 +11,11 @@ RIGHTB_PATTERN = re.compile(r'\]')
 MATHRM_PATTERN = re.compile(r'\\mathrm')
 
 
-def extract_latex_from_raw_query(text):
+def extract_latex_from_raw_latex_query(text):
     if text[0] == "$" and text[-1] == "$":
         return text.strip("$")
+    elif text[0:2] == r"\[" and text[-2:] == r"\]":
+        return text.strip(r"\[\]")
     return text
 
 
@@ -33,7 +35,7 @@ def extract_formulas_from_text(text):
     latex_formulas += BRACKET_NOTATION.findall(text)
     latex_formulas = list(set(latex_formulas))
 
-    return _escape_bracket_parens_mathrm(latex_formulas)
+    return latex_formulas
 
 
 def _escape_bracket_parens_mathrm(formulas):

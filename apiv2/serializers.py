@@ -124,7 +124,7 @@ class FormulaCategorySerializer(serializers.ModelSerializer):
 class FormulaIndexSerializer(serializers.ModelSerializer):
     class Meta:
         model = FormulaIndex
-        fields = ('term_index', 'docsids', 'df')
+        fields = ('term_index', 'formulas', 'df')
 
         # depth = 1
 
