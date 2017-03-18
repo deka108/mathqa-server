@@ -9,8 +9,8 @@ from rest_framework.exceptions import ParseError, AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.schemas import get_schema_view
 
+from apiv2.constants import *
 from apiv2.permissions import *
-from apiv2.search.constants import *
 from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as\
     fr, formula_features_extractor as ffe
 from apiv2.search.test_fsearch import check_tokenizer as ct
@@ -92,15 +92,16 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
 
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('concept', 'subconcept', 'paper', 'keypoints',
-                     'keywords')
+                     'keywords', 'formula_categories')
 
 
 def search_database(query, request):
     questions = Question.objects.filter(content__icontains=query)
     results = [{"rel_formula": None, "question": question}
                for question in questions]
+    print("Question found: {}".format(len(results)))
 
-    if questions:
+    if results:
         serializer = SearchResultSerializer(results,
                                             context={'request': request},
                                             many=True)
@@ -111,10 +112,11 @@ def search_text(query, request):
     query = tu.preprocess_query(query)
 
     questions = SearchQuerySet().filter(
-        content_cleaned_text=query).highlight()[:SEARCH_LIMIT]
+        content_cleaned_text=query)[:SEARCH_LIMIT]
 
     results = [{"rel_formula": None, "question": question.object}
                for question in questions]
+    print("Question found: {}".format(len(results)))
 
     if results:
         serializer = SearchResultSerializer(results,
@@ -212,7 +214,7 @@ class FormulaViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('concept', 'questions')
+    filter_fields = ('concept', 'questions', 'categories')
 
 
 class FormulaCategoryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -395,6 +397,7 @@ def update_question(request):
     pw = request.data.get("password")
     if user == "admin" and pw == "123456":
         question = request.data.get("question")
+        print(question)
 
         if question:
             if request.method == 'PUT' or request.method == 'PATCH':

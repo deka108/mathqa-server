@@ -44,16 +44,16 @@ export default angular.module('viewer-app', ['ngMaterial', 'katex', 'ngMessages'
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     })
-    // .config((katexConfigProvider) => {
-    //     console.log(katexConfigProvider);
-    //     katexConfigProvider.defaultOptions = {
-    //         delimiters: [
-    //             { left: "$$", right: "$$", display: true },
-    //             { left: "\\[", right: "\\]", display: false },
-    //             { left: "\\(", right: "\\)", display: false }
-    //         ]
-    //     }
-    // })
+    .config((katexConfigProvider) => {
+        console.log(katexConfigProvider);
+        katexConfigProvider.defaultOptions = {
+            delimiters: [
+                { left: "$$", right: "$$", display: false },
+                { left: "\\[", right: "\\]", display: true },
+                { left: "\\(", right: "\\)", display: false }
+            ]
+        }
+    })
     .constant('URL', URL)
     .constant('EVENTS', EVENTS)
     .constant('FORMULAS', FORMULAS)

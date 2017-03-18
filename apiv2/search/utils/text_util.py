@@ -72,8 +72,7 @@ def clean_latex(text):
 
 
 def preprocess_query(text):
-    text = remove_non_alphabet(text)
-    text = to_lower(text)
+    text = preprocess(text)
 
     return text
 

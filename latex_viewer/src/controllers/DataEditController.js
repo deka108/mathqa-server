@@ -1,8 +1,7 @@
-function DataController($scope, EVENTS, DataService, LoginService) {
+function DataEditController($scope, EVENTS, DataService, LoginService) {
     $scope.pageTitle = "Data Editor";
 
     $scope.getObject = function() {
-        console.log($scope.objectId);
         switch ($scope.objectType) {
             case "question":
                 DataService.retrieveQuestion($scope.objectId);
@@ -19,7 +18,7 @@ function DataController($scope, EVENTS, DataService, LoginService) {
     $scope.updateObject = function() {
         if (LoginService.getToken()) {
             let tokenHeader = LoginService.getTokenHeader();
-
+            $scope.data.content = $scope.formulaData.rawLatex;
             switch ($scope.objectType) {
                 case "question":
                     DataService.updateQuestion($scope.data, tokenHeader);
@@ -37,9 +36,10 @@ function DataController($scope, EVENTS, DataService, LoginService) {
 
     $scope.$on(EVENTS.DATA_RECEIVED, function() {
         let data = DataService.getData();
+        $scope.data = data;
         $scope.formulaData.rawLatex = data.content;
     });
 
 }
 
-export default ['$scope', 'EVENTS', 'DataService', 'LoginService', DataController];
+export default ['$scope', 'EVENTS', 'DataService', 'LoginService', DataEditController];

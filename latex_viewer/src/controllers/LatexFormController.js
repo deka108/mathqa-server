@@ -88,7 +88,6 @@ function LatexFormController($scope, $mdDialog, FormulaDataService, EVENTS, FORM
             }
         )
         $scope.symbolData.symbols = symbols;
-        console.log($scope.symbolData.symbols);
     }
 
     $scope.updateLatex = function(idx) {
@@ -140,6 +139,7 @@ function LatexFormController($scope, $mdDialog, FormulaDataService, EVENTS, FORM
                 $scope.resetSymbolDialog();
             }, function() {
                 console.log("Cancelled choosing a symbol");
+                $scope.resetSymbolDialog();
             });
     }
 }

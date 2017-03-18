@@ -17,3 +17,11 @@
 #loading-bar .bar {
     position: relative;
 }
+
+.card-table {
+    width: 95%;
+}
+
+div.md-errors-spacer {
+    display: none;
+}

@@ -1,10 +1,8 @@
 """Search tables for formula using the IDF method"""
 import ast
 import math
+
 from itertools import chain
-
-import re
-
 from apiv2.models import Formula, FormulaIndex
 from apiv2.search.fsearch import formula_features_extractor as ffe, \
     formula_extractor as fe

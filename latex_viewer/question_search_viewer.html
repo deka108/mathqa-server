@@ -30,8 +30,8 @@
                                 <h3>Search a Question</h3>
                                 <form name="queryEditor" ng-submit="queryEditor.$valid && search(rawLatex)">
                                     <div layout="column" layout-align="start center">
-                                        <div layout-fill>
-                                            <md-input-container class="md-block">
+                                        <div layout="row" layout-fill>
+                                            <md-input-container class="md-block" flex>
                                                 <label>Search Query</label>
                                                 <input name="rawLatex" type="text" ng-model="rawLatex" required>
                                                 <span class="md-caption">Please provide your query.</span>
@@ -39,21 +39,25 @@
                                                     <div ng-message="required">This field is required.</div>
                                                 </div>
                                             </md-input-container>
+                                            <div>
+                                                <md-button ng-if="searchType == 'formula'" class="md-raised md-primary" ng-click="displayLatexDialog($event)">Insert Symbol</md-button>
+                                            </div>
                                         </div>
                                         <div layout="row" layout-fill style="padding-bottom: 2em;" ng-if="searchType == 'formula'">
                                             <span style="padding-right: 2em;">LaTeX Preview</span>
                                             <katex bind=rawLatex class="latexPreview"></katex>
                                         </div>
                                         <div layout="row" layout-fill layout-align="start">
-                                            <span style="padding-right: 2em;">Search Type</span>
+                                            <span style="padding-right: 2em;">Search By</span>
                                             <md-input-container>
-                                                <md-radio-group layout="row" name="searchType" ng-model="searchType" required layout-xs="column">
+                                                <md-radio-group layout-gt-sm="row" name="searchType" ng-model="searchType" required layout="column">
                                                     <md-radio-button value="questionId" class="md-primary">Question Id</md-radio-button>
                                                     <md-radio-button value="conceptId" class="md-primary">Concept Id</md-radio-button>
                                                     <md-radio-button value="subconceptId" class="md-primary">Subconcept Id</md-radio-button>
                                                     <md-radio-button value="fulltext" class="md-primary">Full Text</md-radio-button>
-                                                    <md-radio-button class="md-primary" value="db">Text Db</md-radio-button>
+                                                    <md-radio-button class="md-primary" value="db">Exact (database)</md-radio-button>
                                                     <md-radio-button class="md-primary" value="formula">Formula</md-radio-button>
+                                                    <md-radio-button class="md-primary" value="formula_category">Formula Category</md-radio-button>
                                                 </md-radio-group>
                                                 <div ng-messages="queryEditor.searchType.$error">
                                                     <div ng-message="required">This field is required.</div>

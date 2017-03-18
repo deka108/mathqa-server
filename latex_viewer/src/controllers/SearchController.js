@@ -12,11 +12,14 @@ function SearchController($scope, EVENTS, DataService) {
             case "subconceptId":
                 $scope.promise = DataService.searchQuestions("?subconcept=" + parseInt(query));
                 break;
-            case "fulltext":
-                $scope.promise = DataService.fullTextSearch(query);
+            case "formula_category":
+                $scope.promise = DataService.searchQuestions("?formula_categories=" + encodeURIComponent(query.toLowerCase()));
                 break;
             case "db":
                 $scope.promise = DataService.exactSearchDb(query);
+                break;
+            case "fulltext":
+                $scope.promise = DataService.fullTextSearch(query);
                 break;
             case "formula":
                 $scope.promise = DataService.searchFormula(query);
@@ -25,7 +28,12 @@ function SearchController($scope, EVENTS, DataService) {
     }
 
     $scope.$on(EVENTS.SEARCH_RECEIVED, function() {
-        $scope.results = DataService.getSearchResults();
+        let results = DataService.getSearchResults();
+        if (results instanceof Array) {
+            $scope.results = results;
+        } else {
+            $scope.results = [results];
+        }
         $scope.questions = "";
         $scope.resultCount = $scope.results.length;
         console.log($scope.results);
@@ -33,11 +41,11 @@ function SearchController($scope, EVENTS, DataService) {
 
 
     $scope.$on(EVENTS.QUESTIONS_RECEIVED, function() {
-        let result = DataService.getSearchResults();
-        if (result instanceof Array) {
-            $scope.questions = result;
+        let questions = DataService.getQuestions();
+        if (questions instanceof Array) {
+            $scope.questions = questions;
         } else {
-            $scope.questions = [result];
+            $scope.questions = [questions];
         }
         $scope.results = "";
         $scope.resultCount = $scope.questions.length;

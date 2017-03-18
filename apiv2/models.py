@@ -203,7 +203,8 @@ class Question(models.Model):
                               on_delete=models.CASCADE, null=True, blank=True,
                               related_name='questions')
 
-    formula_categories = models.ManyToManyField(FormulaCategory)
+    formula_categories = models.ManyToManyField(FormulaCategory, 
+                              related_name='questions')
     keypoints = models.ManyToManyField(KeyPoint)
     keywords = models.ManyToManyField(Keyword)
 

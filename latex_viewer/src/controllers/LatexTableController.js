@@ -78,6 +78,7 @@ function LatexTableController($scope, $mdDialog, $mdEditDialog, $window, Formula
             formulas.push(result.rel_formula);
         });
         $scope.formulas = formulas;
+        console.log($scope.formulas);
     });
 
 }

@@ -90,7 +90,9 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
 
     this.retrieveFormulaCategories = function() {
         if (formulaCategories) { _on_formula_categories_received(); }
-        return $http.get(URL.GET_FORMULA_CATEGORIES).then(
+        return $http.get(URL.GET_FORMULA_CATEGORIES, {
+            ignoreLoadingBar: true
+        }).then(
             function success(response) {
                 _update_formula_categories(response.data);
                 _on_formula_categories_received();
@@ -104,7 +106,9 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
         let formulaData = {
             "formula": data
         }
-        return $http.post(URL.CHECK_MATHML, JSON.stringify(formulaData))
+        return $http.post(URL.CHECK_MATHML, JSON.stringify(formulaData), {
+                ignoreLoadingBar: true
+            })
             .then(
                 function success(response) {
                     _update_mathml_formula(response.data);
@@ -116,7 +120,9 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
     }
 
     this.retrieveFormulas = function() {
-        return $http.get(URL.GET_FORMULAS).then(
+        return $http.get(URL.GET_FORMULAS, {
+            ignoreLoadingBar: true
+        }).then(
             function success(response) {
                 _update_formulas(response.data);
                 _on_formula_received();
@@ -184,7 +190,8 @@ function FormulaDataService($http, $rootScope, LoginService, URL, EVENTS) {
             method: 'POST',
             url: URL.REINDEX_FORMULA,
             data: JSON.stringify(postData),
-            headers: data.headers
+            headers: data.headers,
+            ignoreLoadingBar: true
         }).then(function success(response) {
                 console.log(response)
             },

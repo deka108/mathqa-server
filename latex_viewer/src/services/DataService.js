@@ -11,6 +11,10 @@ function DataService($http, $rootScope, URL, EVENTS) {
         $rootScope.$broadcast(EVENTS.DATAS_RECEIVED);
     }
 
+    function _on_questions_received() {
+        $rootScope.$broadcast(EVENTS.QUESTIONS_RECEIVED);
+    }
+
     function _on_search_received() {
         $rootScope.$broadcast(EVENTS.SEARCH_RECEIVED);
     }
@@ -23,7 +27,7 @@ function DataService($http, $rootScope, URL, EVENTS) {
         datas = newData;
     }
 
-    function _update_question(newData) {
+    function _update_questions(newData) {
         questions = newData;
     }
 
@@ -43,6 +47,10 @@ function DataService($http, $rootScope, URL, EVENTS) {
 
     this.getSearchResults = function() {
         return results;
+    }
+
+    this.getQuestions = function() {
+        return questions;
     }
 
     this.getDatas = function() {
@@ -127,7 +135,7 @@ function DataService($http, $rootScope, URL, EVENTS) {
     this.searchQuestions = function(query) {
         return $http.get(URL.GET_QUESTIONS + query)
             .then(function success(response) {
-                _update_result(response.data);
+                _update_questions(response.data);
                 _on_questions_received();
             }, function error(response) {
                 _on_error(response)
@@ -212,9 +220,9 @@ function DataService($http, $rootScope, URL, EVENTS) {
             });
     }
 
-    this.updateSolution = function(data, tokenHeader) {
+    this.updateKeypoint = function(data, tokenHeader) {
         let keypointData = {
-            "solution": data,
+            "keypoint": data,
             "username": "admin",
             "password": "123456"
         }

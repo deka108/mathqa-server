@@ -78,7 +78,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
 
         fields = ('id', 'content', 'content_cleaned_text', 'concept',
-                  'formula_set',
+                  'formula_set', 'formula_categories',
                   'is_sample', 'subconcept', 'difficulty_level', 'marks',
                   'keypoints', 'keywords',
                   'paper', 'source', 'used_for', 'response_type',
