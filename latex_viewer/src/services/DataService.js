@@ -82,6 +82,16 @@ function DataService($http, $rootScope, URL, EVENTS) {
             });
     }
 
+    this.retrieveSolutionByQuestionId = function(id) {
+        return $http.get(URL.GET_SOLUTIONS + "?question=" + id)
+            .then(function success(response) {
+                _update_data(response.data);
+                _on_data_received();
+            }, function error(response) {
+                _on_error(response)
+            });
+    }
+
     this.retrieveQuestion = function(id) {
         return $http.get(URL.GET_QUESTIONS + id)
             .then(function success(response) {
@@ -111,6 +121,7 @@ function DataService($http, $rootScope, URL, EVENTS) {
                 _on_error(response)
             });
     }
+
 
     this.retrieveQuestions = function() {
         return $http.get(URL.GET_QUESTIONS)

@@ -49,11 +49,11 @@
                                     <md-button type="submit" class="md-raised md-primary">Search Formula!</md-button>
                                 </div>
                             </form>
-                            <h3>Filter Formula Categories</h3>
-                            <div layout="row">
+                            <div layout="row" layout-align="space-between start" layout-fill>
+                                <h3>Filter Formula Categories</h3>
                                 <md-input-container flex=50>
                                     <label>Filter formulas</label>
-                                    <md-select ng-model="selectedCategories " ng-change="updateResults()" multiple>
+                                    <md-select aria-label="Formula categories" ng-model="selectedCategories " multiple>
                                         <md-option><em>all</em></md-option>
                                         <md-option ng-value="category.name " ng-repeat="category in formulaCategories ">{{category.name}}</md-option>
                                     </md-select>

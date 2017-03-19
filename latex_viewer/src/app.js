@@ -26,8 +26,9 @@ import FormulaDataService from 'src/services/FormulaDataService';
 import LoginService from 'src/services/LoginService';
 import DataService from 'src/services/DataService';
 
-import FORMULAS from 'src/constants/FORMULAS';
+import DATA_TYPES from 'src/constants/DATA_TYPES';
 import EVENTS from 'src/constants/EVENTS';
+import FORMULAS from 'src/constants/FORMULAS';
 import URL from 'src/constants/URL';
 
 export default angular.module('viewer-app', ['ngMaterial', 'katex', 'ngMessages', 'md.data.table', 'angular-loading-bar', 'ngAnimate'])
@@ -45,7 +46,6 @@ export default angular.module('viewer-app', ['ngMaterial', 'katex', 'ngMessages'
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     })
     .config((katexConfigProvider) => {
-        console.log(katexConfigProvider);
         katexConfigProvider.defaultOptions = {
             delimiters: [
                 { left: "$$", right: "$$", display: false },
@@ -54,9 +54,10 @@ export default angular.module('viewer-app', ['ngMaterial', 'katex', 'ngMessages'
             ]
         }
     })
-    .constant('URL', URL)
+    .constant('DATA_TYPES', DATA_TYPES)
     .constant('EVENTS', EVENTS)
     .constant('FORMULAS', FORMULAS)
+    .constant('URL', URL)
     .controller('AppController', AppController)
     .controller('DataEditController', DataEditController)
     .controller('DataViewController', DataViewController)

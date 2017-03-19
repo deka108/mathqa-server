@@ -1,4 +1,6 @@
 function LatexTableController($scope, $mdDialog, $mdEditDialog, $window, FormulaDataService, EVENTS) {
+    $scope.pageTitle = "Formula Search";
+
     function _setLatexStr(newLatex) {
         $scope.latexStr = "$$" + newLatex + "$$";
     }
@@ -39,10 +41,9 @@ function LatexTableController($scope, $mdDialog, $mdEditDialog, $window, Formula
 
     $scope.limitOptions = [50, 100];
 
-    $scope.showMathmlDialog = function(evt, formula) {
-        _setLatexStr(formula.content);
-        _setDialogEvent(evt);
-        FormulaDataService.retrieveMathml(formula.content);
+    $scope.updateResults = function() {
+        $scope.limitOptions = [50, 100, $scope.results.length];
+        console.log($scope.selectedCategories);
     }
 
     $scope.filterByCategory = function(formula) {
@@ -58,14 +59,15 @@ function LatexTableController($scope, $mdDialog, $mdEditDialog, $window, Formula
         return true;
     }
 
+    $scope.showMathmlDialog = function(evt, formula) {
+        _setLatexStr(formula.content);
+        _setDialogEvent(evt);
+        FormulaDataService.retrieveMathml(formula.content);
+    }
+
     $scope.changePage = function(page, limit) {
         console.log(page, limit);
     }
-
-    $scope.updateResults = function() {
-        $scope.limitOptions = [50, 100, $scope.results.length];
-    }
-
 
     $scope.searchFormula = function(query) {
         $scope.promise = FormulaDataService.searchFormula(query);

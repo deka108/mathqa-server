@@ -35,6 +35,9 @@ function SearchController($scope, EVENTS, DataService) {
             $scope.results = [results];
         }
         $scope.questions = "";
+        if (!results || (results.length == 1 && results[0] == "")) {
+            $scope.results = [];
+        }
         $scope.resultCount = $scope.results.length;
         console.log($scope.results);
     });
@@ -48,6 +51,9 @@ function SearchController($scope, EVENTS, DataService) {
             $scope.questions = [questions];
         }
         $scope.results = "";
+        if (!questions || (questions.length == 1 && questions[0] == "")) {
+            $scope.questions = [];
+        }
         $scope.resultCount = $scope.questions.length;
         console.log($scope.questions);
     });

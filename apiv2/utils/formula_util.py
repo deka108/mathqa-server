@@ -1,6 +1,7 @@
 from itertools import chain
+
 from apiv2.models import Formula, FormulaCategory, Question
-from apiv2.search.utils import formula_bracket as fb
+from apiv2.utils import formula_bracket as fb
 
 
 def init_formula_categories():

@@ -23,7 +23,7 @@
     <div ng-controller="DataViewController" id="parentEl">
         <div ng-include src="'toolbar.html'"></div>
         <md-content>
-            <div layout="column" layout-align="start center" llayout-fill>
+            <div layout="column" layout-align="start center" layout-fill>
                 <div layout="column" style="width: 80%" layout-padding>
                     <md-card>
                         <md-card-content>
@@ -35,41 +35,34 @@
                                     <md-button ng-click="getObjects('keypoint')" class="md-raised md-primary">Get Keypoints!</md-button>
                                 </div>
                             </div>
-                            <div layout="column">
-                                <h3>Page Select</h3>
-                                <div layout="row" layout-align="start start" layout-fill>
-                                    <md-input-container>
-                                        <label>Current Page</label>
-                                        <input name="curPage" type="text" ng-model="curPage">
-                                    </md-input-container>
-                                    <div ng-if="maxPage">
-                                        <span>out of {{ maxPage }} pages</span>
-                                    </div>
-                                    <div>
-                                        <md-button ng-click="previousPage()" class="md-raised md-primary">Previous Page</md-button>
-                                    </div>
-                                    <div>
-                                        <md-button ng-click="nextPage()" class="md-raised md-primary">Next Page</md-button>
-                                    </div>
-                                </div>
-                            </div>
                         </md-card-content>
                     </md-card>
                 </div>
-                <div layout="column" style="width: 80%" layout-padding ng-if="!hideContent">
-                    <h3>Total {{ dataType }}: {{ datasCount }} </h3>
-                    <md-card ng-repeat="data in datas | limitTo: pageLimit: (curPage - 1)* pageLimit">
-                        <md-card-content>
-                            <div layout="column">
+                <div layout="column" ng-if="datas" layout-align="center center">
+                    <div layout="column" style="width: 80%" layout-padding ng-if="!hideContent">
+                        <h3>Total {{ dataTypeTitle }}: {{ datasCount }} objects</h3>
+                        <md-card ng-repeat="data in datas | limitTo: pageLimit: (curPage - 1)*pageLimit">
+                            <md-card-content>
                                 <div layout="column">
-                                    <h3>{{ dataType }} #{{ data.id }}:</h3>
-                                    <div katex auto-render bind=contents[$index]></div>
+                                    <div layout="column">
+                                        <div layout="row">
+                                            <h3 flex>{{ dataTypeTitle }} #{{ data.id }}:</h3>
+                                            <div>
+                                                <md-button class="md-raised md-primary" ng-click="openDataEditor(data.id)">Edit</md-button>
+                                            </div>
+                                        </div>
+                                        <div katex auto-render bind="contents[ (curPage - 1)*pageLimit + $index]"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </md-card-content>
-                    </md-card>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                    <div layout="column" layout-fill>
+                        <md-table-pagination md-limit="pageLimit" md-limit-options="[50, 100]" md-page="curPage" md-total="{{datasCount}}" md-on-paginate="getPage" md-page-select></md-table-pagination>
+                    </div>
                 </div>
             </div>
+
 
         </md-content>
     </div>

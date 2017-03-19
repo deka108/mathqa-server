@@ -48,16 +48,21 @@
                                             <katex bind=rawLatex class="latexPreview"></katex>
                                         </div>
                                         <div layout="row" layout-fill layout-align="start">
-                                            <span style="padding-right: 2em;">Search By</span>
-                                            <md-input-container>
-                                                <md-radio-group layout-gt-sm="row" name="searchType" ng-model="searchType" required layout="column">
-                                                    <md-radio-button value="questionId" class="md-primary">Question Id</md-radio-button>
-                                                    <md-radio-button value="conceptId" class="md-primary">Concept Id</md-radio-button>
-                                                    <md-radio-button value="subconceptId" class="md-primary">Subconcept Id</md-radio-button>
-                                                    <md-radio-button value="fulltext" class="md-primary">Full Text</md-radio-button>
-                                                    <md-radio-button class="md-primary" value="db">Exact (database)</md-radio-button>
-                                                    <md-radio-button class="md-primary" value="formula">Formula</md-radio-button>
-                                                    <md-radio-button class="md-primary" value="formula_category">Formula Category</md-radio-button>
+                                            <md-input-container layout-fill>
+                                                <md-radio-group name="searchType" ng-model="searchType" required layout="column">
+                                                    <div layout-gt-sm="row" layout="column" layout-align="space-between start">
+                                                        <span style="padding-right: 2em;">Search by</span>
+                                                        <md-radio-button value="fulltext" class="md-primary">Full Text Search</md-radio-button>
+                                                        <md-radio-button class="md-primary" value="db">Exact (database) Search </md-radio-button>
+                                                        <md-radio-button class="md-primary" value="formula">Formula Search </md-radio-button>
+                                                    </div>
+                                                    <div layout-gt-sm="row" layout="column" layout-align="space-between start">
+                                                        <span style="padding-right: 2em;">Get Questions by</span>
+                                                        <md-radio-button value="questionId" class="md-primary">Question Id</md-radio-button>
+                                                        <md-radio-button value="conceptId" class="md-primary">Concept Id</md-radio-button>
+                                                        <md-radio-button value="subconceptId" class="md-primary">Subconcept Id</md-radio-button>
+                                                        <md-radio-button class="md-primary" value="formula_category">Formula Category</md-radio-button>
+                                                    </div>
                                                 </md-radio-group>
                                                 <div ng-messages="queryEditor.searchType.$error">
                                                     <div ng-message="required">This field is required.</div>
@@ -69,14 +74,6 @@
                                         </div>
                                     </div>
                                 </form>
-                                <h3>Filter Formula Categories</h3>
-                                <md-input-container>
-                                    <label>Filter formulas</label>
-                                    <md-select ng-model="selectedCategories " ng-change="updateResults()" multiple>
-                                        <md-option><em>all</em></md-option>
-                                        <md-option ng-value="category.name " ng-repeat="category in formulaCategories ">{{category.name}}</md-option>
-                                    </md-select>
-                                </md-input-container>
                             </div>
                         </md-card-content>
                     </md-card>

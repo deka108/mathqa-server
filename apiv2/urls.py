@@ -64,6 +64,7 @@ urlpatterns = [
 
     url(r'^update_question/$', views.update_question),
     url(r'^update_solution/$', views.update_solution),
+    url(r'^update_keypoint/$', views.update_keypoint),
 
     url(r'^reindex_test_formula/$', apiv2.unused.views_test.reindex_test_formula),
     url(r'^search_test_formula/$', apiv2.unused.views_test.search_test_formula),

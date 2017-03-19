@@ -98,15 +98,18 @@ class TestQuestionSerializer(serializers.ModelSerializer):
 
 
 class SolutionSerializer(serializers.ModelSerializer):
-    class Meta:
+    class Meta :
         model = Solution
         fields = ('id', 'question', 'content')
         # depth = 1
 
 
 class FormulaSerializer(serializers.ModelSerializer):
+    # questions = QuestionSerializer(many=True, read_only=True)
+
     class Meta:
         model = Formula
+
         fields = ('id', 'content', 'categories', 'status', 'inorder_term',
                   'sorted_term', 'structure_term', 'constant_term',
                   'variable_term', 'questions', 'concept')

@@ -1,0 +1,44 @@
+<div layout="column" class="dialog-container" layout-align="start scretch">
+    <md-dialog aria-label="MathPreview">
+        <div layout="column" layout-fill>
+            <form name="LoginForm" ng-submit="submitLogin()" ng-cloak>
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h2 md-truncate flex>Login Form</h2>
+                        <md-button class="md-icon-button" ng-click="cancel()">
+                            <md-icon>close</md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Username</label>
+                            <input type="text" required name="username" ng-model="userData.username" />
+                            <div ng-messages="LoginForm.username.$error">
+                                <div ng-message="required">Username is required.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Password</label>
+                            <input type="password" required name="password" ng-model="userData.password" />
+                            <div ng-messages="LoginForm.password.$error">
+                                <div ng-message="required">Password is required.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </md-dialog-content>
+
+                <div layout="row" layout-align="end start">
+                    <md-button class="md-raised md-primary" type="submit">
+                        Cancel
+                    </md-button>
+                    <md-button class="md-raised md-primary" type="submit">
+                        Login
+                    </md-button>
+                </div>
+            </form>
+        </div>
+    </md-dialog>
+</div>

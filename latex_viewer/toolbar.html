@@ -10,7 +10,7 @@
                 <md-icon style="color: white ">refresh</md-icon>
             </md-button>
         </div>
-        <md-button class="md-raised" ng-if="!isLogin" ng-click="login()">
+        <md-button class="md-raised" ng-if="!isLogin" ng-click="showLoginPrompt()">
             Login
         </md-button>
         <md-button class="md-raised" ng-if="isLogin" ng-click="logout()">

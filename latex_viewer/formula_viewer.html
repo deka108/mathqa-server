@@ -30,9 +30,9 @@
                                 <h3>Filter Formula Categories</h3>
                                 <md-input-container>
                                     <label>Filter formulas</label>
-                                    <md-select ng-model="selectedCategories " ng-change="updateResults()" multiple>
+                                    <md-select ng-model="selectedCategories" ng-change="updateResults()" multiple>
                                         <md-option><em>all</em></md-option>
-                                        <md-option ng-value="category.name " ng-repeat="category in formulaCategories ">{{category.name}}</md-option>
+                                        <md-option ng-value="category.name" ng-repeat="category in formulaCategories ">{{category.name}}</md-option>
                                     </md-select>
                                 </md-input-container>
                                 <div>
@@ -68,7 +68,7 @@
                                         <td md-cell ng-click="editQuestions($event, formula) " ng-class="{ 'md-placeholder': !formula.questions} ">{{formula.questions || 'Add questions'}}</td>
                                         <td md-cell>
                                             <md-input-container>
-                                                <md-select ng-model="formula.categories " placeholder="Other " multiple required>
+                                                <md-select aria-label="Formula categories" ng-model="formula.categories " multiple required>
                                                     <md-option ng-value="category.name " ng-repeat="category in formulaCategories ">{{category.name}}</md-option>
                                                 </md-select>
                                             </md-input-container>

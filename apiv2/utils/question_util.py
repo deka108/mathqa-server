@@ -1,6 +1,7 @@
+from apiv2.utils import formula_bracket as fb
+
 from apiv2.models import Question
-from apiv2.search.utils import text_util as tu
-from apiv2.search.utils import formula_bracket as fb
+from apiv2.utils import text_util as tu
 
 
 def preprocess_questions(english=True, stem=False):
@@ -20,6 +21,7 @@ def update_formula_category():
     for question in all_questions:
         question.formula_categories = fb.get_categories(question.content)
         question.save()
+    print("Finished updating formula categories to all questions")
 
 
 def update_question(question_data):

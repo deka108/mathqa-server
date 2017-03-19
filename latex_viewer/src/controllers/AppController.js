@@ -1,4 +1,4 @@
-function AppController($scope, $mdSidenav, $window, EVENTS, LoginService) {
+function AppController($scope, $mdSidenav, $window, $mdDialog, EVENTS, LoginService) {
     $scope.isLogin = false;
     $scope.userData = {
         'username': 'dekauliya',
@@ -27,19 +27,60 @@ function AppController($scope, $mdSidenav, $window, EVENTS, LoginService) {
     }
 
     $scope.pages = {
+        "Formula Search": "index.html",
+        "Question Search": "question_search_viewer.html",
         "Data Editor": "data_editor.html",
         "Data Viewer": "data_viewer.html",
         "Formula Viewer": "formula_viewer.html",
-        "Formula Search": "index.html",
         "Create New Formula": "insert_formula.html",
-        "Question Search": "question_search_viewer.html",
     }
 
     $scope.goToPage = function(page) {
         $window.location.href = "/" + page;
     }
 
+    $scope.showLoginPrompt = function() {
+        $mdDialog.show({
+                controller: LoginDialogController,
+                templateUrl: 'login_dialog.html',
+                parent: angular.element(document.body),
+                scope: $scope, // use parent scope in template
+                preserveScope: true,
+                clickOutsideToClose: true,
+            })
+            .then(function() {
+                $scope.login();
+            }, function() {
+                console.log("Login cancelled");
+            });
+
+        function LoginDialogController($scope, $mdDialog) {
+            $scope.hide = function() {
+                $mdDialog.hide();
+            };
+
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+
+            $scope.submitLogin = function() {
+                $mdDialog.hide();
+            };
+        }
+    }
+
+    $scope.showLoginAlert = function() {
+        $mdDialog.show(
+            $mdDialog.alert()
+            .parent(angular.element(document.body))
+            .clickOutsideToClose(true)
+            .title('Authentication Error')
+            .textContent('Please login first before performing any database manipulation!')
+            .ok('Okay')
+        );
+    };
+
 
 }
 
-export default ['$scope', '$mdSidenav', '$window', 'EVENTS', 'LoginService', AppController];
+export default ['$scope', '$mdSidenav', '$window', '$mdDialog', 'EVENTS', 'LoginService', AppController];

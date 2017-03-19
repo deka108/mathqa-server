@@ -1,5 +1,7 @@
 import logging
 
+from apiv2.utils import question_util as qu, solution_util as su, \
+    text_util as tu, keypoint_util as ku
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_haystack.viewsets import HaystackViewSet
 from haystack.query import SearchQuerySet
@@ -14,11 +16,9 @@ from apiv2.permissions import *
 from apiv2.search.fsearch import formula_indexer as fi, formula_retriever as\
     fr, formula_features_extractor as ffe
 from apiv2.search.test_fsearch import check_tokenizer as ct
-from apiv2.search.utils import formula_util as fu, question_util as qu, \
-    solution_util as su
-from apiv2.search.utils import text_util as tu
 from apiv2.serializers import *
 from apiv2.unused.views_test import search_test_database, search_test_formula
+from apiv2.utils import formula_util as fu
 
 logger = logging.getLogger(__name__)
 
@@ -414,6 +414,33 @@ def update_question(request):
                         status=status.HTTP_400_BAD_REQUEST)
 
     raise AuthenticationFailed(AUTHENTICATION_FAIL)
+
+
+@api_view(['PUT', 'PATCH'])
+@permission_classes((permissions.IsAuthenticated,))
+def update_keypoint(request):
+    user = request.data.get("username")
+    pw = request.data.get("password")
+    if user == "admin" and pw == "123456":
+        keypoint = request.data.get("keypoint")
+        print(keypoint)
+
+        if keypoint:
+            if request.method == 'PUT' or request.method == 'PATCH':
+                print("Question to be updated: " + str(keypoint))
+                updated_keypoint = ku.update_keypoint(keypoint)
+                if updated_keypoint:
+                    serializer = KeyPointSerializer(updated_keypoint)
+                    print(QUESTION_UPDATE_SUCCESS)
+                    return Response(serializer.data)
+                print(QUESTION_UPDATE_FAIL)
+                return Response(QUESTION_UPDATE_FAIL,
+                                status=status.HTTP_400_BAD_REQUEST)
+        return Response(QUESTION_DB_CRUD_FAIL,
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    raise AuthenticationFailed(AUTHENTICATION_FAIL)
+
 
 @api_view(['PUT', 'PATCH'])
 @permission_classes((permissions.IsAuthenticated,))

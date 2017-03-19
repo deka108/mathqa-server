@@ -5,13 +5,13 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, $window, Formul
 
     $scope.$on(EVENTS.FORMULA_RECEIVED, function() {
         $scope.formulas = FormulaDataService.getFormulas();
+        console.log($scope.formulas);
     });
 
     $scope.$on(EVENTS.FORMULA_CREATED, function() {
         console.log("Formula created!");
         $scope.promise = $scope.refreshData();
-    })
-
+    });
 
     $scope.$on(EVENTS.FORMULA_UPDATED, function() {
         console.log("Formula updated!");
@@ -66,10 +66,6 @@ function FormulaViewController($scope, $mdDialog, $mdEditDialog, $window, Formul
     $scope.refreshData = function() {
         $scope.promise = FormulaDataService.retrieveFormulas();
         FormulaDataService.retrieveFormulaCategories();
-    }
-
-    $scope.updateResults = function() {
-        $scope.limitOptions = [50, 100, $scope.results.length];
     }
 
     $scope.openFormulaEditor = function() {

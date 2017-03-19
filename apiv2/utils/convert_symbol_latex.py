@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
-from apiv2.search.utils import latex_symbols as ls
+
+from apiv2.utils import latex_symbols as ls
 
 prefix = '@string/'
 
