@@ -1,4 +1,5 @@
 import logging
+import os
 
 from apiv2.utils import question_util as qu, solution_util as su, \
     text_util as tu, keypoint_util as ku
@@ -256,7 +257,7 @@ class KeyPointViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('concept', 'question', 'type')
+    filter_fields = ('concept',  'type')
 
 
 class KeywordViewSet(viewsets.ReadOnlyModelViewSet):
@@ -265,7 +266,7 @@ class KeywordViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('name', 'question')
+    filter_fields = ('name', 'questions')
 
 
 @api_view(['GET', 'POST'])
@@ -440,6 +441,29 @@ def update_keypoint(request):
                         status=status.HTTP_400_BAD_REQUEST)
 
     raise AuthenticationFailed(AUTHENTICATION_FAIL)
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def post_text(request):
+    text = request.data.get('text')
+    if text:
+        print(text)
+        return Response("success", status=status.HTTP_200_OK)
+    print('no text')
+    return Response("no text", status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def post_image(request):
+    image = request.data.get('img')
+    if image:
+        print(image)
+        fh = open("img/test.jpg", wb)
+        fh.write(image)
+        fh.close()
+        return Response("success", status=status.HTTP_200_OK)
+    print('no text')
+    return Response("no text", status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['PUT', 'PATCH'])

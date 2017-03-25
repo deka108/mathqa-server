@@ -205,8 +205,8 @@ class Question(models.Model):
 
     formula_categories = models.ManyToManyField(FormulaCategory, 
                               related_name='questions')
-    keypoints = models.ManyToManyField(KeyPoint)
-    keywords = models.ManyToManyField(Keyword)
+    keypoints = models.ManyToManyField(KeyPoint, related_name='questions')
+    keywords = models.ManyToManyField(Keyword, related_name='questions')
 
     def get_difficulty_level(self):
         return range(0, int(self.difficulty_level))

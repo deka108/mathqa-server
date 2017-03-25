@@ -4,6 +4,7 @@ from rest_framework import routers
 from rest_framework.authtoken import views as rest_views
 from rest_framework.urlpatterns import format_suffix_patterns
 
+import debug_toolbar
 import apiv2.unused.views_test
 from apiv2 import views
 from apiv2 import views_hyperlink as hviews
@@ -65,21 +66,25 @@ urlpatterns = [
     url(r'^update_question/$', views.update_question),
     url(r'^update_solution/$', views.update_solution),
     url(r'^update_keypoint/$', views.update_keypoint),
+    url(r'^post_text/$', views.post_text),
+    url(r'^post_imaget/$', views.post_image),
+    
 
     url(r'^reindex_test_formula/$', apiv2.unused.views_test.reindex_test_formula),
     url(r'^search_test_formula/$', apiv2.unused.views_test.search_test_formula),
     url(r'^create_update_test_formula/$',
         apiv2.unused.views_test.create_update_test_formula),
     url(r'^delete_test_formula/$', apiv2.unused.views_test.delete_test_formula),
+    url(r'^__debug__', include(debug_toolbar.urls)),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
 
-urlpatterns += [
-    url(r'^api-auth/',
-        include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', rest_views.obtain_auth_token),
-    url(r'^auth/', include('djoser.urls.authtoken')),
-    url(r'^login/', auth_views.login),
-    url(r'^logout/', auth_views.logout),
-]
+# urlpatterns += [
+#     url(r'^api-auth/',
+#         include('rest_framework.urls', namespace='rest_framework')),
+#     url(r'^api-token-auth/', rest_views.obtain_auth_token),
+#     url(r'^auth/', include('djoser.urls.authtoken')),
+#     url(r'^login/', auth_views.login),
+#     url(r'^logout/', auth_views.logout),
+# ]

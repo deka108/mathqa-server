@@ -73,15 +73,62 @@ function LatexTableController($scope, $mdDialog, $mdEditDialog, $window, Formula
         $scope.promise = FormulaDataService.searchFormula(query);
     }
 
+    $scope.scores = {
+        p5: 0.8,
+        p10: 0.4,
+        ap5: 1,
+        ap10: 1
+    }
+
     $scope.$on(EVENTS.FORMULA_SEARCH_RECEIVED, function() {
         let results = FormulaDataService.getFormulaResults();
         let formulas = [];
-        results.forEach(function(result) {
-            formulas.push(result.rel_formula);
-        });
+        let rel_labels = [1, 1, 1, 1, "0", "0", "0", "0", "0", "0"];
+        let ap_scores = [1, 1, 1, 1, 0.8, 0.67, 0.57, 0.5, 0.44, 0.4];
+        for (let i = 0; i < results.length; i++) {
+            formulas.push(results[i].rel_formula);
+            formulas[i].rel_label = rel_labels[i];
+            formulas[i].ap_score = ap_scores[i];
+        }
         $scope.formulas = formulas;
         console.log($scope.formulas);
     });
+
+
+    $scope.reactClick = function(evt) {
+        console.log("CLICK");
+        // evt.stopPropagation();
+
+    }
+
+    $scope.editRelevance = function(evt, formula) {
+        evt.stopPropagation();
+        console.log("edit relevance!");
+        $mdEditDialog.small({
+            modelValue: formula.rel_label,
+            placeholder: 'Add a relevance',
+            save: function(input) {
+                formula.rel_label = input.$modelValue;
+            },
+            title: 'Add/Edit content',
+            targetEvent: evt,
+        });
+    }
+
+    $scope.editApScore = function(evt, formula) {
+        evt.stopPropagation();
+        console.log("edit ap score!");
+        $mdEditDialog.small({
+            modelValue: formula.ap_score,
+            placeholder: 'Add a AP score',
+            save: function(input) {
+                formula.ap_score = input.$modelValue;
+            },
+            title: 'Add/Edit questions',
+            targetEvent: evt,
+        });
+    }
+
 
 }
 

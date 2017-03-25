@@ -12,7 +12,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'g(yej*3clhw8mh1lge2jd*f7h0uam9exedd$ya50n-^n1#p2(9'
-
+INTERNAL_IPS = ['127.0.0.1']
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    
 
     # Web application
     'webapp.apps.WebAppConfig',
@@ -63,9 +64,12 @@ INSTALLED_APPS = (
     'django_extensions',
 
     'corsheaders',
+    'debug_toolbar',
 )
 
+
 MIDDLEWARE_CLASSES = (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,6 +80,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+def show_toolbar(request):
+    return True
+SHOW_TOOLBAR_CALLBACK = show_toolbar
 
 ROOT_URLCONF = 'meas.urls'
 
@@ -131,6 +139,11 @@ HAYSTACK_CONNECTIONS = {
         'PATH': WHOOSH_INDEX,
     },
 }
+
+DEBUG_TOOLBAR_PANELS = (
+  'debug_toolbar.panels.version.VersionDebugPanel',
+  'debug_toolbar.panels.timer.TimerDebugPanel',
+)
 
 WSGI_APPLICATION = 'meas.wsgi.application'
 
