@@ -80,11 +80,11 @@ urlpatterns = [
 
 urlpatterns = format_suffix_patterns(urlpatterns)
 
-# urlpatterns += [
-#     url(r'^api-auth/',
-#         include('rest_framework.urls', namespace='rest_framework')),
-#     url(r'^api-token-auth/', rest_views.obtain_auth_token),
-#     url(r'^auth/', include('djoser.urls.authtoken')),
-#     url(r'^login/', auth_views.login),
-#     url(r'^logout/', auth_views.logout),
-# ]
+urlpatterns += [
+    # url(r'^api-auth/',
+    #     include('rest_framework.urls', namespace='rest_framework')),
+    # url(r'^api-token-auth/', rest_views.obtain_auth_token),
+    url(r'^auth/', include('djoser.urls.authtoken')),
+    # url(r'^login/', auth_views.login),
+    # url(r'^logout/', auth_views.logout),
+]

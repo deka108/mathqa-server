@@ -98,7 +98,6 @@ function LatexTableController($scope, $mdDialog, $mdEditDialog, $window, Formula
     $scope.reactClick = function(evt) {
         console.log("CLICK");
         // evt.stopPropagation();
-
     }
 
     $scope.editRelevance = function(evt, formula) {

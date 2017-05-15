@@ -33,6 +33,7 @@ function AppController($scope, $mdSidenav, $window, $mdDialog, EVENTS, LoginServ
         "Data Viewer": "data_viewer.html",
         "Formula Viewer": "formula_viewer.html",
         "Create New Formula": "insert_formula.html",
+        "Formula Result Viewer": "formula_result_viewer.html"
     }
 
     $scope.goToPage = function(page) {

@@ -1,0 +1,13 @@
+django_debug_toolbar==1.7
+Django==1.10.2
+django_filter==1.0.1
+drf_haystack==1.6.1
+latex2mathml==1.1.1
+ngram==3.3.0
+nltk==3.2.2
+numpy==1.12.0
+sympy==1.0
+django_filters==0.2.1
+django_haystack==2.6.0
+djangorestframework==3.6.3
+scikit_learn==0.18.1

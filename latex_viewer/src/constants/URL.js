@@ -29,7 +29,6 @@ const URL = {
     DELETE_TEST_FORMULA: BASE_URL + '/delete_test_formula/',
     REINDEX_TEST_FORMULA: BASE_URL + '/reindex_test_formula/',
 
-    GET_FORMULA_CATEGORIES: BASE_URL + '/formula_categories/',
     CHECK_MATHML: BASE_URL + '/check_mathml/',
 
     LOGIN: BASE_URL + '/auth/login/',
