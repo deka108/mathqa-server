@@ -49,9 +49,6 @@ INSTALLED_APPS = (
     'api.apps.ApiConfig',
     'apiv2.apps.Apiv2Config',
 
-    # Search
-    'search.apps.SearchConfig',
-
     # Import Export
     'import_export',
 

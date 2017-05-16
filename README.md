@@ -1,5 +1,9 @@
 # MathQA Server Development
 
+## Docs
+[Link to Presentation Slides](http://bit.ly/fyp_deka)
+Go to docs/ directory for implementation details
+
 ## Demo
 [![MathQA Admin GUI](http://imgur.com/OCENTou.gif)](https://www.youtube.com/watch?v=dE0CVogsEIo)
 [MathQA Admin Demo Video](https://youtu.be/dE0CVogsEIo)
@@ -20,16 +24,16 @@
 2. Install jspm and live-server via npm
 3. cd to latex_viewer directory
 4. Run `jspm install`
-5. Fix dependencies for Angular-Filter:
-    1. Go inside jspm_packages/npm/angular-filter
+5. For first time user-only: fix dependencies in Angular-Filter
+    1. Go inside `jspm_packages/npm/angular-filter` or angular-filter module inside `node_modules` directory
     2. Create index.js then copy and paste the following script:
     ```
     require('./dist/angular-filter');
     module.exports = 'angular-filter';
     ```
-6. Run `live-server .` which starts a node.js server at http://localhost:8080
+6. Run `live-server .` which starts a node.js server at `http://localhost:8080`
 7. Navigate to different html views by clicking the link inside the side-navigator or by manually appending the html layout to the hostname:
-http://localhost:8080/[page].html
+`http://localhost:8080/[page].html`
 
 ## Models and APIs
 1. The model and the APIs are developed under apiv2 module
