@@ -1,15 +1,19 @@
 # MathQA Server Development
 
-## Loading data
-1. The data used for this project is stored inside db.json
-2. Load it using `python manage.py loaddata db.json` command
+## Demo
+[![MathQA Admin GUI](http://imgur.com/OCENTou.gif)](https://www.youtube.com/watch?v=dE0CVogsEIo)
+[MathQA Admin Demo Video](https://youtu.be/dE0CVogsEIo)
 
 ## Running the Server
 1. cd to the main MathQA server directory
 2. Activate the virtual environment: `source activate env`
 3. Install the dependencies: `pip install -r requirements.txt`
-4. Load the data
-5. Run the server `python manage.py runserver at 0.0.0.0:8000`
+4. Load the data (see next section)
+5. Run the server `python manage.py runserver 0.0.0.0:8000`: Runs server at port 8000. This is because the server is not remote, LaTeX viewer then assumes the server is running at localhost at port 8000.
+
+## Loading data
+1. The data used for this project is stored inside db.json
+2. Load it using `python manage.py loaddata db.json` command
 
 ## Running Latex Viewer
 1. Install Node.js and npm
